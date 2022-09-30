@@ -1,32 +1,32 @@
 const data = [
     {
-      code: "E101",
+      rollNo: "101",
       name: "Ajay Bhatia",
-      salary: 500000,
+      marks: 500,
       phone: 9815215233
     },
     {
-      code: "E102",
+      rollNo: "102",
       name: "Ajit Singh",
-      salary: 510000,
+      marks: 510,
       phone: 9415245233
     },
     {
-      code: "E103",
+      rollNo: "103",
       name: "Rameshwer Singh",
-      salary: 550000,
+      marks: 550,
       phone: 9912215243
     },
     {
-      code: "E104",
+      rollNo: "104",
       name: "James Smith",
-      salary: 200000,
+      marks: 200,
       phone: 9915115131
     },
     {
-      code: "E105",
+      rollNo: "105",
       name: "Kruth",
-      salary: 400000,
+      marks: 400,
       phone: 9015115131
     }
   ];

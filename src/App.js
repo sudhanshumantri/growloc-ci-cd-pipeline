@@ -1,19 +1,13 @@
 import './App.css';
-import Header from "./components/header/header";
+import Layout from "./components/Layout/Layout";
 
 
 function App() {
-  return (
-    <div className="App">
-      <Header />
-      {/* <addForm/> */}
-      {/* <DataTable data={data} />
-      <br />
-      <br />
-      <DataTable title="Students" data={data1} /> */}
-
-    </div>
-  );
+    return (
+        <div className="App">
+            <Layout/>
+        </div>
+    );
 }
 
 export default App;

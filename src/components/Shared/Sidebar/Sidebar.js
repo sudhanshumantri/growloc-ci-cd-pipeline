@@ -29,14 +29,7 @@ const menuItems = [
     {
         text: 'Corp',
         id: "corp",
-        subMenu: [{ id: '1', name: 'Dude' }, { id: '2', name: 'wassup' }]
-
-    },
-
-    {
-        text: 'Chipmtu',
-        id: "chimptu",
-        subMenu: [{ id: '1', name: 'Glowloc' }, { id: '2', name: 'Glowloc2' }]
+        subMenu: [{ id: '1', name: 'Seeding' }, { id: '2', name: 'Planting' }]
 
     },
 ];

@@ -1,4 +1,4 @@
-const data1 = [
+const data = [
     {
       rollNo: "101",
       name: "Ajay Bhatia",
@@ -31,5 +31,4 @@ const data1 = [
     }
   ];
   
-  export default data1;
-  
+  export default data;
