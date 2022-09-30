@@ -8,7 +8,6 @@ import reportWebVitals from './reportWebVitals';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {orange} from '@mui/material/colors';
 
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const theme = createTheme({
     status: {

@@ -3,20 +3,12 @@ import { useState } from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
 import ListItemText from "@mui/material/ListItemText";
 import Drawer from "@mui/material/Drawer";
 import Collapse from '@mui/material/Collapse';
 import ListItem from "@mui/material/ListItem";
-
-
-
 
 
 const drawerWidth = 240;
@@ -34,7 +26,6 @@ const menuItems = [
     },
 ];
 
-
 export default function SideBar() {
 
     const [open, setOpen] = useState(false);
@@ -42,7 +33,6 @@ export default function SideBar() {
     const handleClick = (id) => {
         setOpen(prevState => ({ ...prevState, [id]: !prevState[id] }));
     }
-
 
     return (
         <Drawer
@@ -88,7 +78,6 @@ export default function SideBar() {
                     ))}
                 </List>
             </Box>
-            
         </Drawer>
     )
 }
