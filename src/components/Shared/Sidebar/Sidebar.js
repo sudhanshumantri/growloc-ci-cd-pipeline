@@ -9,23 +9,10 @@ import ListItemText from "@mui/material/ListItemText";
 import Drawer from "@mui/material/Drawer";
 import Collapse from '@mui/material/Collapse';
 import ListItem from "@mui/material/ListItem";
-
+import  {Link} from "react-router-dom";
+import menuItems from "./config";
 
 const drawerWidth = 240;
-const menuItems = [
-    {
-        text: 'Dashboard',
-        id: "dash"
-
-    },
-    {
-        text: 'Corp',
-        id: "corp",
-        subMenu: [{ id: '1', name: 'Seeding' }, { id: '2', name: 'Planting' }]
-
-    },
-];
-
 export default function SideBar() {
 
     const [open, setOpen] = useState(false);
@@ -54,15 +41,15 @@ export default function SideBar() {
                     {menuItems.map((each, index) => (
                         <React.Fragment key={index}>
                             {each.subMenu && each.subMenu.length ?
-                                <>
-                                    <ListItem button onClick={() => handleClick(each.id)}>
-                                        <ListItemText primary={each.text} />
+                                <> 
+                                    <ListItem  button onClick={() => handleClick(each.id)}>
+                                        <ListItemText primary={each.title} />
                                         {open[each.id] ? <ExpandLess /> : <ExpandMore />}
                                     </ListItem>
                                     <Collapse in={open[each.id]} >
                                         <List component="div" >
                                             {(each.subMenu || []).map(subData => (
-                                                <ListItem key={subData.id} button>
+                                                <ListItem component={Link} to={subData.navigation} key={subData.id} button>
                                                     <ListItemText inset primary={subData.name} />
 
                                                 </ListItem>
@@ -70,8 +57,8 @@ export default function SideBar() {
                                         </List>
                                     </Collapse>
                                 </> :
-                                <ListItem button key={index}>
-                                    <ListItemText primary={each.text} />
+                                <ListItem component={Link} to={each.navigation} button key={index}>
+                                    <ListItemText primary={each.title} />
                                 </ListItem>
                             }
                         </React.Fragment>

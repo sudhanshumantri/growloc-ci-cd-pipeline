@@ -6,6 +6,8 @@ import SideBar from "../shared/sidebar/sidebar";
 import Toolbar from '@mui/material/Toolbar';
 import { Routes, Route } from "react-router-dom";
 import Seeding from "../crop/seeding/seeding";
+import Planting from "../crop/planting/planting";
+
 
 const drawerWidth = 240;
 export default function Header() {
@@ -20,8 +22,9 @@ export default function Header() {
             >
                 <Toolbar />
                 <Routes>
-                    <Route path="seeding" element={<Seeding />} />
-                    <Route path="planting" element={<Seeding />} />
+
+                    <Route path="crop/seeding" element={<Seeding />} />
+                    <Route path="crop/planting" element={<Planting />} />
                 </Routes>
             </Box>
         </Box>

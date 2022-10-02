@@ -5,41 +5,59 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
+import TableContainer from '@mui/material/TableContainer';
 
-function DataTable({ title, data }) {
-  const headers = Object.keys(data[0]);
+
+function DataTable({data}) {
+  const { headers, rows } = data;
+
+  const handleRedirection = (key) => {
+    console.log(key);
+  }
   return (
-    <Paper>
-      <Typography variant="h4" color="inherit">
-        {title}
-      </Typography>
-      <hr />
-
-      <Table>
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
-          <TableRow>
+          <TableRow >
             {headers.map(header => (
-              <TableCell align="right">{header.toUpperCase()}</TableCell>
+              <TableCell align="center" sx={{
+                color: '#757575',
+                fontSize: 12,
+                fontWeight: 700
+              }} align="left" >{header.label}</TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((emp, index) => (
-            <TableRow key={index}>
-              {headers.map(header => (
-                <TableCell align="right">{emp[header]}</TableCell>
-              ))}
+          {rows.map((row) => (
+            <TableRow align="center" key={row.id}>
+              {headers.map(header => {
+                if (header.redirection) {
+                  return (
+                    <TableCell component="th" scope="row">
+                      <a style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', }}
+                        onClick={() => handleRedirection(row[header.redirectionKey])}>
+                        {row[header.key]}
+                      </a>
+                    </TableCell>
+                  )
+                } else {
+                  return (
+                    <TableCell component="th" scope="row">
+                      {row[header.key]}
+                    </TableCell>
+                  )
+                }
+
+              })}
             </TableRow>
           ))}
         </TableBody>
       </Table>
-    </Paper>
+    </TableContainer>
+
   );
 }
 
-DataTable.defaultProps = {
-  title: "Dynamic Table"
-};
 
 export default DataTable;
