@@ -1,12 +1,10 @@
 import * as React from 'react';
 import DataTable from '../../shared/dataTable/dataTable';
-import data from './seeding-mock';
-import AddCorp from '../../addcrop/addcrop';
+import data from './transplanting-mock';
 
-export default function Seeding() {
+export default function Transplanting() {
     return (
         <>
-        <AddCorp/>
         <DataTable  data={data} />
         </>
     );
