@@ -1,16 +1,18 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Fira Sans Condensed', sans-serif !important;
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #F7FAFB !important;
 }
 
-code {
+/* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
+} */
 
 .MuiTableHead-root	{
   font-weight: bold;
@@ -18,4 +20,19 @@ code {
 }
 .MuiTableCell-root {
   color: red;
+}
+.page-title{
+  font-size: 20px;
+  color: rgb(54,66,83);
+  /* font-weight: 600!important; */
+}
+.page-title-bold{
+  font-size: 20px;
+  font-weight: 600!important;
+  color: rgb(54,66,83);
+  
+}
+p{
+  margin-block-start: 0px !important;
+  margin-block-end: 0px !important;
 }

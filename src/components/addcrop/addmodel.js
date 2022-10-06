@@ -9,6 +9,8 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
 import { Box } from '@mui/system';
 import { Grid } from '@mui/material';
 
@@ -22,7 +24,7 @@ const MenuProps = {
     },
   },
 };
-export default function AddCorpModel({modelData}) {
+export default function AddCorpModel({ modelData }) {
 
   const [open, setOpen] = useState(false);
   const [personName, setPersonName] = useState('');
@@ -51,75 +53,76 @@ export default function AddCorpModel({modelData}) {
         Add New
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <Box
-          sx={{
-            display: 'flex-box',
-            alignItems: 'center',
-            '& > :not(style)': { m: 3 },
-          }}
-        >
-          <FormControl sx={{ m: 2, width: 450 }}>
-            <InputLabel id="demo-multiple-name-label" variant="outlined" >Corp</InputLabel>
-            <Select
-              labelId="demo-multiple-name-label"
-              id="demo-multiple-name"
-              value={personName}
-              onChange={handleChange}
-              input={<OutlinedInput label="corp" />}
-              MenuProps={MenuProps}
-            >
-              {(modelData || []).map((e, keyIndex) => (
-                <MenuItem
-                  key={keyIndex}
-                  value={keyIndex}
+        <DialogTitle>Add a new crop</DialogTitle>
+        <DialogContent sx={{ paddingTop: '10px' }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} >
+              <FormControl fullWidth>
+                <InputLabel id="demo-multiple-name-label" variant="outlined" >Crop</InputLabel>
+                <Select
+                  labelId="demo-multiple-name-label"
+                  id="demo-multiple-name"
+                  value={personName}
+                  onChange={handleChange}
+                  input={<OutlinedInput label="crop" />}
+                  MenuProps={MenuProps}
                 >
-                  {e.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl sx={{ m: 2, width: 450 }}>
-            <InputLabel id="demo-multiple-name-label"  variant="outlined" >Germination Method</InputLabel>
-            <Select
-              labelId="demo-multiple-name-label"
-              id="demo-multiple-name"
-              onChange={handleGerminationChange}
-              value={germinationMethod}
-              input={<OutlinedInput label="corp" />}
-              MenuProps={MenuProps}
-            >
-              {(selectedData.germinationMethod || []).map((e, keyIndex) => (
-                <MenuItem
-                  key={keyIndex}
-                  value={keyIndex}
+                  {(modelData || []).map((e, keyIndex) => (
+                    <MenuItem
+                      key={keyIndex}
+                      value={keyIndex}
+                    >
+                      {e.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} >
+              <FormControl fullWidth>
+                <InputLabel id="demo-multiple-name-label" variant="outlined" >Germination Method</InputLabel>
+                <Select
+                  labelId="demo-multiple-name-label"
+                  id="demo-multiple-name"
+                  onChange={handleGerminationChange}
+                  value={germinationMethod}
+                  input={<OutlinedInput label="Germination Method" />}
+                  MenuProps={MenuProps}
                 >
-                  {e.type}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
-        <h3>Stages</h3>
-        <Grid container spacing={2}> 
-          <Grid item xs={5} >
-            {(selectedData.germinationMethod && selectedData.germinationMethod[germinationMethod]) ? 
-            (selectedData.germinationMethod[germinationMethod].stages||[]).map(item=> (
-              <TextField  sx={{ marginTop: 2,display:"flex-box", marginRight: 'auto',            
+                  {(selectedData.germinationMethod || []).map((e, keyIndex) => (
+                    <MenuItem
+                      key={keyIndex}
+                      value={keyIndex}
+                    >
+                      {e.type}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <h3>Stages</h3>
+          <Grid container spacing={2}>
+            {(selectedData.germinationMethod && selectedData.germinationMethod[germinationMethod]) ?
+              (selectedData.germinationMethod[germinationMethod].stages || []).map(item => (
+                <Grid item xs={4} >
+                  <TextField
+                    key={item.duration} label={item.name} value={item.duration} variant="outlined" />
+                </Grid>
+              )) : ''}
 
-            }}
-              key={item.duration} label={item.name} value ={item.duration} variant="outlined" />
-            )): ''}
           </Grid>
-        </Grid>
-        <h3>Parameters</h3>
-        <Grid container >
-          <Grid  item xs={5}>
-            {(selectedData.parameters || []).map((item)=> 
-            <TextField  sx={{ marginTop: 2 , display:"flex-box",}}
-            item key={item.name}label={item.name} value={item.value} variant="outlined" />
+          <h3>Parameters</h3>
+          <Grid container spacing={2}>
+            {(selectedData.parameters || []).map((item) =>
+              <Grid item xs={4} >
+                <TextField
+                  item key={item.name} label={item.name} value={item.value} variant="outlined" />
+              </Grid>
             )}
+
           </Grid>
-        </Grid>
+        </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleClose}>Save</Button>

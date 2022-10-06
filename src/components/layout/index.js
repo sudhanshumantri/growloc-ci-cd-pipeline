@@ -1,17 +1,15 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import TopHeader from "../shared/header/header";
-import SideBar from "../shared/sidebar/sidebar";
+import TopHeader from "../shared/header/";
+import SideBar from "../shared/sidebar/"
 import Toolbar from '@mui/material/Toolbar';
 import { Routes, Route } from "react-router-dom";
-import Seeding from "../crop/seeding/seeding";
-import Planting from "../crop/planting/planting";
+import Seeding from "../crop/seeding";
+import Planting from "../crop/planting";
 import ManageCrop from "../crop/managecorp";
 import Dashboard from '../dashboard';
-import Transplanting from '../crop/transplating/transplanting';
-import AddCorp from '../addcrop/addmodel';
-
+import Transplanting from '../crop/transplating';
 const drawerWidth = 240;
 export default function Header() {
     return (

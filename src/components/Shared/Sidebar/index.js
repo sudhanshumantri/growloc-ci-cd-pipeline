@@ -9,11 +9,10 @@ import ListItemText from "@mui/material/ListItemText";
 import Drawer from "@mui/material/Drawer";
 import Collapse from '@mui/material/Collapse';
 import ListItem from "@mui/material/ListItem";
-import  {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import menuItems from "./config";
-
-
-const drawerWidth = 240;
+import style from './style.css'
+const drawerWidth = 300;
 export default function SideBar() {
 
     const [open, setOpen] = useState(false);
@@ -28,37 +27,35 @@ export default function SideBar() {
             sx={{
                 width: drawerWidth,
                 flexShrink: 0,
-                [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+                [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', bgcolor: '#F9CF78' },
             }}
         >
             <Toolbar />
-            <Box sx={{ overflow: 'auto' }}>
-
+            <Box sx={{ overflow: 'auto', }}>
                 <List
-                    sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                    sx={{ width: '100%', maxWidth: 360, }}
                     component="nav"
-
                 >
                     {menuItems.map((each, index) => (
                         <React.Fragment key={index}>
                             {each.subMenu && each.subMenu.length ?
-                                <> 
-                                    <ListItem  button onClick={() => handleClick(each.id)}>
+                                <>
+                                    <ListItem button onClick={() => handleClick(each.id)} style={each.css}>
                                         <ListItemText primary={each.title} />
                                         {open[each.id] ? <ExpandLess /> : <ExpandMore />}
                                     </ListItem>
                                     <Collapse in={open[each.id]} >
-                                        <List component="div" >
+                                        <List component="nav" className="drawer-sub-menu" >
                                             {(each.subMenu || []).map(subData => (
-                                                <ListItem component={Link} to={subData.navigation} key={subData.id} button>
-                                                    <ListItemText inset primary={subData.name} />
+                                                <ListItem style={subData.css} component={Link} to={subData.navigation} key={subData.id} button>
+                                                    <ListItemText primary={subData.name} />
 
                                                 </ListItem>
                                             ))}
                                         </List>
                                     </Collapse>
                                 </> :
-                                <ListItem component={Link} to={each.navigation} button key={index}>
+                                <ListItem component={Link} to={each.navigation} style={each.css} button key={index}>
                                     <ListItemText primary={each.title} />
                                 </ListItem>
                             }

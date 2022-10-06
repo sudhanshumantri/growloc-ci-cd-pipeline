@@ -36,48 +36,48 @@ export default function AddCrop() {
   };
   return (
     <div>
-      <Button  sx={{m: 1}} variant="outlined" onClick={handleClickOpen}>
-          Add Corp
+      <Button sx={{ m: 1 }} variant="outlined" onClick={handleClickOpen}>
+        Add Corp
       </Button>
       <Dialog open={open} onClose={handleClose}>
-      <Box
-      sx={{
-        display: 'flex-box',
-        alignItems: 'center',
-        '& > :not(style)': { m: 3 },
-      }}
-    >
-      <FormControl sx={{ m: 1, width: 400 }}>
-        <InputLabel id="demo-multiple-name-label" htmlFor="name"> Name</InputLabel>
-        <Select
-            labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          input={<OutlinedInput label="Name" />}
-          MenuProps={MenuProps}
+        <Box
+          sx={{
+            display: 'flex-box',
+            alignItems: 'center',
+            '& > :not(style)': { m: 3 },
+          }}
         >
-            <MenuItem value="hai">Hai</MenuItem>
-            <MenuItem value="olivier">Olivier</MenuItem>
-            <MenuItem value="kevin">Kevin</MenuItem>
+          <FormControl sx={{ m: 1, width: 400 }}>
+            <InputLabel id="demo-multiple-name-label" htmlFor="name"> Name</InputLabel>
+            <Select
+              labelId="demo-multiple-name-label"
+              id="demo-multiple-name"
+              input={<OutlinedInput label="Name" />}
+              MenuProps={MenuProps}
+            >
+              <MenuItem value="hai">Hai</MenuItem>
+              <MenuItem value="olivier">Olivier</MenuItem>
+              <MenuItem value="kevin">Kevin</MenuItem>
 
-        </Select>
-      </FormControl>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-<DatePicker
-  label="Date"
-  onChange={(newValue) => {
-    setValue(newValue);
-  }}
-  renderInput={(params) => (
-    <TextField {...params}/>
-  )}
-/>
-</LocalizationProvider>
-<TextField
-    id="outlined-required"
-    label="Corp"
-    variant="outlined"
-  />
-    </Box>
+            </Select>
+          </FormControl>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Date"
+              onChange={(newValue) => {
+                setValue(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField {...params} />
+              )}
+            />
+          </LocalizationProvider>
+          <TextField
+            id="outlined-required"
+            label="Corp"
+            variant="outlined"
+          />
+        </Box>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleClose}>Save</Button>
