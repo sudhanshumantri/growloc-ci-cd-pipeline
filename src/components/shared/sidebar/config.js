@@ -20,7 +20,7 @@ const menuItems = [
         navigation: 'harvest',
         css: { borderBottom: '1px solid rgb(81,114,35)' },
 
-        subMenu: [{ id: '1', name: 'Greens', navigation: 'harvest/greens' }, { id: '2', name: 'Herbs', navigation: 'harvest/herbs' }, { id: '3', name: 'Vines', navigation: 'harvest/vines' }, { id: '4', name: 'Flowers', navigation: 'harvest/flowers' }, { id: '5', name: 'Fruits', navigation: 'harvest/fruits' }, { id: '6', name: 'Roots', navigation: 'harvest/roots' }, { id: '6', name: 'Legumes', navigation: 'harvest/legumes' }]
+        subMenu: [{ id: '1', name: 'Greens', navigation: 'harvest/greens' }, { id: '2', name: 'Herbs', navigation: 'harvest/herbs' }, { id: '3', name: 'Vines', navigation: 'harvest/vines' }, { id: '4', name: 'Flowers', navigation: 'harvest/flowers' }, { id: '5', name: 'Fruits', navigation: 'harvest/fruits' }, { id: '6', name: 'Roots', navigation: 'harvest/roots' }, { id: '7', name: 'Legumes', navigation: 'harvest/legumes' }]
 
     },
     {

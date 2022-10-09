@@ -1,0 +1,17 @@
+.button-custom{
+    background-color:rgb(81,114,35) !important;
+    border-radius: 4px !important;
+    border-color: rgb(81,114,35) !important;
+    color: white !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+}
+.button-custom-light{
+    color: #0E2C4B !important;
+    background-color: #DFE3E6 !important;
+    border-color: grey !important;;
+    border-radius: 4px !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    
+}

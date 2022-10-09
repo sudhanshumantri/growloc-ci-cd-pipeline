@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import axios from "../../../api/index"
-import AddCorpModel from "../../addcrop/addmodel";
+import AddCorpModel from "../addcrop";
 import DataTable from '../../shared/dataTable';
+import PageHeader from '../../shared/page-header'
 let plantsDummyData = {
     headers: [
         {
@@ -34,14 +35,24 @@ let plantsDummyData = {
 }
 export default function ManageCrop() {
     const [modelData, setModelData] = useState([]);
+    const [open, setOpen] = useState(false);
+    const handleModalToggle = () => {
+        setOpen(!open);
+    };
+    let buttonArray = [
+        {
+            label: 'Add New',
+            handler: handleModalToggle
+        }
+    ]
     React.useEffect(() => {
         axios.get('crop/get-all-crops').then(res => setModelData(res.data));
     }, []);
     return (
         <div>
-            <p className='page-title-bold'> Manage Crops</p>
-            <AddCorpModel modelData={modelData} />
-            <div>
+            <PageHeader title='Manage Crops' buttonArray={buttonArray} />
+            <AddCorpModel modelData={modelData} open={open} handleClick={handleModalToggle} />
+            <div className='page-container'>
                 <DataTable data={plantsDummyData} />
             </div>
         </div>

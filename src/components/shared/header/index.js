@@ -1,34 +1,51 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
+import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
-        },
-    },
+const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open, drawerWidth }) => ({
+    zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: 'rgb(81,114,35)',
+    transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    }),
 }));
-
-export default function TopHeader() {
-
+export default function TopHeader({ open, toggleDrawer, drawerWidth }) {
+    
     return (
-        <AppBar position="fixed"  sx={{ zIndex: (theme) => theme.zIndex.drawer + 1,background:'rgb(81,114,35)' }}>
+        <AppBar
+            position="fixed"
+            open={open}
+            drawerWidth={drawerWidth}
+        >
             <Toolbar>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={toggleDrawer}
+                    edge="start"
+                    sx={{
+                        marginRight: 5,
+                        ...(open && { display: 'none' }),
+                    }}
+                >
+                    <MenuIcon />
+                </IconButton>
                 <Typography variant="h6" noWrap component="div">
                     Growloc
                 </Typography>

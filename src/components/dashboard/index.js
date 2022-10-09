@@ -1,8 +1,10 @@
-import React from 'react'
+import React from 'react';
+import PageHeader from '../shared/page-header'
 export default function dashBoard() {
   return (
     <div>
-      <p className='page-title-bold'>Dashboard</p>
+        <PageHeader title='Dashboard' buttonArray={[]} />
+
     </div>
   )
 }

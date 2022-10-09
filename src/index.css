@@ -14,25 +14,54 @@ body {
     monospace;
 } */
 
-.MuiTableHead-root	{
+.MuiTableHead-root {
   font-weight: bold;
   color: red;
 }
+
 .MuiTableCell-root {
   color: red;
 }
-.page-title{
+
+.page-title {
   font-size: 20px;
-  color: rgb(54,66,83);
+  color: rgb(54, 66, 83);
   /* font-weight: 600!important; */
 }
-.page-title-bold{
+.page-title-light {
   font-size: 20px;
-  font-weight: 600!important;
-  color: rgb(54,66,83);
-  
+  color: #E5E4D7;
+  /* font-weight: 600!important; */
 }
-p{
+
+.page-title-bold {
+  font-size: 20px;
+  font-weight: 600 !important;
+  color: rgb(54, 66, 83);
+
+}
+.header-title {
+  display: block;
+  font-weight: normal;
+  font-size: 18px;
+  color: #0E2C4B;
+  text-transform: capitalize;
+  margin-block-start: 5px;
+  margin-block-end: 5px;
+  display: block;
+  /* margin: auto; */
+}
+
+/* p {
   margin-block-start: 0px !important;
   margin-block-end: 0px !important;
+} */
+
+.page-container {
+  padding: 16px;
+}
+/* Dialogue styling*/
+.dialog-title-container{
+  background: #E5E4D7 !important;
+  margin-bottom: 16px !important;
 }

@@ -1,5 +1,8 @@
-.mytable {
-    margin: 0;
-    padding: 0;
+.table-header-row{
+  background: #E5E4D7 !important;
+}
+  .table-header{
     
+    font-size: 13px;
+    font-weight: bold;
   }

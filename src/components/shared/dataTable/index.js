@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableContainer from '@mui/material/TableContainer';
-
+import style from './style.css'
 function DataTable({ data }) {
   const { headers, rows } = data;
   const handleRedirection = (key) => {
@@ -14,13 +14,10 @@ function DataTable({ data }) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
-        <TableHead>
+        <TableHead className="table-header-row">
           <TableRow >
             {headers.map(header => (
-              <TableCell sx={{
-                fontSize: 13,
-                fontWeight: 600,
-              }} align="left" >{header.label}</TableCell>
+              <TableCell className="table-header" align="left" >{header.label}</TableCell>
             ))}
           </TableRow>
         </TableHead>
