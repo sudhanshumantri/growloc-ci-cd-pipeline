@@ -37,7 +37,7 @@ let plantsDummyData = {
         { "id": 1194, "seedingId": 317, "crop": "Pepper", "batchName": "WK39/02", "variety": "Common Black Pepper", "stage": "Germination", "transplantingDate": "2022-09-30", "noOfPlants": 500, "noOfSeeds": 5000, "estDate": "2022-09-30", "dueIn": -2, },
         { "id": 1042, "seedingId": 279, "crop": "Cherry Tomatoes", "batchName": "WK34/01", "variety": "General Variety", "stage": "Harvest", "transplantingDate": "2022-08-15", "noOfPlants": 2000, "noOfSeeds": 6000, "estDate": "2022-10-14", "dueIn": 12 }]
 }
-export default function ManageCrop({data}) {
+export default function ManageCrop({fetchCrop, cropList, isCropListLoading, cropListError}) {
     const [modelData, setModelData] = useState([]);
     const [open, setOpen] = useState(false);
     const handleModalToggle = () => {
@@ -50,8 +50,8 @@ export default function ManageCrop({data}) {
         }
     ]
     React.useEffect(() => {
-
-        setModelData(data)
+        console.log(cropList);
+        fetchCrop();
 
         // axios.get('crop/get-all-crops').then(res => setModelData(res.data));
 

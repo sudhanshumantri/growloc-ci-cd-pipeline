@@ -13,12 +13,12 @@ import store from '../../store';
 import { getAsyncInjectors } from '../../utils/asyncInjectors';
 // import reducers and sagas
 import cropsReducer from '../../reducers/crops';
-import { cropsSagas } from '../../sagas/crops';
+import cropsSagas  from '../../sagas/crops';
 import ManageCrop from '../../container/managecrops';
 
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
 injectReducer('crops', cropsReducer);
-injectSagas([cropsSagas]);
+injectSagas(cropsSagas);
 
 
 const drawerWidth = 240;

@@ -50,6 +50,7 @@ function makeAPICall(originalConfig) {
 }
 
 export default function callApi(url, options = {}) {
+
     const defaultHeaders = {
         Accept: 'application/json',
         'Access-Control-Allow-Origin': 'http://localhost:8080/'
@@ -100,5 +101,5 @@ export default function callApi(url, options = {}) {
     //         'X-ENALITO-TOKEN': token
     //     };
     // }
-    // return makeAPICall(originalConfig, otherConfig);
+    return makeAPICall(originalConfig, otherConfig);
 }

@@ -1,8 +1,8 @@
-import { fromJS, List } from "immutable";
+import { fromJS } from "immutable";
 import {
-    FETCH_All_CROPS_REQUEST,
-    FETCH_ALL_CROPS_SUCCESS,
-    FETCH_ALL_CROPS_FAILURE,
+  FETCH_ALL_CROPS_REQUEST,
+  FETCH_ALL_CROPS_SUCCESS,
+  FETCH_ALL_CROPS_FAILURE,
 } from "../actions/actionTypes";
 const INITIAL_STATE = fromJS({
   isCropListLoading: true,
@@ -11,7 +11,7 @@ const INITIAL_STATE = fromJS({
 });
 export default function cropsReducer(state = INITIAL_STATE, action = {}) {
   switch (action.type) {
-    case FETCH_All_CROPS_REQUEST:
+    case FETCH_ALL_CROPS_REQUEST:
       return state
         .set("isCropListLoading", true)
         .set("cropList", [])
@@ -26,9 +26,7 @@ export default function cropsReducer(state = INITIAL_STATE, action = {}) {
         .set("isCropListLoading", false)
         .set("cropList", [])
         .set("cropListError", action.error);
-        default:
-            return state;
-
-  } 
-
+    default:
+      return state;
+  }
 }
