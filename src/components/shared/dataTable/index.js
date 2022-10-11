@@ -17,7 +17,7 @@ function DataTable({ data }) {
         <TableHead className="table-header-row">
           <TableRow >
             {headers.map(header => (
-              <TableCell className="table-header" align="left" >{header.label}</TableCell>
+              <TableCell key={header.id} className="table-header" align="left" >{header.label}</TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -27,7 +27,7 @@ function DataTable({ data }) {
               {headers.map(header => {
                 if (header.redirection) {
                   return (
-                    <TableCell component="td" scope="row">
+                    <TableCell key={row.id + header.id} component="td" scope="row">
                       <a style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', }}
                         onClick={() => handleRedirection(row[header.redirectionKey])}>
                         {row[header.key]}
@@ -36,7 +36,7 @@ function DataTable({ data }) {
                   )
                 } else {
                   return (
-                    <TableCell component="td" scope="row">
+                    <TableCell  key={row.id + header.id} component="td" scope="row">
                       {row[header.key]}
                     </TableCell>
                   )
