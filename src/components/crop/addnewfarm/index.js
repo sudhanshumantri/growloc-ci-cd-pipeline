@@ -26,11 +26,8 @@ export default function AddNewModel({ modelData, open, handleClick }) {
     const handleChange = (event) => {
         const selectedItem = modelData[event.target.value]
         setPersonName(event.target.value);
-        // setSelectedData(selectedItem);
     };
-    const handleGerminationChange = (event) => {
-        // setGerminationMethod(event.target.value);
-    }
+   
     return (
         <div>
             <Dialog open={open} onClose={handleClick}>
@@ -60,7 +57,6 @@ export default function AddNewModel({ modelData, open, handleClick }) {
                             </FormControl>
                         </Grid>
                         </Grid>
-
                         </DialogContent>
                 <DialogActions>
                     <CustomButton handleButtonClick={handleClick} title='Save'/>

@@ -11,7 +11,7 @@ const menuItems = [
         id: "crop",
         navigation: 'corp',
         css: { borderBottom: '1px solid rgb(81,114,35)' },
-        subMenu: [{ id: '1', name: 'Manage Crops', navigation: 'crop/manage', }, { id: '3', name: 'Seeding', navigation: 'crop/seeding', }, { id: '4', name: 'Planting', navigation: 'crop/planting' }, { id: '5', name: 'Transplanting', navigation: 'crop/transplanting' }]
+        subMenu: [{ id: '1', name: 'Manage Crops', navigation: '/crop/manage', }, { id: '3', name: 'Seeding', navigation: 'crop/seeding', }, { id: '4', name: 'Planting', navigation: 'crop/planting' }, { id: '5', name: 'Transplanting', navigation: 'crop/transplanting' }]
 
     },
     {

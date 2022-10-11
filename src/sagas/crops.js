@@ -3,7 +3,8 @@ import { callFetchCropsList } from "../utils/api";
 
 import { fetchCropSuccess, fetchCropFailure } from "../actions/crops";
 
-export function* fetchCropList({ data }) {
+export function* fetchCropList({data} ) {
+  
   let responseData = yield call(callFetchCropsList, data);
   if (responseData?.status == 200) {
     yield put(fetchCropSuccess(responseData.data));
@@ -18,7 +19,7 @@ export function* cropsSagas() {
   // It returns task descriptor (just like fork) so we can continue execution
   // yield all([takeLatest('FETCH_CREATE_SEGMENT_FILTER_DATA_REQUEST', getCreateSegmentFilter),
   // takeLatest('POST_CREATE_SEGMENT_DATA_REQUEST', postCreateSegment),
-  yield all([takeLatest("FETCH_ALL_CROPS_REQUEST", fetchCropList)]);
+  yield all([takeLatest("FETCH_All_CROPS_REQUEST", fetchCropList)]);
 }
 
-export default [cropsSagas];
+export default cropsSagas;

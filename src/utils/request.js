@@ -49,7 +49,7 @@ function makeAPICall(originalConfig) {
         });
 }
 
-export default function callApi(url, options = {}, idToken) {
+export default function callApi(url, options = {}) {
     const defaultHeaders = {
         Accept: 'application/json',
         'Access-Control-Allow-Origin': 'http://localhost:8080/'
@@ -95,10 +95,10 @@ export default function callApi(url, options = {}, idToken) {
         delete options.queryParams;
         originalConfig.url = urlWithQueryParams;
     }
-    if (!removeAuthorizationHeader) {
-        originalConfig.headers = {
-            'X-ENALITO-TOKEN': token
-        };
-    }
-    return makeAPICall(originalConfig, otherConfig);
+    // if (!removeAuthorizationHeader) {
+    //     originalConfig.headers = {
+    //         'X-ENALITO-TOKEN': token
+    //     };
+    // }
+    // return makeAPICall(originalConfig, otherConfig);
 }

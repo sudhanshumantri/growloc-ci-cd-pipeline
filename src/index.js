@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {BrowserRouter} from "react-router-dom";
+import {HashRouter} from "react-router-dom";
 import { Provider } from 'react-redux';
-import store from './store/';
+import store , {browserHistory} from './store/';
 
 
 import './index.css';
@@ -19,12 +19,12 @@ const theme = createTheme({
 });
 
 root.render(
-    <Provider store={store}>
-        <BrowserRouter>
+    <Provider store={store}> 
+      <HashRouter history={browserHistory}>
             <ThemeProvider theme={theme}>
                 <App/>
             </ThemeProvider>
-        </BrowserRouter>
+        </HashRouter>
     </Provider>
 );
 
