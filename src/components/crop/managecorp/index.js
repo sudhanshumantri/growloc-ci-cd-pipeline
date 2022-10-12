@@ -9,18 +9,18 @@ import { fetchCropList } from "../../../sagas/crops";
 let headers = [
   {
     label: "Crop",
-    key: "name",
+    key: "crop.name",
     redirection: false,
     redirectionKey: "link",
   },
   {
     label: "Variety",
-    key: "variety",
+    key: "crop.variety",
     redirection: false,
   },
   {
     label: "Scientific Name",
-    key: "scientificName",
+    key: "crop.scientificName",
     redirection: false,
   },
   {
@@ -39,11 +39,16 @@ export default function ManageCrop({
   cropList,
   isCropListLoading,
   cropListError,
+  addCrop,
+  fecthCropFarm,
+  cropFarmList
 }) {
-  const [modelData, setModelData] = useState([]);
   const [open, setOpen] = useState(false);
-  const handleModalToggle = () => {
+  const handleModalToggle = (data) => {
     setOpen(!open);
+    if (data) {
+      addCrop(data);
+    }
   };
   let buttonArray = [
     {
@@ -53,17 +58,18 @@ export default function ManageCrop({
   ];
   React.useEffect(() => {
     fetchCrop();
+    fecthCropFarm();
   }, []);
   return (
     <div>
       <PageHeader title="Manage Crops" buttonArray={buttonArray} />
       <AddCorpModel
-        modelData={modelData}
+        modelData={cropList}
         open={open}
         handleClick={handleModalToggle}
       />
       <div className="page-container">
-        <DataTable data={{headers: headers, rows: cropList}} />
+        <DataTable data={{ headers: headers, rows: cropFarmList }} />
       </div>
     </div>
   );

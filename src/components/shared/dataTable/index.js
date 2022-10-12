@@ -11,6 +11,16 @@ function DataTable({ data }) {
   const { headers, rows } = data;
   const handleRedirection = (key) => {
   }
+  const validateValue = (row, key)=> {
+
+    if(key.indexOf(".") > -1) {
+      const keys = key.split(".");
+      return row[keys[0]][keys[1]];
+    } else {
+      return row[key];
+    }
+
+  }
   return (
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
@@ -30,14 +40,14 @@ function DataTable({ data }) {
                     <TableCell key={row.id + header.id} component="td" scope="row">
                       <a style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', }}
                         onClick={() => handleRedirection(row[header.redirectionKey])}>
-                        {row[header.key]}
+                        {validateValue(row, header.key)}
                       </a>
                     </TableCell>
                   )
                 } else {
                   return (
                     <TableCell  key={row.id + header.id} component="td" scope="row">
-                      {row[header.key]}
+                      {validateValue(row, header.key)}
                     </TableCell>
                   )
                 }
@@ -47,7 +57,6 @@ function DataTable({ data }) {
         </TableBody>
       </Table>
     </TableContainer>
-
   );
 }
 export default DataTable;

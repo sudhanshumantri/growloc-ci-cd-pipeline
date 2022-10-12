@@ -135,7 +135,7 @@ export default function AddCorpModel({ modelData, open, handleClick }) {
                 </DialogContent>
                 <DialogActions>
                     <CustomButton isLight={true} handleButtonClick={handleClick} title='Cancel'/>
-                    <CustomButton handleButtonClick={handleClick} title='Save'/>
+                    <CustomButton handleButtonClick={()=>handleClick(selectedData)} title='Save'/>
                     {/* <Button onClick={handleClick}>Cancel</Button>
                     <Button onClick={handleClick}>Save</Button> */}
                 </DialogActions>
