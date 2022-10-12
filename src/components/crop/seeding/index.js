@@ -8,9 +8,7 @@ export default function Seeding() {
     const [open, setOpen] = useState(false);
     const handleModalToggle = () => {
         setOpen(!open);
-
     };
-
     return (
         <>
             <PageHeader title='Seeding'  />

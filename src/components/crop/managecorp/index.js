@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios from "../../../api/index";
-import AddCorpModel from "../addcrop";
+import AddCorpModal from "../addcrop";
 import DataTable from "../../shared/dataTable";
 import PageHeader from "../../shared/page-header";
 import { connect } from "react-redux";
@@ -63,8 +62,8 @@ export default function ManageCrop({
   return (
     <div>
       <PageHeader title="Manage Crops" buttonArray={buttonArray} />
-      <AddCorpModel
-        modelData={cropList}
+      <AddCorpModal
+        modalData={cropList}
         open={open}
         handleClick={handleModalToggle}
       />

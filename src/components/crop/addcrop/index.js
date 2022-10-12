@@ -24,15 +24,15 @@ const MenuProps = {
         },
     },
 };
-export default function AddCorpModel({ modelData, open, handleClick }) {
+export default function AddCorpModal({ modalData, open, handleClick }) {
 
     // const [open, setOpen] = useState(false);
-    const [personName, setPersonName] = useState('');
+    const [cropList, setCropList] = useState('');
     const [germinationMethod, setGerminationMethod] = useState('');
     const [selectedData, setSelectedData] = useState({});
     const handleChange = (event) => {
-        const selectedItem = modelData[event.target.value]
-        setPersonName(event.target.value);
+        const selectedItem = modalData[event.target.value]
+        setCropList(event.target.value);
         setSelectedData(selectedItem);
     };
     const handleGerminationChange = (event) => {
@@ -50,12 +50,12 @@ export default function AddCorpModel({ modelData, open, handleClick }) {
                                 <Select
                                     labelId="demo-multiple-name-label"
                                     id="demo-multiple-name"
-                                    value={personName}
+                                    value={cropList}
                                     onChange={handleChange}
                                     input={<OutlinedInput label="crop" />}
                                     MenuProps={MenuProps}
                                 >
-                                    {(modelData || []).map((e, keyIndex) => (
+                                    {(modalData || []).map((e, keyIndex) => (
                                         <MenuItem
                                             key={keyIndex}
                                             value={keyIndex}
