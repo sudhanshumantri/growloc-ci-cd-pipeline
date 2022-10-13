@@ -24,7 +24,7 @@ const MenuProps = {
         },
     },
 };
-export default function AddCorpModal({ modalData, open, handleClick }) {
+export default function AddCropModal({ modalData, open, handleClick }) {
 
     // const [open, setOpen] = useState(false);
     const [cropList, setCropList] = useState('');
@@ -130,12 +130,11 @@ export default function AddCorpModal({ modalData, open, handleClick }) {
                                     item key={item.name} label={item.name} value={item.value} variant="outlined" />
                             </Grid>
                         )}
-
                     </Grid>
                 </DialogContent>
                 <DialogActions>
                     <CustomButton isLight={true} handleButtonClick={handleClick} title='Cancel'/>
-                    <CustomButton handleButtonClick={()=>handleClick(selectedData)} title='Save'/>
+                    <CustomButton handleButtonClick={handleClick} title='Save'/>
                     {/* <Button onClick={handleClick}>Cancel</Button>
                     <Button onClick={handleClick}>Save</Button> */}
                 </DialogActions>

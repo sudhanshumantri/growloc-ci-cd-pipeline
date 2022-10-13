@@ -1,5 +1,9 @@
 import { call, all, put, takeLatest } from "redux-saga/effects";
-import { callFetchCropsList, callAddCrop,callFetchCropsFarmList } from "../utils/api";
+import {
+  callFetchCropsList,
+  callAddCrop,
+  callFetchCropsFarmList,
+} from "../utils/api";
 
 import {
   fetchCropSuccess,
@@ -7,8 +11,7 @@ import {
   saveCropSuccess,
   saveCropFailure,
   fetchCropFarmSuccess,
-  fetchCropFarmFailure
-
+  fetchCropFarmFailure,
 } from "../actions/crops";
 
 export function* fetchCropList({ data }) {
@@ -27,8 +30,8 @@ export function* addCrop({ data }) {
     yield put(saveCropFailure("Something went wrong"));
   }
 }
-export function* fetchCropFarmList({ data }) {
 
+export function* fetchCropFarmList({ data }) {
   let responseData = yield call(callFetchCropsFarmList, data);
   if (responseData?.status == 200) {
     yield put(fetchCropFarmSuccess(responseData.data));

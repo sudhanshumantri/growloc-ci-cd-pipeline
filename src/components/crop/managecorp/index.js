@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import axios from "../../../api/index";
 import AddCorpModal from "../addcrop";
 import DataTable from "../../shared/dataTable";
 import PageHeader from "../../shared/page-header";
 import { connect } from "react-redux";
 import { fetchCropList } from "../../../sagas/crops";
+import { useParams } from 'react-router-dom';
+
 
 let headers = [
   {
@@ -24,12 +27,12 @@ let headers = [
   },
   {
     label: "Type",
-    key: "transplantingDate",
+    key: "crop.transplantingDate",
     redirection: false,
   },
   {
     label: "Germination Method",
-    key: "estDate",
+    key: "crop.estDate",
     redirection: false,
   },
 ];
@@ -43,6 +46,7 @@ export default function ManageCrop({
   cropFarmList
 }) {
   const [open, setOpen] = useState(false);
+  let { farmId } = useParams();
   const handleModalToggle = (data) => {
     setOpen(!open);
     if (data) {
@@ -57,7 +61,7 @@ export default function ManageCrop({
   ];
   React.useEffect(() => {
     fetchCrop();
-    fecthCropFarm();
+    fecthCropFarm({farmId});
   }, []);
   return (
     <div>

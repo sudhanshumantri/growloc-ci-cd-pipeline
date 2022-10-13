@@ -27,7 +27,7 @@ export default function AddNewModel({ modelData, open, handleClick }) {
         const selectedItem = modelData[event.target.value]
         setPersonName(event.target.value);
     };
-   
+
     return (
         <div>
             <Dialog open={open} onClose={handleClick}>

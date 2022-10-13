@@ -60,7 +60,6 @@ export default function callApi(url, options = {}) {
 
   axios.defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded";
-
   // const query = options.query || {};
   const method = options.method || "get";
   const data = options.data || null;
@@ -101,9 +100,9 @@ export default function callApi(url, options = {}) {
     originalConfig.url = urlWithQueryParams;
   }
   if (!removeAuthorizationHeader) {
-      originalConfig.headers = {
-          'Authorization': "Bearer " + TOKEN
-      };
-  }
-  return makeAPICall(originalConfig, otherConfig);
+    originalConfig.headers = {
+        'Authorization': "Bearer " + TOKEN
+    };
+}
+return makeAPICall(originalConfig, otherConfig);
 }

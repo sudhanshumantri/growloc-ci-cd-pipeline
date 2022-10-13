@@ -1,12 +1,14 @@
 import callApi from "./request";
 import { api } from "../config";
-
 const endpointLocation = "remote";
 const urls = {
   remote: {
     "fetch-crops-list": "crop/get-all-crops",
     "add-crops-lists": "crop/add-new-crop",
     "add-crops-farm-list": "farm/crop/get-all-crop",
+    "login": "auth/login",
+    "fetch-farms-list":"farm/get-all-farm",
+    "add-farm-list": "farm/add-new-farm",
   },
 };
 function getEndpoint(endpoint) {
@@ -21,7 +23,6 @@ export function callFetchCropsList() {
     removeAuthorizationHeader: false,
   });
 }
-
 export function callAddCrop(data) {
   console.log(data);
   const params = {
@@ -107,12 +108,31 @@ export function callAddCrop(data) {
     data: { ...params },
   });
 }
-
 export function callFetchCropsFarmList() {
-  const body = {farmId:1};
+  const body = { farmId: 1 };
   return callApi(getEndpoint("add-crops-farm-list"), {
     method: "post",
     removeAuthorizationHeader: false,
-    body
+    body,
   });
-} 
+}
+export function callLoginHandler(data) {
+  return callApi(getEndpoint("login"), {
+    method: "POST",
+    removeAuthorizationHeader: true,
+    data,
+  });
+}
+export function callFetchFarmList() {
+  return callApi(getEndpoint("fetch-farms-list"), {
+    method: "get",
+    removeAuthorizationHeader: false,
+  });
+}
+export function callFarmCrop(data) {
+  return callApi(getEndpoint("add-farm-list"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data
+  });
+}
