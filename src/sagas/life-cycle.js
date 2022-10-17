@@ -1,13 +1,15 @@
 import { call, all, put, takeLatest } from "redux-saga/effects";
 import {
-    callAddCropToLifecycle, callfetchAllCropsLifecycle
+    callAddCropToLifecycle, callfetchAllCropsLifecycle, callfetchCropsLifecycleDetails
 } from "../utils/api";
 
 import {
     addCropToLifecycleSuccess,
     addCropToLifecycleFailure,
     fetchAllCropsLifecycleSuccess,
-    fetchAllCropsLifecycleFailure
+    fetchAllCropsLifecycleFailure,
+    fetchCropsLifecycleDetailsSuccess,
+    fetchCropsLifecycleDetailsFailure
 } from "../actions/life-cycle";
 
 export function* fetchAllCropsLifecycle({ data }) {
@@ -28,11 +30,20 @@ export function* addCropToLifecycle({ data }) {
         yield put(addCropToLifecycleFailure("Something went wrong"));
     }
 }
-export function* cropsSagas() {
+export function* fetchCropsLifecycleDetails({ data }) {
+    let responseData = yield call(callfetchCropsLifecycleDetails, data);
+    if (responseData?.status == 200 && responseData.data.status) {
+        yield put(fetchCropsLifecycleDetailsSuccess(responseData.data.data));
+
+    } else {
+        yield put(fetchCropsLifecycleDetailsFailure("Something went wrong"));
+    }
+}
+export function* cropLifeCycleSagas() {
     yield all([
         takeLatest("ADD_CROP_LIFECYCLE_REQUEST", addCropToLifecycle),
         takeLatest("FETCH_CROP_LIFECYCLE_REQUEST", fetchAllCropsLifecycle),
-        // takeLatest("FETCH_FARM_ALL_CROPS_REQUEST", fetchFarmCropsList),
+        takeLatest("FETCH_CROP_LIFECYCLE_DETAILS_REQUEST", fetchCropsLifecycleDetails),
     ]);
 }
-export default [cropsSagas];
+export default [cropLifeCycleSagas];

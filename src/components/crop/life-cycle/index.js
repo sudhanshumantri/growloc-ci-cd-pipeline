@@ -1,41 +1,42 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import DataTable from '../../shared/dataTable';
-import data from './seeding-mock';
 import PageHeader from '../../shared/page-header';
 import AddNewCropToLifeCycleModal from './addCropToLifeCycleModal';
 import Loader from '../../shared/loader';
 let headers = [
     {
         label: 'Batch No',
-        key: 'batchName',
+        // key: 'batchName',
+        key: 'crop.crop.name',
         redirection: true,
-        redirectionKey: 'link'
-      }, {
+        redirectionKey: 'id',
+        baseEndPoint: '#/crops/lifecycle/details/'
+    }, {
         label: 'Crop',
         key: 'crop.crop.name',
         redirection: false
-      }, {
+    }, {
         label: 'Variety',
         key: 'crop.crop.variety',
         redirection: false
-      }, {
+    }, {
         label: 'Start Date ',
         key: 'start_date',
         redirection: false,
-        isDate:true
-      },
-      {
+        isDate: true
+    },
+    {
         label: 'Est Harvest Date',
         key: 'estDate',
         redirection: false
-      },
-      {
+    },
+    {
         label: 'No. of Seeds',
         key: 'qty',
         redirection: false
-      }
-  ];
+    }
+];
 export default function CropLifeCycle({
     fecthCropFarm,
     fetchAllCropsLifecycle,
@@ -45,7 +46,7 @@ export default function CropLifeCycle({
     lifecycleCropsList,
     isAddLifecycleLoading,
     addLifecycleError,
-   
+
     isCropLifeCycleListLoading
 }) {
     let { farmId } = useParams();
@@ -87,7 +88,7 @@ export default function CropLifeCycle({
                         handleClose={handleModalToggle}
                     />
                 )}
-                 <DataTable data={{ headers: headers, rows: lifecycleCropsList }} />
+                <DataTable data={{ headers: headers, rows: lifecycleCropsList }} />
             </div>
         </>
     );

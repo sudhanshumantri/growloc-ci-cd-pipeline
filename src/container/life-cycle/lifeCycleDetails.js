@@ -1,0 +1,25 @@
+import React from "react";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { fetchFarmCropsRequest } from "../../actions/crops";
+import { fetchCropsLifecycleDetailsRequest } from "../../actions/life-cycle";
+import LifecycleDetails from "../../components/crop/life-cycle/lifeCycleDetails";
+import {
+    selectLifecycleDetails,
+    selectIsLifecycleDetailsLoading,
+    selectLifecycleDetailsError,
+} from "../../selectors/life-cycle";
+import { selectCropFarmList } from "../../selectors/crops";
+
+const mapStateToProps = createStructuredSelector({
+
+    lifecycleDetails: selectLifecycleDetails(),
+    isLifecycleDetailsLoading: selectIsLifecycleDetailsLoading(),
+    lifecycleDetailsError: selectLifecycleDetailsError(),
+
+});
+const mapDispatchToProps = {
+    fetchCropsLifecycleDetails: fetchCropsLifecycleDetailsRequest
+};
+export default
+    connect(mapStateToProps, mapDispatchToProps)(LifecycleDetails);

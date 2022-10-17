@@ -22,7 +22,6 @@ body {
 .MuiTableCell-root {
   color: red;
 }
-
 .page-title {
   font-size: 20px;
   color: rgb(54, 66, 83);
@@ -33,7 +32,6 @@ body {
   color: #E5E4D7;
   /* font-weight: 600!important; */
 }
-
 .page-title-bold {
   font-size: 20px;
   font-weight: 600 !important;

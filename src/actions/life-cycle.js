@@ -1,46 +1,68 @@
 import {
-    ADD_CROP_LIFECYCLE_REQUEST,
-    ADD_CROP_LIFECYCLE_SUCCESS,
-    ADD_CROP_LIFECYCLE_FAILURE,
-    FETCH_CROP_LIFECYCLE_REQUEST,
-    FETCH_CROP_LIFECYCLE_SUCCESS,
-    FETCH_CROP_LIFECYCLE_FAILURE
-  } from "./actionTypes";
+  ADD_CROP_LIFECYCLE_REQUEST,
+  ADD_CROP_LIFECYCLE_SUCCESS,
+  ADD_CROP_LIFECYCLE_FAILURE,
+  FETCH_CROP_LIFECYCLE_REQUEST,
+  FETCH_CROP_LIFECYCLE_SUCCESS,
+  FETCH_CROP_LIFECYCLE_FAILURE,
+  FETCH_CROP_LIFECYCLE_DETAILS_REQUEST,
+  FETCH_CROP_LIFECYCLE_DETAILS__SUCCESS,
+  FETCH_CROP_LIFECYCLE_DETAILS__FAILURE
+} from "./actionTypes";
 
-  export function fetchAllCropsLifecycleRequest(data) {
-    return {
-      type: FETCH_CROP_LIFECYCLE_REQUEST,
-      data
-    };
-  }
-  export function fetchAllCropsLifecycleSuccess(data) {
-    return {
-      type: FETCH_CROP_LIFECYCLE_SUCCESS,
-      data,
-    };
-  }
-  export function fetchAllCropsLifecycleFailure(error) {
-    return {
-      type: FETCH_CROP_LIFECYCLE_FAILURE,
-      error,
-    };
-  }
+export function fetchAllCropsLifecycleRequest(data) {
+  return {
+    type: FETCH_CROP_LIFECYCLE_REQUEST,
+    data
+  };
+}
+export function fetchAllCropsLifecycleSuccess(data) {
+  return {
+    type: FETCH_CROP_LIFECYCLE_SUCCESS,
+    data,
+  };
+}
+export function fetchAllCropsLifecycleFailure(error) {
+  return {
+    type: FETCH_CROP_LIFECYCLE_FAILURE,
+    error,
+  };
+}
 
 export function addCropToLifecycleRequest(data) {
-    return {
-      type: ADD_CROP_LIFECYCLE_REQUEST,
-      data
-    };
-  }
-  export function addCropToLifecycleSuccess(data) {
-    return {
-      type: ADD_CROP_LIFECYCLE_SUCCESS,
-      data,
-    };
-  }
-  export function addCropToLifecycleFailure(error) {
-    return {
-      type: ADD_CROP_LIFECYCLE_FAILURE,
-      error,
-    };
-  }
+  return {
+    type: ADD_CROP_LIFECYCLE_REQUEST,
+    data
+  };
+}
+export function addCropToLifecycleSuccess(data) {
+  return {
+    type: ADD_CROP_LIFECYCLE_SUCCESS,
+    data,
+  };
+}
+export function addCropToLifecycleFailure(error) {
+  return {
+    type: ADD_CROP_LIFECYCLE_FAILURE,
+    error,
+  };
+}
+
+export function fetchCropsLifecycleDetailsRequest(data) {
+  return {
+    type: FETCH_CROP_LIFECYCLE_DETAILS_REQUEST,
+    data
+  };
+}
+export function fetchCropsLifecycleDetailsSuccess(data) {
+  return {
+    type: FETCH_CROP_LIFECYCLE_DETAILS__SUCCESS,
+    data,
+  };
+}
+export function fetchCropsLifecycleDetailsFailure(error) {
+  return {
+    type: FETCH_CROP_LIFECYCLE_DETAILS__FAILURE,
+    error,
+  };
+}

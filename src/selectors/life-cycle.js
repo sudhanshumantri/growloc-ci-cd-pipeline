@@ -14,3 +14,14 @@ export const selectIsAddLifecycleLoading = () =>
 export const selectLifecycleCropsList = () =>
   createSelector(selectCrop, (services) => services.toJS()["lifecycleCrops"]);
 
+/**
+ * Life Cycle Details 
+ */
+
+export const selectLifecycleDetailsError = () =>
+  createSelector(selectCrop, (services) => services.toJS()["lifeCycleDetailsError"]);
+export const selectIsLifecycleDetailsLoading = () =>
+  createSelector(selectCrop, (services) => services.toJS()["isLifeCycleDetailsLoading"]);
+
+export const selectLifecycleDetails = () =>
+  createSelector(selectCrop, (services) => services.toJS()["lifecycleDetails"]);

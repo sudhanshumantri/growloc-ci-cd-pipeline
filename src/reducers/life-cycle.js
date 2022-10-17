@@ -5,7 +5,10 @@ import {
     ADD_CROP_LIFECYCLE_FAILURE,
     FETCH_CROP_LIFECYCLE_REQUEST,
     FETCH_CROP_LIFECYCLE_SUCCESS,
-    FETCH_CROP_LIFECYCLE_FAILURE
+    FETCH_CROP_LIFECYCLE_FAILURE,
+    FETCH_CROP_LIFECYCLE_DETAILS_REQUEST,
+    FETCH_CROP_LIFECYCLE_DETAILS__SUCCESS,
+    FETCH_CROP_LIFECYCLE_DETAILS__FAILURE
 } from "../actions/actionTypes";
 const INITIAL_STATE = fromJS({
     isCropLifeCycleListLoading: false,
@@ -13,6 +16,9 @@ const INITIAL_STATE = fromJS({
     lifecycleCrops: [],
     addLifecycleError: null,
     cropLifeCycleListError: null,
+    lifecycleDetails: null,
+    isLifeCycleDetailsLoading: true,
+    lifeCycleDetailsError: null
 });
 export default function cropLifecycleReducer(state = INITIAL_STATE, action = {}) {
     switch (action.type) {
@@ -46,6 +52,21 @@ export default function cropLifecycleReducer(state = INITIAL_STATE, action = {})
             return state
                 .set("isAddLifecycleLoading", false)
                 .set("addLifecycleError", action.error);
+        case FETCH_CROP_LIFECYCLE_DETAILS_REQUEST:
+            return state
+                .set("lifecycleDetails", null)
+                .set("isLifeCycleDetailsLoading", true)
+                .set("lifeCycleDetailsError", null);
+        case FETCH_CROP_LIFECYCLE_DETAILS__SUCCESS:
+            return state
+                .set("lifecycleDetails", action.data)
+                .set("isLifeCycleDetailsLoading", false)
+                .set("lifeCycleDetailsError", null);
+        case FETCH_CROP_LIFECYCLE_DETAILS__FAILURE:
+            return state
+                .set("lifecycleDetails", null)
+                .set("isLifeCycleDetailsLoading", false)
+                .set("lifeCycleDetailsError", null);
         default:
             return state;
     }

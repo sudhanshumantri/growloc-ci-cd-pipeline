@@ -11,6 +11,7 @@ const urls = {
     "add-crop-to-farm": "farm/crop/add-new-crop",
     "add-crop-to-lifecycle": "farm/crop/start-life-cycle",
     "fetch-crop-lifecycle": "farm/crop/get-all-life-cycle",
+    "fetch-crop-lifecycle-details": "farm/crop/life-cycle-details/",
   },
 };
 function getEndpoint(endpoint) {
@@ -77,4 +78,12 @@ export function callfetchAllCropsLifecycle(data) {
     data
   });
 }
+export function callfetchCropsLifecycleDetails(routeParams) {
+  return callApi(getEndpoint("fetch-crop-lifecycle-details"), {
+    method: "get",
+    removeAuthorizationHeader: false,
+    routeParams: routeParams,
+  });
+}
+
 

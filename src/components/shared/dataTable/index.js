@@ -6,11 +6,13 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableContainer from '@mui/material/TableContainer';
+import { Link } from "react-router-dom";
 import moment from "moment";
 import style from './style.css'
 function DataTable({ data }) {
   const { headers, rows } = data;
   const handleRedirection = (key) => {
+
   }
   const validateValue = (row, key) => {
     if (key.indexOf(".") > -1) {
@@ -38,8 +40,7 @@ function DataTable({ data }) {
                 if (header.redirection) {
                   return (
                     <TableCell key={row.id + header.id} component="td" scope="row">
-                      <a style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', }}
-                        onClick={() => handleRedirection(row[header.redirectionKey])}>
+                      <a style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', }} href={header.baseEndPoint + row[header.redirectionKey]}>
                         {validateValue(row, header.key)}
                       </a>
                     </TableCell>

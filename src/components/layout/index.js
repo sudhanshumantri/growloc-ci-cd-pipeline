@@ -10,8 +10,7 @@ import Login from "../../container/login";
 import SideBar from "../../container/sidebar";
 import Farms from "../../container/farm";
 import CropLifeCycle from "../../container/life-cycle";
-import Planting from "../crop/planting";
-import Transplanting from "../crop/transplating";
+import CropLifeCycleDetails from "../../container/life-cycle/lifeCycleDetails";
 import store from "../../store";
 import PrivateOutlet from "../privateroute";
 import FarmOutlet from "../farmoutlet";
@@ -59,6 +58,15 @@ const Layout = () => {
         <Toolbar />
         <Routes>
           <Route
+            exact
+            path="app/dashboard"
+            element={
+              <PrivateOutlet token={token}>
+                <Farms />
+              </PrivateOutlet>
+            }
+          />
+          <Route
             path="farm/:farmId"
             element={
               <PrivateOutlet token={token}>
@@ -69,18 +77,8 @@ const Layout = () => {
           >
             <Route path="crops/manage" element={<ManageCrop />} />
             <Route path="crops/lifecycle" element={<CropLifeCycle />} />
-            <Route path="crops/planting" element={<Planting />} />
-            <Route path="crops/transplanting" element={<Transplanting />} />
           </Route>
-          <Route
-            exact
-            path="app/dashboard"
-            element={
-              <PrivateOutlet token={token}>
-                <Farms />
-              </PrivateOutlet>
-            }
-          />
+          <Route path="crops/lifecycle/details/:lifecycleId" element={<CropLifeCycleDetails />} />
           <Route path="login" element={<Login />} />
         </Routes>
       </Box>
