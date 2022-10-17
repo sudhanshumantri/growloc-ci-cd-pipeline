@@ -67,6 +67,7 @@ export default function ManageCrop({
     fetchCrop();
     fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
+  console.log(cropFarmList);
   return (
     <div>
       <PageHeader title="Manage Crops" buttonArray={buttonArray} />

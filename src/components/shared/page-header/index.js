@@ -11,14 +11,18 @@ function renderButtonArray(buttonArray) {
         })
     )
 }
-export default function PageHeader({ title, buttonTitle, buttonArray, subtitle,info, customButton }) {
+export default function PageHeader({ title,subtitle, buttonTitle, buttonArray, info, customButton, }) {
     //export default class PageHeader extends React.Component {
     return (
         <>
             <div className='page-header-container'>
                 <div className='page-header-top-row'>
                     <div style={{ flex: 4, display: 'flex' }}>
+
                         <p className='header-title'>{title}
+                            {subtitle && (
+                                <span className='label-light'>{subtitle}</span>
+                            )}
                         </p>
                     </div>
                     {buttonArray && buttonArray.length > 0 && (
@@ -32,16 +36,21 @@ export default function PageHeader({ title, buttonTitle, buttonArray, subtitle,i
                         </div>
                     )}
                 </div>
-                {subtitle && (
-                    <>
-                        <span className='label-light'>{subtitle}</span>
-                        <br />
-                    </>
-                )}
                 {info && (
-                    <>
-                        <span className='label-light'>{info}</span>
-                    </>
+                    info.map((data, index) => (
+                        <span className='label-light'>
+                            {data.title && (
+                                <>
+                                    <b>{data.title}</b>:
+                                </>
+                            )}
+
+                            {data.value}
+                            {info.length - 1 != index && (
+                                <>, </>
+                            )}
+                        </span>
+                    ))
                 )}
 
             </div>
