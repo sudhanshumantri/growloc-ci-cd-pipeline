@@ -6,14 +6,12 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import CustomButton from '../../shared/button'
-import { Box } from '@mui/system';
 import { Grid } from '@mui/material';
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -51,15 +49,18 @@ export default function AddCropModal({ modalData, open, handleSave, handleClose 
             variety: selectedData.variety,
             parameters: selectedData.parameters,
             germinationMethod: selectedData.germinationMethod[germinationMethod],
-
         };
         let data = {
             farmId: parseInt(farmId),
             crop:cropData,
             qty: parseInt(units)
         }
-        handleSave(data)
-        // console.log(data);
+        if(cropList && cropData && cropData.germinationMethod) {
+            handleSave(data)
+        } else {
+        console.log(data);
+
+        }
     }
     return (
         <div>

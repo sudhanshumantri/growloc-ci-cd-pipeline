@@ -8,7 +8,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import ButtonCustom from "../../shared/button";
 import { Grid } from "@mui/material";
-
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -21,13 +20,25 @@ const MenuProps = {
 };
 export default function AddFarmModal({ open, handleClick }) {
   const [farm, setFarm] = useState({});
+  const [nameError, setNameError] = useState("");
+
   const handleChange = (event, name) => {
     setFarm({ ...farm, [name]: event.target.value });
+  };
+
+  const validateFarm = () => {
+    if (farm.name) {
+      handleClick(farm);
+    } else {
+      setNameError(true);
+    }
   };
   return (
     <div>
       <Dialog open={open} onClose={handleClick}>
-        <DialogTitle className="dialog-title-container">Add a new Farm </DialogTitle>
+        <DialogTitle className="dialog-title-container">
+          Add a new Farm{" "}
+        </DialogTitle>
         <DialogContent sx={{ paddingTop: "20px" }}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={6}>
@@ -35,8 +46,13 @@ export default function AddFarmModal({ open, handleClick }) {
                 <TextField
                   label={"Name"}
                   InputLabelProps={{ shrink: true }}
-                  onChange={(e) => handleChange(e, "name")}
+                  onChange={(e) => {
+                    nameError && setNameError(false);
+                    handleChange(e, "name");
+                  }}
                   variant="outlined"
+                  error={nameError}
+                  helperText={nameError ? "Please provide name" : ""}
                 />
               </FormControl>
             </Grid>
@@ -77,12 +93,7 @@ export default function AddFarmModal({ open, handleClick }) {
             handleButtonClick={handleClick}
             title="Cancel"
           />
-          <ButtonCustom
-            handleButtonClick={() => handleClick(farm)}
-            title="Save"
-          />
-          {/* <Button onClick={handleClick}>Cancel</Button>
-                    <Button onClick={handleClick}>Save</Button> */}
+          <ButtonCustom handleButtonClick={() => validateFarm()} title="Save" />
         </DialogActions>
       </Dialog>
     </div>

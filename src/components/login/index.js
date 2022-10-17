@@ -9,8 +9,22 @@ import ButtonCustom from "../shared/button";
 function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   const handleButtonClick = () => {
-    if (phone && password) {
+    const re = /^[0-10\b]{0,10}$/;
+    let isError = false;
+    if (phone.length !== 10 || re.test(phone)) {
+      isError = true;
+      setPhoneError(true);
+    }
+    if (password == "") {
+      setPasswordError(true);
+      isError = true;
+    }
+
+    if (!isError) {
       loginRequest({ phone: parseInt(phone), password });
     }
   };
@@ -27,7 +41,6 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
   const renderErrorMessage = () => {
     return <p className="error-message">{isLoginError}</p>;
   };
-
   return (
     <div className="login-container">
       <CssBaseline />
@@ -45,8 +58,15 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
           type="text"
           name="phone"
           value={phone}
-          // error={emailError}
-          onChange={(e) => setPhone(e.target.value)}
+          helperText={phoneError ? "Please provide Vaild Phone Number" : ""}
+          error={phoneError}
+          maxLength={10}
+          InputProps={{ inputProps: { maxLength: 10 } }}
+          onChange={(event) => {
+            const { value } = event.target;
+            setPhone(value);
+            setPhoneError(false);
+          }}
           autoFocus
         />
         <TextField
@@ -57,11 +77,14 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
           label="Password"
           type="password"
           id="password"
-          // error={passwordError}
-          // helperText={passwordError ? 'Please provide password' : ''}
+          error={passwordError}
+          helperText={passwordError ? "Please provide password" : ""}
           value={password}
           variant="standard"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setPasswordError(false);
+          }}
         />
         <ButtonCustom
           handleButtonClick={handleButtonClick}
