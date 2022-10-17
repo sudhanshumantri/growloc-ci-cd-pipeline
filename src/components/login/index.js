@@ -32,7 +32,7 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
     <div className="login-container">
       <CssBaseline />
       <Box>
-        <p className="page-title ">Login to your Glowloc Account</p>
+        <p className="header-title">Login to your Glowloc Account</p>
         {/* <h1>Login to your Glowloc Account</h1> */}
         {isLoginError && renderErrorMessage()}
         <TextField

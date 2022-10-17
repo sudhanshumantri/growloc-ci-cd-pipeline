@@ -1,11 +1,26 @@
 .farm-list-card-holder {
     border-radius: 4px !important;
     margin: 8px;
+    padding: '30px 30px 0px 30px';
     box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
-    /* min-width: 250px;
-    max-width: 250px; */
     min-width: 280px;
     max-width: 280px;
-    /* background-color: #FCFCFC !important; */
     background-color: white !important;
+    /*
+     ...theme.typography.body2,
+    padding: '30px 30px 0px 30px',
+    // minHeight: '337px',
+    columnGap: '150px',
+    // maxHeight: '337px',
+    display: 'flex',
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    justifyContent: 'start',
+    // paddingTop:'35px',
+    textAlign: 'left',
+    background: 'white',
+    boxshadow: '0px 1px 4px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.02), 0px 1px 12px rgba(0, 0, 0, 0.12)',
+    borderradius: '4px',
+    
+    */
 }
