@@ -10,7 +10,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {orange} from '@mui/material/colors';
-
+import { ReactNotifications, Store } from 'react-notifications-component';
+import '../node_modules/react-notifications-component/dist/theme.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const theme = createTheme({
     status: {
@@ -22,6 +23,7 @@ root.render(
     <Provider store={store}> 
       <HashRouter history={browserHistory}>
             <ThemeProvider theme={theme}>
+                  <ReactNotifications />
                 <App/>
             </ThemeProvider>
         </HashRouter>

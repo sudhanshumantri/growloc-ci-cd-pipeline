@@ -54,16 +54,13 @@ export function injectAsyncReducer(store, isValid) {
  */
 export function injectAsyncSagas(store, isValid) {
     return function injectSagas(sagas) {
-        console.log(sagas, "here is sagas");
         if (!isValid) {
             checkStore(store);
         }
-
         invariant(
             Array.isArray(sagas),
             'injectAsyncSagas: Expected `sagas` to be an array of generator functions'
         );
-
         warning(
             !isEmpty(sagas),
             'injectAsyncSagas: Received an empty `sagas` array'

@@ -2,12 +2,12 @@ import {
   FETCH_ALL_CROPS_REQUEST,
   FETCH_ALL_CROPS_SUCCESS,
   FETCH_ALL_CROPS_FAILURE,
-  ADD_CROPS_REQUEST,
-  ADD_CROPS_SUCCESS,
-  ADD_CROPS_FAILURE,
-  FETCH_ALL_CROPS_FARM_REQUEST,
-  FETCH_ALL_CROPS_FARM_SUCCESS,
-  FETCH_ALL_CROPS_FARM_FAILURE,
+  ADD_CROP_TO_FARM_REQUEST,
+  ADD_CROP_TO_FARM_SUCCESS,
+  ADD_CROP_TO_FARM_FAILURE,
+  FETCH_FARM_ALL_CROPS_REQUEST,
+  FETCH_FARM_ALL_CROPS_SUCCESS,
+  FETCH_FARM_ALL_CROPS_FAILURE
 } from "./actionTypes";
 
 export function fetchCropRequest() {
@@ -28,39 +28,42 @@ export function fetchCropFailure(error) {
   };
 }
 
-export function saveCropRequest(data) {
+export function addCropToFarmRequest(data) {
   return {
-    type: ADD_CROPS_REQUEST,
+    type: ADD_CROP_TO_FARM_REQUEST,
     data,
   };
 }
-export function saveCropSuccess(data) {
+export function addCropToFarmSuccess(data) {
   return {
-    type: ADD_CROPS_SUCCESS,
+    type: ADD_CROP_TO_FARM_SUCCESS,
     data,
   };
 }
-export function saveCropFailure(error) {
+export function addCropToFarmFailure(error) {
   return {
-    type: ADD_CROPS_FAILURE,
+    type: ADD_CROP_TO_FARM_FAILURE,
+    error,
+  };
+}
+export function fetchFarmCropsRequest(data) {
+  return {
+    type: FETCH_FARM_ALL_CROPS_REQUEST,
+    data
+  };
+}
+export function fetchFarmCropsSuccess(data) {
+  return {
+    type: FETCH_FARM_ALL_CROPS_SUCCESS,
+    data,
+  };
+}
+export function fetchFarmCropsFailure(error) {
+  return {
+    type: FETCH_FARM_ALL_CROPS_FAILURE,
     error,
   };
 }
 
-export function fetchCropFarmRequest() {
-  return {
-    type: FETCH_ALL_CROPS_FARM_REQUEST,
-  };
-}
-export function fetchCropFarmSuccess(data) {
-  return {
-    type: FETCH_ALL_CROPS_FARM_SUCCESS,
-    data,
-  };
-}
-export function fetchCropFarmFailure(error) {
-  return {
-    type: FETCH_ALL_CROPS_FARM_FAILURE,
-    error,
-  };
-}
+
+

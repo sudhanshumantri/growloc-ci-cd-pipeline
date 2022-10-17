@@ -3,12 +3,14 @@ import { api } from "../config";
 const endpointLocation = "remote";
 const urls = {
   remote: {
-    "fetch-crops-list": "crop/get-all-crops",
-    "add-crops-lists": "crop/add-new-crop",
-    "add-crops-farm-list": "farm/crop/get-all-crop",
     "login": "auth/login",
-    "fetch-farms-list":"farm/get-all-farm",
-    "add-farm-list": "farm/add-new-farm",
+    "fetch-farms-list": "farm/get-all-farm",
+    "fetch-crops-list": "crop/get-all-crops",
+    "add-farm": "farm/add-new-farm",
+    "fetch-farm-all-crops": "farm/crop/get-all-crop",
+    "add-crop-to-farm": "farm/crop/add-new-crop",
+    "add-crop-to-lifecycle": "farm/crop/start-life-cycle",
+    "fetch-crop-lifecycle": "farm/crop/get-all-life-cycle",
   },
 };
 function getEndpoint(endpoint) {
@@ -23,97 +25,19 @@ export function callFetchCropsList() {
     removeAuthorizationHeader: false,
   });
 }
-export function callAddCrop(data) {
+export function callAddCropToFarm(data) {
   console.log(data);
-  const params = {
-    farmId: 1,
-    cropData: {
-      id: 1,
-      name: "Broccoli - Microgreen",
-      variety: "Microgreen",
-      scientificName: "Brassica oleracea var. italica",
-      germinationMethod: [
-        {
-          type: "Seeding",
-          stages: [
-            {
-              name: "Germination",
-              duration: 1,
-            },
-            {
-              name: "Nursery",
-              duration: 5,
-            },
-            {
-              name: "Harvest",
-              duration: 2,
-            },
-          ],
-        },
-        {
-          type: "Panting",
-          stages: [
-            {
-              name: "Germination",
-              duration: 3,
-            },
-            {
-              name: "Nursery",
-              duration: 2,
-            },
-            {
-              name: "Harvest",
-              duration: 5,
-            },
-          ],
-        },
-      ],
-      parameters: [
-        {
-          name: "pH Level",
-          unit: "Units",
-          value: "5.9",
-        },
-        {
-          name: "Electric Conductivity",
-          unit: "mS/cm",
-          value: "1-2",
-        },
-        {
-          name: "Temperature",
-          unit: "C",
-          value: "18-24",
-        },
-        {
-          name: "CO2 Level",
-          unit: "ppm",
-          value: "1500",
-        },
-        {
-          name: "Light",
-          unit: "lumen",
-          value: "6000",
-        },
-        {
-          name: "Humidity",
-          unit: "%",
-          value: "60-50",
-        },
-      ],
-    },
-  };
-  return callApi(getEndpoint("add-crops-lists"), {
+  return callApi(getEndpoint("add-crop-to-farm"), {
     method: "POST",
     removeAuthorizationHeader: false,
-    data: { ...params },
+    data
   });
 }
-export function callFetchCropsFarmList() {
-  const body = { farmId: 1 };
-  return callApi(getEndpoint("add-crops-farm-list"), {
+export function callFetchFarmCropsList(data) {
+  return callApi(getEndpoint("fetch-farm-all-crops"), {
     method: "post",
     removeAuthorizationHeader: false,
-    body,
+    data,
   });
 }
 export function callLoginHandler(data) {
@@ -130,9 +54,27 @@ export function callFetchFarmList() {
   });
 }
 export function callFarmCrop(data) {
-  return callApi(getEndpoint("add-farm-list"), {
+  return callApi(getEndpoint("add-farm"), {
     method: "POST",
     removeAuthorizationHeader: false,
     data
   });
 }
+
+/**Life cycle api */
+
+export function callAddCropToLifecycle(data) {
+  return callApi(getEndpoint("add-crop-to-lifecycle"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data
+  });
+}
+export function callfetchAllCropsLifecycle(data) {
+  return callApi(getEndpoint("fetch-crop-lifecycle"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data
+  });
+}
+

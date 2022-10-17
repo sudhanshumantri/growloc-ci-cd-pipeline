@@ -6,7 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import TextField from "@mui/material/TextField";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
-import ButtonCustom from "../shared/button";
+import ButtonCustom from "../../shared/button";
 import { Grid } from "@mui/material";
 
 const ITEM_HEIGHT = 48;
@@ -27,7 +27,7 @@ export default function AddFarmModal({ open, handleClick }) {
   return (
     <div>
       <Dialog open={open} onClose={handleClick}>
-        <DialogTitle className="dialog-title-container">Add a new </DialogTitle>
+        <DialogTitle className="dialog-title-container">Add a new Farm </DialogTitle>
         <DialogContent sx={{ paddingTop: "20px" }}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={6}>

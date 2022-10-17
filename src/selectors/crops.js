@@ -18,10 +18,10 @@ export const selectIsAddCropLoading = () =>
 
 export const selectCropFarmList = () =>
   createSelector(selectCrop, (services) => services.toJS()["cropFarmList"]);
-export const selectIsCropFarmListLoading = () =>
+export const selectisFarmCropListLoading = () =>
   createSelector(
     selectCrop,
-    (services) => services.toJS()["isCropFarmListLoading"]
+    (services) => services.toJS()["isFarmCropListLoading"]
   );
 export const selectCropFarmListError = () =>
   createSelector(selectCrop, (services) => services.toJS()["farmListError"]);

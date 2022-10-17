@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -24,12 +25,13 @@ const MenuProps = {
         },
     },
 };
-export default function AddCropModal({ modalData, open, handleClick }) {
-
+export default function AddCropModal({ modalData, open, handleSave, handleClose }) {
+    let { farmId } = useParams();
     // const [open, setOpen] = useState(false);
     const [cropList, setCropList] = useState('');
     const [germinationMethod, setGerminationMethod] = useState('');
     const [selectedData, setSelectedData] = useState({});
+    const [units, setUnits] = useState(1);
     const handleChange = (event) => {
         const selectedItem = modalData[event.target.value]
         setCropList(event.target.value);
@@ -38,9 +40,30 @@ export default function AddCropModal({ modalData, open, handleClick }) {
     const handleGerminationChange = (event) => {
         setGerminationMethod(event.target.value)
     }
+    const handleUnitsChange = (event) => {
+        setUnits(event.target.value)
+    }
+    const handleSaveCrop = () => {
+        // console.log(germinationMethod,selectedData);
+        let cropData = {
+            name: selectedData.name,
+            scientificName: selectedData.scientificName,
+            variety: selectedData.variety,
+            parameters: selectedData.parameters,
+            germinationMethod: selectedData.germinationMethod[germinationMethod],
+
+        };
+        let data = {
+            farmId: parseInt(farmId),
+            crop:cropData,
+            qty: parseInt(units)
+        }
+        handleSave(data)
+        // console.log(data);
+    }
     return (
         <div>
-            <Dialog open={open} onClose={handleClick}>
+            <Dialog open={open} onClose={handleClose}>
                 <DialogTitle className='dialog-title-container'>Add a new crop</DialogTitle>
                 <DialogContent sx={{ paddingTop: '10px' }}>
                     <Grid container spacing={2}>
@@ -86,7 +109,7 @@ export default function AddCropModal({ modalData, open, handleClick }) {
                                     variant="outlined" />
                             </FormControl>
                         </Grid>
-                        <Grid item xs={12} sm={12} md={12} >
+                        <Grid item xs={12} sm={6} md={6} >
                             <FormControl fullWidth>
                                 <InputLabel id="demo-multiple-name-label" variant="outlined" >Germination Method</InputLabel>
                                 <Select
@@ -106,6 +129,16 @@ export default function AddCropModal({ modalData, open, handleClick }) {
                                         </MenuItem>
                                     ))}
                                 </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={6} >
+                            <FormControl fullWidth>
+                                <TextField
+                                    InputLabelProps={{ shrink: true }}
+                                    label={'Units'}
+                                    value={units}
+                                    onChange={handleUnitsChange}
+                                    variant="outlined" />
                             </FormControl>
                         </Grid>
                     </Grid>
@@ -133,10 +166,8 @@ export default function AddCropModal({ modalData, open, handleClick }) {
                     </Grid>
                 </DialogContent>
                 <DialogActions>
-                    <CustomButton isLight={true} handleButtonClick={handleClick} title='Cancel'/>
-                    <CustomButton handleButtonClick={handleClick} title='Save'/>
-                    {/* <Button onClick={handleClick}>Cancel</Button>
-                    <Button onClick={handleClick}>Save</Button> */}
+                    <CustomButton isLight={true} handleButtonClick={handleClose} title='Cancel' />
+                    <CustomButton handleButtonClick={handleSaveCrop} title='Save' />
                 </DialogActions>
             </Dialog>
         </div>

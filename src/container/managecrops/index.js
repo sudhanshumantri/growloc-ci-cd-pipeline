@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
-import { fetchCropRequest, saveCropRequest,fetchCropFarmRequest } from "../../actions/crops";
+import { fetchCropRequest, addCropToFarmRequest,fetchFarmCropsRequest } from "../../actions/crops";
 import ManageCrop from "../../components/crop/managecorp";
 import {
   selectCropList,
@@ -12,7 +12,7 @@ import {
   selectAddCropError,
   selectIsAddCropLoading,
   selectCropFarmList,
-  selectIsCropFarmListLoading,
+  selectisFarmCropListLoading,
   selectCropFarmListError
 } from "../../selectors/crops";
 
@@ -23,14 +23,14 @@ const mapStateToProps = createStructuredSelector({
   addCropError: selectAddCropError(),
   isAddCropLoading: selectIsAddCropLoading(),
   cropFarmList:selectCropFarmList(),
-  isCropFarmListLoading :selectIsCropFarmListLoading(),
+  isFarmCropListLoading :selectisFarmCropListLoading(),
   selectCropFarmListError:selectCropFarmListError(),
 
 });
 const mapDispatchToProps = {
   fetchCrop: fetchCropRequest,
-  addCrop: saveCropRequest,
-  fecthCropFarm:fetchCropFarmRequest,
+  addCrop: addCropToFarmRequest,
+  fecthCropFarm:fetchFarmCropsRequest,
 
 
 

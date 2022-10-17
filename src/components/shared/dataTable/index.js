@@ -6,20 +6,20 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableContainer from '@mui/material/TableContainer';
+import moment from "moment";
 import style from './style.css'
 function DataTable({ data }) {
   const { headers, rows } = data;
   const handleRedirection = (key) => {
   }
-  const validateValue = (row, key)=> {
-
-    if(key.indexOf(".") > -1) {
+  const validateValue = (row, key) => {
+    if (key.indexOf(".") > -1) {
       const keys = key.split(".");
-      return row[keys[0]][keys[1]];
+      const value = keys.reduce((a, v) => a[v], row);
+      return value;
     } else {
       return row[key];
     }
-
   }
   return (
     <TableContainer component={Paper}>
@@ -46,8 +46,13 @@ function DataTable({ data }) {
                   )
                 } else {
                   return (
-                    <TableCell  key={row.id + header.id} component="td" scope="row">
-                      {validateValue(row, header.key)}
+                    <TableCell key={row.id + header.id} component="td" scope="row">
+                      {header.isDate && (
+                        moment(validateValue(row, header.key)).format('YYYY-MM-DD')
+                      )}
+                      {!header.isDate && (
+                        validateValue(row, header.key)
+                      )}
                     </TableCell>
                   )
                 }

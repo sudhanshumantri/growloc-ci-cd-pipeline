@@ -14,10 +14,16 @@ const data = {
       key: 'variety',
       redirection: false
     }, {
-      label: 'Seeding Date',
+      label: 'Current Cycle',
       key: 'transplantingDate',
       redirection: false
-    }, {
+    },
+    {
+      label: 'Next Cycle',
+      key: 'transplantingDate',
+      redirection: false
+    },
+    {
       label: 'Est Harvest Date',
       key: 'estDate',
       redirection: false
@@ -33,6 +39,4 @@ const data = {
     { "id": 1194, "seedingId": 317, "crop": "Pepper", "batchName": "WK39/02", "variety": "Common Black Pepper", "stage": "Germination", "transplantingDate": "2022-09-30", "noOfPlants": 500, "noOfSeeds": 500, "estDate": "2022-09-30", "dueIn": -2, },
     { "id": 1042, "seedingId": 279, "crop": "Cherry Tomatoes", "batchName": "WK34/01", "variety": "General Variety", "stage": "Harvest", "transplantingDate": "2022-08-15", "noOfPlants": 1000, "noOfSeeds": 1000, "estDate": "2022-10-14", "dueIn": 12 }]
 }
-
-
 export default data;

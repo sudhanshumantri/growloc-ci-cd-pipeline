@@ -45,7 +45,7 @@ const menuItems = [
         id: "crop",
         navigation: 'corp',
         css: { borderBottom: '1px solid rgb(81,114,35)' },
-        subMenu: [{ id: '1', name: 'Manage Crops', navigation: '/crops/manage' , link: '/crops/manage' }, { id: '3', name: 'Seeding', navigation: '/crops/seeding', link: '/crops/seeding' }, { id: '4', name: 'Planting', navigation: '/crops/planting', link: '/crops/planting' }, { id: '5', name: 'Transplanting', navigation: '/crops/transplanting', link: '/crops/transplanting' }]
+        subMenu: [{ id: '1', name: 'Manage Crops', navigation: '/crops/manage', link: '/crops/manage' }, { id: '3', name: 'Crops Lifecycle', navigation: '/crops/lifecycle', link: '/crops/lifecycle' }]
 
     },
     {
@@ -98,4 +98,4 @@ const menuItems = [
     },
 ];
 
-export  {menuItems, appItems};
+export { menuItems, appItems };

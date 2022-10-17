@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import axios from "../../../api/index";
-import AddCorpModal from "../addcrop";
+import AddCropModal from "../addcrop";
 import DataTable from "../../shared/dataTable";
 import PageHeader from "../../shared/page-header";
 import { connect } from "react-redux";
 import { fetchCropList } from "../../../sagas/crops";
 import { useParams } from 'react-router-dom';
-
+import Loader from '../../shared/loader';
 
 let headers = [
   {
@@ -26,15 +26,17 @@ let headers = [
     redirection: false,
   },
   {
-    label: "Type",
-    key: "crop.transplantingDate",
+    label: "Germination Method",
+    // key: "crop.estDate",
+    key: "crop.germinationMethod.type",
     redirection: false,
   },
   {
-    label: "Germination Method",
-    key: "crop.estDate",
+    label: "Units Available",
+    // key: "crop.estDate",
+    key: "qty",
     redirection: false,
-  },
+  }
 ];
 export default function ManageCrop({
   fetchCrop,
@@ -43,15 +45,17 @@ export default function ManageCrop({
   cropListError,
   addCrop,
   fecthCropFarm,
-  cropFarmList
+  cropFarmList,
+  isFarmCropListLoading
 }) {
   const [open, setOpen] = useState(false);
   let { farmId } = useParams();
+  const handleCropSave = (addCropData) => {
+    addCrop(addCropData);
+    handleModalToggle();
+  }
   const handleModalToggle = (data) => {
     setOpen(!open);
-    if (data) {
-      addCrop(data);
-    }
   };
   let buttonArray = [
     {
@@ -61,17 +65,23 @@ export default function ManageCrop({
   ];
   React.useEffect(() => {
     fetchCrop();
-    fecthCropFarm({farmId});
+    fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
   return (
     <div>
       <PageHeader title="Manage Crops" buttonArray={buttonArray} />
-      <AddCorpModal
-        modalData={cropList}
-        open={open}
-        handleClick={handleModalToggle}
-      />
       <div className="page-container">
+        {isFarmCropListLoading && (
+          <Loader title='Fetching Crops' />
+        )}
+        {open && (
+          <AddCropModal
+            modalData={cropList}
+            open={open}
+            handleSave={handleCropSave}
+            handleClose={handleModalToggle}
+          />
+        )}
         <DataTable data={{ headers: headers, rows: cropFarmList }} />
       </div>
     </div>

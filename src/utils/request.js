@@ -1,8 +1,7 @@
 import axios from "axios";
 import { isEmpty, toNumber } from "lodash";
 import { Store } from "react-notifications-component";
-const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJHcm93TG9jIiwic3ViIjp7InVzZXJJZCI6MX0sImlhdCI6MTY2NDg5MDg5N30.-5qxeV9zF_MfdOPWNJiVEQv8CC8OavXSUZksam6hpw0";
+const TOKEN = localStorage.getItem('AUTH_TOKEN');
 function queryParams(params) {
   return Object.keys(params)
     .map(
@@ -19,36 +18,22 @@ function makeAPICall(originalConfig) {
   console.log(originalConfig);
   return axios(originalConfig)
     .then((nextResponse) => {
-      if (nextResponse.data.code == 0) {
-        // browserHistory.push('/login');
-        // browserHistory.go('/login');
-        // localStorage.removeItem('AUTH_TOKEN');
-        // localStorage.removeItem('AUTH_OBJECT');
-        Store.addNotification({
-          title: nextResponse.data.message,
-          // message: "teodosii@react-notifications-component",
-          type: "danger",
-          insert: "top",
-          container: "bottom-center",
-          animationIn: ["animate__animated", "animate__fadeIn"],
-          animationOut: ["animate__animated", "animate__fadeOut"],
-          dismiss: {
-            duration: 5000,
-            onScreen: true,
-          },
-        });
-      } else {
-        return nextResponse;
-      }
+      return nextResponse;
     })
     .catch((error) => {
-      console.log(error);
+      Store.addNotification({
+        title: error.message ? error.message : 'Something went wrong',
+        type: "danger",
+        insert: "top",
+        container: "bottom-center",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 1000,
+          onScreen: true,
+        },
+      });
       return error;
-      // //console.log('bad request response', error.response);
-      // if (error.response.status === 401) {
-      //     return error.response.data.msg;
-      // }
-      // return handleError(error, otherConfig);
     });
 }
 
@@ -101,8 +86,8 @@ export default function callApi(url, options = {}) {
   }
   if (!removeAuthorizationHeader) {
     originalConfig.headers = {
-        'Authorization': "Bearer " + TOKEN
+      'Authorization': "Bearer " + TOKEN
     };
-}
-return makeAPICall(originalConfig, otherConfig);
+  }
+  return makeAPICall(originalConfig, otherConfig);
 }

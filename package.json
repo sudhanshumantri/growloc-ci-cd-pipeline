@@ -1,7 +1,18 @@
 {
-  "name": "my-react-app",
+  "name": "GrowLoc",
+  "description": "Enalito-V2 ",
+  "main": "index.js",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start:dev": "webpack-dev-server --mode development --config webpack.dev.js --open --hot --history-api-fallback",
+    "prestart:prod": "webpack --mode production --config webpack.prod.js  --progress",
+    "start:prod": "node server/index.js",
+    "start": "webpack serve --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
+    "build:library:dev": "webpack --config webpack.dev.js && tsc-alias",
+    "build:library:prod": "webpack --config webpack.prod.js && tsc-alias"
+  },
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
@@ -9,21 +20,18 @@
     "@mui/material": "^5.10.7",
     "@mui/styles": "^5.10.7",
     "@mui/x-date-pickers": "^5.0.3",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.5",
     "history": "^5.3.0",
     "invariant": "^2.2.4",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-notifications-component": "^4.0.1",
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.4.1",
     "react-router-redux": "^4.0.8",
-    "react-scripts": "5.0.1",
     "redux": "^4.2.0",
     "redux-immutable": "^4.0.0",
     "redux-saga": "^1.2.1",
@@ -31,28 +39,24 @@
     "warning": "^4.0.3",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "css-minimizer-webpack-plugin": "^3.4.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.5.3",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4",
+    "webpack-merge": "^5.8.0"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react"
+  ]
 }

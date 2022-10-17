@@ -2,26 +2,26 @@ import { call, all, put, takeLatest } from "redux-saga/effects";
 import {
   callFetchFarmList,
   callFarmCrop
-  } from "../utils/api";
+} from "../utils/api";
 import {
-    fetchFarmSuccess,
-    fetchFarmFailure,
-    saveFarmSuccess,
-    saveFarmFailure
+  fetchFarmSuccess,
+  fetchFarmFailure,
+  saveFarmSuccess,
+  saveFarmFailure
 
 } from "../actions/farm";
 export function* fetchFarmList({ data }) {
   let responseData = yield call(callFetchFarmList, data);
-  if (responseData?.status == 200) {
-    yield put(fetchFarmSuccess(responseData.data));
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(fetchFarmSuccess(responseData.data.data));
   } else {
     yield put(fetchFarmFailure("Something went wrong"));
   }
 }
 export function* addFarm({ data }) {
   let responseData = yield call(callFarmCrop, data);
-  if (responseData?.status == 200) {
-    yield put(saveFarmSuccess(responseData.data));
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(saveFarmSuccess(responseData.data.data));
   } else {
     yield put(saveFarmFailure("Something went wrong"));
   }

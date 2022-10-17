@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import { fetchFarmRequest,saveFarmRequest  } from "../../actions/farm";
-import DashBoard from "../../components/dashboard";
+import Farm from "../../components/farm";
 import {
     selectFarmList,
     selectIsFarmListLoading,
@@ -39,5 +39,5 @@ function withRouter(Component) {
   return ComponentWithRouterProp;
 }
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(DashBoard)
+  connect(mapStateToProps, mapDispatchToProps)(Farm)
 );
