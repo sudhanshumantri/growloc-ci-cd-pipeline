@@ -32,9 +32,12 @@ export default function farmReducer(state = INITIAL_STATE, action = {}) {
         .set("farmList", [])
         .set("FarmListError", action.error);
     case ADD_FARM_REQUEST:
-      return state.set("isAddFarmLoading", true).set("addFarmError", null);
+      return state.set("isAddFarmLoading", true)
+      .set("addFarmError", null);
     case ADD_FARM_SUCCESS:
-      return state.set("isAddFarmLoading", false).set("addFarmError", null);
+      let farmList = state.toJS()['farmList'];
+      farmList.push({farm:action.data});
+      return state.set("isAddFarmLoading", false).set("addFarmError", null).set("farmList", farmList);
     case ADD_FARM_FAILURE:
       return state
         .set("isAddFarmLoading", false)

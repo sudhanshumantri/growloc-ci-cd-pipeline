@@ -18,27 +18,42 @@ const MenuProps = {
     },
   },
 };
-export default function AddFarmModal({ open, handleClick }) {
+export default function AddFarmModal({ open, handleSave, handleClose }) {
   const [farm, setFarm] = useState({});
-  const [nameError, setNameError] = useState("");
+  const [nameError, setNameError] = useState(false);
   const handleChange = (event, name) => {
     setFarm({ ...farm, [name]: event.target.value });
   };
+
   const validateFarm = () => {
     if (farm.name) {
-      handleClick(farm);
+      return true;
     } else {
       setNameError(true);
+      return false;
     }
   };
+
+  const handleFarmSave = () => {
+    let requestFarmData = {
+      name: farm.name,
+      farmArea: farm.farmArea,
+      cultivableArea: farm.cultivableArea,
+      reservoirCapacity: farm.cultivableArea,
+    };
+    if (validateFarm()) {
+      handleSave(requestFarmData);
+    }
+  };
+
   return (
     <div>
-      <Dialog open={open} onClose={handleClick}>
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">
           Add a new Farm{" "}
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "20px" }}>
-          <Grid container sx={{ margin: "1px",  width: 500  }}spacing={3}>
+          <Grid container sx={{ margin: "1px", width: 500 }} spacing={3}>
             <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
                 <TextField
@@ -88,10 +103,11 @@ export default function AddFarmModal({ open, handleClick }) {
         <DialogActions>
           <ButtonCustom
             isLight={true}
-            handleButtonClick={handleClick}
+            handleButtonClick={handleClose}
             title="Cancel"
           />
-          <ButtonCustom handleButtonClick={() => validateFarm()} title="Save" />
+          <ButtonCustom handleButtonClick={handleFarmSave} title="Save" />
+          {/* handleButtonClick={() => validateFarm()} */}
         </DialogActions>
       </Dialog>
     </div>

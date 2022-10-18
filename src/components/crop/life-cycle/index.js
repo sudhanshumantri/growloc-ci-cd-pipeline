@@ -69,7 +69,6 @@ export default function CropLifeCycle({
             handler: handleModalToggle,
         },
     ];
-    console.log(lifecycleCropsList);
 
     return (
         <>
