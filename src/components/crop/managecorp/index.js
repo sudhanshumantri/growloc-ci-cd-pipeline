@@ -75,6 +75,7 @@ export default function ManageCrop({
         {isFarmCropListLoading && (
           <Loader title='Fetching Crops' />
         )}
+        
         {open && (
           <AddCropModal
             modalData={cropList}
