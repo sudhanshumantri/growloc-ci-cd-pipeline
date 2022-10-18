@@ -70,6 +70,7 @@ export default function CropLifeCycle({
         },
     ];
     console.log(lifecycleCropsList);
+
     return (
         <>
             <PageHeader title='Crop Lifecycle' buttonArray={buttonArray} />

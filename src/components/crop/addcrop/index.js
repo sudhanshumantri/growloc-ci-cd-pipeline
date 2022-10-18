@@ -32,8 +32,8 @@ export default function AddCropModal({
 }) {
   let { farmId } = useParams();
   // const [open, setOpen] = useState(false);
-  const [cropList, setCropList] = useState("");
-  const [germinationMethod, setGerminationMethod] = useState("");
+  const [cropList, setCropList] = useState(null);
+  const [germinationMethod, setGerminationMethod] = useState(null);
   const [selectedData, setSelectedData] = useState({});
   const [isMethodError, setIsMethodError] = useState(false);
   const [isCropError, setIsCropError] = useState(false);
@@ -57,14 +57,17 @@ export default function AddCropModal({
       scientificName: selectedData.scientificName,
       variety: selectedData.variety,
       parameters: selectedData.parameters,
-      germinationMethod: germinationMethod ? selectedData.germinationMethod[germinationMethod]: null,
+      germinationMethod:
+        germinationMethod !== null
+          ? selectedData.germinationMethod[germinationMethod]
+          : null,
     };
     let data = {
       farmId: parseInt(farmId),
       crop: cropData,
       qty: parseInt(units),
     };
-    if (!cropList) {
+    if (cropList === null) {
       setIsCropError(true);
       isError = true;
     }
@@ -106,7 +109,11 @@ export default function AddCropModal({
                     </MenuItem>
                   ))}
                 </Select>
-                {isCropError && <FormHelperText>Please select a crop</FormHelperText>}
+                {isCropError && (
+                  <FormHelperText style={{ color: "red" }}>
+                    Please select a crop
+                  </FormHelperText>
+                )}
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
@@ -153,7 +160,11 @@ export default function AddCropModal({
                     </MenuItem>
                   ))}
                 </Select>
-                {isMethodError && <FormHelperText>Please select a method</FormHelperText>}
+                {isMethodError && (
+                  <FormHelperText style={{ color: "red" }}>
+                    Please select a method
+                  </FormHelperText>
+                )}
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>

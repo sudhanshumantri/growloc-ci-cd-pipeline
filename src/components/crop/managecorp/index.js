@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import { fetchCropList } from "../../../sagas/crops";
 import { useParams } from 'react-router-dom';
 import Loader from '../../shared/loader';
-
 let headers = [
   {
     label: "Crop",
@@ -68,6 +67,7 @@ export default function ManageCrop({
     fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
   console.log(cropFarmList);
+
   return (
     <div>
       <PageHeader title="Manage Crops" buttonArray={buttonArray} />

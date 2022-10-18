@@ -103,7 +103,7 @@ export default function AddCropModal({
                   ))}
                 </Select>
                 {isCropError && (
-                  <FormHelperText>Please select a crop</FormHelperText>
+                  <FormHelperText style={{color : "red"}}>Please select a crop</FormHelperText>
                 )}
               </FormControl>
             </Grid>

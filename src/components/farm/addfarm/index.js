@@ -21,11 +21,9 @@ const MenuProps = {
 export default function AddFarmModal({ open, handleClick }) {
   const [farm, setFarm] = useState({});
   const [nameError, setNameError] = useState("");
-
   const handleChange = (event, name) => {
     setFarm({ ...farm, [name]: event.target.value });
   };
-
   const validateFarm = () => {
     if (farm.name) {
       handleClick(farm);
@@ -40,7 +38,7 @@ export default function AddFarmModal({ open, handleClick }) {
           Add a new Farm{" "}
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "20px" }}>
-          <Grid container spacing={3}>
+          <Grid container sx={{ margin: "1px",  width: 500  }}spacing={3}>
             <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
                 <TextField
