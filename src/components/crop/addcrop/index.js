@@ -198,21 +198,6 @@ export default function AddCropModal({
                 ))
               : ""}
           </Grid>
-          <p className="header-title">Parameters</p>
-          <Grid container spacing={2}>
-            {(selectedData.parameters || []).map((item) => (
-              <Grid item xs={4}>
-                <TextField
-                  disabled={true}
-                  item
-                  key={item.name}
-                  label={item.name}
-                  value={item.value}
-                  variant="outlined"
-                />
-              </Grid>
-            ))}
-          </Grid>
         </DialogContent>
         <DialogActions>
           <CustomButton

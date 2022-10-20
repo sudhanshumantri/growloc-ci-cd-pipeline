@@ -8,7 +8,10 @@ import {
     FETCH_CROP_LIFECYCLE_FAILURE,
     FETCH_CROP_LIFECYCLE_DETAILS_REQUEST,
     FETCH_CROP_LIFECYCLE_DETAILS__SUCCESS,
-    FETCH_CROP_LIFECYCLE_DETAILS__FAILURE
+    FETCH_CROP_LIFECYCLE_DETAILS__FAILURE,
+    CROP_LIFECYCLE_TRANSITION_REQUEST,
+    CROP_LIFECYCLE_TRANSITION__SUCCESS,
+    CROP_LIFECYCLE_TRANSITION__FAILURE
 } from "../actions/actionTypes";
 const INITIAL_STATE = fromJS({
     isCropLifeCycleListLoading: false,
@@ -18,7 +21,9 @@ const INITIAL_STATE = fromJS({
     cropLifeCycleListError: null,
     lifecycleDetails: null,
     isLifeCycleDetailsLoading: true,
-    lifeCycleDetailsError: null
+    lifeCycleDetailsError: null,
+    isTransitionLoading:false,
+
 });
 export default function cropLifecycleReducer(state = INITIAL_STATE, action = {}) {
     switch (action.type) {
@@ -67,6 +72,19 @@ export default function cropLifecycleReducer(state = INITIAL_STATE, action = {})
                 .set("lifecycleDetails", null)
                 .set("isLifeCycleDetailsLoading", false)
                 .set("lifeCycleDetailsError", null);
+
+        //transtion handling
+        case CROP_LIFECYCLE_TRANSITION_REQUEST:
+            return state
+                .set("isTransitionLoading", true)
+        case CROP_LIFECYCLE_TRANSITION__SUCCESS:
+            return state
+                .set("lifecycleDetails", action.data)
+                .set("isTransitionLoading", false)
+        case CROP_LIFECYCLE_TRANSITION__FAILURE:
+            return state
+                .set("isTransitionLoading", false)
+                
         default:
             return state;
     }

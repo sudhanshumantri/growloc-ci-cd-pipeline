@@ -10,6 +10,7 @@ const urls = {
     "fetch-farm-all-crops": "farm/crop/get-all-crop",
     "add-crop-to-farm": "farm/crop/add-new-crop",
     "add-crop-to-lifecycle": "farm/crop/start-life-cycle",
+    "crop-lifecycle-transition": "farm/crop/life-cycle-transition",
     "fetch-crop-lifecycle": "farm/crop/get-all-life-cycle",
     "fetch-crop-lifecycle-details": "farm/crop/life-cycle-details/",
   },
@@ -66,6 +67,14 @@ export function callFarmCrop(data) {
 
 export function callAddCropToLifecycle(data) {
   return callApi(getEndpoint("add-crop-to-lifecycle"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data
+  });
+}
+
+export function callCropLifecycleTransition(data) {
+  return callApi(getEndpoint("crop-lifecycle-transition"), {
     method: "POST",
     removeAuthorizationHeader: false,
     data

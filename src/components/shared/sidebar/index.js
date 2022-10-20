@@ -12,6 +12,7 @@ import ListItem from "@mui/material/ListItem";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItemIcon from '@mui/material/ListItemIcon';
 import { Link } from "react-router-dom";
 import TopHeader from "../header/";
 import { menuItems, appItems } from "./config";
@@ -123,6 +124,9 @@ export default function SideBar({ router }) {
                     onClick={() => handleClick(each.id)}
                     style={each.css}
                   >
+                    <ListItemIcon className='Icon' >
+                      {each.icon}
+                    </ListItemIcon>
                     <ListItemText primary={each.title} />
                     {openSubmenu[each.id] ? <ExpandLess /> : <ExpandMore />}
                   </ListItem>
@@ -136,6 +140,9 @@ export default function SideBar({ router }) {
                           key={subData.id}
                           button
                         >
+                          <ListItemIcon className='Icon' >
+                            {each.icon}
+                          </ListItemIcon>
                           <ListItemText primary={subData.name} />
                         </ListItem>
                       ))}
@@ -150,6 +157,9 @@ export default function SideBar({ router }) {
                   button
                   key={index}
                 >
+                  <ListItemIcon className='Icon' >
+                    {each.icon}
+                  </ListItemIcon>
                   <ListItemText primary={each.title} />
                 </ListItem>
               )}

@@ -39,37 +39,55 @@ export default function AddCropModal({
 }) {
   let { farmId } = useParams();
   const [selectedCrop, setselectedCrop] = useState("");
-  const [startDate, setStartDate] = useState(moment());
+  const [batchNo, setBatchNo] = useState("");
+  const [isBatchNoError, setBatchNoError] = useState(false);
   const [isUnitsError, setIsUnitsError] = useState(false);
+  const [unitErrorMessage, setUnitErrorMessage] = useState('');
   const [isCropError, setIsCropError] = useState(false);
   const [units, setUnits] = useState(1);
+  const handleDataValidation = (data) => {
+    let isError = false;
+    if (!selectedCrop) {
+      setIsCropError(true);
+      isError = true;
+    }
+    if (!batchNo) {
+      setBatchNoError(true);
+      isError = true;
+    }
+    if (!units) {
+      setIsUnitsError(true);
+      setUnitErrorMessage('Unit is required')
+      isError = true;
+    } else {
+      if (units > selectedCrop.qty) {
+        setIsUnitsError(true);
+        setUnitErrorMessage("Unit can't be greater than " + selectedCrop.qty)
+        isError = true;
+      }
+    }
+    return isError;
+  }
   const handleCropChange = (event) => {
     setselectedCrop(event.target.value);
   };
   const handleUnitsChange = (event) => {
     setUnits(event.target.value);
   };
-  const handleStartDateChange = (event) => {
-    setStartDate(event.target.value);
+  const handleBatchNumberChange = (event) => {
+    setBatchNo(event.target.value);
   };
   const handleSaveCrop = () => {
     let requestData = {
       farmId: parseInt(farmId),
       qty: parseInt(units),
-      start_date: startDate,
+      batchNo: batchNo,
       crop: selectedCrop,
     };
-    let isError = false;
-    if (!selectedCrop) {
-      setIsCropError(true);
-      isError = true;
-    }
-    if (!units) {
-      setIsUnitsError(true);
-      isError = true;
-    }
+    let isError = handleDataValidation(requestData)
     if (!isError) {
-      handleSave(requestData);
+      console.log(requestData);
+      handleSave(requestData)
     }
   };
   return (
@@ -103,28 +121,24 @@ export default function AddCropModal({
                   ))}
                 </Select>
                 {isCropError && (
-                  <FormHelperText style={{color : "red"}}>Please select a crop</FormHelperText>
+                  <FormHelperText style={{ color: "red" }}>Please select a crop</FormHelperText>
                 )}
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                  <DatePicker
-                    label="Start Date"
-                    variant="outlined"
-                    value={startDate}
-                    minDate={startDate}
-                    onChange={handleStartDateChange}
-                    renderInput={(params) => (
-                      <TextField
-                        variant="outlined"
-                        InputLabelProps={{ shrink: true }}
-                        {...params}
-                      />
-                    )}
-                  />
-                </LocalizationProvider>
+                <TextField
+                  label={"Batch No"}
+                  InputLabelProps={{ shrink: true }}
+                  value={batchNo}
+                  error={isBatchNoError}
+                  helperText={isBatchNoError ? 'Please provide batch number' : ""}
+                  onChange={(e) => {
+                    isBatchNoError && setBatchNoError(false);
+                    handleBatchNumberChange(e);
+                  }}
+                  variant="outlined"
+                />
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
@@ -134,7 +148,7 @@ export default function AddCropModal({
                   InputLabelProps={{ shrink: true }}
                   value={units}
                   error={isUnitsError}
-                  helperText={isUnitsError ? "Units is required" : ""}
+                  helperText={isUnitsError ? unitErrorMessage : ""}
                   onChange={(e) => {
                     isUnitsError && setIsUnitsError(false);
                     handleUnitsChange(e);

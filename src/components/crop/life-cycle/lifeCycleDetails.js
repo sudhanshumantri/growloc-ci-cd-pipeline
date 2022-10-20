@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import DataTable from "../../shared/dataTable";
+import { sortBy } from 'lodash';
 import PageHeader from "../../shared/page-header";
 import Loader from "../../shared/loader";
-import { Stack, Stepper, Step, StepLabel, Grid } from "@mui/material";
+import { Stack, Stepper, Step, StepLabel, Grid, Paper, Table, TableBody, TableRow, TableCell } from "@mui/material";
+import { makeStyles } from '@mui/styles'
 import moment from "moment";
 import style from "./style.css";
-import StartNewCycle from "../addnewcycle";
+
+import MoveCropLifeCycleModal from "./moveCropLifecycleModal";
 
 const STATIC_STEPPER = [
   {
@@ -54,177 +56,257 @@ let headers = [
     redirection: false,
   },
 ];
-const renderHeader = (lifecycleDetails, handleModalToggle) => {
-  let { cropDetails, history } = lifecycleDetails;
-  console.log("lifecycleDetails", lifecycleDetails);
-  let title = cropDetails.crop.crop.name;
-  let subtitle = "(Units :" + cropDetails.qty + ")";
-  let buttonArray = [];
-  let info = [
-    {
-      title: "Variety",
-      value: cropDetails.crop.crop.variety,
-    },
-    {
-      title: "Germination Method",
-      value: cropDetails.crop.crop.germinationMethod.type,
-    },
-    {
-      title: "Life Cycle Start Date",
-      value: moment(cropDetails.start_date).format("YYYY-MM-DD"),
-    },
-  ];
-  if (!history || history.length == 0) {
-    buttonArray = [
-      {
-        label: "Start Lifecycle",
-        handler: handleModalToggle,
-      },
-    ];
-  }
-  return (
-    <div>
-      <PageHeader
-        title={title}
-        subtitle={subtitle}
-        info={info}
-        buttonArray={buttonArray}
-      />
-    </div>
-  );
-};
-const renderStepper = (activeStep, setActiveStep) => {
-  const handleClick = (index) => {
-    setActiveStep(index);
-    // console.log(lifecycleDetails,"hello");
-    // const result = lifecycleDetails.find()
-  };
-  return (
-    <Stepper alternativeLabel nonLinear activeStep={activeStep}>
-      {STATIC_STEPPER.map((data, index) => (
-        <Step key={index}>
-          <StepLabel onClick={() => handleClick(index)}>
-            <p className="step-label">{data.label}</p>
-            <p className="step-label">
-              <b>Count:</b>10
-            </p>
-          </StepLabel>
-        </Step>
-      ))}
-    </Stepper>
-  );
-};
-
-const renderSelectedStageInformation = (activeStep) => {
-  return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} sm={6} md={6}>
-        <p className="header-title">
-          {" "}
-          {STATIC_STEPPER[activeStep].label} Stage Information{" "}
-        </p>
-        <div className="life-cycle-details-card">
-          <p className="label-custom">
-            {" "}
-            <span className="label-light-bold">Crop Name: </span> Crop Name
-          </p>
-          <p className="label-custom">
-            {" "}
-            <span className="label-light-bold">Variety: </span> Variety
-          </p>
-          <p className="label-custom">
-            {" "}
-            <span className="label-light-bold">Quantity: </span> Quantity
-          </p>
-        </div>
-      </Grid>
-      <Grid item xs={12} sm={6} md={6}>
-        <p className="header-title">
-          {STATIC_STEPPER[activeStep].label} History Information{" "}
-        </p>
-        <div className="life-cycle-details-card">
-          <p className="label-custom">
-            {" "}
-            <span className="label-light-bold">Crop Name: </span> Crop Name
-          </p>
-          <p className="label-custom">
-            {" "}
-            <span className="label-light-bold">Variety: </span> Variety
-          </p>
-          <p className="label-custom">
-            {" "}
-            <span className="label-light-bold">Quantity: </span> Quantity
-          </p>
-        </div>
-      </Grid>
-      <Grid item xs={12} sm={6} md={6}>
-        <p className="header-title">Task Information </p>
-        <div className="life-cycle-details-card">
-          <p className="label-custom">
-            {" "}
-            <span className="label-light-bold">Crop Name: </span> Crop Name
-          </p>
-          <p className="label-custom">
-            {" "}
-            <span className="label-light-bold">Variety: </span> Variety
-          </p>
-          <p className="label-custom">
-            {" "}
-            <span className="label-light-bold">Quantity: </span> Quantity
-          </p>
-        </div>
-      </Grid>
-      <Grid item xs={12} sm={6} md={6}>
-        <p className="header-title">Sensors Information </p>
-        <div className="life-cycle-details-card">
-          <p className="label-custom">
-            {" "}
-            <span className="label-light-bold">Crop Name: </span> Crop Name
-          </p>
-          <p className="label-custom">
-            {" "}
-            <span className="label-light-bold">Variety: </span> Variety
-          </p>
-          <p className="label-custom">
-            {" "}
-            <span className="label-light-bold">Quantity: </span> Quantity
-          </p>
-        </div>
-      </Grid>
-    </Grid>
-  );
-};
 export default function CropLifeCycleDetails({
   fetchCropsLifecycleDetails,
   lifecycleDetails,
   isLifecycleDetailsLoading,
   lifecycleDetailsError,
+  cropsLifecycleTransition,
+  isTransitionLoading
 }) {
+
   const [open, setOpen] = useState(false);
   let { lifecycleId } = useParams();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [maxQty, setMaxQty] = React.useState(null);
+  const [modalHeaderText, setModalHeaderText] = React.useState('');
   const handleModalToggle = () => {
     setOpen(!open);
   };
+  const handleActiveStep = (id) => {
+    setActiveStep(id);
+    let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
+    let selectedStageInformation = FarmCropLifecycleStages[id];
+    setMaxQty(selectedStageInformation.qty)
+  }
+  const handleCropTransationModalSave = (units) => {
+    let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
+    let selectedStageInformation = FarmCropLifecycleStages[activeStep];
+    if (selectedStageInformation.qty > 0) {
+      let nextStageInforamtion = null;
+      if (activeStep + 1 < FarmCropLifecycleStages.length) {
+        nextStageInforamtion = FarmCropLifecycleStages[activeStep + 1];
+      }
+      let requestData = {
+        cropLifeCycleId: parseInt(lifecycleId),
+        units: parseInt(units),
+        currentStageId: selectedStageInformation.id,
+        nextStageId: nextStageInforamtion ? nextStageInforamtion.id : null
+      }
+      handleModalToggle()
+      cropsLifecycleTransition(requestData);
+    }
+  }
   React.useEffect(() => {
     fetchCropsLifecycleDetails(parseInt(lifecycleId));
   }, []);
+  const handleActionButton = () => {
+    let buttonArray = [];
+    let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
+    let selectedStageInformation = FarmCropLifecycleStages[activeStep];
+    if (selectedStageInformation.qty > 0) {
+      if (activeStep + 1 < FarmCropLifecycleStages.length) {
+        let nextStageInforamtion = FarmCropLifecycleStages[activeStep + 1];
+        let buttonLable = 'Move to ' + nextStageInforamtion.stage;
+        buttonArray.push({
+          label: buttonLable,
+          handler: handleModalToggle
+        })
+      } else {
+        //this is the last step and it is harvesting
+        buttonArray.push({
+          label: 'Dispose',
+          handler: handleModalToggle
+        })
+        buttonArray.push({
+          label: 'Schedule',
+          handler: handleModalToggle
+        })
+      }
+    }
+    return buttonArray;
+  }
+  const renderHeader = () => {
+    let { cropDetails } = lifecycleDetails;
+    let title = cropDetails.batchNo + '-' + cropDetails.crop.crop.name;
+    let subtitle = "(Units :" + cropDetails.qty + ")";
+    let info = [
+      {
+        title: "Variety",
+        value: cropDetails.crop.crop.variety,
+      },
+      {
+        title: "Germination Method",
+        value: cropDetails.crop.crop.germinationMethod.type,
+      },
+      {
+        title: "Life Cycle Start Date",
+        value: moment(cropDetails.start_date).format('MMMM Do YYYY hh:mm:ss A')
+      },
+    ];
+    let buttonArray = handleActionButton();
+    return (
+      <div>
+        <PageHeader
+          title={title}
+          subtitle={subtitle}
+          info={info}
+          buttonArray={buttonArray}
+        />
+      </div>
+    );
+  };
+  const renderStepper = () => {
+    let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
+    return (
+      <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+        {FarmCropLifecycleStages.map((data, index) => (
+          <Step key={index}>
+            <StepLabel onClick={() => handleActiveStep(index)}
+              StepIconProps={{
+                classes: { root: 'rounder-icon-stepper' }
+              }}
+            >
+              <p className="step-label">{data.stage + '(' + data.qty + ')'}</p>
+            </StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+    );
+  };
+  const renderHistoryInformation = () => {
+    let { FarmCropLifecycleStages, FarmCropLifecycleHistory } = lifecycleDetails.cropDetails;
+    let selectedStageInformation = FarmCropLifecycleStages[activeStep];
+    let filteredHistory = _.filter(FarmCropLifecycleHistory, { "stage": selectedStageInformation.stage });
+    filteredHistory = _.orderBy(filteredHistory, ['start_date'], ['desc']);
+    return (
+      <Grid item xs={12} sm={6} md={6}>
+        <p className="header-title">
+          {selectedStageInformation.stage + ' History Information'}
+        </p>
+        <Paper style={{ height: 250, width: '100%', overflowY: 'scroll', boxShadow: 'none' }} className='bordered-table'>
+          <Table
+            size="small" aria-label="a dense table">
+            <TableBody
+            >
+              {filteredHistory.map((data, index) => {
+                return (
+                  <TableRow
+                    key={data + index}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row" >
+                      <p className='label-light'>
+                        <span className='label-bold'> {data.qty}</span>{" "}units  were moved {data.movement == 1 ? ' in to' : 'out from'}  the {selectedStageInformation.stage} stage on {" "}
+                        <span className='label-bold'>{moment(data.start_date).format('MMMM Do YYYY hh:mm:ss A')}</span>
+
+                      </p>
+                    </TableCell>
+                    {/* <TableCell align="right">
+                                        <span className='label-bold'>  {data.value}</span>
+                                    </TableCell> */}
+                  </TableRow>
+                )
+              }
+              )}
+            </TableBody>
+          </Table>
+        </Paper>
+      </Grid>
+    )
+  }
+  const renderSelectedStageInformation = () => {
+    let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
+    let selectedStageInformation = FarmCropLifecycleStages[activeStep];
+    return (
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6} md={6}>
+          <p className="header-title">
+            {selectedStageInformation.stage + ' Stage Information'}
+          </p>
+          <div className="life-cycle-details-card">
+            <p className="label-light">
+              <span className="label-light-bold">Crop Name: </span> {lifecycleDetails.cropDetails.crop.crop.name}
+            </p>
+            <p className="label-light">
+              <span className="label-light-bold">Current Stage: </span> {selectedStageInformation.stage}
+            </p>
+            <p className="label-light">
+              <span className="label-light-bold">Units: </span> {selectedStageInformation.qty}
+            </p>
+            <p className="label-light">
+              <span className="label-light-bold">Expected Start Date : </span>
+              {moment(selectedStageInformation.expected_start_date).format('MMMM Do YYYY')}
+
+            </p>
+            <p className="label-light">
+              <span className="label-light-bold">Actual Start Date : </span>
+              {selectedStageInformation.start_date ? moment(selectedStageInformation.start_date).format('MMMM Do YYYY hh:mm:ss A') : 'Not Yet Started'}
+            </p>
+            <p className="label-light">
+              <span className="label-light-bold">Duration: </span> {selectedStageInformation.duration}
+            </p>
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={6} md={6}>
+          <p className="header-title">
+            {selectedStageInformation.stage + ' Parameters Information'}
+          </p>
+          <div className="life-cycle-details-card">
+            {selectedStageInformation.parameters.map(param => {
+              return (
+                <p className="label-light">
+                  <span className="label-light-bold">{param.name}: </span> {param.value} <b>{param.unit}</b>
+                </p>
+              )
+            })}
+          </div>
+        </Grid>
+        {renderHistoryInformation()}
+        <Grid item xs={12} sm={6} md={6}>
+          <p className="header-title">Sensors Information </p>
+          <div className="life-cycle-details-card">
+            <p className="label-light">
+              {" "}
+              <span className="label-light-bold">Crop Name: </span> Crop Name
+            </p>
+            <p className="label-light">
+              {" "}
+              <span className="label-light-bold">Variety: </span> Variety
+            </p>
+            <p className="label-light">
+              {" "}
+              <span className="label-light-bold">Quantity: </span> Quantity
+            </p>
+          </div>
+        </Grid>
+      </Grid>
+    );
+  };
+
   return (
     <>
       {isLifecycleDetailsLoading && <Loader title="Fetching Details" />}
-      {open && (
-        <StartNewCycle
-          open={open}
-          handleClick={handleModalToggle}
-          modalData={lifecycleDetails}
-        />
-      )}
+
       {!isLifecycleDetailsLoading && (
         <>
           {renderHeader(lifecycleDetails, handleModalToggle)}
           <div className="page-container">
+            {open && (
+              <MoveCropLifeCycleModal
+                open={open}
+                handleClose={handleModalToggle}
+                title={'Transplant crops '}
+                handleClick={handleCropTransationModalSave}
+                modalData={lifecycleDetails}
+                maxQty={maxQty ? maxQty : lifecycleDetails.cropDetails.FarmCropLifecycleStages[activeStep].qty}
+              />
+            )}
+            {isTransitionLoading && (
+              <Loader title="Migrating Crops to another stage" />
+            )}
             <Stack sx={{ width: "100%" }} spacing={4}>
-              {renderStepper(activeStep, setActiveStep)}
+              {renderStepper()}
             </Stack>
             {renderSelectedStageInformation(activeStep)}
           </div>

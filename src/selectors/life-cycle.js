@@ -17,7 +17,6 @@ export const selectLifecycleCropsList = () =>
 /**
  * Life Cycle Details 
  */
-
 export const selectLifecycleDetailsError = () =>
   createSelector(selectCrop, (services) => services.toJS()["lifeCycleDetailsError"]);
 export const selectIsLifecycleDetailsLoading = () =>
@@ -25,3 +24,7 @@ export const selectIsLifecycleDetailsLoading = () =>
 
 export const selectLifecycleDetails = () =>
   createSelector(selectCrop, (services) => services.toJS()["lifecycleDetails"]);
+
+
+  export const selectIsTransitionLoading = () =>
+  createSelector(selectCrop, (services) => services.toJS()["isTransitionLoading"]);

@@ -1,4 +1,6 @@
 import axios from "axios";
+import { call, all, put, takeLatest } from "redux-saga/effects";
+import { browserHistory } from '../store';
 import { isEmpty, toNumber } from "lodash";
 import { Store } from "react-notifications-component";
 const TOKEN = localStorage.getItem('AUTH_TOKEN');
@@ -19,21 +21,29 @@ function makeAPICall(originalConfig) {
   return axios(originalConfig)
     .then((nextResponse) => {
       return nextResponse;
+
     })
     .catch((error) => {
-      Store.addNotification({
-        title: error.message ? error.message : 'Something went wrong',
-        type: "danger",
-        insert: "top",
-        container: "bottom-center",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 1000,
-          onScreen: true,
-        },
-      });
-      return error;
+      if (error.response && error.response.status) {
+        browserHistory.push('/login');
+        browserHistory.go('/login');
+        localStorage.removeItem('AUTH_TOKEN');
+        localStorage.removeItem('AUTH_OBJECT');
+      } else {
+        Store.addNotification({
+          title: error.message ? error.message : 'Something went wrong',
+          type: "danger",
+          insert: "top",
+          container: "bottom-center",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 1000,
+            onScreen: true,
+          },
+        });
+        return error;
+      }
     });
 }
 

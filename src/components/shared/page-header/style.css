@@ -16,3 +16,13 @@
   color: grey;
   margin-left: 7px;
 }
+
+.button-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end
+}
+
+.button-container >* {
+  margin-left: 5px !important;
+}

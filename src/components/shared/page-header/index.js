@@ -26,12 +26,12 @@ export default function PageHeader({ title,subtitle, buttonTitle, buttonArray, i
                         </p>
                     </div>
                     {buttonArray && buttonArray.length > 0 && (
-                        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                        <div className='button-container'>
                             {renderButtonArray(buttonArray)}
                         </div>
                     )}
                     {customButton && (
-                        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                        <div className='button-container'>
                             {customButton}
                         </div>
                     )}
