@@ -28,3 +28,10 @@ export const selectLifecycleDetails = () =>
 
   export const selectIsTransitionLoading = () =>
   createSelector(selectCrop, (services) => services.toJS()["isTransitionLoading"]);
+
+  //
+export const selectIsLifecycleParametersLoading = () =>
+  createSelector(selectCrop, (services) => services.toJS()["isAddLifecycleParametersLoading"]);
+  export const selectLifecycleParametersError = () =>
+  createSelector(selectCrop, (services) => services.toJS()["addLifecycleParameterError"]);
+

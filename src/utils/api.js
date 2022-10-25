@@ -13,6 +13,7 @@ const urls = {
     "crop-lifecycle-transition": "farm/crop/life-cycle-transition",
     "fetch-crop-lifecycle": "farm/crop/get-all-life-cycle",
     "fetch-crop-lifecycle-details": "farm/crop/life-cycle-details/",
+    'add-crop-lifecycle-parameters': "farm/crop/update-life-cycle-stage-parameters"
   },
 };
 function getEndpoint(endpoint) {
@@ -94,5 +95,15 @@ export function callfetchCropsLifecycleDetails(routeParams) {
     routeParams: routeParams,
   });
 }
+
+export function callAddCropCycleParameters(data) {
+  console.log(data);
+  return callApi(getEndpoint("add-crop-lifecycle-parameters"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data
+  });
+}
+
 
 

@@ -10,7 +10,11 @@ import {
   FETCH_CROP_LIFECYCLE_DETAILS__FAILURE,
   CROP_LIFECYCLE_TRANSITION_REQUEST,
   CROP_LIFECYCLE_TRANSITION__SUCCESS,
-  CROP_LIFECYCLE_TRANSITION__FAILURE
+  CROP_LIFECYCLE_TRANSITION__FAILURE,
+  ADD_CROP_LIFECYCLE_PARAMETERS_REQUEST,
+  ADD_CROP_LIFECYCLE_PARAMETERS_SUCCESS,
+  ADD_CROP_LIFECYCLE_PARAMETERS_FAILURE,
+
 } from "./actionTypes";
 
 export function fetchAllCropsLifecycleRequest(data) {
@@ -85,6 +89,26 @@ export function cropsLifecycleTransitionSuccess(data) {
 export function cropsLifecycleTransitionFailure(error) {
   return {
     type: CROP_LIFECYCLE_TRANSITION__FAILURE,
+    error,
+  };
+}
+
+export function addCropToLifecycleParametersRequest(data) {
+  console.log(data, "data");
+  return {
+    type: ADD_CROP_LIFECYCLE_PARAMETERS_REQUEST,
+    data
+  };
+}
+export function addCropToLifecycleParametersSuccess(data) {
+  return {
+    type: ADD_CROP_LIFECYCLE_PARAMETERS_SUCCESS,
+    data,
+  };
+}
+export function addCropToLifecycleParametersFailure(error) {
+  return {
+    type: ADD_CROP_LIFECYCLE_PARAMETERS_FAILURE,
     error,
   };
 }

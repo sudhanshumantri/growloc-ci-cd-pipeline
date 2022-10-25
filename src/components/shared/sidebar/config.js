@@ -100,6 +100,15 @@ const menuItems = [
         css: { borderBottom: '1px solid rgb(81,114,35)' },
 
     },
+    {
+        title: 'Users',
+        id: "Users",
+        icon: <DashboardCustomizeIcon />,
+        navigation: 'users',
+        css: { borderBottom: '1px solid rgb(81,114,35)' },
+
+    },
+
 ];
 
 export { menuItems, appItems };
