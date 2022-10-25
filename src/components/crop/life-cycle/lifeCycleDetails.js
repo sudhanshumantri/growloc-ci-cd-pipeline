@@ -68,6 +68,7 @@ export default function CropLifeCycleDetails({
   const [open, setOpen] = useState(false);
   let { lifecycleId } = useParams();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [isHarvestStage, setHarvestStage] = React.useState(false);
   const [maxQty, setMaxQty] = React.useState(null);
   const [modalHeaderText, setModalHeaderText] = React.useState('');
   const handleModalToggle = () => {
@@ -77,9 +78,12 @@ export default function CropLifeCycleDetails({
     setActiveStep(id);
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let selectedStageInformation = FarmCropLifecycleStages[id];
-    setMaxQty(selectedStageInformation.qty)
+    setMaxQty(selectedStageInformation.qty);
+    if (id = FarmCropLifecycleStages.length - 1) {
+      setHarvestStage(true);
+    }
   }
-  const handleCropTransationModalSave = (units) => {
+  const handleCropTransationModalSave = (units, kgs) => {
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let selectedStageInformation = FarmCropLifecycleStages[activeStep];
     if (selectedStageInformation.qty > 0) {
@@ -90,6 +94,7 @@ export default function CropLifeCycleDetails({
       let requestData = {
         cropLifeCycleId: parseInt(lifecycleId),
         units: parseInt(units),
+        kgs: kgs ? parseInt(kgs) : kgs,
         currentStageId: selectedStageInformation.id,
         nextStageId: nextStageInforamtion ? nextStageInforamtion.id : null
       }
@@ -296,9 +301,10 @@ export default function CropLifeCycleDetails({
               <MoveCropLifeCycleModal
                 open={open}
                 handleClose={handleModalToggle}
-                title={'Transplant crops '}
+                title={isHarvestStage ? 'Dispose Plants' : 'Transplant crops '}
                 handleClick={handleCropTransationModalSave}
                 modalData={lifecycleDetails}
+                isHarvestStage={isHarvestStage}
                 maxQty={maxQty ? maxQty : lifecycleDetails.cropDetails.FarmCropLifecycleStages[activeStep].qty}
               />
             )}

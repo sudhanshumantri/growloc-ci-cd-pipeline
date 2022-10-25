@@ -9,8 +9,9 @@ import DialogContent from "@mui/material/DialogContent";
 import ButtonCustom from "../../shared/button";
 import { Grid } from "@mui/material";
 
-export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQty, handleClose }) {
+export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQty, handleClose, isHarvestStage }) {
     const [units, setUnits] = useState("");
+    const [kgs, setKgs] = useState("");
     const [unitError, setUnitError] = useState(false);
     const [unitErrorMessage, setUnitErrorMessage] = useState(false);
     const handleChange = (e) => {
@@ -18,15 +19,21 @@ export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQt
         setUnits(numbers);
 
     };
+    const handleKgChange = (e) => {
+        let input=e.target.value;
+        if (!input || input.match(/^\d{1,}(\.\d{0,4})?$/)) {
+            setKgs(input);
+        }
+    };
     const handleModalInfoSave = () => {
         if (!units) {
             setUnitError(true)
-            setUnitErrorMessage('Unit is required')
+            setUnitErrorMessage('"No of plants is required')
         } else if (parseInt(units) > maxQty) {
             setUnitError(true)
-            setUnitErrorMessage("Unit can't be greater than " + maxQty)
+            setUnitErrorMessage("No of plants can't be greater than " + maxQty)
         } else {
-            handleClick(units)
+            handleClick(units,kgs)
         }
     }
     return (
@@ -41,8 +48,8 @@ export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQt
                             <br />
                             <FormControl fullWidth>
                                 <TextField
-                                    style={{ width: 300 }}
-                                    label={"Units"}
+                                    // style={{ width: 300 }}
+                                    label={"No of plants"}
                                     name="units"
                                     InputLabelProps={{ shrink: true }}
                                     value={units}
@@ -55,6 +62,20 @@ export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQt
                                     onChange={handleChange}
                                 />
                             </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12}>
+                            {isHarvestStage && (
+                                <FormControl fullWidth>
+                                    <TextField
+                                        // style={{ width: 300 }}
+                                        label={"Plants harvested in KGS?"}
+                                        name="units"
+                                        InputLabelProps={{ shrink: true }}
+                                        value={kgs}
+                                        onChange={handleKgChange}
+                                    />
+                                </FormControl>
+                            )}
                         </Grid>
                     </Grid>
                 </DialogContent>
