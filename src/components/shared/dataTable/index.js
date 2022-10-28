@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import TableContainer from "@mui/material/TableContainer";
 import Button from "@mui/material/Button";
 import moment from "moment";
+import "./style.css";
 function DataTable({ data }) {
   const { headers, rows } = data;
   const handleRedirection = (key) => {};
