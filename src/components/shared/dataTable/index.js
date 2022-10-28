@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableContainer from "@mui/material/TableContainer";
 import Button from "@mui/material/Button";
+import IconButton from '@mui/material/IconButton';
 import moment from "moment";
 import "./style.css";
 function DataTable({ data }) {
@@ -23,7 +24,8 @@ function DataTable({ data }) {
   };
   const renderButtonArray = (buttonArray, rowData) => {
     return buttonArray.map((item, index) => {
-      return <Button key={index+item.label} onClick={()=>item.handler(rowData)}>{item.label}</Button>;
+      return (item.type === 'icon' ? <IconButton title={item.label} key={index+item.label} color={item.color} onClick={()=>item.handler(rowData)}>{item.icon}</IconButton>
+      :<Button key={index+item.label} onClick={()=>item.handler(rowData)}>{item.label}</Button>)
     });
   };
   return (

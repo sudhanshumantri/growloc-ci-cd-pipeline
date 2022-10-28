@@ -51,6 +51,7 @@ const menuItems = [
         title: 'Crop',
         id: "crop",
         icon: <DashboardCustomizeIcon />,
+        isChildToFarmId: true,
         navigation: 'corp',
         css: { borderBottom: '1px solid rgb(81,114,35)' },
         subMenu: [{ id: '1', name: 'Manage Crops', navigation: '/crops/manage', icon: <DashboardCustomizeIcon />, link: '/crops/manage' }, { id: '3', name: 'Crops Lifecycle', navigation: '/crops/lifecycle', link: '/crops/lifecycle', icon: <DashboardCustomizeIcon />, }]
@@ -103,8 +104,10 @@ const menuItems = [
     {
         title: 'Users',
         id: "Users",
-        icon: <DashboardCustomizeIcon />,
+        isChildToFarmId: true,
         navigation: 'users',
+        link: '/users',
+        icon: <DashboardCustomizeIcon />,
         css: { borderBottom: '1px solid rgb(81,114,35)' },
 
     },

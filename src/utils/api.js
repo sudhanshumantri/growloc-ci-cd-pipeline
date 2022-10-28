@@ -109,12 +109,11 @@ export function callAddCropCycleParameters(data) {
     data,
   });
 }
+  // data = {
+  //   farmId: 1,
+  // }
 
-export function callFetchUsersList(
-  data = {
-    farmId: 1,
-  }
-) {
+export function callFetchUsersList(data) {
   return callApi(getEndpoint("fetch-users"), {
     method: "POST",
     removeAuthorizationHeader: false,

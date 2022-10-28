@@ -6,10 +6,15 @@ import { useParams } from 'react-router-dom';
 const FarmOutlet = () => {
     const { farmId } = useParams();
   useEffect(() => {
-
-    console.log(menuItems, "111");
-    menuItems[1].subMenu.forEach((item) => {
-      item.navigation = "farm/" + farmId + item.link;
+    const formChildren = menuItems.filter((menu) => menu.isChildToFarmId);
+    formChildren.forEach((items) => {
+      if (items.subMenu) {
+        items.subMenu.forEach((item) => {
+          item.navigation = "farm/" + farmId + item.link;
+        });
+      } else {
+        items.navigation = "farm/" + farmId + items.link;
+      }
     });
   }, []);
   return <Outlet />;

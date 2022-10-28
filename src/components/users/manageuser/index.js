@@ -6,8 +6,8 @@ import { useParams } from "react-router-dom";
 import Loader from "../../shared/loader";
 import AddUsersModal from "../adduser";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Button } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import CreateIcon from '@mui/icons-material/Create';
 
 export default function ManageUsers({
   usersList,
@@ -15,12 +15,12 @@ export default function ManageUsers({
   addUser,
   updateUser,
   deleteUser,
+  isAddUserLoading,
+  isUsersListLoading,
 }) {
   const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
-
   const [userInfo, setUserInfo] = useState({});
-
   const handleEdit = (userData) => {
     const { user, userId } = userData;
     const { profile } = user;
@@ -29,7 +29,7 @@ export default function ManageUsers({
       password: user.password,
       phone: profile.phone,
       role: profile.role || "farmmanager",
-      isEditMode: true, 
+      isEditMode: true,
       userId,
     };
     setUserInfo(userDetails);
@@ -37,14 +37,14 @@ export default function ManageUsers({
   };
   const handleDelete = (userData) => {
     const { userId, user } = userData;
-    const userDetails = {userId, name: user.profile.name};
+    const userDetails = { userId, name: user.profile.name };
     setUserInfo(userDetails);
     setIsDeleteModelOpen(true);
   };
 
   const handleConfirmRemove = () => {
-    const { userId} = userInfo;
-    deleteUser({userId});
+    const { userId } = userInfo;
+    deleteUser({ userId });
     handleDeleteDialogueToggle();
   };
   const handleDeleteDialogueToggle = () => {
@@ -73,10 +73,16 @@ export default function ManageUsers({
         {
           label: "Edit",
           handler: handleEdit,
+          type: 'icon',
+          icon: <CreateIcon />,
+          color: 'primary'
         },
         {
           label: "Delete",
           handler: handleDelete,
+          type: 'icon',
+          icon: <DeleteIcon />,
+          color:'warning'
         },
       ],
     },
@@ -123,16 +129,19 @@ export default function ManageUsers({
     fetchUsers();
   }, []);
 
+  // { userId: parseInt(userId) }
   return (
     <div>
       <PageHeader title="Users" buttonArray={buttonArray} />
+      {isAddUserLoading && <Loader title="Adding User" />}
+      {isUsersListLoading && <Loader title="Fetching Users" />}
       {open && (
         <AddUsersModal
           open={open}
           handleSave={handleCropSave}
           handleClose={handleModalToggle}
           userDetails={userInfo}
-          data = {usersList}
+          data={usersList}
         />
       )}
       {isDeleteModelOpen && (

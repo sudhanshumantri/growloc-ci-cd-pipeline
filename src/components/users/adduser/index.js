@@ -27,10 +27,26 @@ export default function AddUsersModal({
 }) {
   const { farmId } = useParams();
   const [userData, setUserData] = useState(userDetails);
+  const [isNameError, setIsNameError] = useState(false);
+  const [isPhoneError,setIsPhoneError] = useState(false)
+
   const handleChange = (e) => {
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });
   };
+  const handleUserValidation = (data) => {
+    let isError = false;
+    if (!userData.name) {
+      setIsNameError(true);
+      isError = true;
+    }
+    if (!userData.phone) {
+      setIsPhoneError(true);
+      isError = true;
+    }
+    return isError;
+  }
+
   const handleSaveUser = () => {
     let payload = {
       farmId: parseInt(farmId),
@@ -39,13 +55,18 @@ export default function AddUsersModal({
       phone: parseInt(userData.phone),
       role: userData.role,
     };
-    handleSave(payload);
+    let isError = handleUserValidation(payload)
+    if (!isError) {
+      handleSave(payload)
+
   };
+}
   const isButtonSelected = (value) => {
     if (userData.role === value) {
       return true;
     }
   };
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -63,7 +84,10 @@ export default function AddUsersModal({
                   id="name"
                   name="name"
                   value={userData.name}
-                  onChange={(e) => handleChange(e)}
+                  error={isNameError}
+                  helperText={isNameError ? 'Please provide name' : ""}
+                  onChange={(e) => {isNameError && setIsNameError(false)
+                    handleChange(e)}}
                 />
               </FormControl>
             </Grid>
@@ -93,7 +117,10 @@ export default function AddUsersModal({
                   InputLabelProps={{ shrink: true }}
                   variant="outlined"
                   value={userData.phone}
-                  onChange={(e) => handleChange(e)}
+                  error={isPhoneError}
+                  helperText={isPhoneError ? 'Please provide phone number' : ""}
+                  onChange={(e) => {isPhoneError && setIsPhoneError(false)
+                    handleChange(e)}}
                 />
               </FormControl>
               <br/>
