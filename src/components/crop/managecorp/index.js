@@ -35,7 +35,17 @@ let headers = [
     // key: "crop.estDate",
     key: "qty",
     redirection: false,
-  }
+  },
+  {
+    label: "Actons",
+    isButton: true,
+    buttonArray: [
+      {
+        label: "Edit",
+        handler: ()=>{},
+      },
+    ]
+  },
 ];
 export default function ManageCrop({
   fetchCrop,
@@ -66,7 +76,7 @@ export default function ManageCrop({
     fetchCrop();
     fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
-  console.log(cropFarmList);
+  console.log(cropFarmList,"here is data");
 
   return (
     <div>
@@ -75,7 +85,6 @@ export default function ManageCrop({
         {isFarmCropListLoading && (
           <Loader title='Fetching Crops' />
         )}
-        
         {open && (
           <AddCropModal
             modalData={cropList}

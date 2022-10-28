@@ -14,7 +14,6 @@ import {
   ADD_CROP_LIFECYCLE_PARAMETERS_REQUEST,
   ADD_CROP_LIFECYCLE_PARAMETERS_SUCCESS,
   ADD_CROP_LIFECYCLE_PARAMETERS_FAILURE,
-
 } from "./actionTypes";
 
 export function fetchAllCropsLifecycleRequest(data) {

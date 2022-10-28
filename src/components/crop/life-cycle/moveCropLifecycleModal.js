@@ -17,7 +17,6 @@ export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQt
     const handleChange = (e) => {
         const numbers = e.target.value.replace(/[^0-9]/g, '');
         setUnits(numbers);
-
     };
     const handleKgChange = (e) => {
         let input=e.target.value;
@@ -37,6 +36,7 @@ export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQt
         }
     }
     return (
+
         <div>
             <Dialog open={open} onClose={handleClick}>
                 <DialogTitle className="dialog-title-container">

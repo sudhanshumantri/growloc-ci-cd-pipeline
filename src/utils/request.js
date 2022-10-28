@@ -25,8 +25,8 @@ function makeAPICall(originalConfig) {
     })
     .catch((error) => {
       if (error.response && error.response.status) {
-        browserHistory.push('/login');
-        browserHistory.go('/login');
+        // browserHistory.push('/login');
+        // browserHistory.go('/login');
         localStorage.removeItem('AUTH_TOKEN');
         localStorage.removeItem('AUTH_OBJECT');
       } else {
@@ -94,6 +94,7 @@ export default function callApi(url, options = {}) {
     delete options.queryParams;
     originalConfig.url = urlWithQueryParams;
   }
+
   if (!removeAuthorizationHeader) {
     originalConfig.headers = {
       'Authorization': "Bearer " + TOKEN

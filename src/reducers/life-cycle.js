@@ -16,7 +16,6 @@ import {
   ADD_CROP_LIFECYCLE_PARAMETERS_SUCCESS,
   ADD_CROP_LIFECYCLE_PARAMETERS_FAILURE,
 } from "../actions/actionTypes";
-
 const INITIAL_STATE = fromJS({
   isCropLifeCycleListLoading: false,
   isAddLifecycleLoading: false,
@@ -66,7 +65,7 @@ export default function cropLifecycleReducer(
         .set("isAddLifecycleLoading", false)
         .set("addLifecycleError", action.error);
     case FETCH_CROP_LIFECYCLE_DETAILS_REQUEST:
-      return state  
+      return state
         .set("lifecycleDetails", null)
         .set("isLifeCycleDetailsLoading", true)
         .set("lifeCycleDetailsError", null);
@@ -89,22 +88,22 @@ export default function cropLifecycleReducer(
         .set("isTransitionLoading", false);
     case CROP_LIFECYCLE_TRANSITION__FAILURE:
       return state.set("isTransitionLoading", false);
-      //
+    //
     case ADD_CROP_LIFECYCLE_PARAMETERS_REQUEST:
-     
-
       return state
         .set("isAddLifecycleParametersLoading", true)
         .set("addLifecycleParameterError", null);
     case ADD_CROP_LIFECYCLE_PARAMETERS_SUCCESS:
       let lifecycleDetails = state.toJS()["lifecycleDetails"];
-      const {FarmCropLifecycleStages} = lifecycleDetails.cropDetails;
-      const {id} = action.data;
-      const index = FarmCropLifecycleStages.findIndex((stage)=> stage.id === id);
-      lifecycleDetails.cropDetails.FarmCropLifecycleStages[index] = action.data
+      const { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
+      const { id } = action.data;
+      const index = FarmCropLifecycleStages.findIndex(
+        (stage) => stage.id === id
+      );
+      lifecycleDetails.cropDetails.FarmCropLifecycleStages[index] = action.data;
       return state
         .set("isAddLifecycleParametersLoading", false)
-        .set('lifecycleDetails',lifecycleDetails)
+        .set("lifecycleDetails", lifecycleDetails)
         .set("addLifecycleParameterError", null);
     case ADD_CROP_LIFECYCLE_PARAMETERS_FAILURE:
       return state

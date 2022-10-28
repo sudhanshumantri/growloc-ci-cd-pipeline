@@ -3,7 +3,7 @@ import { api } from "../config";
 const endpointLocation = "remote";
 const urls = {
   remote: {
-    "login": "auth/login",
+    login: "auth/login",
     "fetch-farms-list": "farm/get-all-farm",
     "fetch-crops-list": "crop/get-all-crops",
     "add-farm": "farm/add-new-farm",
@@ -13,7 +13,12 @@ const urls = {
     "crop-lifecycle-transition": "farm/crop/life-cycle-transition",
     "fetch-crop-lifecycle": "farm/crop/get-all-life-cycle",
     "fetch-crop-lifecycle-details": "farm/crop/life-cycle-details/",
-    'add-crop-lifecycle-parameters': "farm/crop/update-life-cycle-stage-parameters"
+    "add-crop-lifecycle-parameters":
+    "farm/crop/update-life-cycle-stage-parameters",
+    "fetch-users": "farm/get-all-farm-users",
+    "add-user": "farm/add-new-user-to-farm",
+    "update-user": "farm/update-farm-user",
+    "delete-user": "farm/delete-farm-user",
   },
 };
 function getEndpoint(endpoint) {
@@ -33,7 +38,7 @@ export function callAddCropToFarm(data) {
   return callApi(getEndpoint("add-crop-to-farm"), {
     method: "POST",
     removeAuthorizationHeader: false,
-    data
+    data,
   });
 }
 export function callFetchFarmCropsList(data) {
@@ -60,7 +65,7 @@ export function callFarmCrop(data) {
   return callApi(getEndpoint("add-farm"), {
     method: "POST",
     removeAuthorizationHeader: false,
-    data
+    data,
   });
 }
 
@@ -70,7 +75,7 @@ export function callAddCropToLifecycle(data) {
   return callApi(getEndpoint("add-crop-to-lifecycle"), {
     method: "POST",
     removeAuthorizationHeader: false,
-    data
+    data,
   });
 }
 
@@ -78,14 +83,14 @@ export function callCropLifecycleTransition(data) {
   return callApi(getEndpoint("crop-lifecycle-transition"), {
     method: "POST",
     removeAuthorizationHeader: false,
-    data
+    data,
   });
 }
 export function callfetchAllCropsLifecycle(data) {
   return callApi(getEndpoint("fetch-crop-lifecycle"), {
     method: "POST",
     removeAuthorizationHeader: false,
-    data
+    data,
   });
 }
 export function callfetchCropsLifecycleDetails(routeParams) {
@@ -101,9 +106,41 @@ export function callAddCropCycleParameters(data) {
   return callApi(getEndpoint("add-crop-lifecycle-parameters"), {
     method: "POST",
     removeAuthorizationHeader: false,
-    data
+    data,
   });
 }
 
+export function callFetchUsersList(
+  data = {
+    farmId: 1,
+  }
+) {
+  return callApi(getEndpoint("fetch-users"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data,
+  });
+}
 
-
+export function callAddUser(data) {
+  console.log(data, "hello here is data");
+  return callApi(getEndpoint("add-user"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data,
+  });
+}
+export function callUpdateUser(data) {
+  return callApi(getEndpoint("update-user"), {
+    method: "PUT",
+    removeAuthorizationHeader: false,
+    data: data,
+  });
+}
+export function callDeleteUser(data) {
+  return callApi(getEndpoint("delete-user"), {
+    method: "delete",
+    removeAuthorizationHeader: false,
+    data: data,
+  });
+}

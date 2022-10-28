@@ -9,6 +9,7 @@ import ManageCrop from "../../container/managecrops";
 import Login from "../../container/login";
 import SideBar from "../../container/sidebar";
 import Farms from "../../container/farm";
+import AddUsers from "../../container/users"
 import CropLifeCycle from "../../container/life-cycle";
 import CropLifeCycleDetails from "../../container/life-cycle/lifeCycleDetails";
 import store from "../../store";
@@ -17,11 +18,13 @@ import FarmOutlet from "../farmoutlet";
 import { getAsyncInjectors } from "../../utils/asyncInjectors";
 import loginReducer from "../../reducers/login";
 import farmReducer from "../../reducers/farm";
+import usersReducer from "../../reducers/users";
 import cropsReducer from "../../reducers/crops";
 import lifeCycleReducer from "../../reducers/life-cycle";
 import loginSagas from "../../sagas/login";
 import cropsSagas from "../../sagas/crops";
 import farmSagas from "../../sagas/farm";
+import  userSagas  from "../../sagas/users";
 import lifeCycleSagas from "../../sagas/life-cycle";
 import { selectToken } from "../../selectors/login";
 import { loadAuthToken } from "../../actions/login";
@@ -31,7 +34,9 @@ injectReducer("crops", cropsReducer);
 injectReducer("login", loginReducer);
 injectReducer("farm", farmReducer);
 injectReducer("life-cycle", lifeCycleReducer);
+injectReducer("users", usersReducer);
 injectSagas(farmSagas);
+injectSagas(userSagas);
 injectSagas(loginSagas);
 injectSagas(cropsSagas);
 injectSagas(lifeCycleSagas);
@@ -57,6 +62,8 @@ const Layout = () => {
       >
         <Toolbar />
         <Routes>
+
+
           <Route
             exact
             path="app/dashboard"
@@ -75,6 +82,7 @@ const Layout = () => {
             }
             children={[SideBar]}
           >
+            <Route path="users" element={<AddUsers />} />
             <Route path="crops/manage" element={<ManageCrop />} />
             <Route path="crops/lifecycle" element={<CropLifeCycle />} />
           </Route>
