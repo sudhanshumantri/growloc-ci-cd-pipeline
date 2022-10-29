@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
-import { fetchCropRequest, addCropToFarmRequest,fetchFarmCropsRequest } from "../../actions/crops";
+import { fetchCropRequest, addCropToFarmRequest,fetchFarmCropsRequest,deleteFarmCropsRequest , updateFarmCropsRequest} from "../../actions/crops";
 import ManageCrop from "../../components/crop/managecorp";
 import {
   selectCropList,
@@ -31,9 +31,8 @@ const mapDispatchToProps = {
   fetchCrop: fetchCropRequest,
   addCrop: addCropToFarmRequest,
   fecthCropFarm:fetchFarmCropsRequest,
-
-
-
+  deleteCrop :deleteFarmCropsRequest,
+  updateCrop:updateFarmCropsRequest,
 };
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -48,3 +47,6 @@ function withRouter(Component) {
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(ManageCrop)
 );
+
+
+

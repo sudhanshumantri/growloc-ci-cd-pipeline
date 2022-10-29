@@ -35,6 +35,7 @@ export default function AddCropModal({
   const [cropList, setCropList] = useState(null);
   const [germinationMethod, setGerminationMethod] = useState(null);
   const [selectedData, setSelectedData] = useState({});
+
   const [isMethodError, setIsMethodError] = useState(false);
   const [isCropError, setIsCropError] = useState(false);
   const [units, setUnits] = useState(1);
@@ -71,7 +72,7 @@ export default function AddCropModal({
       setIsCropError(true);
       isError = true;
     }
-    if (!cropData.germinationMethod) {
+    if (!germinationMethod) {
       setIsMethodError(true);
       isError = true;
     }
@@ -96,6 +97,7 @@ export default function AddCropModal({
                   labelId="demo-multiple-name-label"
                   id="demo-multiple-name"
                   value={cropList}
+                  // value ={cropData.cropList}
                   onChange={(e) => {
                     isCropError && setIsCropError(false);
                     handleChange(e);
@@ -123,6 +125,7 @@ export default function AddCropModal({
                   label={"Variety"}
                   InputLabelProps={{ shrink: true }}
                   value={selectedData.variety}
+                  // value= {cropData.selectedData.variety}
                   variant="outlined"
                 />
               </FormControl>
@@ -134,6 +137,8 @@ export default function AddCropModal({
                   InputLabelProps={{ shrink: true }}
                   label={"Scientific Name"}
                   value={selectedData.scientificName}
+                  // value={cropData.selectedData.scientificName}
+
                   variant="outlined"
                 />
               </FormControl>
@@ -151,6 +156,7 @@ export default function AddCropModal({
                     handleGerminationChange(e);
                   }}
                   value={germinationMethod}
+                  // value ={cropData.germinationMethod}
                   input={<OutlinedInput label="Germination Method" />}
                   MenuProps={MenuProps}
                 >
@@ -173,6 +179,7 @@ export default function AddCropModal({
                   InputLabelProps={{ shrink: true }}
                   label={"Units"}
                   value={units}
+                  // value ={cropData}
                   onChange={handleUnitsChange}
                   variant="outlined"
                 />

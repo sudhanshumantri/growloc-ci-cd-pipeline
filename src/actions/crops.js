@@ -7,7 +7,13 @@ import {
   ADD_CROP_TO_FARM_FAILURE,
   FETCH_FARM_ALL_CROPS_REQUEST,
   FETCH_FARM_ALL_CROPS_SUCCESS,
-  FETCH_FARM_ALL_CROPS_FAILURE
+  FETCH_FARM_ALL_CROPS_FAILURE,
+  UPDATE_MANAGE_CROP_REQUEST,
+  UPDATE_MANAGE_CROP_SUCCESS,
+  UPDATE_MANAGE_CROP_FAILURE,
+  DELETE_MANAGE_CROP_REQUEST,
+  DELETE_MANAGE_CROP_SUCCESS,
+  DELETE_MANAGE_CROP_FAILURE,
 } from "./actionTypes";
 
 export function fetchCropRequest() {
@@ -64,6 +70,46 @@ export function fetchFarmCropsFailure(error) {
     error,
   };
 }
+
+export function deleteFarmCropsRequest(data) {
+  return {
+      type: DELETE_MANAGE_CROP_REQUEST,
+      data
+  };
+}
+export function deleteFarmCropsSuccess(data) {
+  return {
+      type: DELETE_MANAGE_CROP_SUCCESS,
+      data
+  };
+}
+export function deleteFarmCropsFailure(error) {
+  return {
+      type: DELETE_MANAGE_CROP_FAILURE,
+      error
+  };
+}
+
+
+export function updateFarmCropsRequest(data) {
+  return {
+      type: UPDATE_MANAGE_CROP_REQUEST,
+      data
+  };
+}
+export function updateFarmCropsSuccess(data) {
+  return {
+      type:UPDATE_MANAGE_CROP_SUCCESS,
+      data
+  };
+}
+export function updateFarmCropsFailure(error) {
+  return {
+      type: UPDATE_MANAGE_CROP_FAILURE,
+      error
+  };
+}
+
 
 
 

@@ -27,3 +27,11 @@ export const selectIsUpdateUserLoading = () =>
   );
 export const selectIsUpdateUserError = () =>
   createSelector(selectUsers, (services) => services.toJS()["updateUserError"]);
+
+
+  export const selectIsDeleteUserLoading = () =>
+  createSelector(
+    selectUsers,
+    (services) => services.toJS()["isdeleteUserLoading"]
+  );
+

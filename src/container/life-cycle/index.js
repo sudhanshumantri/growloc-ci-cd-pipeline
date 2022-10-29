@@ -9,12 +9,12 @@ import {
   selectIsAddLifecycleLoading,
   selectLifecycleCropsList,
   selectCropLifeCycleListError,
-  selectIsCropLifeCycleListLoading
+  selectIsCropLifeCycleListLoading,
+  selectIsLifecycleParametersLoading,
 } from "../../selectors/life-cycle";
 import { selectCropFarmList } from "../../selectors/crops";
 
 const mapStateToProps = createStructuredSelector({
-
   cropLifeCycleListError:selectCropLifeCycleListError(),
   isCropLifeCycleListLoading:selectIsCropLifeCycleListLoading(),
   farmCropList: selectCropFarmList(),

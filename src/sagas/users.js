@@ -10,6 +10,7 @@ import {
   deleteUserSuccess,
   deleteUserFailure,
 } from "../actions/users";
+import {addNotification} from "../utils/noftification";
 export function* fetchUsersList({ data }) {
   let responseData = yield call(callFetchUsersList, data);
   if (responseData?.status == 200 && responseData.data.status) {
@@ -20,8 +21,14 @@ export function* fetchUsersList({ data }) {
 }
 export function* addUser({ data }) {
   let responseData = yield call(callAddUser, data);
-  if (responseData?.status == 200 && responseData.data.status) {
+  if (responseData?.status == 200) {
+    const {status, error} = responseData.data;
+    if(status) {
     yield put(addUserSuccess(responseData.data.data));
+    } else {
+      addNotification({message:error}, 5000);
+      yield put(addUserFailure("Something went wrong"));
+    }
   } else {
     yield put(addUserFailure("Something went wrong"));
   }

@@ -8,7 +8,8 @@ import {
     selectLifecycleDetails,
     selectIsLifecycleDetailsLoading,
     selectLifecycleDetailsError,
-    selectIsTransitionLoading
+    selectIsTransitionLoading,
+    selectIsLifecycleParametersLoading
 } from "../../selectors/life-cycle";
 import { selectCropFarmList } from "../../selectors/crops";
 
@@ -17,7 +18,9 @@ const mapStateToProps = createStructuredSelector({
     lifecycleDetails: selectLifecycleDetails(),
     isLifecycleDetailsLoading: selectIsLifecycleDetailsLoading(),
     lifecycleDetailsError: selectLifecycleDetailsError(),
-    isTransitionLoading:selectIsTransitionLoading()
+    isTransitionLoading:selectIsTransitionLoading(),
+    isAddLifecycleParametersLoading :selectIsLifecycleParametersLoading(),
+
 
 });
 const mapDispatchToProps = {

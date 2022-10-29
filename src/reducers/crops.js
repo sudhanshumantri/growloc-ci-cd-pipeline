@@ -9,6 +9,12 @@ import {
   FETCH_FARM_ALL_CROPS_REQUEST,
   FETCH_FARM_ALL_CROPS_SUCCESS,
   FETCH_FARM_ALL_CROPS_FAILURE,
+  UPDATE_MANAGE_CROP_REQUEST,
+  UPDATE_MANAGE_CROP_SUCCESS,
+  UPDATE_MANAGE_CROP_FAILURE,
+  DELETE_MANAGE_CROP_REQUEST,
+  DELETE_MANAGE_CROP_SUCCESS,
+  DELETE_MANAGE_CROP_FAILURE,
 } from "../actions/actionTypes";
 const INITIAL_STATE = fromJS({
   isCropListLoading: false,
@@ -19,8 +25,17 @@ const INITIAL_STATE = fromJS({
   isFarmCropListLoading: false,
   cropFarmList: [],
   farmListError: null,
+  farmcropsStatus: true,
+  isupdateFarmCropsLoading: false,
+  isupdateFarmCropsError: null,
+  farmcropsStatus: true,
+  isdeleteFarmCropsLoading: false,
+  isdeleteFarmCropsError: false,
+
 });
 export default function cropsReducer(state = INITIAL_STATE, action = {}) {
+  let cropList = state.toJS()["cropList"];
+  let cropFarmList = state.toJS()["cropFarmList"];
   switch (action.type) {
     case FETCH_ALL_CROPS_REQUEST:
       return state
@@ -60,6 +75,38 @@ export default function cropsReducer(state = INITIAL_STATE, action = {}) {
         .set("isFarmCropListLoading", false)
         .set("cropFarmList", [])
         .set("farmListError", action.error);
+    //
+    case UPDATE_MANAGE_CROP_REQUEST:
+      return state
+        .set("isupdateFarmCropsLoading", true)
+        .set("farmcropsStatus", null)
+        .set("isupdateFarmCropsError", null);
+    case UPDATE_MANAGE_CROP_SUCCESS:
+      const { data } = action.data;
+      const index = cropFarmList.findIndex((crop) => crop.id === data.id);
+      cropFarmList[index].qty = data;
+      return state
+        .set("isupdateFarmCropsLoading", false)
+        .set("farmcropsStatus", true)
+        .set("cropList", cropList)
+    case UPDATE_MANAGE_CROP_FAILURE:
+      return state
+        .set("isupdateFarmCropsLoading", false)
+        .set("farmcropsStatus", true)
+        .set("isupdateFarmCropsError", true);
+    case DELETE_MANAGE_CROP_REQUEST:
+      return state
+        .set("isdeleteFarmCropsLoading", true)
+        .set("isdeleteFarmCropsError", null);
+    case DELETE_MANAGE_CROP_SUCCESS:
+      const { id } = action.data;
+      const newList = cropFarmList.filter((crop) => crop.id !== id);
+      return state
+        .set("isdeleteFarmCropsLoading", false)
+        .set("cropFarmList", newList)
+        .set("isdeleteFarmCropsError", null); 
+    case DELETE_MANAGE_CROP_FAILURE:
+      return state.set("cropFarmList", cropFarmList);
     default:
       return state;
   }

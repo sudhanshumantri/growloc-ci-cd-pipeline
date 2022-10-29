@@ -9,6 +9,7 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
+  DELETE_USER_REQUEST,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAILURE,
 } from "../actions/actionTypes";
@@ -21,6 +22,9 @@ const INITIAL_STATE = fromJS({
   updateUserLoading: false,
   updateUserError: null,
   userStatus: true,
+  isdeleteUserLoading: false,
+  isdeleteUserError: false,
+  
 });
 
 export default function usersReducer(state = INITIAL_STATE, action = {}) {
@@ -42,8 +46,12 @@ export default function usersReducer(state = INITIAL_STATE, action = {}) {
         .set("usersList", [])
         .set("UsersListError", action.error);
     case ADD_USER_REQUEST:
-      return state.set("isAddUserLoading", true).set("addUserError", null);
+      return state
+      .set("isAddUserLoading", true)
+      .set("addUserError", null);
     case ADD_USER_SUCCESS:
+      const newUser = { id: action.data?.id, userId: action.data?.profile?.userId, farmId: usersList[0]?.farmId, user:{...action.data}}
+      usersList.push(newUser);
       return state
         .set("isAddUserLoading", false)
         .set("usersList", usersList)
@@ -65,16 +73,20 @@ export default function usersReducer(state = INITIAL_STATE, action = {}) {
         .set("updateUserLoading", false)
         .set("userStatus", true)
         .set("usersList", usersList)
-        .set("updateUserLoading", null);
     case UPDATE_USER_FAILURE:
       return state
         .set("updateUserLoading", false)
         .set("userStatus", true)
         .set("updateUserError", true);
+    case DELETE_USER_REQUEST:
+      return state.set("isdeleteUserLoading", true).set("isdeleteUserError", null);
     case DELETE_USER_SUCCESS:
-      const {userId} =action.data;
+      const { userId } = action.data;
       const filteredList = usersList.filter((user) => user.userId !== userId);
-      return state.set("usersList", filteredList);
+      return state
+        .set("isdeleteUserLoading", false)
+        .set("usersList", filteredList)
+        .set("isdeleteUserError", null);
     case DELETE_USER_FAILURE:
       return state.set("usersList", usersList);
     default:

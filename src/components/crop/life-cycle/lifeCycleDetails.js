@@ -379,8 +379,7 @@ export default function CropLifeCycleDetails({
               {renderStepper()}
             </Stack>
             {renderSelectedStageInformation(activeStep, handleEditToggle)}
-            {/* {isopen && <EditParameters open={isopen} handleClose={handleEditToggle} */}
-
+            {isAddLifecycleParametersLoading && (<Loader title="updating parameters" />)}
             {isStageEditOpen && (
               <EditParameters
                 open={isStageEditOpen}

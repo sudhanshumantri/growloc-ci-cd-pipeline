@@ -25,3 +25,15 @@ export const selectisFarmCropListLoading = () =>
   );
 export const selectCropFarmListError = () =>
   createSelector(selectCrop, (services) => services.toJS()["farmListError"]);
+
+//
+export const selectIsUpdateFarmCropsLoading = () =>
+  createSelector( selectCrop,(services) => services.toJS()["isupdateFarmCropsLoading"]
+  );
+export const selectIsUpdateFarmCropsError = () =>
+  createSelector(selectCrop,(services) => services.toJS()["isupdateFarmCropsError"]
+  );
+
+export const selectIsDeleteFarmCropsLoading = () =>
+  createSelector(selectCrop,(services) => services.toJS()["isdeleteFarmCropsLoading"]
+  );

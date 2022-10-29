@@ -24,29 +24,34 @@ export default function AddUsersModal({
     role: "farmmanager",
     isEditMode: false,
   },
+  
 }) {
   const { farmId } = useParams();
   const [userData, setUserData] = useState(userDetails);
   const [isNameError, setIsNameError] = useState(false);
   const [isPhoneError,setIsPhoneError] = useState(false)
-
   const handleChange = (e) => {
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });
   };
   const handleUserValidation = (data) => {
+    const re = /^[0-10\b]{0,10}$/;
     let isError = false;
     if (!userData.name) {
       setIsNameError(true);
       isError = true;
     }
-    if (!userData.phone) {
-      setIsPhoneError(true);
+    // if (!userData.phone) {
+    //   setIsPhoneError(true);
+    //   isError = true;
+      
+    // }
+    if (!userData.phone.length !== 10 || re.test(userData.phone)) {
       isError = true;
+      setIsPhoneError(true);
     }
     return isError;
   }
-
   const handleSaveUser = () => {
     let payload = {
       farmId: parseInt(farmId),
@@ -66,7 +71,6 @@ export default function AddUsersModal({
       return true;
     }
   };
-
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -116,6 +120,7 @@ export default function AddUsersModal({
                   disabled={userData.isEditMode}
                   InputLabelProps={{ shrink: true }}
                   variant="outlined"
+                  InputProps={{ inputProps: { maxLength: 10 } }}
                   value={userData.phone}
                   error={isPhoneError}
                   helperText={isPhoneError ? 'Please provide phone number' : ""}

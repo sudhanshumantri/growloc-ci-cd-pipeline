@@ -19,6 +19,8 @@ const urls = {
     "add-user": "farm/add-new-user-to-farm",
     "update-user": "farm/update-farm-user",
     "delete-user": "farm/delete-farm-user",
+    "update-farm-crop" : "farm/crop/update-crop",
+    "delete-farm-crop" : "farm/crop/delete-crop"
   },
 };
 function getEndpoint(endpoint) {
@@ -143,3 +145,19 @@ export function callDeleteUser(data) {
     data: data,
   });
 }
+
+export function callUpdateFarmCrop(data) {
+  return callApi(getEndpoint("update-farm-crop"), {
+    method: "PUT",
+    removeAuthorizationHeader: false,
+    data: data,
+  });
+}
+export function callDeleteFarmCrop(data) {
+  return callApi(getEndpoint("delete-farm-crop"), {
+    method: "delete",
+    removeAuthorizationHeader: false,
+    data,
+  });
+}
+

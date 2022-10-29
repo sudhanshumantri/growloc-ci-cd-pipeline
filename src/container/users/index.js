@@ -10,7 +10,8 @@ import {
     selectUsersListError,
     selectIsAddUserLoading,
     selectAddUserError,
-
+    selectIsDeleteUserLoading,
+    selectIsUpdateUserLoading
 } from "../../selectors/users";
 
 const mapStateToProps = createStructuredSelector({
@@ -19,6 +20,8 @@ const mapStateToProps = createStructuredSelector({
     UsersListError: selectUsersListError(),
     isAddUserLoading:selectIsAddUserLoading(),
     addUserError:selectAddUserError(),
+    isdeleteUserLoading:selectIsDeleteUserLoading(),
+    updateUserLoading :selectIsUpdateUserLoading(),
 });
 const mapDispatchToProps = {
   fetchUsers: fetchUsersRequest,
