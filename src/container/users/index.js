@@ -21,7 +21,7 @@ const mapStateToProps = createStructuredSelector({
     isAddUserLoading:selectIsAddUserLoading(),
     addUserError:selectAddUserError(),
     isdeleteUserLoading:selectIsDeleteUserLoading(),
-    updateUserLoading :selectIsUpdateUserLoading(),
+    isUpdateUserLoading:selectIsUpdateUserLoading(),
 });
 const mapDispatchToProps = {
   fetchUsers: fetchUsersRequest,

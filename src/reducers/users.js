@@ -19,7 +19,7 @@ const INITIAL_STATE = fromJS({
   UsersListError: null,
   isAddUserLoading: false,
   addUserError: null,
-  updateUserLoading: false,
+  isUpdateUserLoading: false,
   updateUserError: null,
   userStatus: true,
   isdeleteUserLoading: false,
@@ -62,7 +62,7 @@ export default function usersReducer(state = INITIAL_STATE, action = {}) {
         .set("addUserError", action.error);
     case UPDATE_USER_REQUEST:
       return state
-        .set("isAddUserLoading", true)
+        .set("isUpdateUserLoading", true)
         .set("userStatus", null)
         .set("updateUserLoading", null);
     case UPDATE_USER_SUCCESS:
@@ -70,12 +70,12 @@ export default function usersReducer(state = INITIAL_STATE, action = {}) {
       const index = usersList.findIndex((user) => user.userId === data.userId);
       usersList[index].user.profile = data;
       return state
-        .set("updateUserLoading", false)
+        .set("isUpdateUserLoading", false)
         .set("userStatus", true)
         .set("usersList", usersList)
     case UPDATE_USER_FAILURE:
       return state
-        .set("updateUserLoading", false)
+        .set("isUpdateUserLoading", false)
         .set("userStatus", true)
         .set("updateUserError", true);
     case DELETE_USER_REQUEST:

@@ -10,7 +10,6 @@ import Loader from "../../shared/loader";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import ConfirmDialogBox from "../../shared/dailog/ConfirmDialogBox";
-
 export default function ManageCrop({
   fetchCrop,
   cropList,
@@ -25,12 +24,11 @@ export default function ManageCrop({
   const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [cropInfo, setCropInfo] = useState({});
-
   let { farmId } = useParams();
-  // const handleCropSave = (addCropData) => {
-  //   addCrop(addCropData);
-  //   handleModalToggle();
-  // };
+  const handleCropSave = (addCropData) => {
+    addCrop(addCropData);
+    handleModalToggle();
+  };
   const handleModalToggle = (data) => {
     setOpen(!open);
   };
@@ -44,15 +42,7 @@ export default function ManageCrop({
     fetchCrop();
     fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
-   const handleEdit =(cropData) => {
-    const{id,qty} = cropData;
-    cropDetails = {
-      qyt: qty,
-      id,
-    }
-    setUserInfo(cropDetails);
-    setOpen(true);
-   }
+
   const handleDelete =(cropData) =>{
     console.log(cropData, "cropData");
     const {id,crop } = cropData;
@@ -64,12 +54,10 @@ export default function ManageCrop({
     const {id} = cropInfo
     deleteCrop({id})
     handleDeleteDialogueToggle();
-
   }
   const handleDeleteDialogueToggle = () =>{
     setIsDeleteModelOpen(!isDeleteModelOpen)
     setCropInfo({})
-
   }
   let headers = [
     {
@@ -107,7 +95,7 @@ export default function ManageCrop({
         {
           label: "Edit",
           type: "icon",
-          handler: handleEdit,
+          // handler: handleEdit,
           icon: <CreateIcon />,
           color: "primary",
         },
@@ -121,8 +109,6 @@ export default function ManageCrop({
       ],
     },
   ];
-
-
 
   let conFirmbuttons = [
     {
@@ -141,13 +127,6 @@ export default function ManageCrop({
     fetchCrop();
     fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
-
-  // const handleCropSave = (data) => {
-  //   const payload = {
-
-  //   }
-  // };
-
 
   return (
     <div>
@@ -170,7 +149,6 @@ export default function ManageCrop({
             subHeading={`Are you sure to delete ${cropInfo.name} ?`}
           />
         )}
-
         <DataTable data={{ headers: headers, rows: cropFarmList }} />
       </div>
     </div>

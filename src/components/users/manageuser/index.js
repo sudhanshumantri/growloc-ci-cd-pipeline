@@ -17,8 +17,8 @@ export default function ManageUsers({
   deleteUser,
   isAddUserLoading,
   isUsersListLoading,
-  updateUserLoading,
   isdeleteUserLoading,
+  isUpdateUserLoading,
 }) {
   const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
@@ -38,7 +38,7 @@ export default function ManageUsers({
     setOpen(true);
   };
   const handleDelete = (userData) => {
-    const { userId,    } = userData;
+    const { userId,  user  } = userData;
     const userDetails = { userId, name: user.profile.name };
     setUserInfo(userDetails);
     setIsDeleteModelOpen(true);
@@ -137,6 +137,7 @@ export default function ManageUsers({
       <PageHeader title="Users" buttonArray={buttonArray} />
       {isAddUserLoading && <Loader title="Adding User" />}
       {isUsersListLoading && <Loader title="Fetching Users" />}
+      {isUpdateUserLoading && <Loader title="Updating User  " />}
       {isdeleteUserLoading && <Loader title="Deleting  User" />}
       {open && (
         <AddUsersModal

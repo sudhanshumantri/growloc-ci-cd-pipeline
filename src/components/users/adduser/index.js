@@ -24,7 +24,7 @@ export default function AddUsersModal({
     role: "farmmanager",
     isEditMode: false,
   },
-  
+
 }) {
   const { farmId } = useParams();
   const [userData, setUserData] = useState(userDetails);
@@ -41,14 +41,10 @@ export default function AddUsersModal({
       setIsNameError(true);
       isError = true;
     }
-    // if (!userData.phone) {
-    //   setIsPhoneError(true);
-    //   isError = true;
-      
-    // }
-    if (!userData.phone.length !== 10 || re.test(userData.phone)) {
-      isError = true;
+    if (!userData.phone) {
       setIsPhoneError(true);
+      isError = true;
+      
     }
     return isError;
   }
@@ -63,7 +59,6 @@ export default function AddUsersModal({
     let isError = handleUserValidation(payload)
     if (!isError) {
       handleSave(payload)
-
   };
 }
   const isButtonSelected = (value) => {
