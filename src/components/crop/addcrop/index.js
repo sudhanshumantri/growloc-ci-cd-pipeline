@@ -29,20 +29,37 @@ export default function AddCropModal({
   open,
   handleSave,
   handleClose,
+  cropDetails ={
+    isEditMode: false,
+
+  }
 }) {
   let { farmId } = useParams();
   // const [open, setOpen] = useState(false);
-  const [cropList, setCropList] = useState(null);
+  const [cropListName, setCropListName] = useState(null);
   const [germinationMethod, setGerminationMethod] = useState(null);
   const [selectedData, setSelectedData] = useState({});
-
   const [isMethodError, setIsMethodError] = useState(false);
   const [isCropError, setIsCropError] = useState(false);
   const [units, setUnits] = useState(1);
-  const handleChange = (event) => {
-    const selectedItem = modalData[event.target.value];
-    setCropList(event.target.value);
+
+  React.useEffect(() => {
+    if (open && cropDetails.name) {
+      console.log(cropDetails.name, "cropDeatils.name");
+      handleChange({ target: { value: cropDetails.name }}, true);
+    }
+  }, [modalData]);
+
+  const handleChange = (event, isFromEdit = false) => {
+    console.log("event.target.value", event.target.value, event);
+    const selectedItem = modalData.find(item=>item.name === event.target.value);
+    setCropListName(event.target.value);
     setSelectedData(selectedItem);
+    if(isFromEdit) {
+      const germinationIndex = selectedItem.germinationMethod.findIndex(method=> method.type === cropDetails.germinationMethod.type);
+      handleGerminationChange({ target: { value: germinationIndex}});
+      handleUnitsChange({target: { value: cropDetails.qty}})
+    }
   };
   const handleGerminationChange = (event) => {
     setGerminationMethod(event.target.value);
@@ -54,7 +71,7 @@ export default function AddCropModal({
     // console.log(germinationMethod,selectedData);
     let isError = false;
     let cropData = {
-      name: selectedData.name,
+      name: cropListName,
       scientificName: selectedData.scientificName,
       variety: selectedData.variety,
       parameters: selectedData.parameters,
@@ -68,11 +85,11 @@ export default function AddCropModal({
       crop: cropData,
       qty: parseInt(units),
     };
-    if (cropList === null) {
+    if (cropListName === null) {
       setIsCropError(true);
       isError = true;
     }
-    if (!germinationMethod) {
+    if (!cropData.germinationMethod) {
       setIsMethodError(true);
       isError = true;
     }
@@ -84,29 +101,32 @@ export default function AddCropModal({
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">
-          Add a new crop
+          {/* Add a new crop */}
+          {cropDetails.id? "Update crop": "Add a new crop"}
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
               <FormControl fullWidth>
                 <InputLabel id="demo-multiple-name-label" variant="outlined">
+                {/*  */}
                   Crop
                 </InputLabel>
                 <Select
                   labelId="demo-multiple-name-label"
                   id="demo-multiple-name"
-                  value={cropList}
-                  // value ={cropData.cropList}
+                  name="name"
+                  label="Select"
+                  disabled={cropDetails.isEditMode}
+                  value={cropListName}
                   onChange={(e) => {
                     isCropError && setIsCropError(false);
                     handleChange(e);
                   }}
-                  input={<OutlinedInput label="crop" />}
                   MenuProps={MenuProps}
                 >
                   {(modalData || []).map((e, keyIndex) => (
-                    <MenuItem key={keyIndex} value={keyIndex}>
+                    <MenuItem key={keyIndex} value={e.name}>
                       {e.name}
                     </MenuItem>
                   ))}
@@ -125,7 +145,6 @@ export default function AddCropModal({
                   label={"Variety"}
                   InputLabelProps={{ shrink: true }}
                   value={selectedData.variety}
-                  // value= {cropData.selectedData.variety}
                   variant="outlined"
                 />
               </FormControl>
@@ -137,8 +156,6 @@ export default function AddCropModal({
                   InputLabelProps={{ shrink: true }}
                   label={"Scientific Name"}
                   value={selectedData.scientificName}
-                  // value={cropData.selectedData.scientificName}
-
                   variant="outlined"
                 />
               </FormControl>
@@ -151,6 +168,7 @@ export default function AddCropModal({
                 <Select
                   labelId="demo-multiple-name-label"
                   id="demo-multiple-name"
+                  disabled={cropDetails.isEditMode}
                   onChange={(e) => {
                     isMethodError && setIsMethodError(false);
                     handleGerminationChange(e);
@@ -178,8 +196,8 @@ export default function AddCropModal({
                 <TextField
                   InputLabelProps={{ shrink: true }}
                   label={"Units"}
-                  value={units}
-                  // value ={cropData}
+                  // value={units}
+                  value ={units}
                   onChange={handleUnitsChange}
                   variant="outlined"
                 />

@@ -84,11 +84,11 @@ export default function cropsReducer(state = INITIAL_STATE, action = {}) {
     case UPDATE_MANAGE_CROP_SUCCESS:
       const { data } = action.data;
       const index = cropFarmList.findIndex((crop) => crop.id === data.id);
-      cropFarmList[index].qty = data;
+      cropFarmList[index] = data;
       return state
         .set("isupdateFarmCropsLoading", false)
         .set("farmcropsStatus", true)
-        .set("cropList", cropList)
+        .set("cropFarmList", cropFarmList)
     case UPDATE_MANAGE_CROP_FAILURE:
       return state
         .set("isupdateFarmCropsLoading", false)

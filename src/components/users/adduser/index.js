@@ -66,10 +66,11 @@ export default function AddUsersModal({
       return true;
     }
   };
+  
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle className="dialog-title-container">add a user</DialogTitle>
+        <DialogTitle className="dialog-title-container">{userDetails.userId? "Update user": "Add a user"}</DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
           <Grid container sx={{ margin: "1px", width: 500 }} spacing={2}>
             <Grid item xs={12} sm={6} md={12}>

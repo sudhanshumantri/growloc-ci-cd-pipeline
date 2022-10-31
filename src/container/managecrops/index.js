@@ -13,7 +13,10 @@ import {
   selectIsAddCropLoading,
   selectCropFarmList,
   selectisFarmCropListLoading,
-  selectCropFarmListError
+  selectCropFarmListError,
+  selectIsUpdateFarmCropsLoading,
+  selectIsDeleteFarmCropsLoading
+
 } from "../../selectors/crops";
 
 const mapStateToProps = createStructuredSelector({
@@ -25,7 +28,8 @@ const mapStateToProps = createStructuredSelector({
   cropFarmList:selectCropFarmList(),
   isFarmCropListLoading :selectisFarmCropListLoading(),
   selectCropFarmListError:selectCropFarmListError(),
-
+  isupdateFarmCropsLoading:selectIsUpdateFarmCropsLoading(),
+  isdeleteFarmCropsLoading:selectIsDeleteFarmCropsLoading(),
 });
 const mapDispatchToProps = {
   fetchCrop: fetchCropRequest,

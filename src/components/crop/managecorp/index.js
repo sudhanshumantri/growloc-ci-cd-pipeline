@@ -15,22 +15,33 @@ export default function ManageCrop({
   cropList,
   isCropListLoading,
   cropListError,
+  updateCrop,
   addCrop,
   fecthCropFarm,
   cropFarmList,
   isFarmCropListLoading,
   deleteCrop,
+  isdeleteFarmCropsLoading,
+  isupdateFarmCropsLoading,
 }) {
   const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [cropInfo, setCropInfo] = useState({});
   let { farmId } = useParams();
   const handleCropSave = (addCropData) => {
-    addCrop(addCropData);
+    if (cropInfo.id) {
+      const { qty } = addCropData;
+      const { id } = cropInfo;
+      updateCrop({id, qty});
+    } else {
+      addCrop(addCropData);
+    }
+
     handleModalToggle();
   };
   const handleModalToggle = (data) => {
     setOpen(!open);
+    setCropInfo({});
   };
   let buttonArray = [
     {
@@ -42,6 +53,24 @@ export default function ManageCrop({
     fetchCrop();
     fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
+
+  const handleEdit = (cropData) => {
+    console.log(cropData, "hello");
+    const { id, crop, farmId , qty} = cropData;
+    const cropDetails = {
+      name: crop.name,
+      id,
+      farmId,
+      germinationMethod: crop.germinationMethod,
+      qty,
+      isEditMode: true,
+
+    };
+    console.log("cropDetails", cropDetails);
+
+    setCropInfo(cropDetails);
+    setOpen(true);
+  };
 
   const handleDelete = (cropData) => {
     console.log(cropData, "cropData");
@@ -95,7 +124,7 @@ export default function ManageCrop({
         {
           label: "Edit",
           type: "icon",
-          // handler: handleEdit,
+          handler: handleEdit,
           icon: <CreateIcon />,
           color: "primary",
         },
@@ -132,12 +161,17 @@ export default function ManageCrop({
       <PageHeader title="Manage Crops" buttonArray={buttonArray} />
       <div className="page-container">
         {isFarmCropListLoading && <Loader title="Fetching Crops" />}
+        {isupdateFarmCropsLoading && <Loader title="Updating Crop  " />}
+      {isdeleteFarmCropsLoading && <Loader title="Deleting  Crop" />}
+
         {open && (
           <AddCropModal
             modalData={cropList}
             open={open}
             handleSave={handleCropSave}
             handleClose={handleModalToggle}
+            cropDetails ={cropInfo}
+            data ={cropFarmList}
           />
         )}
 
