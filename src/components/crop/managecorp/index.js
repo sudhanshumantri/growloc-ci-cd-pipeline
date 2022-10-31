@@ -27,10 +27,10 @@ export default function ManageCrop({
   const [cropInfo, setCropInfo] = useState({});
 
   let { farmId } = useParams();
-  // const handleCropSave = (addCropData) => {
-  //   addCrop(addCropData);
-  //   handleModalToggle();
-  // };
+  const handleCropSave = (addCropData) => {
+    addCrop(addCropData);
+    handleModalToggle();
+  };
   const handleModalToggle = (data) => {
     setOpen(!open);
   };
@@ -44,29 +44,29 @@ export default function ManageCrop({
     fetchCrop();
     fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
-   const handleEdit =(cropData) => {
-    const{id,qty} = cropData;
+  const handleEdit = (cropData) => {
+    const { id, qty } = cropData;
     cropDetails = {
       qyt: qty,
       id,
     }
     setUserInfo(cropDetails);
     setOpen(true);
-   }
-  const handleDelete =(cropData) =>{
+  }
+  const handleDelete = (cropData) => {
     console.log(cropData, "cropData");
-    const {id,crop } = cropData;
-    const cropDetails = {id,name:crop.name, }
+    const { id, crop } = cropData;
+    const cropDetails = { id, name: crop.name, }
     setCropInfo(cropDetails);
     setIsDeleteModelOpen(true);
   }
   const handleConfirmRemove = () => {
-    const {id} = cropInfo
-    deleteCrop({id})
+    const { id } = cropInfo
+    deleteCrop({ id })
     handleDeleteDialogueToggle();
 
   }
-  const handleDeleteDialogueToggle = () =>{
+  const handleDeleteDialogueToggle = () => {
     setIsDeleteModelOpen(!isDeleteModelOpen)
     setCropInfo({})
 

@@ -30,3 +30,8 @@
 .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
     color: rgb(81, 114, 35) !important;
 }
+.repeat-days-container{
+    display: flex;
+    justify-content: space-around;
+    width: 350px;
+}
