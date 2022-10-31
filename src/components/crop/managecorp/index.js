@@ -102,9 +102,9 @@ export default function ManageCrop({
         {
           label: "Delete",
           type: "icon",
-          icon: <DeleteIcon />,
+          icon: <DeleteIcon aria-label="delete" />,
           handler: handleDelete,
-          color: "warning",
+          // color: "warning",
         },
       ],
     },

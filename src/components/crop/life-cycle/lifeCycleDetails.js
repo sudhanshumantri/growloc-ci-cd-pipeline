@@ -94,6 +94,8 @@ export default function CropLifeCycleDetails({
 
   };
   const handleScheduleHarvestingModalToggle = () => {
+    console.log("hhhhh")
+
     setScheduleHarvestingModal(!openScheduleHarvestingModal);
   };
 
@@ -132,6 +134,12 @@ export default function CropLifeCycleDetails({
       cropsLifecycleTransition(requestData);
     }
   };
+const handleClose = (event, reason) => {
+    if (reason && reason == "backdropClick") 
+        return;
+    myCloseModal();
+}
+
   React.useEffect(() => {
     fetchCropsLifecycleDetails(parseInt(lifecycleId));
   }, []);
@@ -390,6 +398,7 @@ export default function CropLifeCycleDetails({
               <ScheduleHarvestingModal
                 open={openScheduleHarvestingModal}
                 handleClose={handleScheduleHarvestingModalToggle}
+                
               //  handleClick={handleCropTransationModalSave}
               />
             )}

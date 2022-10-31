@@ -57,8 +57,9 @@ export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQt
             handleClick(units, kgs, isHarvestStage ? complete : false)
         }
     }
+
     return (
-        <Dialog open={open} onClose={handleClick}>
+        <Dialog open={open} onClose={handleClose} disableBackdropClick>
             <DialogTitle className="dialog-title-container">
                 Schedule Crop Harvesting
             </DialogTitle>

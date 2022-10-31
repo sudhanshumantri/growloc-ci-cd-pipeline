@@ -83,8 +83,8 @@ export default function ManageUsers({
           label: "Delete",
           handler: handleDelete,
           type: 'icon',
-          icon: <DeleteIcon />,
-          color:'warning'
+          icon: <DeleteIcon aria-label="delete"/>,
+          // color:'warning'
         },
       ],
     },

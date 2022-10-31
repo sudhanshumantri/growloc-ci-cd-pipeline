@@ -11,7 +11,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import ButtonCustom from "../../shared/button";
 import { Grid } from "@mui/material";
-
 export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQty, handleClose, isHarvestStage }) {
     const [units, setUnits] = useState("");
     const [kgs, setKgs] = useState("");
@@ -47,10 +46,16 @@ export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQt
             handleClick(units, kgs, isHarvestStage ? complete : false)
         }
     }
+
+    const handleDialogClose = (event, reason) => {
+        if (reason && reason == "backdropClick") 
+            return;
+            handleClick();
+    }
     return (
 
         <div>
-            <Dialog open={open} onClose={handleClick}>
+            <Dialog open={open} onClose={handleDialogClose}>
                 <DialogTitle className="dialog-title-container">
                     {title}
                 </DialogTitle>
