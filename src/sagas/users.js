@@ -10,7 +10,7 @@ import {
   deleteUserSuccess,
   deleteUserFailure,
 } from "../actions/users";
-import {addNotification} from "../utils/noftification";
+import {addNotification} from "../utils/notification";
 export function* fetchUsersList({ data }) {
   let responseData = yield call(callFetchUsersList, data);
   if (responseData?.status == 200 && responseData.data.status) {

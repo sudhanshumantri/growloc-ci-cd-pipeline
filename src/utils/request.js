@@ -2,7 +2,7 @@ import axios from "axios";
 import { call, all, put, takeLatest } from "redux-saga/effects";
 import { browserHistory } from "../store";
 import { isEmpty, toNumber } from "lodash";
-import { addNotification } from "./noftification";
+import { addNotification } from "./notification";
 const TOKEN = localStorage.getItem("AUTH_TOKEN");
 function queryParams(params) {
   return Object.keys(params)

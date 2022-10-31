@@ -47,15 +47,10 @@ export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQt
         }
     }
 
-    const handleDialogClose = (event, reason) => {
-        if (reason && reason == "backdropClick") 
-            return;
-            handleClick();
-    }
     return (
 
         <div>
-            <Dialog open={open} onClose={handleDialogClose}>
+            <Dialog open={open} onClose={handleClose}>
                 <DialogTitle className="dialog-title-container">
                     {title}
                 </DialogTitle>
