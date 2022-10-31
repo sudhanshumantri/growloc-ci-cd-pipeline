@@ -19,6 +19,7 @@ import { makeStyles } from "@mui/styles";
 import moment from "moment";
 import style from "./style.css";
 import MoveCropLifeCycleModal from "./moveCropLifecycleModal";
+import ScheduleHarvestingModal from "./scheduleHarvestingModal";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import EditParameters from "./editParameter";
 
@@ -81,6 +82,7 @@ export default function CropLifeCycleDetails({
 
 }) {
   const [open, setOpen] = useState(false);
+  const [openScheduleHarvestingModal, setScheduleHarvestingModal] = useState(false);
   const [isStageEditOpen, setIsStageEditOpen] = useState(false);
   let { lifecycleId } = useParams();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -91,6 +93,10 @@ export default function CropLifeCycleDetails({
     setOpen(!open);
 
   };
+  const handleScheduleHarvestingModalToggle = () => {
+    setScheduleHarvestingModal(!openScheduleHarvestingModal);
+  };
+
   const handleEditToggle = () => {
     setIsStageEditOpen(!isStageEditOpen);
   };
@@ -99,11 +105,13 @@ export default function CropLifeCycleDetails({
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let selectedStageInformation = FarmCropLifecycleStages[id];
     setMaxQty(selectedStageInformation.qty);
-    if ((id = FarmCropLifecycleStages.length - 1)) {
+    if (id == FarmCropLifecycleStages.length - 1) {
       setHarvestStage(true);
+    } else {
+      setHarvestStage(false);
     }
   };
-  const handleCropTransationModalSave = (units, kgs) => {
+  const handleCropTransationModalSave = (units, kgs, isComplete) => {
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let selectedStageInformation = FarmCropLifecycleStages[activeStep];
     if (selectedStageInformation.qty > 0) {
@@ -117,6 +125,8 @@ export default function CropLifeCycleDetails({
         kgs: kgs ? parseInt(kgs) : kgs,
         currentStageId: selectedStageInformation.id,
         nextStageId: nextStageInforamtion ? nextStageInforamtion.id : null,
+        isDispose: isHarvestStage ? true : false,
+        isCompleted: isHarvestStage ? isComplete : false
       };
       handleModalToggle();
       cropsLifecycleTransition(requestData);
@@ -127,6 +137,8 @@ export default function CropLifeCycleDetails({
   }, []);
   const handleActionButton = () => {
     let buttonArray = [];
+    let { cropDetails } = lifecycleDetails;
+    //  cropDetails.crop.crop.variety
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let selectedStageInformation = FarmCropLifecycleStages[activeStep];
     if (selectedStageInformation.qty > 0) {
@@ -143,10 +155,12 @@ export default function CropLifeCycleDetails({
           label: "Dispose",
           handler: handleModalToggle,
         });
-        buttonArray.push({
-          label: "Schedule",
-          handler: handleModalToggle,
-        });
+        if (cropDetails.crop.crop.variety == 'Vine' || cropDetails.crop.crop.variety == 'Herb') {
+          buttonArray.push({
+            label: "Schedule",
+            handler: handleScheduleHarvestingModalToggle,
+          });
+        }
       }
     }
     return buttonArray;
@@ -287,8 +301,8 @@ export default function CropLifeCycleDetails({
               <span className="label-light-bold">Actual Start Date : </span>
               {selectedStageInformation.start_date
                 ? moment(selectedStageInformation.start_date).format(
-                    "MMMM Do YYYY hh:mm:ss A"
-                  )
+                  "MMMM Do YYYY hh:mm:ss A"
+                )
                 : "Not Yet Started"}
             </p>
             <p className="label-light">
@@ -299,10 +313,10 @@ export default function CropLifeCycleDetails({
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
           <p className="header-title">
-            {selectedStageInformation.stage + " Parameters Information"} 
+            {selectedStageInformation.stage + " Parameters Information"}
             {" "}
             <BorderColorIcon className="icon" onClick={handleEditToggle} />
-          </p> 
+          </p>
 
           <div className="life-cycle-details-card">
             {selectedStageInformation.parameters.map((param) => {
@@ -346,7 +360,7 @@ export default function CropLifeCycleDetails({
     addCropToLifecycleParameters(paylad);
     handleEditToggle();
   };
-
+  console.log('isHarvestStage', isHarvestStage)
   return (
     <>
       {isLifecycleDetailsLoading && <Loader title="Fetching Details" />}
@@ -367,11 +381,19 @@ export default function CropLifeCycleDetails({
                   maxQty
                     ? maxQty
                     : lifecycleDetails.cropDetails.FarmCropLifecycleStages[
-                        activeStep
-                      ].qty
+                      activeStep
+                    ].qty
                 }
               />
             )}
+            {openScheduleHarvestingModal && (
+              <ScheduleHarvestingModal
+                open={openScheduleHarvestingModal}
+                handleClose={handleScheduleHarvestingModalToggle}
+              //  handleClick={handleCropTransationModalSave}
+              />
+            )}
+
             {isTransitionLoading && (
               <Loader title="Migrating Crops to another stage" />
             )}
@@ -385,8 +407,8 @@ export default function CropLifeCycleDetails({
                 open={isStageEditOpen}
                 handleClose={handleEditToggle}
                 modalData={lifecycleDetails}
-                activeStep ={activeStep}
-                handleSave ={handleParametersSave}
+                activeStep={activeStep}
+                handleSave={handleParametersSave}
               />
             )}
           </div>

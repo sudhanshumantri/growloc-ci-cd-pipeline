@@ -43,22 +43,22 @@ export default function ManageCrop({
     fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
 
-  const handleDelete =(cropData) =>{
+  const handleDelete = (cropData) => {
     console.log(cropData, "cropData");
-    const {id,crop } = cropData;
-    const cropDetails = {id,name:crop.name, }
+    const { id, crop } = cropData;
+    const cropDetails = { id, name: crop.name };
     setCropInfo(cropDetails);
     setIsDeleteModelOpen(true);
-  }
+  };
   const handleConfirmRemove = () => {
-    const {id} = cropInfo
-    deleteCrop({id})
+    const { id } = cropInfo;
+    deleteCrop({ id });
     handleDeleteDialogueToggle();
-  }
-  const handleDeleteDialogueToggle = () =>{
-    setIsDeleteModelOpen(!isDeleteModelOpen)
-    setCropInfo({})
-  }
+  };
+  const handleDeleteDialogueToggle = () => {
+    setIsDeleteModelOpen(!isDeleteModelOpen);
+    setCropInfo({});
+  };
   let headers = [
     {
       label: "Crop",
@@ -121,7 +121,6 @@ export default function ManageCrop({
       handler: handleConfirmRemove,
     },
   ];
-
 
   React.useEffect(() => {
     fetchCrop();
