@@ -1,6 +1,6 @@
 import { call, all, put, takeLatest } from "redux-saga/effects";
 import {
-    callAddCropToLifecycle, callCropLifecycleTransition, callfetchAllCropsLifecycle, callfetchCropsLifecycleDetails,callAddCropCycleParameters
+    callAddCropToLifecycle, callCropLifecycleTransition, callfetchAllCropsLifecycle, callfetchCropsLifecycleDetails, callUpdateCropCycleParameters, callUpdateCropToLifecycleSchedule
 } from "../utils/api";
 
 import {
@@ -12,8 +12,10 @@ import {
     fetchCropsLifecycleDetailsFailure,
     cropsLifecycleTransitionSuccess,
     cropsLifecycleTransitionFailure,
-    addCropToLifecycleParametersSuccess,
-    addCropToLifecycleParametersFailure
+    updateCropToLifecycleParametersSuccess,
+    updateCropToLifecycleParametersFailure,
+    updateCropToLifecycleScheduleSuccess,
+    updateCropToLifecycleScheduleFailure
 } from "../actions/life-cycle";
 
 export function* fetchAllCropsLifecycle({ data }) {
@@ -52,13 +54,23 @@ export function* fetchCropsLifecycleDetails({ data }) {
         yield put(fetchCropsLifecycleDetailsFailure("Something went wrong"));
     }
 }
-export function* addCropToLifecycleParameters({ data }) {
-    let responseData = yield call(callAddCropCycleParameters, data);
+export function* updateCropToLifecycleParameters({ data }) {
+    let responseData = yield call(callUpdateCropCycleParameters, data);
     if (responseData?.status == 200 && responseData.data.status) {
-        yield put(addCropToLifecycleParametersSuccess(responseData.data.data));
+        yield put(updateCropToLifecycleParametersSuccess(responseData.data.data));
 
     } else {
-        yield put(addCropToLifecycleParametersFailure("Something went wrong"));
+        yield put(updateCropToLifecycleParametersFailure("Something went wrong"));
+    }
+}
+
+export function* updateCropToLifecycleSchedule({ data }) {
+    let responseData = yield call(callUpdateCropToLifecycleSchedule, data);
+    if (responseData?.status == 200 && responseData.data.status) {
+        yield put(updateCropToLifecycleScheduleSuccess(responseData.data.data));
+
+    } else {
+        yield put(updateCropToLifecycleScheduleFailure("Something went wrong"));
     }
 }
 
@@ -68,7 +80,8 @@ export function* cropLifeCycleSagas() {
         takeLatest("FETCH_CROP_LIFECYCLE_REQUEST", fetchAllCropsLifecycle),
         takeLatest("FETCH_CROP_LIFECYCLE_DETAILS_REQUEST", fetchCropsLifecycleDetails),
         takeLatest("CROP_LIFECYCLE_TRANSITION_REQUEST", cropLifecycleTransition),
-        takeLatest("ADD_CROP_LIFECYCLE_PARAMETERS_REQUEST", addCropToLifecycleParameters),
+        takeLatest("UPDATE_CROP_LIFECYCLE_PARAMETERS_REQUEST", updateCropToLifecycleParameters),
+        takeLatest("UPDATE_CROP_LIFECYCLE_SCHEDULE_REQUEST", updateCropToLifecycleSchedule),
 
     ]);
 }

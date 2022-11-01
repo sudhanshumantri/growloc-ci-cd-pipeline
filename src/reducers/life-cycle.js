@@ -12,9 +12,12 @@ import {
   CROP_LIFECYCLE_TRANSITION_REQUEST,
   CROP_LIFECYCLE_TRANSITION__SUCCESS,
   CROP_LIFECYCLE_TRANSITION__FAILURE,
-  ADD_CROP_LIFECYCLE_PARAMETERS_REQUEST,
-  ADD_CROP_LIFECYCLE_PARAMETERS_SUCCESS,
-  ADD_CROP_LIFECYCLE_PARAMETERS_FAILURE,
+  UPDATE_CROP_LIFECYCLE_PARAMETERS_REQUEST,
+  UPDATE_CROP_LIFECYCLE_PARAMETERS_SUCCESS,
+  UPDATE_CROP_LIFECYCLE_PARAMETERS_FAILURE,
+  UPDATE_CROP_LIFECYCLE_SCHEDULE_REQUEST,
+  UPDATE_CROP_LIFECYCLE_SCHEDULE_SUCCESS,
+  UPDATE_CROP_LIFECYCLE_SCHEDULE_FAILURE
 } from "../actions/actionTypes";
 const INITIAL_STATE = fromJS({
   isCropLifeCycleListLoading: false,
@@ -28,12 +31,16 @@ const INITIAL_STATE = fromJS({
   isTransitionLoading: false,
   isAddLifecycleParametersLoading: false,
   addLifecycleParameterError: null,
+  isUpdateLifecycleStageScheduleRequested: false
+
 });
 export default function cropLifecycleReducer(
   state = INITIAL_STATE,
   action = {}
 ) {
+  let lifecycleDetails = state.toJS()["lifecycleDetails"];
   switch (action.type) {
+
     case FETCH_CROP_LIFECYCLE_REQUEST:
       return state
         .set("isCropLifeCycleListLoading", true)
@@ -89,12 +96,11 @@ export default function cropLifecycleReducer(
     case CROP_LIFECYCLE_TRANSITION__FAILURE:
       return state.set("isTransitionLoading", false);
     //
-    case ADD_CROP_LIFECYCLE_PARAMETERS_REQUEST:
+    case UPDATE_CROP_LIFECYCLE_PARAMETERS_REQUEST:
       return state
         .set("isAddLifecycleParametersLoading", true)
         .set("addLifecycleParameterError", null);
-    case ADD_CROP_LIFECYCLE_PARAMETERS_SUCCESS:
-      let lifecycleDetails = state.toJS()["lifecycleDetails"];
+    case UPDATE_CROP_LIFECYCLE_PARAMETERS_SUCCESS:
       const { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
       const { id } = action.data;
       const index = FarmCropLifecycleStages.findIndex(
@@ -105,10 +111,23 @@ export default function cropLifecycleReducer(
         .set("isAddLifecycleParametersLoading", false)
         .set("lifecycleDetails", lifecycleDetails)
         .set("addLifecycleParameterError", null);
-    case ADD_CROP_LIFECYCLE_PARAMETERS_FAILURE:
+    case UPDATE_CROP_LIFECYCLE_PARAMETERS_FAILURE:
       return state
         .set("isAddLifecycleParametersLoading", false)
         .set("addLifecycleParameterError", action.error);
+
+    // update of stage parameters
+    case UPDATE_CROP_LIFECYCLE_SCHEDULE_REQUEST:
+      return state
+        .set("isUpdateLifecycleStageScheduleRequested", true)
+    case UPDATE_CROP_LIFECYCLE_SCHEDULE_SUCCESS:
+      lifecycleDetails.cropDetails.FarmCropLifecycleSchedules = [action.data];
+      return state
+        .set("isUpdateLifecycleStageScheduleRequested", false)
+        .set("lifecycleDetails", lifecycleDetails)
+    case UPDATE_CROP_LIFECYCLE_SCHEDULE_FAILURE:
+      return state
+        .set("isUpdateLifecycleStageScheduleRequested", false)
     default:
       return state;
   }

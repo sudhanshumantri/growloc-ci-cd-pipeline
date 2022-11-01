@@ -11,9 +11,12 @@ import {
   CROP_LIFECYCLE_TRANSITION_REQUEST,
   CROP_LIFECYCLE_TRANSITION__SUCCESS,
   CROP_LIFECYCLE_TRANSITION__FAILURE,
-  ADD_CROP_LIFECYCLE_PARAMETERS_REQUEST,
-  ADD_CROP_LIFECYCLE_PARAMETERS_SUCCESS,
-  ADD_CROP_LIFECYCLE_PARAMETERS_FAILURE,
+  UPDATE_CROP_LIFECYCLE_PARAMETERS_REQUEST,
+  UPDATE_CROP_LIFECYCLE_PARAMETERS_SUCCESS,
+  UPDATE_CROP_LIFECYCLE_PARAMETERS_FAILURE,
+  UPDATE_CROP_LIFECYCLE_SCHEDULE_REQUEST,
+  UPDATE_CROP_LIFECYCLE_SCHEDULE_SUCCESS,
+  UPDATE_CROP_LIFECYCLE_SCHEDULE_FAILURE,
 } from "./actionTypes";
 
 export function fetchAllCropsLifecycleRequest(data) {
@@ -92,22 +95,40 @@ export function cropsLifecycleTransitionFailure(error) {
   };
 }
 
-export function addCropToLifecycleParametersRequest(data) {
-  console.log(data, "data");
+export function updateCropToLifecycleParametersRequest(data) {
   return {
-    type: ADD_CROP_LIFECYCLE_PARAMETERS_REQUEST,
+    type: UPDATE_CROP_LIFECYCLE_PARAMETERS_REQUEST,
     data
   };
 }
-export function addCropToLifecycleParametersSuccess(data) {
+export function updateCropToLifecycleParametersSuccess(data) {
   return {
-    type: ADD_CROP_LIFECYCLE_PARAMETERS_SUCCESS,
+    type: UPDATE_CROP_LIFECYCLE_PARAMETERS_SUCCESS,
     data,
   };
 }
-export function addCropToLifecycleParametersFailure(error) {
+export function updateCropToLifecycleParametersFailure(error) {
   return {
-    type: ADD_CROP_LIFECYCLE_PARAMETERS_FAILURE,
+    type: UPDATE_CROP_LIFECYCLE_PARAMETERS_FAILURE,
+    error,
+  };
+}
+//
+export function updateCropToLifecycleScheduleRequest(data) {
+  return {
+    type: UPDATE_CROP_LIFECYCLE_SCHEDULE_REQUEST,
+    data
+  };
+}
+export function updateCropToLifecycleScheduleSuccess(data) {
+  return {
+    type: UPDATE_CROP_LIFECYCLE_SCHEDULE_SUCCESS,
+    data,
+  };
+}
+export function updateCropToLifecycleScheduleFailure(error) {
+  return {
+    type: UPDATE_CROP_LIFECYCLE_SCHEDULE_FAILURE,
     error,
   };
 }

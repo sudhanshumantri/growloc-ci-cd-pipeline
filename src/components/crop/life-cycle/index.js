@@ -32,6 +32,14 @@ let headers = [
         redirection: false
     },
     {
+        label: 'Completed',
+        key: 'isComplete',
+        redirection: false,
+        isBoolean: true,
+        falseLabel: 'In-process',
+        trueLabel: 'Completed'
+    },
+    {
         label: 'No. of Seeds',
         key: 'qty',
         redirection: false
@@ -69,7 +77,7 @@ export default function CropLifeCycle({
             handler: handleModalToggle,
         },
     ];
-
+    console.log('lifecycleCropsList', lifecycleCropsList)
     return (
         <>
             <PageHeader title='Crop Lifecycle' buttonArray={buttonArray} />

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { fetchFarmCropsRequest } from "../../actions/crops";
-import { fetchCropsLifecycleDetailsRequest,cropsLifecycleTransitionRequest, addCropToLifecycleParametersRequest } from "../../actions/life-cycle";
+import { fetchCropsLifecycleDetailsRequest,cropsLifecycleTransitionRequest, updateCropToLifecycleParametersRequest,updateCropToLifecycleScheduleRequest } from "../../actions/life-cycle";
 import LifecycleDetails from "../../components/crop/life-cycle/lifeCycleDetails";
 import {
     selectLifecycleDetails,
@@ -26,7 +26,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = {
     fetchCropsLifecycleDetails: fetchCropsLifecycleDetailsRequest,
     cropsLifecycleTransition:cropsLifecycleTransitionRequest,
-    addCropToLifecycleParameters: addCropToLifecycleParametersRequest
+    addCropToLifecycleParameters: updateCropToLifecycleParametersRequest,
+    updateCropToLifecycleSchedule:updateCropToLifecycleScheduleRequest
 };
 export default
     connect(mapStateToProps, mapDispatchToProps)(LifecycleDetails);

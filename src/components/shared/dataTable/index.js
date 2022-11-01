@@ -12,7 +12,7 @@ import moment from "moment";
 import "./style.css";
 function DataTable({ data }) {
   const { headers, rows } = data;
-  const handleRedirection = (key) => {};
+  const handleRedirection = (key) => { };
   const validateValue = (row, key) => {
     if (key.indexOf(".") > -1) {
       const keys = key.split(".");
@@ -24,8 +24,8 @@ function DataTable({ data }) {
   };
   const renderButtonArray = (buttonArray, rowData) => {
     return buttonArray.map((item, index) => {
-      return (item.type === 'icon' ? <IconButton title={item.label} key={index+item.label} color={item.color} onClick={()=>item.handler(rowData)}>{item.icon}</IconButton>
-      :<Button key={index+item.label} onClick={()=>item.handler(rowData)}>{item.label}</Button>)
+      return (item.type === 'icon' ? <IconButton title={item.label} key={index} color={item.color} onClick={() => item.handler(rowData)}>{item.icon}</IconButton>
+        : <Button key={index + item.label} onClick={() => item.handler(rowData)}>{item.label}</Button>)
     });
   };
   return (
@@ -33,8 +33,8 @@ function DataTable({ data }) {
       <Table aria-label="simple table">
         <TableHead className="table-header-row">
           <TableRow>
-            {headers.map((header) => (
-              <TableCell key={header.id} className="table-header" align="left">
+            {headers.map((header, index) => (
+              <TableCell key={index} className="table-header" align="left">
                 {header.label}
               </TableCell>
             ))}
@@ -44,14 +44,14 @@ function DataTable({ data }) {
           {rows.map((row, index) => (
             <TableRow
               align="center"
-              key={row.id}
+              key={index}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              {headers.map((header) => {
+              {headers.map((header, headerIndex) => {
                 if (header.redirection) {
                   return (
                     <TableCell
-                      key={row.id + header.id}
+                      key={headerIndex}
                       component="td"
                       scope="row"
                     >
@@ -70,7 +70,7 @@ function DataTable({ data }) {
                 } else {
                   return (
                     <TableCell
-                      key={row.id + header.id}
+                      key={headerIndex}
                       component="td"
                       scope="row"
                     >
@@ -88,6 +88,8 @@ function DataTable({ data }) {
                         moment(validateValue(row, header.key)).format(
                           "YYYY-MM-DD"
                         )
+                      ) : header.isBoolean ? (
+                        validateValue(row, header.key) ? header.trueLabel : header.falseLabel
                       ) : (
                         validateValue(row, header.key)
                       )}

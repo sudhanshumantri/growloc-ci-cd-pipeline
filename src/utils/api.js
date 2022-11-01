@@ -13,8 +13,8 @@ const urls = {
     "crop-lifecycle-transition": "farm/crop/life-cycle-transition",
     "fetch-crop-lifecycle": "farm/crop/get-all-life-cycle",
     "fetch-crop-lifecycle-details": "farm/crop/life-cycle-details/",
-    "add-crop-lifecycle-parameters":
-    "farm/crop/update-life-cycle-stage-parameters",
+    "update-crop-lifecycle-parameters":"farm/crop/update-life-cycle-stage-parameters",
+    "update-crop-lifecycle-schedule":"farm//crop/schedule-lifecycle/",
     "fetch-users": "farm/get-all-farm-users",
     "add-user": "farm/add-new-user-to-farm",
     "update-user": "farm/update-farm-user",
@@ -103,18 +103,22 @@ export function callfetchCropsLifecycleDetails(routeParams) {
   });
 }
 
-export function callAddCropCycleParameters(data) {
+export function callUpdateCropCycleParameters(data) {
   console.log(data);
-  return callApi(getEndpoint("add-crop-lifecycle-parameters"), {
+  return callApi(getEndpoint("update-crop-lifecycle-parameters"), {
     method: "POST",
     removeAuthorizationHeader: false,
     data,
   });
 }
-  // data = {
-  //   farmId: 1,
-  // }
-
+export function callUpdateCropToLifecycleSchedule(data) {
+  console.log(data);
+  return callApi(getEndpoint("update-crop-lifecycle-schedule"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data,
+  });
+}
 export function callFetchUsersList(data) {
   return callApi(getEndpoint("fetch-users"), {
     method: "POST",

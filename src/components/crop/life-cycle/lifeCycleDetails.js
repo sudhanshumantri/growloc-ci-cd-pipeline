@@ -22,53 +22,6 @@ import MoveCropLifeCycleModal from "./moveCropLifecycleModal";
 import ScheduleHarvestingModal from "./scheduleHarvestingModal";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import EditParameters from "./editParameter";
-
-const STATIC_STEPPER = [
-  {
-    label: "Germination",
-  },
-  {
-    label: "Nursery",
-  },
-  {
-    label: "Harvest",
-  },
-];
-
-let headers = [
-  {
-    label: "Batch No",
-    key: "batchName",
-    redirection: true,
-    redirectionKey: "link",
-  },
-  {
-    label: "Crop",
-    key: "crop.crop.name",
-    redirection: false,
-  },
-  {
-    label: "Variety",
-    key: "crop.crop.variety",
-    redirection: false,
-  },
-  {
-    label: "Start Date ",
-    key: "start_date",
-    redirection: false,
-    isDate: true,
-  },
-  {
-    label: "Est Harvest Date",
-    key: "estDate",
-    redirection: false,
-  },
-  {
-    label: "No. of Seeds",
-    key: "qty",
-    redirection: false,
-  },
-];
 export default function CropLifeCycleDetails({
   fetchCropsLifecycleDetails,
   lifecycleDetails,
@@ -78,8 +31,7 @@ export default function CropLifeCycleDetails({
   isTransitionLoading,
   addCropToLifecycleParameters,
   isAddLifecycleParametersLoading,
-
-
+  updateCropToLifecycleSchedule
 }) {
   const [open, setOpen] = useState(false);
   const [openScheduleHarvestingModal, setScheduleHarvestingModal] = useState(false);
@@ -89,16 +41,54 @@ export default function CropLifeCycleDetails({
   const [isHarvestStage, setHarvestStage] = React.useState(false);
   const [maxQty, setMaxQty] = React.useState(null);
   const [modalHeaderText, setModalHeaderText] = React.useState("");
+  const [harvestingSchedules, setHarvestingSchedules] = React.useState([]);
+  React.useEffect(() => {
+    fetchCropsLifecycleDetails(parseInt(lifecycleId));
+  }, []);
+  console.log('lifecycleDetails', lifecycleDetails)
   const handleModalToggle = () => {
     setOpen(!open);
-
   };
   const handleScheduleHarvestingModalToggle = () => {
-    console.log("hhhhh")
-
+    if (!openScheduleHarvestingModal) {
+      setHarvestingSchedules((lifecycleDetails.cropDetails.FarmCropLifecycleSchedules && lifecycleDetails.cropDetails.FarmCropLifecycleSchedules.length > 0) ? lifecycleDetails.cropDetails.FarmCropLifecycleSchedules[0].repeatsOn : [])
+    }
     setScheduleHarvestingModal(!openScheduleHarvestingModal);
   };
-
+  const handleScheduleHarvestChange = (value) => {
+    let daysIndex = harvestingSchedules.indexOf(value);
+    if (daysIndex != -1) {
+      setHarvestingSchedules(
+        harvestingSchedules.filter(a =>
+          a !== value
+        )
+      );
+    } else {
+      setHarvestingSchedules([
+        ...harvestingSchedules, value
+      ]
+      )
+    }
+  }
+  const handleScheduleHarvestSave = () => {
+    let scheduleHarvestingData = null;
+    if (lifecycleDetails.cropDetails.FarmCropLifecycleSchedules && lifecycleDetails.cropDetails.FarmCropLifecycleSchedules.length > 0) {
+      scheduleHarvestingData = {
+        id: lifecycleDetails.cropDetails.FarmCropLifecycleSchedules[0].id,
+        cropLifeCycleId: lifecycleId,
+        repeatsOn: harvestingSchedules
+      }
+      //edit is happening
+    } else {
+      scheduleHarvestingData = {
+        cropLifeCycleId: lifecycleId,
+        repeatsOn: harvestingSchedules
+      }
+      //add is happening
+    }
+    updateCropToLifecycleSchedule(scheduleHarvestingData);
+    handleScheduleHarvestingModalToggle();
+  }
   const handleEditToggle = () => {
     setIsStageEditOpen(!isStageEditOpen);
   };
@@ -113,6 +103,7 @@ export default function CropLifeCycleDetails({
       setHarvestStage(false);
     }
   };
+
   const handleCropTransationModalSave = (units, kgs, isComplete) => {
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let selectedStageInformation = FarmCropLifecycleStages[activeStep];
@@ -134,15 +125,15 @@ export default function CropLifeCycleDetails({
       cropsLifecycleTransition(requestData);
     }
   };
-const handleClose = (event, reason) => {
-    if (reason && reason == "backdropClick") 
-        return;
-    myCloseModal();
-}
-
-  React.useEffect(() => {
-    fetchCropsLifecycleDetails(parseInt(lifecycleId));
-  }, []);
+  const handleParametersSave = (data) => {
+    const { id, parameters } = data;
+    const paylad = {
+      cropLifeCycleStageId: id,
+      parameters,
+    };
+    addCropToLifecycleParameters(paylad);
+    handleEditToggle();
+  };
   const handleActionButton = () => {
     let buttonArray = [];
     let { cropDetails } = lifecycleDetails;
@@ -249,12 +240,13 @@ const handleClose = (event, reason) => {
               {filteredHistory.map((data, index) => {
                 return (
                   <TableRow
-                    key={data + index}
+                    key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
                       <p className="label-light">
                         <span className="label-bold"> {data.qty}</span> units
+                        <span className="label-bold"> {data.kgs?'('+data.kgs+' Kg) ':''}</span>
                         were moved {data.movement == 1 ? " in to" : "out from"}{" "}
                         the {selectedStageInformation.stage} stage on{" "}
                         <span className="label-bold">
@@ -264,9 +256,6 @@ const handleClose = (event, reason) => {
                         </span>
                       </p>
                     </TableCell>
-                    {/* <TableCell align="right">
-                                        <span className='label-bold'>  {data.value}</span>
-                                    </TableCell> */}
                   </TableRow>
                 );
               })}
@@ -323,7 +312,7 @@ const handleClose = (event, reason) => {
           <p className="header-title">
             {selectedStageInformation.stage + " Parameters Information"}
             {" "}
-            <BorderColorIcon className="icon" onClick={handleEditToggle} />
+            <BorderColorIcon className="icon" sx={{ fontSize: '16px' }} onClick={handleEditToggle} />
           </p>
 
           <div className="life-cycle-details-card">
@@ -359,20 +348,10 @@ const handleClose = (event, reason) => {
     );
   };
 
-  const handleParametersSave = (data) => {
-    const { id, parameters } = data;
-    const paylad = {
-      cropLifeCycleStageId: id,
-      parameters,
-    };
-    addCropToLifecycleParameters(paylad);
-    handleEditToggle();
-  };
-  console.log('isHarvestStage', isHarvestStage)
+
   return (
     <>
       {isLifecycleDetailsLoading && <Loader title="Fetching Details" />}
-
       {!isLifecycleDetailsLoading && (
         <>
           {renderHeader(lifecycleDetails, handleModalToggle)}
@@ -398,8 +377,9 @@ const handleClose = (event, reason) => {
               <ScheduleHarvestingModal
                 open={openScheduleHarvestingModal}
                 handleClose={handleScheduleHarvestingModalToggle}
-                
-              //  handleClick={handleCropTransationModalSave}
+                handleChange={handleScheduleHarvestChange}
+                data={harvestingSchedules}
+                handleSave={handleScheduleHarvestSave}
               />
             )}
 

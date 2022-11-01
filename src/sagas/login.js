@@ -8,9 +8,8 @@ import { loginSuccess, loginFailure, loadAuthToken } from "../actions/login";
 export function* loginHandler({ data }) {
   let responseData = yield call(callLoginHandler, data);
   if (responseData?.status == 200 && responseData.data.status) {
-    yield call(browserHistory.push, "/app/dashboard");
-    yield call(browserHistory.go, "/app/dashboard");
-
+    yield call(browserHistory.push, "/");
+    yield call(browserHistory.go, "/");
     yield put(loginSuccess(responseData.data.token));
     localStorage.setItem("AUTH_TOKEN", responseData.data.token);
     localStorage.setItem("AUTH_OBJECT", JSON.stringify(responseData.data.data));

@@ -22,44 +22,9 @@ const days = [
     { label: 'F', value: '5' },
     { label: 'Sa', value: '6' },
 ]
-export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQty, handleClose, isHarvestStage }) {
-    const [units, setUnits] = useState("");
-    const [kgs, setKgs] = useState("");
-    const [complete, setComplete] = useState(true);
-    const [unitError, setUnitError] = useState(false);
-    const [unitErrorMessage, setUnitErrorMessage] = useState(false);
-    const handleCompleteToggle = () => {
-        setComplete(!complete);
-    }
-    const handleUnitsChange = (e) => {
-        const numbers = e.target.value.replace(/[^0-9]/g, '');
-        setUnits(numbers);
-    };
-    const handleKgChange = (e) => {
-        let input = e.target.value;
-        if (!input || input.match(/^\d{1,}(\.\d{0,4})?$/)) {
-            setKgs(input);
-        }
-    };
-    const handleModalInfoSave = () => {
-        if (!units) {
-            setUnitError(true)
-            setUnitErrorMessage('"No of plants is required')
-        } else if (parseInt(units) > maxQty) {
-            setUnitError(true)
-            setUnitErrorMessage("No of plants can't be greater than " + maxQty)
-        } else {
-            let data = {
-                units,
-                kgs,
-                complete: isHarvestStage ? complete : false,
-            }
-            handleClick(units, kgs, isHarvestStage ? complete : false)
-        }
-    }
-
+export default function MoveCropLifeCycleModal({ title, open, handleSave, handleClose, handleChange, data }) {
     return (
-        <Dialog open={open} onClose={handleClose} disableBackdropClick>
+        <Dialog open={open} onClose={handleClose}>
             <DialogTitle className="dialog-title-container">
                 Schedule Crop Harvesting
             </DialogTitle>
@@ -67,21 +32,17 @@ export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQt
                 <p className="label-bold">Harvesting cycle will repeat every week on?</p>
                 <div className='repeat-days-container'>
                     {days.map((day, index) => {
-                        let isChecked = true;
+                        let isChecked = data.indexOf(day.value);
                         return (
                             <Box key={index}
-                                // onClick={() => {
-                                //     handleFlowCardUpdate(day.value, {
-                                //         stepObject: stepObject,
-                                //         userDataKey: 'days'
-                                //     }
-                                //     )
-                                // }}
+                                onClick={() => {
+                                    handleChange(day.value)
+                                }}
                                 sx={{
                                     padding: "5px 13px",
-                                    backgroundColor: isChecked == -1 ? "#2B98D3" : "#EBEEEF",
+                                    backgroundColor: isChecked == -1 ? "#EBEEEF" : "#517223",
                                     fontSize: "12px",
-                                    color: isChecked == -1 ? "white" : "#0E2C4B",
+                                    color: isChecked == -1 ? "#0E2C4B" : "white",
                                     '&:hover': {
                                         backgroundColor: 'primary.main',
                                         opacity: [0.9, 0.8, 0.7],
@@ -101,7 +62,7 @@ export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQt
                     handleButtonClick={handleClose}
                 />
                 <ButtonCustom title="Schedule"
-                    handleButtonClick={handleModalInfoSave}
+                    handleButtonClick={handleSave}
                 />
             </DialogActions>
         </Dialog>

@@ -66,7 +66,7 @@ const Layout = () => {
 
           <Route
             exact
-            path="app/dashboard"
+            path="/"
             element={
               <PrivateOutlet token={token}>
                 <Farms />

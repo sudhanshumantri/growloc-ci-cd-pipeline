@@ -92,7 +92,6 @@ export default function SideBar({ router }) {
       }
     }
   }, [location]);
-  console.log(router, "location");
   const handleClick = (id) => {
     toggleSubmenu((prevState) => ({ ...prevState, [id]: !prevState[id] }));
   };
