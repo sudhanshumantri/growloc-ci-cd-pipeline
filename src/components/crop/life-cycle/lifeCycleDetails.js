@@ -14,6 +14,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Alert
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import moment from "moment";
@@ -22,6 +23,7 @@ import MoveCropLifeCycleModal from "./moveCropLifecycleModal";
 import ScheduleHarvestingModal from "./scheduleHarvestingModal";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import EditParameters from "./editParameter";
+import { WEEKDAYS } from '../../../config'
 export default function CropLifeCycleDetails({
   fetchCropsLifecycleDetails,
   lifecycleDetails,
@@ -45,7 +47,6 @@ export default function CropLifeCycleDetails({
   React.useEffect(() => {
     fetchCropsLifecycleDetails(parseInt(lifecycleId));
   }, []);
-  console.log('lifecycleDetails', lifecycleDetails)
   const handleModalToggle = () => {
     setOpen(!open);
   };
@@ -155,10 +156,13 @@ export default function CropLifeCycleDetails({
           handler: handleModalToggle,
         });
         if (cropDetails.crop.crop.variety == 'Vine' || cropDetails.crop.crop.variety == 'Herb') {
-          buttonArray.push({
-            label: "Schedule",
-            handler: handleScheduleHarvestingModalToggle,
-          });
+          let cropsSchedule = lifecycleDetails?.cropDetails?.FarmCropLifecycleSchedules.length > 0;
+          if(!cropsSchedule){
+            buttonArray.push({
+              label: "Schedule",
+              handler: handleScheduleHarvestingModalToggle,
+            });
+          }
         }
       }
     }
@@ -197,22 +201,47 @@ export default function CropLifeCycleDetails({
   const renderStepper = () => {
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     return (
-      <Stepper alternativeLabel nonLinear activeStep={activeStep}>
-        {FarmCropLifecycleStages.map((data, index) => (
-          <Step key={index}>
-            <StepLabel
-              onClick={() => handleActiveStep(index)}
-              StepIconProps={{
-                classes: { root: "rounder-icon-stepper" },
-              }}
-            >
-              <p className="step-label">{data.stage + "(" + data.qty + ")"}</p>
-            </StepLabel>
-          </Step>
-        ))}
-      </Stepper>
+      <>
+        <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+          {FarmCropLifecycleStages.map((data, index) => (
+            <Step key={index}>
+              <StepLabel
+                onClick={() => handleActiveStep(index)}
+                StepIconProps={{
+                  classes: { root: "rounder-icon-stepper" },
+                }}
+              >
+                <p className="step-label">{data.stage + "(" + data.qty + ")"}</p>
+              </StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+      </>
     );
   };
+  const renderNotification = () => {
+    let cropsSchedule = lifecycleDetails?.cropDetails?.FarmCropLifecycleSchedules.length > 0;
+    if (cropsSchedule) {
+      cropsSchedule = lifecycleDetails?.cropDetails?.FarmCropLifecycleSchedules[0];
+      let repeatsOn = _.orderBy(cropsSchedule.repeatsOn, [], ["asc"]);
+      return (
+        <Alert severity="info">Crop Harvesting would be repeated on following days:
+          {repeatsOn.map((date, index) => {
+            let dayObject = _.find(WEEKDAYS, { value: date });
+            let daysText = dayObject.label;
+            if (index != repeatsOn.length - 1) {
+              daysText = daysText + ', '
+            }
+            return (
+              <b> {daysText}</b>
+            )
+          })}
+          <BorderColorIcon className="icon" sx={{ fontSize: '14px', marginLeft: '5px',color:'#517223' }} onClick={handleScheduleHarvestingModalToggle} />
+        </Alert>
+      )
+    }
+
+  }
   const renderHistoryInformation = () => {
     let { FarmCropLifecycleStages, FarmCropLifecycleHistory } =
       lifecycleDetails.cropDetails;
@@ -246,7 +275,7 @@ export default function CropLifeCycleDetails({
                     <TableCell component="th" scope="row">
                       <p className="label-light">
                         <span className="label-bold"> {data.qty}</span> units
-                        <span className="label-bold"> {data.kgs?'('+data.kgs+' Kg) ':''}</span>
+                        <span className="label-bold"> {data.kgs ? '(' + data.kgs + ' Kg) ' : ''}</span>
                         were moved {data.movement == 1 ? " in to" : "out from"}{" "}
                         the {selectedStageInformation.stage} stage on{" "}
                         <span className="label-bold">
@@ -265,7 +294,7 @@ export default function CropLifeCycleDetails({
       </Grid>
     );
   };
-  const renderSelectedStageInformation = (activeStep, handleEditToggle) => {
+  const renderSelectedStageInformation = () => {
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let selectedStageInformation = FarmCropLifecycleStages[activeStep];
 
@@ -354,8 +383,11 @@ export default function CropLifeCycleDetails({
       {isLifecycleDetailsLoading && <Loader title="Fetching Details" />}
       {!isLifecycleDetailsLoading && (
         <>
-          {renderHeader(lifecycleDetails, handleModalToggle)}
+          {renderHeader()}
           <div className="page-container">
+            {renderStepper()}
+            {renderNotification()}
+            {renderSelectedStageInformation()}
             {open && (
               <MoveCropLifeCycleModal
                 open={open}
@@ -386,10 +418,6 @@ export default function CropLifeCycleDetails({
             {isTransitionLoading && (
               <Loader title="Migrating Crops to another stage" />
             )}
-            <Stack sx={{ width: "100%" }} spacing={4}>
-              {renderStepper()}
-            </Stack>
-            {renderSelectedStageInformation(activeStep, handleEditToggle)}
             {isAddLifecycleParametersLoading && (<Loader title="updating parameters" />)}
             {isStageEditOpen && (
               <EditParameters

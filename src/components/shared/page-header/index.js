@@ -30,11 +30,6 @@ export default function PageHeader({ title,subtitle, buttonTitle, buttonArray, i
                             {renderButtonArray(buttonArray)}
                         </div>
                     )}
-                    {customButton && (
-                        <div className='button-container'>
-                            {customButton}
-                        </div>
-                    )}
                 </div>
                 {info && (
                     info.map((data, index) => (
@@ -52,7 +47,6 @@ export default function PageHeader({ title,subtitle, buttonTitle, buttonArray, i
                         </span>
                     ))
                 )}
-
             </div>
 
             <hr />

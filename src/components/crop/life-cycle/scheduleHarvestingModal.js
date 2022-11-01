@@ -10,18 +10,9 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import ButtonCustom from "../../shared/button";
-import { Box } from '@mui/material'
-
+import { Box } from '@mui/material';
+import {WEEKDAYS} from '../../../config'
 import { Grid } from "@mui/material";
-const days = [
-    { label: 'S', value: '7' },
-    { label: 'M', value: '1' },
-    { label: 'T', value: '2' },
-    { label: 'W', value: '3' },
-    { label: 'Th', value: '4' },
-    { label: 'F', value: '5' },
-    { label: 'Sa', value: '6' },
-]
 export default function MoveCropLifeCycleModal({ title, open, handleSave, handleClose, handleChange, data }) {
     return (
         <Dialog open={open} onClose={handleClose}>
@@ -31,7 +22,7 @@ export default function MoveCropLifeCycleModal({ title, open, handleSave, handle
             <DialogContent>
                 <p className="label-bold">Harvesting cycle will repeat every week on?</p>
                 <div className='repeat-days-container'>
-                    {days.map((day, index) => {
+                    {WEEKDAYS.map((day, index) => {
                         let isChecked = data.indexOf(day.value);
                         return (
                             <Box key={index}
