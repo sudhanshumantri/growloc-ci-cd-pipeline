@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { menuItems } from "../shared/sidebar/config";
+import { farmMenuItems } from "../shared/sidebar/config";
 import { useParams } from 'react-router-dom';
 
 const FarmOutlet = () => {
-    const { farmId } = useParams();
+  const { farmId } = useParams();
   useEffect(() => {
-    const formChildren = menuItems.filter((menu) => menu.isChildToFarmId);
+    //  const formChildren = farmMenuItems.filter((menu) => menu.isChildToFarmId);
+    const formChildren = farmMenuItems;
     formChildren.forEach((items) => {
       if (items.subMenu) {
         items.subMenu.forEach((item) => {

@@ -28,12 +28,11 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
   const handleChange = (event, name) => {
     setFarm({ ...farm, [name]: event.target.value });
   };
-
-  const germination = ["Tray with coco peat", "oasis cubes", "coco plugs"];
-  const wateringType = ["manual","automated"]
-  const nursaryType =["open(No humidity control)","Closed dome (Humidity control)" ]
-  const growingZone =['NFT system',"Trough system ", "Raft system", "Dutch bucket system"]
-  const plantSpacing = [' Plant to Plant', "Row to Row"]
+  const germination = ["Tray with coco peat", "Oasis cubes", "Coco plugs"];
+  const wateringType = ["Manual", "automated"]
+  const nursaryType = ["Open (No humidity control)", "Closed dome (Humidity control)"]
+  const growingZone = ['NFT system', "Trough system ", "Raft system", "Dutch bucket system"]
+  const plantSpacing = ['Plant to Plant', "Row to Row"]
   const validateFarm = () => {
     if (farm.name) {
       return true;
@@ -57,10 +56,11 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">
-          Add a new Farm{" "}
+          Add a new Farm
         </DialogTitle>
-        <DialogContent sx={{ paddingTop: "20px" }}>
-          <Grid container sx={{ margin: "1px", width: 500 }} spacing={3}>
+        <DialogContent sx={{ paddingTop: "10px" }}>
+          <br />
+          <Grid container spacing={2}>
             <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
                 <TextField
@@ -86,9 +86,11 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
                 />
               </FormControl>
             </Grid>
-            <p className="header-title">Germination Zone</p>
             <Grid item xs={12} sm={12} md={12}>
               <FormControl fullWidth>
+                <InputLabel id="demo-multiple-name-label" variant="outlined">
+                  Germination Zone
+                </InputLabel>
                 <InputLabel id="demo-multiple-name-label" variant="outlined">
                   {/*  */}
                   zone
@@ -102,7 +104,7 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
                   MenuProps={MenuProps}
                 >
                   {germination.map((zone, index) => {
-                    return <MenuItem value ={zone} key={index}>{zone}</MenuItem>;
+                    return <MenuItem value={zone} key={index}>{zone}</MenuItem>;
                   })}
                 </Select>
               </FormControl>
@@ -139,30 +141,27 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
                   MenuProps={MenuProps}
                 >
                   {wateringType.map((water, index) => {
-                    return <MenuItem value ={water} key={index}>{water}</MenuItem>;
+                    return <MenuItem value={water} key={index}>{water}</MenuItem>;
                   })}
                 </Select>
               </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6} md={12}>
+            </Grid>
+            <Grid item xs={12} sm={6} md={12}>
               <FormControl fullWidth>
                 <TextField
                   InputLabelProps={{ shrink: true }}
                   label={"WateringSchedule"}
                   type="number"
                   onChange={(e) => handleChange(e, "WateringSchedule")}
-                  InputProps={{ inputProps: { min: 1, max:10 } }}
+                  InputProps={{ inputProps: { min: 1, max: 10 } }}
                 />
               </FormControl>
             </Grid>
-            <br/>
+            <Grid item xs={12} sm={12} md={12}>
             <p className="header-title">Nursery Zone</p>
+            </Grid>
             <Grid item xs={12} sm={12} md={12}>
               <FormControl fullWidth>
-                <InputLabel id="demo-multiple-name-label" variant="outlined">
-                  {/*  */}
-                  Nursery Type
-                </InputLabel>
                 <Select
                   labelId="demo-multiple-name-label"
                   id="demo-multiple-name"
@@ -171,12 +170,12 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
                   MenuProps={MenuProps}
                 >
                   {nursaryType.map((narsary, index) => {
-                    return <MenuItem value ={narsary} key={index}>{narsary}</MenuItem>;
+                    return <MenuItem value={narsary} key={index}>{narsary}</MenuItem>;
                   })}
                 </Select>
               </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6} md={6}>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
                 <TextField
                   InputLabelProps={{ shrink: true }}
@@ -199,19 +198,19 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
                   MenuProps={MenuProps}
                 >
                   {wateringType.map((water, index) => {
-                    return <MenuItem value ={water} key={index}>{water}</MenuItem>;
+                    return <MenuItem value={water} key={index}>{water}</MenuItem>;
                   })}
                 </Select>
               </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6} md={12}>
+            </Grid>
+            <Grid item xs={12} sm={6} md={12}>
               <FormControl fullWidth>
                 <TextField
                   InputLabelProps={{ shrink: true }}
                   label={"WateringSchedule"}
                   type="number"
                   onChange={(e) => handleChange(e, "wateringSchedule")}
-                  InputProps={{ inputProps: { min: 1, max:10 } }}
+                  InputProps={{ inputProps: { min: 1, max: 10 } }}
                 />
               </FormControl>
             </Grid>
@@ -230,7 +229,7 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
                   MenuProps={MenuProps}
                 >
                   {growingZone.map((grow, index) => {
-                    return <MenuItem value ={grow} key={index}>{grow}</MenuItem>;
+                    return <MenuItem value={grow} key={index}>{grow}</MenuItem>;
                   })}
                 </Select>
               </FormControl>
@@ -242,7 +241,7 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
                   label={"WateringSchedule"}
                   type="number"
                   onChange={(e) => handleChange(e, "wateringSchedule")}
-                  InputProps={{ inputProps: { min: 1, max:10 } }}
+                  InputProps={{ inputProps: { min: 1, max: 10 } }}
                 />
               </FormControl>
             </Grid>
@@ -286,7 +285,7 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
               <FormControl fullWidth>
                 <InputLabel id="demo-multiple-name-label" variant="outlined">
                   {/*  */}
-                  Plant spacing                
+                  Plant spacing
                 </InputLabel>
                 <Select
                   labelId="demo-multiple-name-label"
@@ -296,11 +295,11 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
                   MenuProps={MenuProps}
                 >
                   {plantSpacing.map((plant, index) => {
-                    return <MenuItem value ={plant} key={index}>{plant}</MenuItem>;
+                    return <MenuItem value={plant} key={index}>{plant}</MenuItem>;
                   })}
                 </Select>
               </FormControl>
-              </Grid>
+            </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>

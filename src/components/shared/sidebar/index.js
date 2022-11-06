@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -15,9 +16,8 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { Link } from "react-router-dom";
 import TopHeader from "../header/";
-import { menuItems, appItems } from "./config";
+import { farmMenuItems, menuItems } from "./config";
 const drawerWidth = 300;
-
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -72,23 +72,22 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 export default function SideBar({ router }) {
+
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [openSubmenu, toggleSubmenu] = useState(false);
-  const [items, setItems] = useState(appItems);
+  const [items, setItems] = useState(menuItems);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
   const { location } = router;
   useEffect(() => {
     if (location?.pathname) {
-      if (
-        location.pathname.indexOf("app/") > -1 ||
-        location.pathname.indexOf("/login") > -1
-      ) {
-        setItems(appItems);
-      } else {
+      if (location.pathname.indexOf("app/") > -1 ||location.pathname.indexOf("/login") > -1) {
         setItems(menuItems);
+      } else {
+        setItems(farmMenuItems);
       }
     }
   }, [location]);
@@ -112,6 +111,7 @@ export default function SideBar({ router }) {
               <ChevronLeftIcon />
             )}
           </IconButton>
+
         </DrawerHeader>
         <List sx={{ width: "100%", maxWidth: 360 }} component="nav">
           {items.map((each, index) => (

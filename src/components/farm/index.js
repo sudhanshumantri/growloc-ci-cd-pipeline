@@ -16,13 +16,6 @@ export default function ManageFarm({
   isAddFarmLoading,
 }) {
   const [open, setOpen] = useState(false);
-  //   const handleModalToggle = (data) => {
-  //     setOpen(!open);
-  //     if (data) {
-  //       addFarm(data);
-  //     }
-  //   };
-
   const handleModalToggle = () => {
     setOpen(!open);
   };
@@ -54,7 +47,7 @@ export default function ManageFarm({
                     /> */}
         {/* isAddFarmLoading */}
         {isAddFarmLoading && <Loader title="Adding Farm" />}
-       
+
         {open && (
           <AddFarmModal
             open={open}
@@ -68,7 +61,7 @@ export default function ManageFarm({
             <Grid
               item
               component={Link}
-              to={`/farm/${elem.farmId}/crops/manage`}
+              to={`/farm/${elem.farmId}/dashboard`}
               xs={4}
               sm={4}
               md={4}
