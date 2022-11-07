@@ -77,7 +77,6 @@ export default function CropLifeCycle({
             handler: handleModalToggle,
         },
     ];
-    console.log('lifecycleCropsList', lifecycleCropsList)
     return (
         <>
             <PageHeader title='Crop Lifecycle' buttonArray={buttonArray} />

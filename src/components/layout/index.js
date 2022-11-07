@@ -5,6 +5,9 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import { Routes, Route } from "react-router-dom";
+import store from "../../store";
+import PrivateOutlet from "../privateroute";
+import FarmDashboard from "../dashboard/farm";
 import ManageCrop from "../../container/managecrops";
 import Login from "../../container/login";
 import SideBar from "../../container/sidebar";
@@ -12,10 +15,10 @@ import Farms from "../../container/farm";
 import AddUsers from "../../container/users"
 import CropLifeCycle from "../../container/life-cycle";
 import CropLifeCycleDetails from "../../container/life-cycle/lifeCycleDetails";
-import store from "../../store";
-import PrivateOutlet from "../privateroute";
+
 import FarmOutlet from "../farmoutlet";
 import { getAsyncInjectors } from "../../utils/asyncInjectors";
+
 import loginReducer from "../../reducers/login";
 import farmReducer from "../../reducers/farm";
 import usersReducer from "../../reducers/users";
@@ -24,7 +27,7 @@ import lifeCycleReducer from "../../reducers/life-cycle";
 import loginSagas from "../../sagas/login";
 import cropsSagas from "../../sagas/crops";
 import farmSagas from "../../sagas/farm";
-import  userSagas  from "../../sagas/users";
+import userSagas from "../../sagas/users";
 import lifeCycleSagas from "../../sagas/life-cycle";
 import { selectToken } from "../../selectors/login";
 import { loadAuthToken } from "../../actions/login";
@@ -62,8 +65,6 @@ const Layout = () => {
       >
         <Toolbar />
         <Routes>
-
-
           <Route
             exact
             path="/"
@@ -82,6 +83,7 @@ const Layout = () => {
             }
             children={[SideBar]}
           >
+            <Route path="dashboard" element={<FarmDashboard />} />
             <Route path="users" element={<AddUsers />} />
             <Route path="crops/manage" element={<ManageCrop />} />
             <Route path="crops/lifecycle" element={<CropLifeCycle />} />

@@ -35,6 +35,14 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
   const handleChange = (event, name) => {
     setFarm({ ...farm, [name]: event.target.value });
   };
+<<<<<<< HEAD
+=======
+  const germination = ["Tray with coco peat", "Oasis cubes", "Coco plugs"];
+  const wateringType = ["Manual", "automated"]
+  const nursaryType = ["Open (No humidity control)", "Closed dome (Humidity control)"]
+  const growingZone = ['NFT system', "Trough system ", "Raft system", "Dutch bucket system"]
+  const plantSpacing = ['Plant to Plant', "Row to Row"]
+>>>>>>> origin/main
   const validateFarm = () => {
     if (farm.name) {
       return true;
@@ -360,10 +368,9 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">
-          Add a new Farm{" "}
+          Add a new Farm
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
-          <br />
           <Grid container spacing={3}>
             {farmBasicInfo()}
             {germinationZone()}

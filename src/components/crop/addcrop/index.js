@@ -92,7 +92,6 @@ export default function AddCropModal({
           {cropDetails.id ? "Update crop" : "Add a new crop"}
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
-          <br />
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
               <SingleCustomSelect
