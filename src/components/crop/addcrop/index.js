@@ -1,43 +1,28 @@
 import * as React from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
-import Select from "@mui/material/Select";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import TextField from "@mui/material/TextField";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import CustomButton from "../../shared/button";
+import SingleCustomSelect from "../../shared/select";
 import { Grid } from "@mui/material";
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 export default function AddCropModal({
   modalData,
   open,
   handleSave,
   handleClose,
-  cropDetails ={
+  cropDetails = {
     isEditMode: false,
-
-  }
+  },
 }) {
   let { farmId } = useParams();
   // const [open, setOpen] = useState(false);
-  const [cropListName, setCropListName] = useState(null);
-  const [germinationMethod, setGerminationMethod] = useState(null);
+  const [cropListName, setCropListName] = useState("");
+  const [germinationMethod, setGerminationMethod] = useState("");
   const [selectedData, setSelectedData] = useState({});
   const [isMethodError, setIsMethodError] = useState(false);
   const [isCropError, setIsCropError] = useState(false);
@@ -45,20 +30,23 @@ export default function AddCropModal({
 
   React.useEffect(() => {
     if (open && cropDetails.name) {
-      console.log(cropDetails.name, "cropDeatils.name");
-      handleChange({ target: { value: cropDetails.name }}, true);
+      handleChange({ target: { value: cropDetails.name } }, true);
     }
   }, [modalData]);
 
   const handleChange = (event, isFromEdit = false) => {
     console.log("event.target.value", event.target.value, event);
-    const selectedItem = modalData.find(item=>item.name === event.target.value);
+    const selectedItem = modalData.find(
+      (item) => item.name === event.target.value
+    );
     setCropListName(event.target.value);
     setSelectedData(selectedItem);
-    if(isFromEdit) {
-      const germinationIndex = selectedItem.germinationMethod.findIndex(method=> method.type === cropDetails.germinationMethod.type);
-      handleGerminationChange({ target: { value: germinationIndex}});
-      handleUnitsChange({target: { value: cropDetails.qty}})
+    if (isFromEdit) {
+      const germinationIndex = selectedItem.germinationMethod.findIndex(
+        (method) => method.type === cropDetails.germinationMethod.type
+      );
+      handleGerminationChange({ target: { value: germinationIndex } });
+      handleUnitsChange({ target: { value: cropDetails.qty } });
     }
   };
   const handleGerminationChange = (event) => {
@@ -102,41 +90,28 @@ export default function AddCropModal({
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">
           {/* Add a new crop */}
-          {cropDetails.id? "Update crop": "Add a new crop"}
+          {cropDetails.id ? "Update crop" : "Add a new crop"}
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
+          <br />
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-multiple-name-label" variant="outlined">
-                {/*  */}
-                  Crop
-                </InputLabel>
-                <Select
-                  labelId="demo-multiple-name-label"
-                  id="demo-multiple-name"
-                  name="name"
-                  label="Select"
-                  disabled={cropDetails.isEditMode}
-                  value={cropListName}
-                  onChange={(e) => {
-                    isCropError && setIsCropError(false);
-                    handleChange(e);
-                  }}
-                  MenuProps={MenuProps}
-                >
-                  {(modalData || []).map((e, keyIndex) => (
-                    <MenuItem key={keyIndex} value={e.name}>
-                      {e.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {isCropError && (
-                  <FormHelperText style={{ color: "red" }}>
-                    Please select a crop
-                  </FormHelperText>
-                )}
-              </FormControl>
+              <SingleCustomSelect
+                inputLable="Crop"
+                label="Select"
+                valueKey="name"
+                labelKey="name"
+                lable="Crop"
+                value={cropListName}
+                disabled={cropDetails.isEditMode}
+                options={modalData}
+                handleChange={(e) => {
+                  isCropError && setIsCropError(false);
+                  handleChange(e);
+                }}
+                isError={isCropError}
+                errorMessage="Please select a crop"
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
@@ -161,35 +136,21 @@ export default function AddCropModal({
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-multiple-name-label" variant="outlined">
-                  Germination Method
-                </InputLabel>
-                <Select
-                  labelId="demo-multiple-name-label"
-                  id="demo-multiple-name"
-                  disabled={cropDetails.isEditMode}
-                  onChange={(e) => {
-                    isMethodError && setIsMethodError(false);
-                    handleGerminationChange(e);
-                  }}
-                  value={germinationMethod}
-                  // value ={cropData.germinationMethod}
-                  input={<OutlinedInput label="Germination Method" />}
-                  MenuProps={MenuProps}
-                >
-                  {(selectedData.germinationMethod || []).map((e, keyIndex) => (
-                    <MenuItem key={keyIndex} value={keyIndex}>
-                      {e.type}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {isMethodError && (
-                  <FormHelperText style={{ color: "red" }}>
-                    Please select a method
-                  </FormHelperText>
-                )}
-              </FormControl>
+              <SingleCustomSelect
+                inputLable="Germination Method"
+                value={germinationMethod}
+                valueKey="index"
+                labelKey="type"
+                lable="Germination Method"
+                disabled={cropDetails.isEditMode}
+                options={selectedData.germinationMethod}
+                handleChange={(e) => {
+                  isMethodError && setIsMethodError(false);
+                  handleGerminationChange(e);
+                }}
+                isError={isMethodError}
+                errorMessage="Please select a method"
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
@@ -197,15 +158,15 @@ export default function AddCropModal({
                   InputLabelProps={{ shrink: true }}
                   label={"Units"}
                   // value={units}
-                  value ={units}
+                  value={units}
                   onChange={handleUnitsChange}
                   variant="outlined"
                 />
               </FormControl>
             </Grid>
-          </Grid>
-          <p className="header-title">Stages</p>
-          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={12}>
+              <p className="header-title">Stages</p>
+            </Grid>
             {selectedData.germinationMethod &&
             selectedData.germinationMethod[germinationMethod]
               ? (

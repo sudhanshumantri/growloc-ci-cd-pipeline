@@ -55,7 +55,6 @@ export default function ManageCrop({
   }, []);
 
   const handleEdit = (cropData) => {
-    console.log(cropData, "hello");
     const { id, crop, farmId , qty} = cropData;
     const cropDetails = {
       name: crop.name,
@@ -66,7 +65,6 @@ export default function ManageCrop({
       isEditMode: true,
 
     };
-    console.log("cropDetails", cropDetails);
 
     setCropInfo(cropDetails);
     setOpen(true);

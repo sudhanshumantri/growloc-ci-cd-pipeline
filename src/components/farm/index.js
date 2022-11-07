@@ -72,11 +72,13 @@ export default function ManageFarm({
               xs={4}
               sm={4}
               md={4}
-              key={elem._id}
+              key={elem.id}
             >
               <Card className="farm-list-card-holder" variant="outlined">
                 <CardContent>
-                  <p className="header-title">{elem.farm.name}</p>
+                  <p className="header-title">{elem.farm.name}
+                  </p>
+
                 </CardContent>
               </Card>
             </Grid>
