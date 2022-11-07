@@ -38,6 +38,7 @@ export default function ManageUsers({
     setOpen(true);
   };
   const handleDelete = (userData) => {
+    console.log(userData.id, "here is id");
     const { userId,  user  } = userData;
     const userDetails = { userId, name: user.profile.name };
     setUserInfo(userDetails);

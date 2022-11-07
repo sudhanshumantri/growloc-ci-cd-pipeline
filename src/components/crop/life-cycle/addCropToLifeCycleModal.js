@@ -18,6 +18,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import moment from "moment";
 import CustomButton from "../../shared/button";
+import SingleCustomSelect from "../../shared/select";
 import { Box } from "@mui/system";
 import { Grid } from "@mui/material";
 
@@ -43,7 +44,7 @@ export default function AddCropModal({
   const [batchNo, setBatchNo] = useState("");
   const [isBatchNoError, setBatchNoError] = useState(false);
   const [isUnitsError, setIsUnitsError] = useState(false);
-  const [unitErrorMessage, setUnitErrorMessage] = useState('');
+  const [unitErrorMessage, setUnitErrorMessage] = useState("");
   const [isCropError, setIsCropError] = useState(false);
   const [units, setUnits] = useState(1);
   const handleDataValidation = (data) => {
@@ -58,18 +59,19 @@ export default function AddCropModal({
     }
     if (!units) {
       setIsUnitsError(true);
-      setUnitErrorMessage('Unit is required')
+      setUnitErrorMessage("Unit is required");
       isError = true;
     } else {
       if (units > selectedCrop.qty) {
         setIsUnitsError(true);
-        setUnitErrorMessage("Unit can't be greater than " + selectedCrop.qty)
+        setUnitErrorMessage("Unit can't be greater than " + selectedCrop.qty);
         isError = true;
       }
     }
     return isError;
-  }
+  };
   const handleCropChange = (event) => {
+    isCropError && setIsCropError(false);
     setselectedCrop(event.target.value);
   };
   const handleUnitsChange = (event) => {
@@ -85,10 +87,10 @@ export default function AddCropModal({
       batchNo: batchNo,
       crop: selectedCrop,
     };
-    let isError = handleDataValidation(requestData)
+    let isError = handleDataValidation(requestData);
     if (!isError) {
       console.log(requestData);
-      handleSave(requestData)
+      handleSave(requestData);
     }
   };
   return (
@@ -98,6 +100,7 @@ export default function AddCropModal({
           Add a new crop to Lifecycle
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
+          <br />
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
               <FormControl fullWidth>
@@ -122,7 +125,9 @@ export default function AddCropModal({
                   ))}
                 </Select>
                 {isCropError && (
-                  <FormHelperText style={{ color: "red" }}>Please select a crop</FormHelperText>
+                  <FormHelperText style={{ color: "red" }}>
+                    Please select a crop
+                  </FormHelperText>
                 )}
               </FormControl>
             </Grid>
@@ -133,7 +138,9 @@ export default function AddCropModal({
                   InputLabelProps={{ shrink: true }}
                   value={batchNo}
                   error={isBatchNoError}
-                  helperText={isBatchNoError ? 'Please provide batch number' : ""}
+                  helperText={
+                    isBatchNoError ? "Please provide batch number" : ""
+                  }
                   onChange={(e) => {
                     isBatchNoError && setBatchNoError(false);
                     handleBatchNumberChange(e);

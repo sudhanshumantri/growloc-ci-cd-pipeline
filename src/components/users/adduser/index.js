@@ -13,6 +13,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
+
 export default function AddUsersModal({
   open,
   handleClose,
@@ -24,7 +25,6 @@ export default function AddUsersModal({
     role: "farmmanager",
     isEditMode: false,
   },
-
 }) {
   const { farmId } = useParams();
   const [userData, setUserData] = useState(userDetails);
@@ -66,7 +66,6 @@ export default function AddUsersModal({
       return true;
     }
   };
-  
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>

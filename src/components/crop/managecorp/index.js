@@ -36,7 +36,6 @@ export default function ManageCrop({
     } else {
       addCrop(addCropData);
     }
-
     handleModalToggle();
   };
   const handleModalToggle = (data) => {
@@ -53,7 +52,6 @@ export default function ManageCrop({
     fetchCrop();
     fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
-
   const handleEdit = (cropData) => {
     const { id, crop, farmId , qty} = cropData;
     const cropDetails = {
@@ -65,13 +63,11 @@ export default function ManageCrop({
       isEditMode: true,
 
     };
-
     setCropInfo(cropDetails);
     setOpen(true);
   };
 
   const handleDelete = (cropData) => {
-    console.log(cropData, "cropData");
     const { id, crop } = cropData;
     const cropDetails = { id, name: crop.name };
     setCropInfo(cropDetails);

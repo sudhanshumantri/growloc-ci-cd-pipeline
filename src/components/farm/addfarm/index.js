@@ -8,41 +8,32 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import ButtonCustom from "../../shared/button";
 import { Grid } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import SingleCustomSelect from "../../shared/select";
 import { germination } from "../../../config";
 import { wateringType } from "../../../config";
 import { nursaryType } from "../../../config";
 import { growingZone } from "../../../config";
 import { plantSpacing } from "../../../config";
-import { select } from "redux-saga/effects";
+import InputLabel from "@mui/material/InputLabel";
 import TextBox from "../../shared/text-box";
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
+
+export default function AddFarmModal({
+  open,
+  handleSave,
+  handleClose,
+  farmDetails = {
+    name: "",
+    farmArea: "",
   },
-};
-export default function AddFarmModal({ open, handleSave, handleClose }) {
-  const [farm, setFarm] = useState({});
+}) {
+  // const [farm, setFarm] = useState({});
+  const [farm, setFarm] = useState(farmDetails);
   const [nameError, setNameError] = useState(false);
-  const handleChange = (event, name) => {
-    setFarm({ ...farm, [name]: event.target.value });
+  const handleChange = (e) => {
+    nameError && setNameError(false);
+    const { value, name } = e.target;
+    setFarm({ ...farm, [name]: value });
   };
-<<<<<<< HEAD
-=======
-  const germination = ["Tray with coco peat", "Oasis cubes", "Coco plugs"];
-  const wateringType = ["Manual", "automated"]
-  const nursaryType = ["Open (No humidity control)", "Closed dome (Humidity control)"]
-  const growingZone = ['NFT system', "Trough system ", "Raft system", "Dutch bucket system"]
-  const plantSpacing = ['Plant to Plant', "Row to Row"]
->>>>>>> origin/main
   const validateFarm = () => {
     if (farm.name) {
       return true;
@@ -69,11 +60,10 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
           <FormControl fullWidth>
             <TextField
               label={"Name"}
+              name="name"
+              value={farm.name}
               InputLabelProps={{ shrink: true }}
-              onChange={(e) => {
-                nameError && setNameError(false);
-                handleChange(e, "name");
-              }}
+              onChange={handleChange}
               variant="outlined"
               error={nameError}
               helperText={nameError ? "Please provide name" : ""}
@@ -85,7 +75,9 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
             <TextField
               InputLabelProps={{ shrink: true }}
               label={"FarmArea"}
-              onChange={(e) => handleChange(e, "Farm Area")}
+              name="FarmArea"
+              value={farm.farmArea}
+              onChange={handleChange}
               variant="outlined"
             />
           </FormControl>
@@ -100,48 +92,50 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
           <p className="header-title">Germination Zone</p>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
-          <SingleCustomSelect
-            inputLable="Germination Type"
-            name="germination"
-            lable="Germination Type"
-            value={farm.germination || ""}
-            options={germination}
-            handleChange={(e) => {
-              handleChange(e, "germination");
-            }}
-          />
+          <FormControl fullWidth>
+            <InputLabel id="demo-multiple-name-label" variant="outlined">
+              Germination Type
+            </InputLabel>
+            <SingleCustomSelect
+              name="germination"
+              lable="Germination Type"
+              value={farm.germination || ""}
+              options={germination}
+              handleChange={handleChange}
+            />
+          </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
-          <TextBox InputLabelProps={{ shrink: true }}  label ={"Germination Area"} onChange={(e) => handleChange(e, "GerminationArea")}
-/>
-          {/* <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"Germination Area"}
-              onChange={(e) => handleChange(e, "GerminationArea")}
-            />
-          </FormControl> */}
+          <TextBox
+            InputLabelProps={{ shrink: true }}
+            label={"Germination Area"}
+            name="GerminationArea"
+            onChange={handleChange}
+          />
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
           <FormControl fullWidth>
             <TextField
               InputLabelProps={{ shrink: true }}
               label={"No. of seeds per plantation"}
-              onChange={(e) => handleChange(e, "seeds")}
+              name="seeds"
+              onChange={handleChange}
             />
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
-          <SingleCustomSelect
-            inputLable="Watering Type"
-            name="germinationwater"
-            lable="Watering Type"
-            value={farm.germinationWater || ""}
-            options={wateringType}
-            handleChange={(e) => {
-              handleChange(e, "germinationWater");
-            }}
-          />
+          <FormControl fullWidth>
+            <InputLabel id="demo-multiple-name-label" variant="outlined">
+              Watering Type
+            </InputLabel>
+            <SingleCustomSelect
+              name="germinationwater"
+              lable="Watering Type"
+              value={farm.germinationwater || ""}
+              options={wateringType}
+              handleChange={handleChange}
+            />
+          </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
           <FormControl fullWidth>
@@ -149,7 +143,8 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
               InputLabelProps={{ shrink: true }}
               label={"Watering Schedule"}
               type="number"
-              onChange={(e) => handleChange(e, "wateringschedule")}
+              name="wateringschedule"
+              onChange={handleChange}
               InputProps={{ inputProps: { min: 1, max: 10 } }}
             />
           </FormControl>
@@ -165,44 +160,50 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
           <p className="header-title">Nursery Zone</p>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
-          <SingleCustomSelect
-            inputLable="Nursery Zone"
-            name="nurserytype"
-            lable="Nursery Type"
-            value={farm.nurserytype || ""}
-            options={nursaryType}
-            handleChange={(e) => {
-              handleChange(e, "nurserytype");
-            }}
-          />
+          <FormControl fullWidth>
+            <InputLabel id="demo-multiple-name-label" variant="outlined">
+              Nursery Zone
+            </InputLabel>
+            <SingleCustomSelect
+              name="nurserytype"
+              lable="Nursery Type"
+              value={farm.nurserytype || ""}
+              options={nursaryType}
+              handleChange={handleChange}
+            />
+          </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
           <FormControl fullWidth>
             <TextField
               InputLabelProps={{ shrink: true }}
               label={"Nursary Area"}
-              onChange={(e) => handleChange(e, "nursaryarea")}
+              name="nursaryarea"
+              onChange={handleChange}
             />
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
-          <SingleCustomSelect
-            inputLable="Watering Type"
-            name="nursarywateringtype"
-            lable="Watering Type"
-            value={farm.nursarywateringtype || ""}
-            options={wateringType}
-            handleChange={(e) => {
-              handleChange(e, "nursarywateringtype");
-            }}
-          />
+          <FormControl fullWidth>
+            <InputLabel id="demo-multiple-name-label" variant="outlined">
+              Watering Type
+            </InputLabel>
+            <SingleCustomSelect
+              name="nursarywateringtype"
+              lable="Watering Type"
+              value={farm.nursarywateringtype || ""}
+              options={wateringType}
+              handleChange={handleChange}
+            />
+          </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
           <FormControl fullWidth>
             <TextField
               InputLabelProps={{ shrink: true }}
               label={"No of seeds for Nursery"}
-              onChange={(e) => handleChange(e, "nurseryseeds")}
+              name="nurseryseeds"
+              onChange={handleChange}
               InputProps={{ inputProps: { min: 1, max: 10 } }}
             />
           </FormControl>
@@ -214,7 +215,8 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
               InputLabelProps={{ shrink: true }}
               label={"Watering Schedule"}
               type="number"
-              onChange={(e) => handleChange(e, "nursaryschedule")}
+              name="nursaryschedule"
+              onChange={handleChange}
               InputProps={{ inputProps: { min: 1, max: 10 } }}
             />
           </FormControl>
@@ -230,24 +232,27 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
           <p className="header-title">Growring Zone</p>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
-          <SingleCustomSelect
-            inputLable="Growing Zone"
-            name="growing"
-            lable="Growing Zone"
-            value={farm.growing || ""}
-            options={growingZone}
-            handleChange={(e) => {
-              handleChange(e, "growing");
-            }}
-          />
+          <FormControl fullWidth>
+            <InputLabel id="demo-multiple-name-label" variant="outlined">
+              Growing Zone
+            </InputLabel>
+            <SingleCustomSelect
+              name="growing"
+              lable="Growing Zone"
+              value={farm.growing || ""}
+              options={growingZone}
+              handleChange={handleChange}
+            />
+          </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
           <FormControl fullWidth>
             <TextField
               InputLabelProps={{ shrink: true }}
               label={"Watering Schedule"}
+              name="growingschedule"
               type="number"
-              onChange={(e) => handleChange(e, "growingschedule")}
+              onChange={handleChange}
               InputProps={{ inputProps: { min: 1, max: 10 } }}
             />
           </FormControl>
@@ -257,7 +262,8 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
             <TextField
               InputLabelProps={{ shrink: true }}
               label={"Growing Area"}
-              onChange={(e) => handleChange(e, "growingarea")}
+              name="growingarea"
+              onChange={handleChange}
             />
           </FormControl>
         </Grid>
@@ -266,7 +272,8 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
             <TextField
               InputLabelProps={{ shrink: true }}
               label={"No of plants in a row"}
-              onChange={(e) => handleChange(e, "plants")}
+              name="plants"
+              onChange={handleChange}
             />
           </FormControl>
         </Grid>
@@ -275,21 +282,24 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
             <TextField
               InputLabelProps={{ shrink: true }}
               label={"No of rows"}
-              onChange={(e) => handleChange(e, "rows")}
+              name="rows"
+              onChange={handleChange}
             />
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
-          <SingleCustomSelect
-            inputLable="Plant spacing"
-            name="plantspacing"
-            lable="Plant spacing"
-            value={farm.plantspacing || ""}
-            options={plantSpacing}
-            handleChange={(e) => {
-              handleChange(e, "plantspacing");
-            }}
-          />
+          <FormControl fullWidth>
+            <InputLabel id="demo-multiple-name-label" variant="outlined">
+              Plant spacing
+            </InputLabel>
+            <SingleCustomSelect
+              name="plantspacing"
+              lable="Plant spacing"
+              value={farm.plantspacing || ""}
+              options={plantSpacing}
+              handleChange={handleChange}
+            />
+          </FormControl>
         </Grid>
       </>
     );
@@ -305,9 +315,8 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
             <TextField
               label={"Main reservoir capacity"}
               InputLabelProps={{ shrink: true }}
-              onChange={(e) => {
-                handleChange(e, "mainreservoir");
-              }}
+              name="mainreservoir"
+              onChange={handleChange}
               variant="outlined"
             />
           </FormControl>
@@ -317,9 +326,8 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
             <TextField
               label={"Nutrient water reservoir capacity"}
               InputLabelProps={{ shrink: true }}
-              onChange={(e) => {
-                handleChange(e, "nutrient");
-              }}
+              name="nutrient"
+              onChange={handleChange}
               variant="outlined"
             />
           </FormControl>
@@ -329,9 +337,8 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
             <TextField
               label={"Input water analysis report"}
               InputLabelProps={{ shrink: true }}
-              onChange={(e) => {
-                handleChange(e, "input");
-              }}
+              name="input"
+              onChange={handleChange}
               variant="outlined"
             />
           </FormControl>
@@ -341,9 +348,8 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
             <TextField
               label={"Ph up/down reservoir capacity"}
               InputLabelProps={{ shrink: true }}
-              onChange={(e) => {
-                handleChange(e, "input");
-              }}
+              name="updown"
+              onChange={handleChange}
               variant="outlined"
             />
           </FormControl>
@@ -353,9 +359,8 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
             <TextField
               label={"Stock nutrient solution capacity"}
               InputLabelProps={{ shrink: true }}
-              onChange={(e) => {
-                handleChange(e, "stock");
-              }}
+              name="stock"
+              onChange={handleChange}
               variant="outlined"
             />
           </FormControl>
@@ -370,6 +375,7 @@ export default function AddFarmModal({ open, handleSave, handleClose }) {
         <DialogTitle className="dialog-title-container">
           Add a new Farm
         </DialogTitle>
+        <br />
         <DialogContent sx={{ paddingTop: "10px" }}>
           <Grid container spacing={3}>
             {farmBasicInfo()}

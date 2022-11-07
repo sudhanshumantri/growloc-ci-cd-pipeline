@@ -5,6 +5,12 @@ import {
     ADD_FARM_REQUEST,
     ADD_FARM_SUCCESS,
     ADD_FARM_FAILURE,
+    UPDATE_FARM_REQUEST,
+    UPDATE_FARM_SUCCESS,
+    UPDATE_FARM_FAILURE,
+    DELETE_FARM_REQUEST,
+    DELETE_FARM_SUCCESS,
+    DELETE_FARM_FAILURE,
     } from './actionTypes';
 export function fetchFarmRequest(data) {
     return {
@@ -43,5 +49,44 @@ export function saveFarmRequest(data) {
       error,
     };
   }
+
+  //
+  export function deleteFarmRequest(data) {
+    return {
+        type: DELETE_FARM_REQUEST,
+        data
+    };
+}
+export function deleteFarmSuccess(data) {
+    return {
+        type: DELETE_FARM_SUCCESS,
+        data
+    };
+}
+export function deleteFarmFailure(error) {
+    return {
+        type: DELETE_FARM_FAILURE,
+        error
+    };
+}
+
+export function updateFarmRequest(data) {
+    return {
+        type: UPDATE_FARM_REQUEST,
+        data
+    };
+}
+export function updateFarmSuccess(data) {
+    return {
+        type: UPDATE_FARM_SUCCESS,
+        data
+    };
+}
+export function updateFarmFailure(error) {
+    return {
+        type: UPDATE_FARM_FAILURE,
+        error
+    };
+}
   
 

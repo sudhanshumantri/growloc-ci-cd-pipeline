@@ -6,6 +6,13 @@ import {
   ADD_FARM_REQUEST,
   ADD_FARM_SUCCESS,
   ADD_FARM_FAILURE,
+  UPDATE_FARM_REQUEST,
+  UPDATE_FARM_SUCCESS,
+  UPDATE_FARM_FAILURE,
+  DELETE_FARM_REQUEST,
+  DELETE_FARM_SUCCESS,
+  DELETE_FARM_FAILURE,
+
 } from "../actions/actionTypes";
 const INITIAL_STATE = fromJS({
   isFarmListLoading: false,
@@ -13,6 +20,11 @@ const INITIAL_STATE = fromJS({
   addFarmError: null,
   farmList: [],
   FarmListError: null,
+  isUpdateFarmLoading: false,
+  isupdateFarmError: null,
+  farmStatus: true,
+  isdeleteFarmLoading: false,
+  isdeleteFarmError: false,
 });
 export default function farmReducer(state = INITIAL_STATE, action = {}) {
   switch (action.type) {
@@ -42,6 +54,29 @@ export default function farmReducer(state = INITIAL_STATE, action = {}) {
       return state
         .set("isAddFarmLoading", false)
         .set("addFarmError", action.error);
+        case UPDATE_FARM_REQUEST:
+          return state
+            .set("isUpdateFarmLoading", true)
+            .set("farmStatus", null)
+            .set("isupdateFarmError", null);
+        case UPDATE_FARM_SUCCESS:
+          return state
+            .set("isUpdateFarmLoading", false)
+            .set("farmStatus", true)
+        case UPDATE_FARM_FAILURE:
+          return state
+            .set("isUpdateFarmLoading", false)
+            .set("farmStatus", true)
+            .set("isupdateUserError", true);
+        case DELETE_FARM_REQUEST:
+          return state.set("isdeleteFarmLoading", true).set("isdeleteFarmError", null);
+        case DELETE_FARM_SUCCESS:
+          return state
+            .set("isdeleteFarmLoading", false)
+            .set("isdeleteFarmError", null);
+        case DELETE_FARM_FAILURE:
+          return state.set("farmList");
+    
     default:
       return state;
   }

@@ -9,6 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import CustomButton from "../../shared/button";
 import SingleCustomSelect from "../../shared/select";
+import InputLabel from "@mui/material/InputLabel";
 import { Grid } from "@mui/material";
 export default function AddCropModal({
   modalData,
@@ -27,14 +28,14 @@ export default function AddCropModal({
   const [isMethodError, setIsMethodError] = useState(false);
   const [isCropError, setIsCropError] = useState(false);
   const [units, setUnits] = useState(1);
-
   React.useEffect(() => {
     if (open && cropDetails.name) {
-      handleChange({ target: { value: cropDetails.name } }, true);
+      handleCropChange({ target: { value: cropDetails.name } }, true);
     }
   }, [modalData]);
 
-  const handleChange = (event, isFromEdit = false) => {
+  const handleCropChange = (event, isFromEdit = false) => {
+    isCropError && setIsCropError(false)
     const selectedItem = modalData.find(
       (item) => item.name === event.target.value
     );
@@ -49,6 +50,7 @@ export default function AddCropModal({
     }
   };
   const handleGerminationChange = (event) => {
+    isMethodError && setIsMethodError(false)
     setGerminationMethod(event.target.value);
   };
   const handleUnitsChange = (event) => {
@@ -92,10 +94,15 @@ export default function AddCropModal({
           {cropDetails.id ? "Update crop" : "Add a new crop"}
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
+          <br/>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
+            <FormControl fullWidth>
+                <InputLabel id="demo-multiple-name-label" variant="outlined">
+                  Crop
+                </InputLabel>
               <SingleCustomSelect
-                inputLable="Crop"
+                // inputLable="Crop"
                 label="Select"
                 valueKey="name"
                 labelKey="name"
@@ -103,13 +110,11 @@ export default function AddCropModal({
                 value={cropListName}
                 disabled={cropDetails.isEditMode}
                 options={modalData}
-                handleChange={(e) => {
-                  isCropError && setIsCropError(false);
-                  handleChange(e);
-                }}
+                handleChange = {(e)=>handleCropChange(e)}
                 isError={isCropError}
                 errorMessage="Please select a crop"
               />
+              </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>
@@ -134,21 +139,23 @@ export default function AddCropModal({
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
+            <FormControl fullWidth>
+                <InputLabel id="demo-multiple-name-label" variant="outlined">
+                Germination Method
+                </InputLabel>
               <SingleCustomSelect
-                inputLable="Germination Method"
+                // inputLable="Germination Method"
                 value={germinationMethod}
                 valueKey="index"
                 labelKey="type"
                 lable="Germination Method"
                 disabled={cropDetails.isEditMode}
                 options={selectedData.germinationMethod}
-                handleChange={(e) => {
-                  isMethodError && setIsMethodError(false);
-                  handleGerminationChange(e);
-                }}
+                handleChange ={handleGerminationChange}
                 isError={isMethodError}
                 errorMessage="Please select a method"
               />
+              </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <FormControl fullWidth>

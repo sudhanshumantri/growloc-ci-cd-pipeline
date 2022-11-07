@@ -20,10 +20,11 @@ const SingleCustomSelect = ({
   ref,
 }) => {
   return (
-    <FormControl fullWidth>
-      <InputLabel id="test-select-label" variant="outlined">
-        {inputLable}
-      </InputLabel>
+    <>
+    {/* // <FormControl fullWidth>
+    //   <InputLabel id="test-select-label" variant="outlined">
+    //     {inputLable}
+    //   </InputLabel> */}
       <Select
         labelId={lable + "multiple-name-label"}
         id={lable + "test-select-label"}
@@ -44,7 +45,8 @@ const SingleCustomSelect = ({
       {isError && (
         <FormHelperText style={{ color: "red" }}>{errorMessage}</FormHelperText>
       )}
-    </FormControl>
+    {/* // </FormControl> */}
+    </>
   );
 };
 

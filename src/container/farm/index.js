@@ -3,29 +3,32 @@ import { connect } from "react-redux";
 
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
-import { fetchFarmRequest,saveFarmRequest  } from "../../actions/farm";
+import { fetchFarmRequest,saveFarmRequest,updateFarmRequest,deleteFarmRequest  } from "../../actions/farm";
 import Farm from "../../components/farm";
 import {
     selectFarmList,
     selectIsFarmListLoading,
     selectFarmListError,
     selectAddFarmError,
-    selectIsAddFarmLoading
-
+    selectIsAddFarmLoading,
+    selectIsUpdateFarmLoading,
+    selectIsDeleteFarmLoading,
 } from "../../selectors/farm";
-
 const mapStateToProps = createStructuredSelector({
     farmList: selectFarmList(),
     isFarmListLoading: selectIsFarmListLoading(),
     FarmListError: selectFarmListError(),
     addFarmError: selectAddFarmError(),
     isAddFarmLoading: selectIsAddFarmLoading(),
-  
-
+    isdeleteFarmLoading:selectIsDeleteFarmLoading(),
+    isUpdateFarmLoading:selectIsUpdateFarmLoading()
 });
 const mapDispatchToProps = {
   fetchFarm: fetchFarmRequest,
   addFarm: saveFarmRequest,
+  updateFarm: updateFarmRequest,
+  deleteFarm:deleteFarmRequest,
+
 
 };
 function withRouter(Component) {

@@ -20,7 +20,9 @@ const urls = {
     "update-user": "farm/update-farm-user",
     "delete-user": "farm/delete-farm-user",
     "update-farm-crop" : "farm/crop/update-crop",
-    "delete-farm-crop" : "farm/crop/delete-crop"
+    "delete-farm-crop" : "farm/crop/delete-crop",
+    "update-farm" : "",
+    "delete-farm" :"",
   },
 };
 function getEndpoint(endpoint) {
@@ -164,4 +166,21 @@ export function callDeleteFarmCrop(data) {
     data,
   });
 }
+//
+
+export function callUpdateFarm(data) {
+  return callApi(getEndpoint("update-farm"), {
+    method: "PUT",
+    removeAuthorizationHeader: false,
+    data: data,
+  });
+}
+export function callDeleteFarm(data) {
+  return callApi(getEndpoint("delete-farm"), {
+    method: "delete",
+    removeAuthorizationHeader: false,
+    data: data,
+  });
+}
+
 

@@ -14,6 +14,19 @@ export const selectFarmListError = () =>
   createSelector(selectFarm, (services) => services.toJS()["addFarmError"]);
 export const selectIsAddFarmLoading = () =>
   createSelector(selectFarm, (services) => services.toJS()["isAddFarmLoading"]);
+  //
+  export const selectIsUpdateFarmLoading = () =>
+  createSelector(
+    selectFarm,(services) => services.toJS()["isUpdateFarmLoading"]
+  );
+export const selectIsUpdateFarmError = () =>
+  createSelector(selectFarm, (services) => services.toJS()["isupdateFarmError"]);
+
+  export const selectIsDeleteFarmLoading = () =>
+  createSelector(
+    selectFarm,(services) => services.toJS()["isdeleteFarmLoading"]
+  );
+
 
   
 
