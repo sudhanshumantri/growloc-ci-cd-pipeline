@@ -35,7 +35,6 @@ export default function AddCropModal({
   }, [modalData]);
 
   const handleChange = (event, isFromEdit = false) => {
-    console.log("event.target.value", event.target.value, event);
     const selectedItem = modalData.find(
       (item) => item.name === event.target.value
     );
