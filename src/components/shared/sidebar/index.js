@@ -84,7 +84,8 @@ export default function SideBar({ router }) {
   const { location } = router;
   useEffect(() => {
     if (location?.pathname) {
-      if (location.pathname.indexOf("app/") > -1 ||location.pathname.indexOf("/login") > -1) {
+      console.log(location);
+      if (location.pathname === "/" || location.pathname.indexOf("/login") > -1) {
         setItems(menuItems);
       } else {
         setItems(farmMenuItems);

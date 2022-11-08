@@ -46,6 +46,7 @@ injectSagas(lifeCycleSagas);
 const drawerWidth = 240;
 const Layout = () => {
   const token = localStorage.getItem("AUTH_TOKEN");
+  console.log(token,"hello token");
   let loginObject = localStorage.getItem("AUTH_OBJECT");
   if (loginObject) {
     loginObject = JSON.parse(loginObject);

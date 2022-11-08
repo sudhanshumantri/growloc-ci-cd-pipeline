@@ -25,6 +25,7 @@ export default function ManageFarm({
   const [farmInfo, setFarmInfo] = useState({});
   const handleModalToggle = () => {
     setOpen(!open);
+    setFarmInfo({});
   };
 
   const handleCropSave = (data) => {
@@ -34,10 +35,38 @@ export default function ManageFarm({
 
   const handleEdit = (e, elem) => {
     e.preventDefault();
-    const { userId, farmId, id, farm } = elem;
+    const { userId, farmId, farm } = elem;
+    const {id} = farm
+    console.log(id,"farm id");
     const farmDetails = {
       name: farm.name,
       farmArea: farm.farmArea,
+      germinationType:farm.germinationType,
+      germinationArea:farm.germinationArea,
+      germinationSeedsCount:parseInt(farm.germinationSeedsCount),
+      germinationWateringType:farm.germinationWateringType,
+      germinationWateringSchedule:farm.germinationWateringSchedule,
+      nurseryType:farm.nurseryType,
+      nurseryArea:farm.nurseryArea,
+      nurserySeedsCount:parseInt(farm.nurserySeedsCount),
+      nurseryWateringType:farm.nurseryWateringType,
+      nurseryWateringSchedule:farm.nurseryWateringSchedule,
+      growingType:farm.growingType,
+      growingArea:farm.growingArea,
+      growingRowCount:parseInt(farm.growingRowCount),
+      growingPlantCountPerRow:parseInt(farm.growingRowCount),
+      growingPlantSpacing:parseInt(farm.growingRowCount),
+      growingWateringSchedule:farm.growingWateringSchedule,
+      reservoirCapacity:farm.reservoirCapacity,
+      nutrientWaterReservoirCapacity:farm.nutrientWaterReservoirCapacity,
+      phReservoirCapacity:farm.phReservoirCapacity,
+      stockNutrientSolutionCapacity:farm.stockNutrientSolutionCapacity,
+      cultivableArea:farm.cultivableArea,
+      nutrientdilutionRatio:farm.nutrientdilutionRatio,
+      nutrientsType:farm.nutrientsType,
+      location:farm.location,
+      polyhouseStructureExpectedLife:farm.polyhouseStructureExpectedLife,
+      polyhousePlasticExpectedLife:farm.polyhousePlasticExpectedLife,
       userId,
       farmId,
       id,
@@ -91,6 +120,7 @@ export default function ManageFarm({
             handleSave={handleCropSave}
             handleClose={handleModalToggle}
             farmDetails={farmInfo}
+            data ={farmList}
           />
         )}
         <Grid container spacing={2}>
@@ -133,3 +163,8 @@ export default function ManageFarm({
     </div>
   );
 }
+
+
+///
+
+

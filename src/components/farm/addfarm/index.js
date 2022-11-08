@@ -14,6 +14,7 @@ import { wateringType } from "../../../config";
 import { nursaryType } from "../../../config";
 import { growingZone } from "../../../config";
 import { plantSpacing } from "../../../config";
+import { nutrientsType } from "../../../config";
 import InputLabel from "@mui/material/InputLabel";
 import TextBox from "../../shared/text-box";
 
@@ -24,18 +25,46 @@ export default function AddFarmModal({
   farmDetails = {
     name: "",
     farmArea: "",
+    germinationType:"",
+    germinationArea:"",
+    germinationSeedsCount:"",
+    germinationWateringType:"",
+    germinationWateringSchedule:"",
+    nurseryType:"",
+    nurseryArea:"",
+    nurserySeedsCount:"",
+    nurseryWateringType:"",
+    nurseryWateringSchedule:"",
+    nurseryWateringSchedule: "",
+    growingType: "",
+    growingArea: "",
+    growingRowCount: "",
+    growingPlantCountPerRow: "",
+    growingPlantSpacing: "",
+    growingWateringSchedule: "",
+    reservoirCapacity: "",
+    nutrientWaterReservoirCapacity: "",
+    phReservoirCapacity: "",
+    stockNutrientSolutionCapacity: "",
+    cultivableArea: "",
+    nutrientdilutionRatio:"",
+    nutrientsType: "",
+    location: "",
+    polyhouseStructureExpectedLife: "",
+    polyhousePlasticExpectedLife: "",
   },
 }) {
   // const [farm, setFarm] = useState({});
-  const [farm, setFarm] = useState(farmDetails);
+  const geolocation = ["Climate zone"];
+  const [farmData, setFarmData] = useState(farmDetails);
   const [nameError, setNameError] = useState(false);
   const handleChange = (e) => {
     nameError && setNameError(false);
     const { value, name } = e.target;
-    setFarm({ ...farm, [name]: value });
+    setFarmData({ ...farmData, [name]: value });
   };
   const validateFarm = () => {
-    if (farm.name) {
+    if (farmData.name) {
       return true;
     } else {
       setNameError(true);
@@ -44,10 +73,34 @@ export default function AddFarmModal({
   };
   const handleFarmSave = () => {
     let requestFarmData = {
-      name: farm.name,
-      farmArea: farm.farmArea,
-      cultivableArea: farm.cultivableArea,
-      reservoirCapacity: farm.cultivableArea,
+      name: farmData.name,
+      farmArea: farmData.farmArea,
+      germinationType: farmData.germinationType,
+      germinationArea: farmData.germinationArea,
+      germinationSeedsCount: parseInt(farmData.germinationSeedsCount),
+      germinationWateringType: farmData.germinationWateringType,
+      germinationWateringSchedule: farmData.germinationWateringSchedule,
+      nurseryType: farmData.nurseryType,
+      nurseryArea: farmData.nurseryArea,
+      nurserySeedsCount: parseInt(farmData.nurserySeedsCount),
+      nurseryWateringType: farmData.nurseryWateringType,
+      nurseryWateringSchedule: farmData.nurseryWateringSchedule,
+      growingType: farmData.growingType,
+      growingArea: farmData.growingArea,
+      growingRowCount: parseInt(farmData.growingRowCount),
+      growingPlantCountPerRow: parseInt(farmData.growingPlantCountPerRow),
+      growingPlantSpacing: parseInt(farmData.growingPlantSpacing),
+      growingWateringSchedule: farmData.growingWateringSchedule,
+      reservoirCapacity: farmData.reservoirCapacity,
+      nutrientWaterReservoirCapacity: farmData.nutrientWaterReservoirCapacity,
+      phReservoirCapacity: farmData.phReservoirCapacity,
+      stockNutrientSolutionCapacity: farmData.stockNutrientSolutionCapacity,
+      cultivableArea: farmData.cultivableArea,
+      nutrientdilutionRatio: farmData.nutrientdilutionRatio,
+      nutrientsType: farmData.nutrientsType,
+      location: farmData.location,
+      polyhouseStructureExpectedLife: farmData.polyhouseStructureExpectedLife,
+      polyhousePlasticExpectedLife: farmData.polyhousePlasticExpectedLife,
     };
     if (validateFarm()) {
       handleSave(requestFarmData);
@@ -61,7 +114,7 @@ export default function AddFarmModal({
             <TextField
               label={"Name"}
               name="name"
-              value={farm.name}
+              value={farmData.name || ""}
               InputLabelProps={{ shrink: true }}
               onChange={handleChange}
               variant="outlined"
@@ -75,8 +128,8 @@ export default function AddFarmModal({
             <TextField
               InputLabelProps={{ shrink: true }}
               label={"FarmArea"}
-              name="FarmArea"
-              value={farm.farmArea}
+              name="farmArea"
+              value={farmData.farmArea || ""}
               onChange={handleChange}
               variant="outlined"
             />
@@ -97,9 +150,9 @@ export default function AddFarmModal({
               Germination Type
             </InputLabel>
             <SingleCustomSelect
-              name="germination"
+              name="germinationType"
               lable="Germination Type"
-              value={farm.germination || ""}
+              value={farmData.germinationType }
               options={germination}
               handleChange={handleChange}
             />
@@ -109,7 +162,8 @@ export default function AddFarmModal({
           <TextBox
             InputLabelProps={{ shrink: true }}
             label={"Germination Area"}
-            name="GerminationArea"
+            name="germinationArea"
+            value={farmData.germinationArea}
             onChange={handleChange}
           />
         </Grid>
@@ -118,7 +172,7 @@ export default function AddFarmModal({
             <TextField
               InputLabelProps={{ shrink: true }}
               label={"No. of seeds per plantation"}
-              name="seeds"
+              name="germinationSeedsCount"
               onChange={handleChange}
             />
           </FormControl>
@@ -129,9 +183,9 @@ export default function AddFarmModal({
               Watering Type
             </InputLabel>
             <SingleCustomSelect
-              name="germinationwater"
+              name="germinationWateringType"
               lable="Watering Type"
-              value={farm.germinationwater || ""}
+              value={farmData.germinationWateringType || ""}
               options={wateringType}
               handleChange={handleChange}
             />
@@ -143,8 +197,9 @@ export default function AddFarmModal({
               InputLabelProps={{ shrink: true }}
               label={"Watering Schedule"}
               type="number"
-              name="wateringschedule"
+              name="germinationWateringSchedule"
               onChange={handleChange}
+              value={farmData.germinationWateringSchedule}
               InputProps={{ inputProps: { min: 1, max: 10 } }}
             />
           </FormControl>
@@ -165,9 +220,9 @@ export default function AddFarmModal({
               Nursery Zone
             </InputLabel>
             <SingleCustomSelect
-              name="nurserytype"
+              name="nurseryType"
               lable="Nursery Type"
-              value={farm.nurserytype || ""}
+              value={farmData.nurseryType || ""}
               options={nursaryType}
               handleChange={handleChange}
             />
@@ -177,9 +232,22 @@ export default function AddFarmModal({
           <FormControl fullWidth>
             <TextField
               InputLabelProps={{ shrink: true }}
-              label={"Nursary Area"}
-              name="nursaryarea"
+              label={"Nursery Area"}
+              name="nurseryArea"
+              value={farmData.nurseryArea}
               onChange={handleChange}
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6} md={6}>
+          <FormControl fullWidth>
+            <TextField
+              InputLabelProps={{ shrink: true }}
+              label={"No of seeds for Nursery"}
+              name="nurserySeedsCount"
+              onChange={handleChange}
+              value={farmData.nurserySeedsCount}
+              InputProps={{ inputProps: { min: 1, max: 10 } }}
             />
           </FormControl>
         </Grid>
@@ -189,9 +257,9 @@ export default function AddFarmModal({
               Watering Type
             </InputLabel>
             <SingleCustomSelect
-              name="nursarywateringtype"
+              name="nurseryWateringType"
               lable="Watering Type"
-              value={farm.nursarywateringtype || ""}
+              value={farmData.nurseryWateringType || ""}
               options={wateringType}
               handleChange={handleChange}
             />
@@ -201,21 +269,10 @@ export default function AddFarmModal({
           <FormControl fullWidth>
             <TextField
               InputLabelProps={{ shrink: true }}
-              label={"No of seeds for Nursery"}
-              name="nurseryseeds"
-              onChange={handleChange}
-              InputProps={{ inputProps: { min: 1, max: 10 } }}
-            />
-          </FormControl>
-        </Grid>
-
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
               label={"Watering Schedule"}
               type="number"
-              name="nursaryschedule"
+              name="nurseryWateringSchedule"
+              value={farmData.nurseryWateringSchedule}
               onChange={handleChange}
               InputProps={{ inputProps: { min: 1, max: 10 } }}
             />
@@ -237,9 +294,9 @@ export default function AddFarmModal({
               Growing Zone
             </InputLabel>
             <SingleCustomSelect
-              name="growing"
+              name="growingType"
               lable="Growing Zone"
-              value={farm.growing || ""}
+              value={farmData.growingType || ""}
               options={growingZone}
               handleChange={handleChange}
             />
@@ -249,30 +306,21 @@ export default function AddFarmModal({
           <FormControl fullWidth>
             <TextField
               InputLabelProps={{ shrink: true }}
-              label={"Watering Schedule"}
-              name="growingschedule"
-              type="number"
-              onChange={handleChange}
-              InputProps={{ inputProps: { min: 1, max: 10 } }}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
               label={"Growing Area"}
-              name="growingarea"
+              name="growingArea"
+              value={farmData.growingArea}
               onChange={handleChange}
             />
           </FormControl>
         </Grid>
+
         <Grid item xs={12} sm={6} md={6}>
           <FormControl fullWidth>
             <TextField
               InputLabelProps={{ shrink: true }}
               label={"No of plants in a row"}
-              name="plants"
+              name="growingRowCount"
+              value={farmData.growingRowCount}
               onChange={handleChange}
             />
           </FormControl>
@@ -282,8 +330,22 @@ export default function AddFarmModal({
             <TextField
               InputLabelProps={{ shrink: true }}
               label={"No of rows"}
-              name="rows"
+              name="growingPlantCountPerRow"
+              value={farmData.growingPlantCountPerRow}
               onChange={handleChange}
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6} md={6}>
+          <FormControl fullWidth>
+            <TextField
+              InputLabelProps={{ shrink: true }}
+              label={"Watering Schedule"}
+              name="growingWateringSchedule"
+              type="number"
+              onChange={handleChange}
+              value ={farmData.growingWateringSchedule}
+              InputProps={{ inputProps: { min: 1, max: 10 } }}
             />
           </FormControl>
         </Grid>
@@ -293,9 +355,9 @@ export default function AddFarmModal({
               Plant spacing
             </InputLabel>
             <SingleCustomSelect
-              name="plantspacing"
+              name="growingPlantSpacing"
               lable="Plant spacing"
-              value={farm.plantspacing || ""}
+              value={farmData.growingPlantSpacing || ""}
               options={plantSpacing}
               handleChange={handleChange}
             />
@@ -315,7 +377,8 @@ export default function AddFarmModal({
             <TextField
               label={"Main reservoir capacity"}
               InputLabelProps={{ shrink: true }}
-              name="mainreservoir"
+              name="reservoirCapacity"
+              value={farmData.reservoirCapacity}
               onChange={handleChange}
               variant="outlined"
             />
@@ -326,18 +389,8 @@ export default function AddFarmModal({
             <TextField
               label={"Nutrient water reservoir capacity"}
               InputLabelProps={{ shrink: true }}
-              name="nutrient"
-              onChange={handleChange}
-              variant="outlined"
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              label={"Input water analysis report"}
-              InputLabelProps={{ shrink: true }}
-              name="input"
+              name="nutrientWaterReservoirCapacity"
+              value={farmData.nutrientWaterReservoirCapacity}
               onChange={handleChange}
               variant="outlined"
             />
@@ -348,8 +401,9 @@ export default function AddFarmModal({
             <TextField
               label={"Ph up/down reservoir capacity"}
               InputLabelProps={{ shrink: true }}
-              name="updown"
+              name="phReservoirCapacity"
               onChange={handleChange}
+              value={farmData.phReservoirCapacity}
               variant="outlined"
             />
           </FormControl>
@@ -359,7 +413,90 @@ export default function AddFarmModal({
             <TextField
               label={"Stock nutrient solution capacity"}
               InputLabelProps={{ shrink: true }}
-              name="stock"
+              name="stockNutrientSolutionCapacity"
+              onChange={handleChange}
+              value={farmData.stockNutrientSolutionCapacity}
+              variant="outlined"
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6} md={6}>
+          <FormControl fullWidth>
+            <TextField
+              label={"Nutrient dilution ratio"}
+              InputLabelProps={{ shrink: true }}
+              name="nutrientdilutionRatio"
+              onChange={handleChange}
+              value={farmData.nutrientdilutionRatio}
+              variant="outlined"
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6} md={6}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-multiple-name-label" variant="outlined">
+              Type of nutrients{" "}
+            </InputLabel>
+            <SingleCustomSelect
+              name="nutrientsType"
+              lable="Type of nutrients"
+              value={farmData.nutrientsType || ""}
+              options={nutrientsType}
+              handleChange={handleChange}
+            />
+          </FormControl>
+        </Grid>
+      </>
+    );
+  };
+  const geolocationZone = () => {
+    return (
+      <>
+        <Grid item xs={12} sm={12} md={12}>
+          <p className="header-title">Geolocation</p>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-multiple-name-label" variant="outlined">
+              Zone
+            </InputLabel>
+            <SingleCustomSelect
+              name="location"
+              lable="Zone"
+              value={farmData.location || ""}
+              options={geolocation}
+              handleChange={handleChange}
+            />
+          </FormControl>
+        </Grid>
+      </>
+    );
+  };
+  const PolyhouseZone = () => {
+    return (
+      <>
+        <Grid item xs={12} sm={12} md={12}>
+          <p className="header-title">Polyhouse</p>
+        </Grid>
+        <Grid item xs={12} sm={6} md={6}>
+          <FormControl fullWidth>
+            <TextField
+              InputLabelProps={{ shrink: true }}
+              name="polyhouseStructureExpectedLife"
+              label=" Polyhouse structure expected life"
+              value={farmData.polyhouseStructureExpectedLife}
+              onChange={handleChange}
+              variant="outlined"
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={6} md={6}>
+          <FormControl fullWidth>
+            <TextField
+              InputLabelProps={{ shrink: true }}
+              label="Polyhouse plastic expected life"
+              name="polyhousePlasticExpectedLife"
+              value={farmData.polyhousePlasticExpectedLife}
               onChange={handleChange}
               variant="outlined"
             />
@@ -368,7 +505,6 @@ export default function AddFarmModal({
       </>
     );
   };
-
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -383,6 +519,8 @@ export default function AddFarmModal({
             {nurseryZone()}
             {growZoneArea()}
             {wateringZone()}
+            {geolocationZone()}
+            {PolyhouseZone()}
           </Grid>
         </DialogContent>
         <DialogActions>
