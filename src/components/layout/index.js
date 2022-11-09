@@ -37,8 +37,8 @@ injectReducer("crops", cropsReducer);
 injectReducer("login", loginReducer);
 injectReducer("farm", farmReducer);
 injectReducer("life-cycle", lifeCycleReducer);
-injectReducer("users", dashboardFarmReducer);
 injectReducer("dashboard", dashboardFarmReducer);
+injectReducer("users", usersReducer);
 injectSagas(farmSagas);
 injectSagas(userSagas);
 injectSagas(loginSagas);
@@ -46,7 +46,7 @@ injectSagas(cropsSagas);
 injectSagas(lifeCycleSagas);
 injectSagas(farmDashboardSagas);
 const drawerWidth = 240;
-const Layout = () => {
+const Layout = () => {  
   const token = localStorage.getItem("AUTH_TOKEN");
   console.log(token,"hello token");
   let loginObject = localStorage.getItem("AUTH_OBJECT");

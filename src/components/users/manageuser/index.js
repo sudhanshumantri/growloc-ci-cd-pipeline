@@ -131,6 +131,7 @@ export default function ManageUsers({
   React.useEffect(() => {
     fetchUsers();
   }, []);
+  console.log("usersList", usersList);
 
   // { userId: parseInt(userId) }
   return (
@@ -156,7 +157,7 @@ export default function ManageUsers({
           subHeading={`Are you sure to delete ${userInfo.name} ?`}
         />
       )}
-      <DataTable data={{ headers: headers, rows: usersList }} />
+      <DataTable data={{ headers: headers, rows: usersList || [] }} />
     </div>
   );
 }

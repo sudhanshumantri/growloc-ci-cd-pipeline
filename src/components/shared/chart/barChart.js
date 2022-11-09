@@ -18,7 +18,7 @@ ChartJS.register(ArcElement, CategoryScale,
     Tooltip,
     Filler,
     Legend);
-export default function PieChart(props) {
+export default function PieChart() {
     const data = {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [

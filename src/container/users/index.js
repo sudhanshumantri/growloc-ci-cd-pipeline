@@ -12,9 +12,7 @@ import {
     selectAddUserError,
     selectIsDeleteUserLoading,
     selectIsUpdateUserLoading,
-    
 } from "../../selectors/users";
-
 const mapStateToProps = createStructuredSelector({
     usersList: selectUsersList(),
     isUsersListLoading: selectIsUsersListLoading(),

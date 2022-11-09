@@ -6,7 +6,7 @@ import {
 } from "../actions/actionTypes";
 const INITIAL_STATE = fromJS({
   isDashboardFarmListLoading: false,
-  dashboardFarmList: [],
+  dashboardFarmList: {},
   DashboardFarmListError: null,
 });
 export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
