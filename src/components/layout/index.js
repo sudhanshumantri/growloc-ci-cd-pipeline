@@ -7,7 +7,8 @@ import Toolbar from "@mui/material/Toolbar";
 import { Routes, Route } from "react-router-dom";
 import store from "../../store";
 import PrivateOutlet from "../privateroute";
-import FarmDashboard from "../dashboard/farm";
+// import FarmDashboard from "../dashboard/farm";
+import FarmDashboard from "../../container/dashboard";
 import ManageCrop from "../../container/managecrops";
 import Login from "../../container/login";
 import SideBar from "../../container/sidebar";
@@ -15,34 +16,35 @@ import Farms from "../../container/farm";
 import AddUsers from "../../container/users"
 import CropLifeCycle from "../../container/life-cycle";
 import CropLifeCycleDetails from "../../container/life-cycle/lifeCycleDetails";
-
 import FarmOutlet from "../farmoutlet";
 import { getAsyncInjectors } from "../../utils/asyncInjectors";
-
 import loginReducer from "../../reducers/login";
 import farmReducer from "../../reducers/farm";
 import usersReducer from "../../reducers/users";
 import cropsReducer from "../../reducers/crops";
 import lifeCycleReducer from "../../reducers/life-cycle";
+import dashboardFarmReducer from "../../reducers/dashboard";
 import loginSagas from "../../sagas/login";
 import cropsSagas from "../../sagas/crops";
 import farmSagas from "../../sagas/farm";
 import userSagas from "../../sagas/users";
+import farmDashboardSagas from "../../sagas/dashboard";
 import lifeCycleSagas from "../../sagas/life-cycle";
 import { selectToken } from "../../selectors/login";
 import { loadAuthToken } from "../../actions/login";
-
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
 injectReducer("crops", cropsReducer);
 injectReducer("login", loginReducer);
 injectReducer("farm", farmReducer);
 injectReducer("life-cycle", lifeCycleReducer);
-injectReducer("users", usersReducer);
+injectReducer("users", dashboardFarmReducer);
+injectReducer("dashboard", dashboardFarmReducer);
 injectSagas(farmSagas);
 injectSagas(userSagas);
 injectSagas(loginSagas);
 injectSagas(cropsSagas);
 injectSagas(lifeCycleSagas);
+injectSagas(farmDashboardSagas);
 const drawerWidth = 240;
 const Layout = () => {
   const token = localStorage.getItem("AUTH_TOKEN");

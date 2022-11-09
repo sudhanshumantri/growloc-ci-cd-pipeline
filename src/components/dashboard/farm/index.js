@@ -29,7 +29,7 @@ let rows = [
     {
         zoneId: 'Zone 1',
         batchNo: 'batchNo',
-        name: 'Crop Name',
+        name: '',
         description: 'The harvesting for this crop is expected to start in next two days'
     },
     {
@@ -52,7 +52,11 @@ let rows = [
     }
 ]
 export default function FarmDashboard({
+    dashboardFarmList,
+    fetchFarmDashboard,
 }) {
+
+
     const { farmId } = useParams();
     const renderCropSchedules = () => {
         return (
@@ -73,7 +77,7 @@ export default function FarmDashboard({
                     <p className="header-title">
                         Task Schedules
                     </p>
-                    <DataTable data={{ headers: cropSchedulesHeader, rows: rows }} />
+                    <DataTable data={{ headers: cropSchedulesHeader, rows:rows }} />
                 </div>
             </Grid>
         )
@@ -114,6 +118,13 @@ export default function FarmDashboard({
             </Grid>
         )
     }
+
+    React.useEffect(() => {
+         fetchFarmDashboard(farmId);
+      }, []);
+    
+      console.log("here is list", dashboardFarmList);
+
     return (
         <div>
             <PageHeader title="Farm Dashboard" buttonArray={[]} />

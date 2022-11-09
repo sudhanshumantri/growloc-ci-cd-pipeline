@@ -10,7 +10,6 @@ import {
   selectLifecycleCropsList,
   selectCropLifeCycleListError,
   selectIsCropLifeCycleListLoading,
-  selectIsLifecycleParametersLoading,
 } from "../../selectors/life-cycle";
 import { selectCropFarmList } from "../../selectors/crops";
 

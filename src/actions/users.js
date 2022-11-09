@@ -72,8 +72,6 @@ export function deleteUserFailure(error) {
         error
     };
 }
-
-
 export function updateUserRequest(data) {
     return {
         type: UPDATE_USER_REQUEST,

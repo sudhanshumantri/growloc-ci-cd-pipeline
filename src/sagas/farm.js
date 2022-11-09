@@ -33,7 +33,9 @@ export function* addFarm({ data }) {
 }
 //
 export function* updateFarm({ data }) {
-  let responseData = yield call(callUpdateUser, data);
+  const {farmId, payload} = data;
+  console.log(data,"updateFarm");
+  let responseData = yield call(callUpdateFarm, payload, farmId);
   if (responseData?.status == 200) {
     yield put(updateFarmSuccess(responseData.data));
   } else {
@@ -41,7 +43,8 @@ export function* updateFarm({ data }) {
   }
 }
 export function* deleteFarm({ data }) {
-  let responseData = yield call(callDeleteUser, data);
+  console.log(data,"here farmId");
+  let responseData = yield call(callDeleteFarm, data);
   if (responseData?.status == 200) {
     yield put(deleteFarmSuccess(data));
   } else {

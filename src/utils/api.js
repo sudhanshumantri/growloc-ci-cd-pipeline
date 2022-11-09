@@ -21,8 +21,9 @@ const urls = {
     "delete-user": "farm/delete-farm-user",
     "update-farm-crop" : "farm/crop/update-crop",
     "delete-farm-crop" : "farm/crop/delete-crop",
-    "update-farm" : "",
-    "delete-farm" :"",
+    "update-farm" : "farm/update-farm/",
+    "delete-farm" :"farm/delete-farm/",
+    "fetch-farm-all-dashboard": "farm/get-farm-dashboard-data/",
   },
 };
 function getEndpoint(endpoint) {
@@ -113,6 +114,7 @@ export function callUpdateCropCycleParameters(data) {
     data,
   });
 }
+
 export function callUpdateCropToLifecycleSchedule(data) {
   console.log(data);
   return callApi(getEndpoint("update-crop-lifecycle-schedule"), {
@@ -168,19 +170,30 @@ export function callDeleteFarmCrop(data) {
 }
 //
 
-export function callUpdateFarm(data) {
+export function callUpdateFarm(data, routeParams) {
   return callApi(getEndpoint("update-farm"), {
     method: "PUT",
     removeAuthorizationHeader: false,
-    data: data,
+    data,
+    routeParams,
   });
 }
-export function callDeleteFarm(data) {
+export function callDeleteFarm(routeParams) {
+
   return callApi(getEndpoint("delete-farm"), {
     method: "delete",
     removeAuthorizationHeader: false,
-    data: data,
+    routeParams
   });
 }
+//
+export function callFetchDashboardFarmList(routeParams) {
+  return callApi(getEndpoint("fetch-farm-all-dashboard"), {
+    method: "get",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
+
 
 

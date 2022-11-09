@@ -16,8 +16,6 @@ import { growingZone } from "../../../config";
 import { plantSpacing } from "../../../config";
 import { nutrientsType } from "../../../config";
 import InputLabel from "@mui/material/InputLabel";
-import TextBox from "../../shared/text-box";
-
 export default function AddFarmModal({
   open,
   handleSave,
@@ -27,19 +25,19 @@ export default function AddFarmModal({
     farmArea: "",
     germinationType:"",
     germinationArea:"",
-    germinationSeedsCount:"",
+    germinationSeedsCount:null,
     germinationWateringType:"",
     germinationWateringSchedule:"",
     nurseryType:"",
     nurseryArea:"",
-    nurserySeedsCount:"",
+    nurserySeedsCount:null,
     nurseryWateringType:"",
     nurseryWateringSchedule:"",
     nurseryWateringSchedule: "",
     growingType: "",
     growingArea: "",
-    growingRowCount: "",
-    growingPlantCountPerRow: "",
+    growingRowCount: null,
+    growingPlantCountPerRow:null,
     growingPlantSpacing: "",
     growingWateringSchedule: "",
     reservoirCapacity: "",
@@ -73,23 +71,23 @@ export default function AddFarmModal({
   };
   const handleFarmSave = () => {
     let requestFarmData = {
-      name: farmData.name,
-      farmArea: farmData.farmArea,
-      germinationType: farmData.germinationType,
-      germinationArea: farmData.germinationArea,
-      germinationSeedsCount: parseInt(farmData.germinationSeedsCount),
-      germinationWateringType: farmData.germinationWateringType,
-      germinationWateringSchedule: farmData.germinationWateringSchedule,
-      nurseryType: farmData.nurseryType,
-      nurseryArea: farmData.nurseryArea,
-      nurserySeedsCount: parseInt(farmData.nurserySeedsCount),
+      name:farmData.name,
+      farmArea:farmData.farmArea,
+      germinationType:farmData.germinationType,
+      germinationArea:farmData.germinationArea,
+      germinationSeedsCount:parseInt(farmData.germinationSeedsCount),
+      germinationWateringType:farmData.germinationWateringType,
+      germinationWateringSchedule:farmData.germinationWateringSchedule,
+      nurseryType:farmData.nurseryType,
+      nurseryArea:farmData.nurseryArea,
+      nurserySeedsCount:parseInt(farmData.nurserySeedsCount),
       nurseryWateringType: farmData.nurseryWateringType,
       nurseryWateringSchedule: farmData.nurseryWateringSchedule,
-      growingType: farmData.growingType,
-      growingArea: farmData.growingArea,
-      growingRowCount: parseInt(farmData.growingRowCount),
-      growingPlantCountPerRow: parseInt(farmData.growingPlantCountPerRow),
-      growingPlantSpacing: parseInt(farmData.growingPlantSpacing),
+      growingType:farmData.growingType,
+      growingArea:farmData.growingArea,
+      growingRowCount:parseInt(farmData.growingRowCount),
+      growingPlantCountPerRow:parseInt(farmData.growingPlantCountPerRow),
+      growingPlantSpacing:farmData.growingPlantSpacing,
       growingWateringSchedule: farmData.growingWateringSchedule,
       reservoirCapacity: farmData.reservoirCapacity,
       nutrientWaterReservoirCapacity: farmData.nutrientWaterReservoirCapacity,
@@ -98,11 +96,13 @@ export default function AddFarmModal({
       cultivableArea: farmData.cultivableArea,
       nutrientdilutionRatio: farmData.nutrientdilutionRatio,
       nutrientsType: farmData.nutrientsType,
-      location: farmData.location,
-      polyhouseStructureExpectedLife: farmData.polyhouseStructureExpectedLife,
-      polyhousePlasticExpectedLife: farmData.polyhousePlasticExpectedLife,
+      location:farmData.location,
+      polyhouseStructureExpectedLife:farmData.polyhouseStructureExpectedLife,
+      polyhousePlasticExpectedLife:farmData.polyhousePlasticExpectedLife
     };
+
     if (validateFarm()) {
+      console.log("hey",requestFarmData );
       handleSave(requestFarmData);
     }
   };
@@ -152,18 +152,18 @@ export default function AddFarmModal({
             <SingleCustomSelect
               name="germinationType"
               lable="Germination Type"
-              value={farmData.germinationType }
+              value={farmData.germinationType || "" }
               options={germination}
               handleChange={handleChange}
             />
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
-          <TextBox
+          <TextField
             InputLabelProps={{ shrink: true }}
             label={"Germination Area"}
             name="germinationArea"
-            value={farmData.germinationArea}
+            value={farmData.germinationArea || ""}
             onChange={handleChange}
           />
         </Grid>
@@ -173,6 +173,7 @@ export default function AddFarmModal({
               InputLabelProps={{ shrink: true }}
               label={"No. of seeds per plantation"}
               name="germinationSeedsCount"
+              value={farmData.germinationSeedsCount || ""}
               onChange={handleChange}
             />
           </FormControl>
@@ -199,7 +200,7 @@ export default function AddFarmModal({
               type="number"
               name="germinationWateringSchedule"
               onChange={handleChange}
-              value={farmData.germinationWateringSchedule}
+              value={farmData.germinationWateringSchedule || ""}
               InputProps={{ inputProps: { min: 1, max: 10 } }}
             />
           </FormControl>
@@ -234,7 +235,7 @@ export default function AddFarmModal({
               InputLabelProps={{ shrink: true }}
               label={"Nursery Area"}
               name="nurseryArea"
-              value={farmData.nurseryArea}
+              value={farmData.nurseryArea || ""}
               onChange={handleChange}
             />
           </FormControl>
@@ -246,7 +247,7 @@ export default function AddFarmModal({
               label={"No of seeds for Nursery"}
               name="nurserySeedsCount"
               onChange={handleChange}
-              value={farmData.nurserySeedsCount}
+              value={farmData.nurserySeedsCount || ""}
               InputProps={{ inputProps: { min: 1, max: 10 } }}
             />
           </FormControl>
@@ -272,7 +273,7 @@ export default function AddFarmModal({
               label={"Watering Schedule"}
               type="number"
               name="nurseryWateringSchedule"
-              value={farmData.nurseryWateringSchedule}
+              value={farmData.nurseryWateringSchedule || ""}
               onChange={handleChange}
               InputProps={{ inputProps: { min: 1, max: 10 } }}
             />
@@ -308,7 +309,7 @@ export default function AddFarmModal({
               InputLabelProps={{ shrink: true }}
               label={"Growing Area"}
               name="growingArea"
-              value={farmData.growingArea}
+              value={farmData.growingArea || ""}
               onChange={handleChange}
             />
           </FormControl>
@@ -320,7 +321,7 @@ export default function AddFarmModal({
               InputLabelProps={{ shrink: true }}
               label={"No of plants in a row"}
               name="growingRowCount"
-              value={farmData.growingRowCount}
+              value={farmData.growingRowCount || ""}
               onChange={handleChange}
             />
           </FormControl>
@@ -331,7 +332,7 @@ export default function AddFarmModal({
               InputLabelProps={{ shrink: true }}
               label={"No of rows"}
               name="growingPlantCountPerRow"
-              value={farmData.growingPlantCountPerRow}
+              value={farmData.growingPlantCountPerRow || ""}
               onChange={handleChange}
             />
           </FormControl>
@@ -344,7 +345,7 @@ export default function AddFarmModal({
               name="growingWateringSchedule"
               type="number"
               onChange={handleChange}
-              value ={farmData.growingWateringSchedule}
+              value ={farmData.growingWateringSchedule || ""}
               InputProps={{ inputProps: { min: 1, max: 10 } }}
             />
           </FormControl>
@@ -378,7 +379,7 @@ export default function AddFarmModal({
               label={"Main reservoir capacity"}
               InputLabelProps={{ shrink: true }}
               name="reservoirCapacity"
-              value={farmData.reservoirCapacity}
+              value={farmData.reservoirCapacity || ""}
               onChange={handleChange}
               variant="outlined"
             />
@@ -390,7 +391,7 @@ export default function AddFarmModal({
               label={"Nutrient water reservoir capacity"}
               InputLabelProps={{ shrink: true }}
               name="nutrientWaterReservoirCapacity"
-              value={farmData.nutrientWaterReservoirCapacity}
+              value={farmData.nutrientWaterReservoirCapacity || ""}
               onChange={handleChange}
               variant="outlined"
             />
@@ -403,7 +404,7 @@ export default function AddFarmModal({
               InputLabelProps={{ shrink: true }}
               name="phReservoirCapacity"
               onChange={handleChange}
-              value={farmData.phReservoirCapacity}
+              value={farmData.phReservoirCapacity || ""}  
               variant="outlined"
             />
           </FormControl>
@@ -415,7 +416,7 @@ export default function AddFarmModal({
               InputLabelProps={{ shrink: true }}
               name="stockNutrientSolutionCapacity"
               onChange={handleChange}
-              value={farmData.stockNutrientSolutionCapacity}
+              value={farmData.stockNutrientSolutionCapacity || ""}
               variant="outlined"
             />
           </FormControl>
@@ -427,7 +428,7 @@ export default function AddFarmModal({
               InputLabelProps={{ shrink: true }}
               name="nutrientdilutionRatio"
               onChange={handleChange}
-              value={farmData.nutrientdilutionRatio}
+              value={farmData.nutrientdilutionRatio || ""}
               variant="outlined"
             />
           </FormControl>
@@ -484,7 +485,7 @@ export default function AddFarmModal({
               InputLabelProps={{ shrink: true }}
               name="polyhouseStructureExpectedLife"
               label=" Polyhouse structure expected life"
-              value={farmData.polyhouseStructureExpectedLife}
+              value={farmData.polyhouseStructureExpectedLife || ""}
               onChange={handleChange}
               variant="outlined"
             />
@@ -496,7 +497,7 @@ export default function AddFarmModal({
               InputLabelProps={{ shrink: true }}
               label="Polyhouse plastic expected life"
               name="polyhousePlasticExpectedLife"
-              value={farmData.polyhousePlasticExpectedLife}
+              value={farmData.polyhousePlasticExpectedLife || ""}
               onChange={handleChange}
               variant="outlined"
             />

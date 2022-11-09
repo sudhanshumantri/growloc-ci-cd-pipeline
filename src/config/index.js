@@ -24,6 +24,6 @@ export const growingZone = [
   "Raft system",
   "Dutch bucket system",
 ];
-export const plantSpacing = [" Plant to Plant", "Row to Row"];
+export const plantSpacing = [ "Plant to Plant", "Row to Row"];
 
 export const nutrientsType = ["2 part mix", "3 part mix","Custom nutrient mix"]
