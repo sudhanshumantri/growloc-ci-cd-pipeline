@@ -20,6 +20,7 @@ export default function ManageUsers({
   isdeleteUserLoading,
   isUpdateUserLoading,
 }) {
+  let { farmId } = useParams();
   const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [userInfo, setUserInfo] = useState({});
@@ -129,7 +130,7 @@ export default function ManageUsers({
     },
   ];
   React.useEffect(() => {
-    fetchUsers();
+    fetchUsers({farmId});
   }, []);
 
   // { userId: parseInt(userId) }

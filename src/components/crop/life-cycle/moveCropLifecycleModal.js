@@ -11,10 +11,10 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import ButtonCustom from "../../shared/button";
 import { Grid } from "@mui/material";
-export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQty, handleClose, isHarvestStage }) {
+export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQty, handleClose, isHarvestStage, isContiniousHarvet }) {
     const [units, setUnits] = useState("");
     const [kgs, setKgs] = useState("");
-    const [complete, setComplete] = useState(true);
+    const [complete, setComplete] = useState(false);
     const [unitError, setUnitError] = useState(false);
     const [unitErrorMessage, setUnitErrorMessage] = useState(false);
     const handleCompleteToggle = () => {
@@ -43,7 +43,7 @@ export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQt
                 kgs,
                 complete: isHarvestStage ? complete : false,
             }
-            handleClick(units, kgs, isHarvestStage ? complete : false)
+            handleClick(units, kgs, isContiniousHarvet ? (isHarvestStage ? complete : false) : true)
         }
     }
 
@@ -88,9 +88,11 @@ export default function MoveCropLifeCycleModal({ title, open, handleClick, maxQt
                                             onChange={handleKgChange}
                                         />
                                     </FormControl>
-                                    <FormGroup>
-                                        <FormControlLabel control={<Checkbox defaultChecked onChange={handleCompleteToggle} checked-={complete} />} c label="Do you want to end the lifecycle of this crop after this dispose?" />
-                                    </FormGroup>
+                                    {isContiniousHarvet && (
+                                        <FormGroup>
+                                            <FormControlLabel control={<Checkbox onChange={handleCompleteToggle} checked-={complete} />} c label="Do you want to dispose  the crops after this harvest?" />
+                                        </FormGroup>
+                                    )}
                                 </>
                             )}
                         </Grid>
