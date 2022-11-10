@@ -42,7 +42,6 @@ export default function AddCropModal({
   let { farmId } = useParams();
   const [selectedCrop, setselectedCrop] = useState("");
   const [batchNo, setBatchNo] = useState("");
-  const [isBatchNoError, setBatchNoError] = useState(false);
   const [isUnitsError, setIsUnitsError] = useState(false);
   const [unitErrorMessage, setUnitErrorMessage] = useState("");
   const [isCropError, setIsCropError] = useState(false);
@@ -53,10 +52,7 @@ export default function AddCropModal({
       setIsCropError(true);
       isError = true;
     }
-    if (!batchNo) {
-      setBatchNoError(true);
-      isError = true;
-    }
+    
     if (!units) {
       setIsUnitsError(true);
       setUnitErrorMessage("Unit is required");
@@ -131,25 +127,7 @@ export default function AddCropModal({
                 )}
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <FormControl fullWidth>
-                <TextField
-                  label={"Batch No"}
-                  InputLabelProps={{ shrink: true }}
-                  value={batchNo}
-                  error={isBatchNoError}
-                  helperText={
-                    isBatchNoError ? "Please provide batch number" : ""
-                  }
-                  onChange={(e) => {
-                    isBatchNoError && setBatchNoError(false);
-                    handleBatchNumberChange(e);
-                  }}
-                  variant="outlined"
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={12} md={12}>
               <FormControl fullWidth>
                 <TextField
                   label={"Units"}

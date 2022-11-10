@@ -23,6 +23,7 @@ export default function ManageCrop({
   deleteCrop,
   isdeleteFarmCropsLoading,
   isupdateFarmCropsLoading,
+  isAddCropLoading,
 }) {
   const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
@@ -38,7 +39,7 @@ export default function ManageCrop({
     }
     handleModalToggle();
   };
-  const handleModalToggle = (data) => {
+  const handleModalToggle = () => {
     setOpen(!open);
     setCropInfo({});
   };
@@ -149,15 +150,14 @@ export default function ManageCrop({
     fetchCrop();
     fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
-
   return (
     <div>
       <PageHeader title="Manage Crops" buttonArray={buttonArray} />
       <div className="page-container">
         {isFarmCropListLoading && <Loader title="Fetching Crops" />}
+        {isAddCropLoading && <Loader title="Adding Crops" />}
         {isupdateFarmCropsLoading && <Loader title="Updating Crop  " />}
-      {isdeleteFarmCropsLoading && <Loader title="Deleting  Crop" />}
-
+       {isdeleteFarmCropsLoading && <Loader title="Deleting  Crop" />}
         {open && (
           <AddCropModal
             modalData={cropList}

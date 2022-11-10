@@ -30,7 +30,9 @@ export default function AddUsersModal({
   const [userData, setUserData] = useState(userDetails);
   const [isNameError, setIsNameError] = useState(false);
   const [isPhoneError,setIsPhoneError] = useState(false)
+  const [isPasswordError,setIsPasswordError] = useState(false)
   const handleChange = (e) => {
+    
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });
   };
@@ -45,6 +47,10 @@ export default function AddUsersModal({
       setIsPhoneError(true);
       isError = true;
       
+    }
+    if(userData.password !==userData.confirmpassword) {
+      setIsPasswordError(true);
+      isError = true;   
     }
     return isError;
   }
@@ -94,21 +100,6 @@ export default function AddUsersModal({
               <FormControl fullWidth>
                 <TextField
                   fullWidth
-                  label={"Password"}
-                  id="password"
-                  name="password"
-                  disabled={userData.isEditMode}
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                  value={userData.password}
-                  onChange={(e) => handleChange(e)}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6} md={12}>
-              <FormControl fullWidth>
-                <TextField
-                  fullWidth
                   label={"Phone Number"}
                   id="phone"
                   name="phone"
@@ -123,6 +114,39 @@ export default function AddUsersModal({
                     handleChange(e)}}
                 />
               </FormControl>
+              </Grid>
+            <Grid item xs={12} sm={6} md={12} hidden={userData.isEditMode}>
+              <FormControl fullWidth>
+                <TextField
+                  fullWidth
+                  label={"Password"}
+                  id="password"
+                  name="password"
+                  disabled={userData.isEditMode}
+                  InputLabelProps={{ shrink: true }}
+                  variant="outlined"
+                  value={userData.password}
+                  onChange={(e) => handleChange(e)}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6} md={12} hidden={userData.isEditMode}>
+              <FormControl fullWidth>
+                <TextField
+                  fullWidth
+                  label={"Confirm Password"}
+                  id="confirmpassword"
+                  name="confirmpassword"
+                  InputLabelProps={{ shrink: true }}
+                  variant="outlined"
+                  value={userData.confirmpassword}
+                  error={isPasswordError}
+                  helperText={isPasswordError ? 'Password does not match' : ""}              
+                  onChange={(e) =>{isPasswordError && setIsPasswordError(false)
+                     handleChange(e)}}
+                />
+              </FormControl>
+            </Grid>
               <br/>
               {" "}
               <FormControl>
@@ -163,7 +187,6 @@ export default function AddUsersModal({
                 </RadioGroup>
               </FormControl>
             </Grid>
-          </Grid>
         </DialogContent>
         <DialogActions>
           <CustomButton

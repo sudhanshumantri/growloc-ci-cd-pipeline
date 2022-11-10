@@ -8,7 +8,7 @@ let headers = [
     {
         label: 'Batch No',
         // key: 'batchName',
-        key: 'batchNo',
+        key: 'id',
         redirection: true,
         redirectionKey: 'id',
         baseEndPoint: '#/crops/lifecycle/details/'

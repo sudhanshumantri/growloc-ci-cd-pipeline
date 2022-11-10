@@ -78,7 +78,7 @@ export default function farmReducer(state = INITIAL_STATE, action = {}) {
         .set("isdeleteFarmLoading", true)
         .set("isdeleteFarmError", null);
     case DELETE_FARM_SUCCESS:
-      const { farmId } = action.data;
+      const farmId = action.data;
       const filteredList = farmList.filter((farm) => farm.farmId !== farmId);
       return state
         .set("isdeleteFarmLoading", false)

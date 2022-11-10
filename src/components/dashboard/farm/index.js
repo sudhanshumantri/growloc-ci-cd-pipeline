@@ -12,6 +12,12 @@ import PageHeader from "../../shared/page-header";
 import DataTable from "../../shared/dataTable";
 import PieChart from "../../shared/chart/pieChart";
 import BarChart from "../../shared/chart/barChart";
+import SingleCustomSelect from "../../shared/select";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import { options } from "../../../config";
+import Loader from "../../shared/loader";
+
 let cropSchedulesHeader = [
   {
     label: "Batch Number",
@@ -64,14 +70,19 @@ let rows = [
 export default function FarmDashboard({
   dashboardFarmList,
   fetchFarmDashboard,
+  fetchFarmDashboardHarvest,
+  dashboardHarvestList,
+  isDashboardHarvestListLoading,
 }) {
+  const { farmId } = useParams();
+  const [month, setMonth] = useState(3);
   const headers = [
     {
       label: "Batch Number",
-      key: "batch",
+      key: "lifecycleId",
       redirection: true,
-      redirectionKey: 'lifecycleId',
-      baseEndPoint: '#/crops/lifecycle/details/'
+      redirectionKey: "lifecycleId",
+      baseEndPoint: "#/crops/lifecycle/details/",
     },
 
     {
@@ -84,7 +95,12 @@ export default function FarmDashboard({
     },
   ];
 
-  const { farmId } = useParams();
+  const handleChange = (event) => {
+    const {value} = event.target; 
+    setMonth(value);
+    fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month: value });
+  };
+
   const renderCropSchedules = () => {
     const { cropSchedules } = dashboardFarmList;
     return (
@@ -98,6 +114,7 @@ export default function FarmDashboard({
   };
   const renderTaskSchedules = () => {
     return (
+
       <Grid item xs={12} sm={12} md={12}>
         <div className="card-container">
           <p className="header-title">Task Schedules</p>
@@ -133,23 +150,46 @@ export default function FarmDashboard({
       <Grid item xs={12} sm={12} md={12}>
         <div className="card-container">
           <p className="header-title">Monthly Harvest Breakup</p>
-          <BarChart />
+          <Grid container justifyContent="end">
+          <Grid item xs={3} sm={2} md={2}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-multiple-name-label" variant="outlined">
+                Select Month
+              </InputLabel>
+              <SingleCustomSelect
+                value={month}
+                valueKey="value"
+                labelKey="name"
+                lable="Select Month"
+                options={options}
+                handleChange={handleChange}
+              />
+            </FormControl>
+            </Grid>
+          </Grid>
+          <BarChart chartData={dashboardHarvestList || []}/>
         </div>
+       
       </Grid>
     );
   };
-
   React.useEffect(() => {
     fetchFarmDashboard(farmId);
+    fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
   }, []);
 
   console.log("here is list", dashboardFarmList);
+  console.log("here is dashboard list", dashboardHarvestList);
 
   return (
     <div>
       <PageHeader title="Farm Dashboard" buttonArray={[]} />
+      {isDashboardHarvestListLoading && <Loader title="Fetching Details" />
+ }
       <div className="page-container">
         <Grid container item sx={8} spacing={2}>
+                {isDashboardHarvestListLoading && <Loader title="Fetching Details" />
+}
           {renderCropSchedules()}
           {renderTaskSchedules()}
           {renderMonthlyHarvestBreakup()}

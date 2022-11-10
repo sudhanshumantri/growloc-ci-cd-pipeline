@@ -29,7 +29,7 @@ const mapStateToProps = createStructuredSelector({
   isFarmCropListLoading :selectisFarmCropListLoading(),
   selectCropFarmListError:selectCropFarmListError(),
   isupdateFarmCropsLoading:selectIsUpdateFarmCropsLoading(),
-  isdeleteFarmCropsLoading:selectIsDeleteFarmCropsLoading(),
+  isdeleteFarmCropsLoading:selectIsDeleteFarmCropsLoading()
 });
 const mapDispatchToProps = {
   fetchCrop: fetchCropRequest,

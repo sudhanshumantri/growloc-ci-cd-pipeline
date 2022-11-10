@@ -29,7 +29,7 @@ export default function ManageUsers({
     const { profile } = user;
     const userDetails = {
       name: profile.name,
-      password: user.password,
+      // password: user.password,
       phone: profile.phone,
       role: profile.role || "farmmanager",
       isEditMode: true,

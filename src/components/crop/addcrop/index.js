@@ -151,7 +151,7 @@ export default function AddCropModal({
                 lable="Germination Method"
                 disabled={cropDetails.isEditMode}
                 options={selectedData.germinationMethod}
-                handleChange ={handleGerminationChange}
+                handleChange ={(e)=>handleGerminationChange(e)}
                 isError={isMethodError}
                 errorMessage="Please select a method"
               />

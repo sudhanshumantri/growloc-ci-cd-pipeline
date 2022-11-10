@@ -24,6 +24,7 @@ const urls = {
     "update-farm" : "farm/update-farm/",
     "delete-farm" :"farm/delete-farm/",
     "fetch-farm-all-dashboard": "farm/get-farm-dashboard-data/",
+    "fetch-farm-harvest-dashboard":"farm/get-farm-harvesteed-breakup",
   },
 };
 function getEndpoint(endpoint) {
@@ -194,6 +195,15 @@ export function callFetchDashboardFarmList(routeParams) {
     routeParams,
   });
 }
+
+export function callFetchDashboardHarvestList(data) {
+  return callApi(getEndpoint("fetch-farm-harvest-dashboard"), {
+    method: "post",
+    removeAuthorizationHeader: false,
+    data,
+  });
+}
+
 
 
 

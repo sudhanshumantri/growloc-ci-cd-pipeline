@@ -106,6 +106,7 @@ export default function AddFarmModal({
       handleSave(requestFarmData);
     }
   };
+
   const farmBasicInfo = () => {
     return (
       <>
@@ -510,7 +511,7 @@ export default function AddFarmModal({
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">
-          Add a new Farm
+           Add a new Farm
         </DialogTitle>
         <br />
         <DialogContent sx={{ paddingTop: "10px" }}>

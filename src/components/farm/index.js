@@ -10,7 +10,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import ConfirmDialogBox from "../shared/dailog/ConfirmDialogBox";
 import CardActions from "@mui/material/CardActions";
-
 export default function ManageFarm({
   fetchFarm,
   farmList,
@@ -19,17 +18,18 @@ export default function ManageFarm({
   isAddFarmLoading,
   deleteFarm,
   updateFarm,
+  isdeleteFarmLoading,
+  isUpdateFarmLoading,
+  
 }) {
   const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [farmInfo, setFarmInfo] = useState({});
   const [selectedFarmId, setSeletedFarmId] = useState({});
-
   const handleEdit = (e, elem) => {
     e.preventDefault();
     const { farm } = elem;
     console.log(farm, "farmhandleEdit");
-
     const farmDetails = {
       name: farm.name,
       farmArea: farm.farmArea,
@@ -65,6 +65,14 @@ export default function ManageFarm({
     setOpen(true);
   };
 
+
+
+  const handleModalToggle = () => {
+    setOpen(!open);
+    setFarmInfo({});
+    setSeletedFarmId({});
+  };
+
   const handleDelete = (e, elem) => {
     e.preventDefault();
     const { farmId, farm } = elem;
@@ -85,7 +93,6 @@ export default function ManageFarm({
     fetchFarm();
     // addFarm()
   }, []);
-
   let buttonArray = [
     {
       label: "Add New",
@@ -103,7 +110,6 @@ export default function ManageFarm({
       handler: handleConfirmRemove,
     },
   ];
-
   const handleFarmSave = (data) => {
     if (selectedFarmId) {
       const payload = {
@@ -143,18 +149,14 @@ export default function ManageFarm({
     handleModalToggle();
   };
 
-  const handleModalToggle = () => {
-    setOpen(!open);
-    setFarmInfo({});
-    setSeletedFarmId({});
-  };
-
   return (
     <div>
       <PageHeader title="Manage Farm" buttonArray={buttonArray} />
       <div className="page-container">
         {isFarmListLoading && <Loader title="Fetching Farms" />}
         {isAddFarmLoading && <Loader title="Adding Farm" />}
+        {isUpdateFarmLoading && <Loader title="Updating Farms" />}
+        {isdeleteFarmLoading && <Loader title="Deleting Farm" />}  
         {open && (
           <AddFarmModal
             open={open}
