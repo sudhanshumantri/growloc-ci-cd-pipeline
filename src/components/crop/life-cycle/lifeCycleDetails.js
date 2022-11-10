@@ -151,18 +151,24 @@ export default function CropLifeCycleDetails({
         });
       } else {
         //this is the last step and it is harvesting
-        buttonArray.push({
-          label: "Dispose",
-          handler: handleModalToggle,
-        });
+
         if (cropDetails.crop.crop.variety == 'Vine' || cropDetails.crop.crop.variety == 'Herb') {
+          buttonArray.push({
+            label: "Harvest",
+            handler: handleModalToggle,
+          });
           let cropsSchedule = lifecycleDetails?.cropDetails?.FarmCropLifecycleSchedules.length > 0;
-          if(!cropsSchedule){
+          if (!cropsSchedule) {
             buttonArray.push({
               label: "Schedule",
               handler: handleScheduleHarvestingModalToggle,
             });
           }
+        } else {
+          buttonArray.push({
+            label: "Dispose",
+            handler: handleModalToggle,
+          });
         }
       }
     }
@@ -236,7 +242,7 @@ export default function CropLifeCycleDetails({
               <b> {daysText}</b>
             )
           })}
-          <BorderColorIcon className="icon" sx={{ fontSize: '14px', marginLeft: '5px',color:'#517223' }} onClick={handleScheduleHarvestingModalToggle} />
+          <BorderColorIcon className="icon" sx={{ fontSize: '14px', marginLeft: '5px', color: '#517223' }} onClick={handleScheduleHarvestingModalToggle} />
         </Alert>
       )
     }
@@ -377,60 +383,63 @@ export default function CropLifeCycleDetails({
     );
   };
 
-
   return (
     <>
-      {isLifecycleDetailsLoading && <Loader title="Fetching Details" />}
-      {!isLifecycleDetailsLoading && (
-        <>
-          {renderHeader()}
-          <div className="page-container">
-            {renderStepper()}
-            {renderNotification()}
-            {renderSelectedStageInformation()}
-            {open && (
-              <MoveCropLifeCycleModal
-                open={open}
-                handleClose={handleModalToggle}
-                title={isHarvestStage ? "Dispose Plants" : "Transplant crops "}
-                handleClick={handleCropTransationModalSave}
-                modalData={lifecycleDetails}
-                isHarvestStage={isHarvestStage}
-                maxQty={
-                  maxQty
-                    ? maxQty
-                    : lifecycleDetails.cropDetails.FarmCropLifecycleStages[
-                      activeStep
-                    ].qty
-                }
-              />
-            )}
-            {openScheduleHarvestingModal && (
-              <ScheduleHarvestingModal
-                open={openScheduleHarvestingModal}
-                handleClose={handleScheduleHarvestingModalToggle}
-                handleChange={handleScheduleHarvestChange}
-                data={harvestingSchedules}
-                handleSave={handleScheduleHarvestSave}
-              />
-            )}
+      {isLifecycleDetailsLoading && <Loader title="Fetching Details" />
+      }
+      {
+        !isLifecycleDetailsLoading && (
+          <>
+            {renderHeader()}
+            <div className="page-container">
+              {renderStepper()}
+              {renderNotification()}
+              {renderSelectedStageInformation()}
+              {open && (
+                <MoveCropLifeCycleModal
+                  open={open}
+                  handleClose={handleModalToggle}
+                  title={isHarvestStage ? "Dispose Plants" : "Transplant crops "}
+                  handleClick={handleCropTransationModalSave}
+                  modalData={lifecycleDetails}
+                  isHarvestStage={isHarvestStage}
+                  isContiniousHarvet={(lifecycleDetails.cropDetails.crop.crop.variety == 'Vine' || lifecycleDetails.cropDetails.crop.crop.variety == 'Herb') ? true : false}
+                  maxQty={
+                    maxQty
+                      ? maxQty
+                      : lifecycleDetails.cropDetails.FarmCropLifecycleStages[
+                        activeStep
+                      ].qty
+                  }
+                />
+              )}
+              {openScheduleHarvestingModal && (
+                <ScheduleHarvestingModal
+                  open={openScheduleHarvestingModal}
+                  handleClose={handleScheduleHarvestingModalToggle}
+                  handleChange={handleScheduleHarvestChange}
+                  data={harvestingSchedules}
+                  handleSave={handleScheduleHarvestSave}
+                />
+              )}
 
-            {isTransitionLoading && (
-              <Loader title="Migrating Crops to another stage" />
-            )}
-            {isAddLifecycleParametersLoading && (<Loader title="updating parameters" />)}
-            {isStageEditOpen && (
-              <EditParameters
-                open={isStageEditOpen}
-                handleClose={handleEditToggle}
-                modalData={lifecycleDetails}
-                activeStep={activeStep}
-                handleSave={handleParametersSave}
-              />
-            )}
-          </div>
-        </>
-      )}
+              {isTransitionLoading && (
+                <Loader title="Migrating Crops to another stage" />
+              )}
+              {isAddLifecycleParametersLoading && (<Loader title="updating parameters" />)}
+              {isStageEditOpen && (
+                <EditParameters
+                  open={isStageEditOpen}
+                  handleClose={handleEditToggle}
+                  modalData={lifecycleDetails}
+                  activeStep={activeStep}
+                  handleSave={handleParametersSave}
+                />
+              )}
+            </div>
+          </>
+        )
+      }
     </>
   );
 }

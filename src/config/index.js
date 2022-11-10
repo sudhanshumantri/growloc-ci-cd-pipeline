@@ -1,6 +1,6 @@
 export const api = {
-  host: "https://growloc-backend.herokuapp.com/api/",
-  // host: 'http://localhost:8000/api/'
+  // host: "https://growloc-backend.herokuapp.com/api/",
+  host: 'http://localhost:8000/api/'
 };
 export const WEEKDAYS = [
   { label: "S", value: "7" },
@@ -24,6 +24,6 @@ export const growingZone = [
   "Raft system",
   "Dutch bucket system",
 ];
-export const plantSpacing = [ "Plant to Plant", "Row to Row"];
+export const plantSpacing = ["Plant to Plant", "Row to Row"];
 
-export const nutrientsType = ["2 part mix", "3 part mix","Custom nutrient mix"]
+export const nutrientsType = ["2 part mix", "3 part mix", "Custom nutrient mix"]

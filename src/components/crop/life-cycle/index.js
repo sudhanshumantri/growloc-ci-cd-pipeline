@@ -27,8 +27,8 @@ let headers = [
         isDate: true
     },
     {
-        label: 'Est Harvest Date',
-        key: 'estDate',
+        label: 'Total Harvested (Kgs/Units)',
+        key: 'harvestedData',
         redirection: false
     },
     {
