@@ -46,7 +46,6 @@ export default function AddUsersModal({
     if (!userData.phone) {
       setIsPhoneError(true);
       isError = true;
-      
     }
     if(userData.password !==userData.confirmpassword) {
       setIsPasswordError(true);

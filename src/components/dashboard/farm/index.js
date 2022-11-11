@@ -151,7 +151,7 @@ export default function FarmDashboard({
         <div className="card-container">
           <p className="header-title">Monthly Harvest Breakup</p>
           <Grid container justifyContent="end">
-          <Grid item xs={3} sm={2} md={2}>
+          <Grid item xs={3} sm={2} md={2} >
             <FormControl fullWidth>
               <InputLabel id="demo-multiple-name-label" variant="outlined">
                 Select Month

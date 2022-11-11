@@ -25,7 +25,7 @@ export default function ManageFarm({
   const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [farmInfo, setFarmInfo] = useState({});
-  const [selectedFarmId, setSeletedFarmId] = useState({});
+  const [selectedFarmId, setSeletedFarmId] = useState(null);
   const handleEdit = (e, elem) => {
     e.preventDefault();
     const { farm } = elem;
@@ -70,7 +70,7 @@ export default function ManageFarm({
   const handleModalToggle = () => {
     setOpen(!open);
     setFarmInfo({});
-    setSeletedFarmId({});
+    setSeletedFarmId(null);
   };
 
   const handleDelete = (e, elem) => {
