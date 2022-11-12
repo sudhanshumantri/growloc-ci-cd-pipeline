@@ -11,7 +11,7 @@ function renderButtonArray(buttonArray) {
         })
     )
 }
-export default function PageHeader({ title,subtitle, buttonTitle, buttonArray, info, customButton, }) {
+export default function PageHeader({ title, subtitle, buttonTitle, buttonArray, info, customButton, }) {
     //export default class PageHeader extends React.Component {
     return (
         <>
@@ -48,9 +48,7 @@ export default function PageHeader({ title,subtitle, buttonTitle, buttonArray, i
                     ))
                 )}
             </div>
-
             <hr />
         </>
-
     )
 }

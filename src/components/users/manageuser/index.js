@@ -8,7 +8,6 @@ import AddUsersModal from "../adduser";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
-
 export default function ManageUsers({
   usersList,
   fetchUsers,
@@ -39,13 +38,11 @@ export default function ManageUsers({
     setOpen(true);
   };
   const handleDelete = (userData) => {
-    console.log(userData.id, "here is id");
-    const { userId,  user  } = userData;
+    const { userId, user } = userData;
     const userDetails = { userId, name: user.profile.name };
     setUserInfo(userDetails);
     setIsDeleteModelOpen(true);
   };
-
   const handleConfirmRemove = () => {
     const { userId } = userInfo;
     deleteUser({ userId });
@@ -55,7 +52,6 @@ export default function ManageUsers({
     setIsDeleteModelOpen(!isDeleteModelOpen);
     setUserInfo({});
   };
-
   const headers = [
     {
       label: "Name",
@@ -85,7 +81,7 @@ export default function ManageUsers({
           label: "Delete",
           handler: handleDelete,
           type: 'icon',
-          icon: <DeleteIcon aria-label="delete"/>,
+          icon: <DeleteIcon aria-label="delete" />,
           // color:'warning'
         },
       ],
@@ -117,12 +113,10 @@ export default function ManageUsers({
     }
     handleModalToggle();
   };
-
   const handleModalToggle = () => {
     setOpen(!open);
     setUserInfo({});
   };
-
   let buttonArray = [
     {
       label: "Add New",
@@ -130,10 +124,8 @@ export default function ManageUsers({
     },
   ];
   React.useEffect(() => {
-    fetchUsers({farmId});
+    fetchUsers({ farmId });
   }, []);
-  console.log("usersList", usersList);
-
   // { userId: parseInt(userId) }
   return (
     <div>
