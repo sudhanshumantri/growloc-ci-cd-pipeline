@@ -23,6 +23,9 @@ export default function ManageUsers({
   const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [userInfo, setUserInfo] = useState({});
+  const [userLat, setUserLat]= useState();
+const  [userLong, setUserLong]= useState();
+
   const handleEdit = (userData) => {
     const { user, userId } = userData;
     const { profile } = user;
@@ -126,6 +129,17 @@ export default function ManageUsers({
   React.useEffect(() => {
     fetchUsers({ farmId });
   }, []);
+
+  // let test = {lat: parseFloat(userLat), lng: parseFloat(userLong)}
+  React.useEffect(()=> {
+    navigator.geolocation.getCurrentPosition(position =>{
+      setUserLat(position.coords.latitude);
+      setUserLong(position.coords.longitude);
+      console.log(userLat, userLong);
+  
+    })
+  },[]);
+
   // { userId: parseInt(userId) }
   return (
     <div>

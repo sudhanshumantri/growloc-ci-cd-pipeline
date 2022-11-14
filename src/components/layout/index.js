@@ -32,6 +32,7 @@ import farmDashboardSagas from "../../sagas/dashboard";
 import lifeCycleSagas from "../../sagas/life-cycle";
 import { selectToken } from "../../selectors/login";
 import { loadAuthToken } from "../../actions/login";
+import AddFarm from "../../container/addfarm";
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
 injectReducer("crops", cropsReducer);
 injectReducer("login", loginReducer);
@@ -77,6 +78,8 @@ const Layout = () => {
               </PrivateOutlet>
             }
           />
+          <Route path="add-farm/" element={<AddFarm/>} />
+          <Route path="edit-farm/:farmId" element={<AddFarm/>} />
           <Route
             path="farm/:farmId"
             element={

@@ -1,4 +1,6 @@
 import { call, all, put, takeLatest } from "redux-saga/effects";
+import { useNavigate } from "react-router-dom";
+
 import {
   callFetchFarmList,
   callFarmCrop,
@@ -24,9 +26,12 @@ export function* fetchFarmList({ data }) {
   }
 }
 export function* addFarm({ data }) {
+
   let responseData = yield call(callFarmCrop, data);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(saveFarmSuccess(responseData.data.data));
+    yield call(browserHistory.push, "/");
+    yield call(browserHistory.go, "/");
   } else {
     yield put(saveFarmFailure("Something went wrong"));
   }
@@ -38,6 +43,7 @@ export function* updateFarm({ data }) {
   let responseData = yield call(callUpdateFarm, payload, farmId);
   if (responseData?.status == 200) {
     yield put(updateFarmSuccess(responseData.data));
+
   } else {
     yield put(updateFarmFailure("Something went wrong"));
   }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AddFarmModal from "./addfarm";
+import { useNavigate } from "react-router-dom";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
 import Grid from "@mui/material/Grid";
@@ -13,64 +13,25 @@ import CardActions from "@mui/material/CardActions";
 export default function ManageFarm({
   fetchFarm,
   farmList,
-  addFarm,
   isFarmListLoading,
   isAddFarmLoading,
   deleteFarm,
-  updateFarm,
   isdeleteFarmLoading,
   isUpdateFarmLoading,
-  
 }) {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [farmInfo, setFarmInfo] = useState({});
   const [selectedFarmId, setSeletedFarmId] = useState(null);
   const handleEdit = (e, elem) => {
     e.preventDefault();
-    const { farm } = elem;
-    console.log(farm, "farmhandleEdit");
-    const farmDetails = {
-      name: farm.name,
-      farmArea: farm.farmArea,
-      germinationType: farm.germinationType,
-      germinationArea: farm.germinationArea,
-      germinationSeedsCount: farm.germinationSeedsCount,
-      germinationWateringType: farm.germinationWateringType,
-      germinationWateringSchedule: farm.germinationWateringSchedule,
-      nurseryType: farm.nurseryType,
-      nurseryArea: farm.nurseryArea,
-      nurserySeedsCount: farm.nurserySeedsCount,
-      nurseryWateringType: farm.nurseryWateringType,
-      nurseryWateringSchedule: farm.nurseryWateringSchedule,
-      growingType: farm.growingType,
-      growingArea: farm.growingArea,
-      growingRowCount: farm.growingRowCount,
-      growingPlantCountPerRow: farm.growingRowCount,
-      growingPlantSpacing: farm.growingPlantSpacing,
-      growingWateringSchedule: farm.growingWateringSchedule,
-      reservoirCapacity: farm.reservoirCapacity,
-      nutrientWaterReservoirCapacity: farm.nutrientWaterReservoirCapacity,
-      phReservoirCapacity: farm.phReservoirCapacity,
-      stockNutrientSolutionCapacity: farm.stockNutrientSolutionCapacity,
-      cultivableArea: farm.cultivableArea,
-      nutrientdilutionRatio: farm.nutrientdilutionRatio,
-      nutrientsType: farm.nutrientsType,
-      location: farm.location,
-      polyhouseStructureExpectedLife: farm.polyhouseStructureExpectedLife,
-      polyhousePlasticExpectedLife: farm.polyhousePlasticExpectedLife,
-    };
-    setFarmInfo(farmDetails);
-    setSeletedFarmId(farm.id);
-    setOpen(true);
+     const { farm } = elem;
+    navigate("/add-farm/" + farm.id);
   };
 
-
-
   const handleModalToggle = () => {
-    setOpen(!open);
-    setFarmInfo({});
-    setSeletedFarmId(null);
+    navigate("/add-farm/");
   };
 
   const handleDelete = (e, elem) => {
@@ -93,6 +54,7 @@ export default function ManageFarm({
     fetchFarm();
     // addFarm()
   }, []);
+
   let buttonArray = [
     {
       label: "Add New",
@@ -110,44 +72,6 @@ export default function ManageFarm({
       handler: handleConfirmRemove,
     },
   ];
-  const handleFarmSave = (data) => {
-    if (selectedFarmId) {
-      const payload = {
-        name: data.name,
-        farmArea: data.farmArea,
-        germinationType: data.germinationType,
-        germinationArea: data.germinationArea,
-        germinationSeedsCount: data.germinationSeedsCount,
-        germinationWateringType: data.germinationWateringType,
-        germinationWateringSchedule: data.germinationWateringSchedule,
-        nurseryType: data.nurseryType,
-        nurseryArea: data.nurseryArea,
-        nurserySeedsCount: data.nurserySeedsCount,
-        nurseryWateringType: data.nurseryWateringType,
-        nurseryWateringSchedule: data.nurseryWateringSchedule,
-        growingType: data.growingType,
-        growingArea: data.growingArea,
-        growingRowCount: data.growingRowCount,
-        growingPlantCountPerRow: data.growingRowCount,
-        growingPlantSpacing: data.growingPlantSpacing,
-        growingWateringSchedule: data.growingWateringSchedule,
-        reservoirCapacity: data.reservoirCapacity,
-        nutrientWaterReservoirCapacity: data.nutrientWaterReservoirCapacity,
-        phReservoirCapacity: data.phReservoirCapacity,
-        stockNutrientSolutionCapacity: data.stockNutrientSolutionCapacity,
-        cultivableArea: data.cultivableArea,
-        nutrientdilutionRatio: data.nutrientdilutionRatio,
-        nutrientsType: data.nutrientsType,
-        location: data.location,
-        polyhouseStructureExpectedLife: data.polyhouseStructureExpectedLife,
-        polyhousePlasticExpectedLife: data.polyhousePlasticExpectedLife,
-      };
-      updateFarm({ payload, farmId: selectedFarmId });
-    } else {
-      addFarm(data);
-    }
-    handleModalToggle();
-  };
 
   return (
     <div>
@@ -156,16 +80,7 @@ export default function ManageFarm({
         {isFarmListLoading && <Loader title="Fetching Farms" />}
         {isAddFarmLoading && <Loader title="Adding Farm" />}
         {isUpdateFarmLoading && <Loader title="Updating Farms" />}
-        {isdeleteFarmLoading && <Loader title="Deleting Farm" />}  
-        {open && (
-          <AddFarmModal
-            open={open}
-            handleSave={handleFarmSave}
-            handleClose={handleModalToggle}
-            farmDetails={farmInfo}
-            data={farmList}
-          />
-        )}
+        {isdeleteFarmLoading && <Loader title="Deleting Farm" />}
         <Grid container spacing={2}>
           {farmList.map((elem) => (
             <Grid

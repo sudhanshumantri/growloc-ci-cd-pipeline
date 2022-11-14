@@ -1,32 +1,22 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
+import { useParams } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import TextField from "@mui/material/TextField";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import ButtonCustom from "../../shared/button";
+import ButtonCustom from "../shared/button";
+import SingleCustomSelect from "../shared/select";
 import { Grid } from "@mui/material";
-import SingleCustomSelect from "../../shared/select";
-import { germination } from "../../../config";
-import { wateringType } from "../../../config";
-import { nursaryType } from "../../../config";
-import { growingZone } from "../../../config";
-import { plantSpacing } from "../../../config";
-import { nutrientsType } from "../../../config";
+import { germination } from "../../config";
+import { wateringType } from "../../config";
+import { nursaryType } from "../../config";
+import { growingZone } from "../../config";
+import { plantSpacing } from "../../config";
+import { nutrientsType } from "../../config";
 import InputLabel from "@mui/material/InputLabel";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import RadioGroup from "@mui/material/RadioGroup";
-import Radio from "@mui/material/Radio";
-
-import Autocomplete from "react-google-autocomplete";
-
-export default function AddFarmModal({
-  open,
-  handleSave,
-  handleClose,
-  farmDetails = {
+import PageHeader from "../shared/page-header";
+import Loader from "../shared/loader";
+import Autocomplete, { usePlacesWidget } from "react-google-autocomplete";
+export default function AddFarm({ addFarm, updateFarm, isAddFarmLoading, isUpdateFarmLoading}) {
+    const [farmData, setFarmData] = useState({
     name: "",
     farmArea: "",
     germinationType: "",
@@ -52,19 +42,20 @@ export default function AddFarmModal({
     stockNutrientSolutionCapacity: "",
     cultivableArea: "",
     nutrientdilutionRatio: "",
-    nutrientsType: "",
     location: "",
     polyhouseStructureExpectedLife: "",
     polyhousePlasticExpectedLife: "",
-  },
-}) {
-  // const [farm, setFarm] = useState({});
+  });
+
   const geolocation = ["Climate zone"];
-  const [farmData, setFarmData] = useState(farmDetails);
-  const [markers, setMarkers] = React.useState([]);
-  const [selected, setSelected] = React.useState(null);
-  
-  // const [nameError, setNameError] = useState(false);
+  const { ref: materialRef } = usePlacesWidget({
+    apiKey: "AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY",
+    onPlaceSelected: (place) => console.log(place),
+    inputAutocompleteValue: "country",
+    options: {
+    },
+  });
+
   const [validation, setValidation] = useState({
     name: "",
     germinationType: "",
@@ -81,6 +72,8 @@ export default function AddFarmModal({
     location: "",
     polyhouseStructureExpectedLife: "",
     polyhousePlasticExpectedLife: "",
+    farmLocation:"",
+    liveLocation:""
   });
 
   const handleChange = (e) => {
@@ -88,6 +81,19 @@ export default function AddFarmModal({
     setFarmData({ ...farmData, [name]: value });
     validation[name] && setValidation({ ...validation, [name]: false });
   };
+
+  const { farmId } = useParams();
+  const isButtonSelected = (value) => {
+    if (farmData.liveLocation === value) {
+      return true;
+    }
+  };
+
+
+  useEffect(() => {
+    if (farmId) {
+    }
+  }, [farmId]);
 
   const validateFarm = () => {
     let errors = { ...validation };
@@ -188,8 +194,15 @@ export default function AddFarmModal({
       polyhousePlasticExpectedLife: farmData.polyhousePlasticExpectedLife,
     };
     if (validateFarm()) {
-      console.log("hey", requestFarmData);
       handleSave(requestFarmData);
+    }
+  };
+
+  const handleSave = (payload) => {
+    if (farmId) {
+      updateFarm(payload);
+    } else {
+      addFarm(payload);
     }
   };
 
@@ -225,6 +238,30 @@ export default function AddFarmModal({
       </>
     );
   };
+
+  const farmLocation = () => {
+    
+    return (
+        <>
+         <Grid item xs={12} sm={12} md={12}>
+         <FormControl fullWidth>
+            <TextField
+              fullWidth
+              variant="outlined"
+              inputRef={materialRef}
+              label={"Farm Location"}
+              name="farmLocation"
+              InputLabelProps={{ shrink: true }}
+            onChange={handleChange}
+             error={validation.farmLocation}
+            helperText={validation.farmLocation ? "Please provide name" : ""}
+            />
+          </FormControl>
+          </Grid>
+        </>
+    )
+ }
+
   const germinationZone = () => {
     return (
       <>
@@ -248,14 +285,17 @@ export default function AddFarmModal({
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
-          <TextField
-            InputLabelProps={{ shrink: true }}
-            label={"Germination Area"}
-            name="germinationArea"
-            value={farmData.germinationArea || ""}
-            onChange={handleChange}
-          />
+          <FormControl fullWidth>
+            <TextField
+              InputLabelProps={{ shrink: true }}
+              label={"Germination Area"}
+              name="germinationArea"
+              value={farmData.nurseryArea || ""}
+              onChange={handleChange}
+            />
+          </FormControl>
         </Grid>
+
         <Grid item xs={12} sm={6} md={6}>
           <FormControl fullWidth>
             <TextField
@@ -299,7 +339,6 @@ export default function AddFarmModal({
       </>
     );
   };
-
   const nurseryZone = () => {
     return (
       <>
@@ -569,31 +608,8 @@ export default function AddFarmModal({
       </>
     );
   };
-  const geolocationZone = () => {
-    return (
-      <>
-        <Grid item xs={12} sm={12} md={12}>
-          <p className="header-title">Geolocation</p>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-multiple-name-label" variant="outlined">
-              Zone
-            </InputLabel>
-            <SingleCustomSelect
-              name="location"
-              lable="Zone"
-              value={farmData.location || ""}
-              options={geolocation}
-              handleChange={handleChange}
-              isError={validation.location}
-              errorMessage="Please select a location"
-            />
-          </FormControl>
-        </Grid>
-      </>
-    );
-  };
+
+
   const PolyhouseZone = () => {
     return (
       <>
@@ -639,86 +655,53 @@ export default function AddFarmModal({
       </>
     );
   };
-
-  const googleMaps = () => {
-    const {isLoaded}= useJsApiLoader({
-      googleMapsApiKey: "AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY",
-    })
-    let userLat;
-    let userLong;
-    let test = {lat: parseFloat(userLat), lng: parseFloat(userLong)}
-    useEffect(()=> {
-      navigator.geolocation.getCurrentPosition(position =>{
-        userLat =             
-          position.coords.latitude 
-        ;
-        userLong =             
-           position.coords.longitude 
-        ;
-        console.log(userLat, userLong);
-      })
-    },[]);
-
-
+  const geolocationZone = () => {
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
+          <p className="header-title">Geolocation</p>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12}>
           <FormControl fullWidth>
-            <Autocomplete
-              apiKey={"AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY"}
-              onPlaceSelected={(place) => {
-                console.log(place);
-              }}
-              types={["address"]}
+            <InputLabel id="demo-multiple-name-label" variant="outlined">
+              Zone
+            </InputLabel>
+            <SingleCustomSelect
+              name="location"
+              lable="Zone"
+              value={farmData.location || ""}
+              options={geolocation}
+              handleChange={handleChange}
+              isError={validation.location}
+              errorMessage="Please select a location"
             />
-          </FormControl>
-          <FormControl>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="female"
-              name="radio-buttons-group"
-            >
-              <FormControlLabel
-                value="other"
-                control={<Radio />}
-                label=" Add Live Location"
-              />
-            </RadioGroup>
           </FormControl>
         </Grid>
       </>
     );
   };
-
   return (
     <div>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle className="dialog-title-container">
-          Add a new Farm
-        </DialogTitle>
-        <br />
-        <DialogContent sx={{ paddingTop: "10px" }}>
-          <Grid container spacing={3}>
-            {farmBasicInfo()}
-            {googleMaps()}
-            {germinationZone()}
-            {nurseryZone()}
-            {growZoneArea()}
-            {wateringZone()}
-            {geolocationZone()}
-            {PolyhouseZone()}
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <ButtonCustom
-            isLight={true}
-            handleButtonClick={handleClose}
-            title="Cancel"
-          />
-          <ButtonCustom handleButtonClick={handleFarmSave} title="Save" />
-          {/* handleButtonClick={() => validateFarm()} */}
-        </DialogActions>
-      </Dialog>
+      <PageHeader title="Manage Farm" buttonArray={[]} />
+      {isAddFarmLoading && <Loader title="Adding Farm" />}
+        {isUpdateFarmLoading && <Loader title="Updating Farms" />}
+      <div className="page-container">
+        <Grid container spacing={3}>
+          {farmBasicInfo()}
+          {farmLocation()}
+          {germinationZone()}
+          {nurseryZone()}
+          {growZoneArea()}
+          {wateringZone()}
+          {geolocationZone()}
+          {PolyhouseZone()}
+        </Grid>
+        <br/>
+        <ButtonCustom
+          handleButtonClick={handleFarmSave}
+          title={farmId ? "Update" : "Save"}
+        />
+      </div>
     </div>
   );
 }
