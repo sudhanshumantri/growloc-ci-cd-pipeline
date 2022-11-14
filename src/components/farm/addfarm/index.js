@@ -16,6 +16,11 @@ import { growingZone } from "../../../config";
 import { plantSpacing } from "../../../config";
 import { nutrientsType } from "../../../config";
 import InputLabel from "@mui/material/InputLabel";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import RadioGroup from "@mui/material/RadioGroup";
+import Radio from "@mui/material/Radio";
+
+import Autocomplete from "react-google-autocomplete";
 
 export default function AddFarmModal({
   open,
@@ -24,21 +29,21 @@ export default function AddFarmModal({
   farmDetails = {
     name: "",
     farmArea: "",
-    germinationType:"",
-    germinationArea:"",
-    germinationSeedsCount:null,
-    germinationWateringType:"",
-    germinationWateringSchedule:"",
-    nurseryType:"",
-    nurseryArea:"",
-    nurserySeedsCount:null,
-    nurseryWateringType:"",
-    nurseryWateringSchedule:"",
+    germinationType: "",
+    germinationArea: "",
+    germinationSeedsCount: null,
+    germinationWateringType: "",
+    germinationWateringSchedule: "",
+    nurseryType: "",
+    nurseryArea: "",
+    nurserySeedsCount: null,
+    nurseryWateringType: "",
+    nurseryWateringSchedule: "",
     nurseryWateringSchedule: "",
     growingType: "",
     growingArea: "",
     growingRowCount: null,
-    growingPlantCountPerRow:null,
+    growingPlantCountPerRow: null,
     growingPlantSpacing: "",
     growingWateringSchedule: "",
     reservoirCapacity: "",
@@ -46,7 +51,7 @@ export default function AddFarmModal({
     phReservoirCapacity: "",
     stockNutrientSolutionCapacity: "",
     cultivableArea: "",
-    nutrientdilutionRatio:"",
+    nutrientdilutionRatio: "",
     nutrientsType: "",
     location: "",
     polyhouseStructureExpectedLife: "",
@@ -60,130 +65,115 @@ export default function AddFarmModal({
   const [selected, setSelected] = React.useState(null);
   // const [nameError, setNameError] = useState(false);
   const [validation, setValidation] = useState({
-    name: '',
-    germinationType: '',
-    germinationWateringType:'',
-    nurseryType:"",
-    nurseryWateringType:"",
-    growingType:"",
-    growingArea:"",
-    growingPlantCountPerRow:"",
-    growingPlantSpacing:"",
-    reservoirCapacity:"",
-    nutrientWaterReservoirCapacity:"",
-    nutrientsType:"",
-    location:"",
-    polyhouseStructureExpectedLife:"",
-    polyhousePlasticExpectedLife:"",
+    name: "",
+    germinationType: "",
+    germinationWateringType: "",
+    nurseryType: "",
+    nurseryWateringType: "",
+    growingType: "",
+    growingArea: "",
+    growingPlantCountPerRow: "",
+    growingPlantSpacing: "",
+    reservoirCapacity: "",
+    nutrientWaterReservoirCapacity: "",
+    nutrientsType: "",
+    location: "",
+    polyhouseStructureExpectedLife: "",
+    polyhousePlasticExpectedLife: "",
   });
 
   const handleChange = (e) => {
     const { value, name } = e.target;
     setFarmData({ ...farmData, [name]: value });
-    validation[name] &&  setValidation({...validation, [name]: false});
-    
+    validation[name] && setValidation({ ...validation, [name]: false });
   };
-  
+
   const validateFarm = () => {
-   let errors = {...validation};
-   let isValid = true;
+    let errors = { ...validation };
+    let isValid = true;
     if (!farmData.name) {
       errors.name = true;
       isValid = false;
     }
     if (!farmData.germinationType) {
-      errors.germinationType = true
+      errors.germinationType = true;
       isValid = false;
-
     }
-     if (!farmData.germinationWateringType) {
-      errors.germinationWateringType = true
+    if (!farmData.germinationWateringType) {
+      errors.germinationWateringType = true;
       isValid = false;
-
-    
-     }
+    }
     if (!farmData.nurseryType) {
-      errors.nurseryType = true
+      errors.nurseryType = true;
       isValid = false;
-
     }
     if (!farmData.nurseryWateringType) {
-      errors.nurseryWateringType = true
+      errors.nurseryWateringType = true;
       isValid = false;
-
     }
 
     if (!farmData.growingType) {
-      errors.growingType = true
+      errors.growingType = true;
       isValid = false;
-
     }
     if (!farmData.growingArea) {
-      errors.growingArea = true
+      errors.growingArea = true;
       isValid = false;
-
     }
     if (!farmData.growingPlantCountPerRow) {
-      errors.growingPlantCountPerRow = true
+      errors.growingPlantCountPerRow = true;
       isValid = false;
-
     }
     if (!farmData.growingPlantSpacing) {
-      errors.growingPlantSpacing = true
+      errors.growingPlantSpacing = true;
       isValid = false;
-
     }
     if (!farmData.reservoirCapacity) {
-      errors.reservoirCapacity =true
+      errors.reservoirCapacity = true;
       isValid = false;
-
     }
     if (!farmData.nutrientWaterReservoirCapacity) {
-      errors.nutrientWaterReservoirCapacity = true
+      errors.nutrientWaterReservoirCapacity = true;
       isValid = false;
-
     }
     if (!farmData.nutrientsType) {
-      errors.nutrientsType = true
+      errors.nutrientsType = true;
       isValid = false;
-
     }
     if (!farmData.location) {
-      errors.location = true
+      errors.location = true;
       isValid = false;
-
     }
     if (!farmData.polyhouseStructureExpectedLife) {
-      errors.polyhouseStructureExpectedLife = true
+      errors.polyhouseStructureExpectedLife = true;
       isValid = false;
     }
     if (!farmData.polyhousePlasticExpectedLife) {
-      errors.polyhousePlasticExpectedLife = true
+      errors.polyhousePlasticExpectedLife = true;
       isValid = false;
-
     }
     setValidation(errors);
     return isValid;
   };
   const handleFarmSave = () => {
     let requestFarmData = {
-      name:farmData.name,
-      farmArea:farmData.farmArea,
-      germinationType:farmData.germinationType,
-      germinationArea:farmData.germinationArea,
-      germinationSeedsCount:parseInt(farmData.germinationSeedsCount),
-      germinationWateringType:farmData.germinationWateringType,
-      germinationWateringSchedule:farmData.germinationWateringSchedule,
-      nurseryType:farmData.nurseryType,
-      nurseryArea:farmData.nurseryArea,
-      nurserySeedsCount:parseInt(farmData.nurserySeedsCount),
+      name: farmData.name,
+      farmArea: farmData.farmArea,
+      germinationType: farmData.germinationType,
+      germinationArea: farmData.germinationArea,
+      germinationSeedsCount: parseInt(farmData.germinationSeedsCount),
+      germinationWateringType: farmData.germinationWateringType,
+      germinationWateringSchedule: farmData.germinationWateringSchedule,
+      nurseryType: farmData.nurseryType,
+      nurseryArea: farmData.nurseryArea,
+      nurserySeedsCount: parseInt(farmData.nurserySeedsCount),
       nurseryWateringType: farmData.nurseryWateringType,
       nurseryWateringSchedule: farmData.nurseryWateringSchedule,
-      growingType:farmData.growingType,
-      growingArea:farmData.growingArea,
-      growingRowCount:parseInt(farmData.growingRowCount),
-      growingPlantCountPerRow:parseInt(farmData.growingPlantCountPerRow),
-      growingPlantSpacing:farmData.growingPlantSpacing,
+      growingType: farmData.growingType,
+      growingArea: farmData.growingArea,
+      growingRowCount: parseInt(farmData.growingRowCount),
+      growingPlantCountPerRow: parseInt(farmData.growingPlantCountPerRow),
+      growingPlantSpacing: farmData.growingPlantSpacing,
       growingWateringSchedule: farmData.growingWateringSchedule,
       reservoirCapacity: farmData.reservoirCapacity,
       nutrientWaterReservoirCapacity: farmData.nutrientWaterReservoirCapacity,
@@ -192,17 +182,16 @@ export default function AddFarmModal({
       cultivableArea: farmData.cultivableArea,
       nutrientdilutionRatio: farmData.nutrientdilutionRatio,
       nutrientsType: farmData.nutrientsType,
-      location:farmData.location,
-      polyhouseStructureExpectedLife:farmData.polyhouseStructureExpectedLife,
-      polyhousePlasticExpectedLife:farmData.polyhousePlasticExpectedLife
+      location: farmData.location,
+      polyhouseStructureExpectedLife: farmData.polyhouseStructureExpectedLife,
+      polyhousePlasticExpectedLife: farmData.polyhousePlasticExpectedLife,
     };
     if (validateFarm()) {
-      console.log("hey",requestFarmData );
+      console.log("hey", requestFarmData);
       handleSave(requestFarmData);
     }
   };
 
-  
   const farmBasicInfo = () => {
     return (
       <>
@@ -249,7 +238,7 @@ export default function AddFarmModal({
             <SingleCustomSelect
               name="germinationType"
               lable="Germination Type"
-              value={farmData.germinationType || "" }
+              value={farmData.germinationType || ""}
               options={germination}
               isError={validation.germinationType}
               errorMessage="Please select a germination zone"
@@ -443,8 +432,9 @@ export default function AddFarmModal({
               name="growingPlantCountPerRow"
               value={farmData.growingPlantCountPerRow || ""}
               error={validation.growingPlantCountPerRow}
-              helperText={validation.growingPlantCountPerRow ? "Please provide name" : ""}
-
+              helperText={
+                validation.growingPlantCountPerRow ? "Please provide name" : ""
+              }
               onChange={handleChange}
             />
           </FormControl>
@@ -457,7 +447,7 @@ export default function AddFarmModal({
               name="growingWateringSchedule"
               type="number"
               onChange={handleChange}
-              value ={farmData.growingWateringSchedule || ""}
+              value={farmData.growingWateringSchedule || ""}
               InputProps={{ inputProps: { min: 1, max: 10 } }}
             />
           </FormControl>
@@ -475,7 +465,6 @@ export default function AddFarmModal({
               handleChange={handleChange}
               isError={validation.growingPlantSpacing}
               errorMessage="Please select Plant spacing"
-
             />
           </FormControl>
         </Grid>
@@ -497,7 +486,11 @@ export default function AddFarmModal({
               value={farmData.reservoirCapacity || ""}
               onChange={handleChange}
               error={validation.growingPlantCountPerRow}
-              helperText={validation.growingPlantCountPerRow ? "Please provide reservoircapacity" : ""}
+              helperText={
+                validation.growingPlantCountPerRow
+                  ? "Please provide reservoircapacity"
+                  : ""
+              }
               variant="outlined"
             />
           </FormControl>
@@ -511,7 +504,11 @@ export default function AddFarmModal({
               value={farmData.nutrientWaterReservoirCapacity || ""}
               onChange={handleChange}
               error={validation.nutrientWaterReservoirCapacity}
-              helperText={validation.nutrientWaterReservoirCapacity ? "Please provide Nutrient water reservoir capacity" : ""}
+              helperText={
+                validation.nutrientWaterReservoirCapacity
+                  ? "Please provide Nutrient water reservoir capacity"
+                  : ""
+              }
               variant="outlined"
             />
           </FormControl>
@@ -523,7 +520,7 @@ export default function AddFarmModal({
               InputLabelProps={{ shrink: true }}
               name="phReservoirCapacity"
               onChange={handleChange}
-              value={farmData.phReservoirCapacity || ""}  
+              value={farmData.phReservoirCapacity || ""}
               variant="outlined"
             />
           </FormControl>
@@ -612,7 +609,11 @@ export default function AddFarmModal({
               onChange={handleChange}
               variant="outlined"
               error={validation.polyhouseStructureExpectedLife}
-              helperText={validation.polyhouseStructureExpectedLife ? "Please provide polyhouse structure expected life" : ""}
+              helperText={
+                validation.polyhouseStructureExpectedLife
+                  ? "Please provide polyhouse structure expected life"
+                  : ""
+              }
             />
           </FormControl>
         </Grid>
@@ -625,9 +626,44 @@ export default function AddFarmModal({
               value={farmData.polyhousePlasticExpectedLife || ""}
               onChange={handleChange}
               error={validation.polyhousePlasticExpectedLife}
-              helperText={validation.polyhousePlasticExpectedLife ? "Please provide Polyhouse plastic expected life" : ""}
+              helperText={
+                validation.polyhousePlasticExpectedLife
+                  ? "Please provide Polyhouse plastic expected life"
+                  : ""
+              }
               variant="outlined"
             />
+          </FormControl>
+        </Grid>
+      </>
+    );
+  };
+
+  const googleMaps = () => {
+    return (
+      <>
+        <Grid item xs={12} sm={12} md={12}>
+          <FormControl fullWidth>
+            <Autocomplete
+              apiKey={"AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY"}
+              onPlaceSelected={(place) => {
+                console.log(place);
+              }}
+              types={["address"]}
+            />
+          </FormControl>
+          <FormControl>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue="female"
+              name="radio-buttons-group"
+            >
+              <FormControlLabel
+                value="other"
+                control={<Radio />}
+                label=" Add Live Location"
+              />
+            </RadioGroup>
           </FormControl>
         </Grid>
       </>
@@ -638,12 +674,13 @@ export default function AddFarmModal({
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">
-           Add a new Farm
+          Add a new Farm
         </DialogTitle>
         <br />
         <DialogContent sx={{ paddingTop: "10px" }}>
           <Grid container spacing={3}>
             {farmBasicInfo()}
+            {googleMaps()}
             {germinationZone()}
             {nurseryZone()}
             {growZoneArea()}
