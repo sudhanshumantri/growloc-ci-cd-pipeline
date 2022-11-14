@@ -11,7 +11,7 @@ const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open, drawerWidth }) => ({
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: 'rgb(81,114,35)',
+    backgroundColor: '#F8F8F8',
     transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -46,7 +46,7 @@ export default function TopHeader({ open, toggleDrawer, drawerWidth }) {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" noWrap component="div">
+                <Typography sx={{color:'black'}} variant="h6" noWrap component="div">
                     Growloc
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />

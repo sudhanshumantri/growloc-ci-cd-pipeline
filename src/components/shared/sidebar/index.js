@@ -17,6 +17,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import { Link } from "react-router-dom";
 import TopHeader from "../header/";
 import { farmMenuItems, menuItems } from "./config";
+import '../../../../public/assets/Irrigation.png';
+const ASSETS_URL = '../../../../public/assets/';
+import './style.css';
 const drawerWidth = 300;
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -25,7 +28,7 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
-  backgroundColor: "#F4F4F2",
+  backgroundColor: "#517223",
   // backgroundColor: '#e9e9e9',
 });
 
@@ -38,7 +41,7 @@ const closedMixin = (theme) => ({
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(9)} + -13px)`,
-    backgroundColor: "#F4F4F2",
+    backgroundColor: "#517223",
     // backgroundColor: '#e9e9e9',
   },
 });
@@ -74,7 +77,7 @@ const Drawer = styled(MuiDrawer, {
 export default function SideBar({ router }) {
 
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [openSubmenu, toggleSubmenu] = useState(false);
   const [items, setItems] = useState(menuItems);
 
@@ -99,71 +102,68 @@ export default function SideBar({ router }) {
       <CssBaseline />
       <TopHeader
         open={open}
-        toggleDrawer={toggleDrawer}
+        // toggleDrawer={toggleDrawer}
         drawerWidth={drawerWidth}
       />
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader sx={{ background: "#F4F4F2" }}>
-          <IconButton onClick={toggleDrawer}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-
+        <DrawerHeader sx={{ background: "#517223" }}>
         </DrawerHeader>
-        <List sx={{ width: "100%", maxWidth: 360 }} component="nav">
-          {items.map((each, index) => (
-            <React.Fragment key={index}>
-              {each.subMenu && each.subMenu.length ? (
-                <>
+        <List className='drawer-list-container' sx={{ width: "100%", maxWidth: 360 }} component="nav">
+          {items.map((each, index) => {
+            console.log(each.icon);
+            return (
+              <React.Fragment key={index}>
+                {each.subMenu && each.subMenu.length ? (
+                  <>
+                    <ListItem
+                      button
+                      onClick={() => handleClick(each.id)}
+                      style={each.css}
+                    >
+                      <ListItemIcon className='darwer-icon' >
+                        <img src={each.icon} />
+                      </ListItemIcon>
+                      <ListItemText primary={each.title} />
+                      {openSubmenu[each.id] ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <Collapse in={openSubmenu[each.id]}>
+                      <List component="nav" className="drawer-sub-menu">
+                        {(each.subMenu || []).map((subData) => (
+                          <ListItem
+                            style={subData.css}
+                            component={Link}
+                            to={subData.navigation}
+                            key={subData.id}
+                            button
+                          >
+                            <ListItemIcon className='darwer-icon' >
+                              <img src={subData.icon} />
+                            </ListItemIcon>
+                            <ListItemText primary={subData.name} />
+                          </ListItem>
+                        )
+                        )}
+                      </List>
+                    </Collapse>
+                  </>
+                ) : (
                   <ListItem
-                    button
-                    onClick={() => handleClick(each.id)}
+                    component={Link}
+                    to={each.navigation}
                     style={each.css}
+                    button
+                    key={index}
                   >
-                    <ListItemIcon className='Icon' >
-                      {each.icon}
+                    <ListItemIcon className='darwer-icon' >
+                      <img src={each.icon} />
+                      {/* <img src={require('../../../../public/assets/Irrigation.png')} /> */}
                     </ListItemIcon>
                     <ListItemText primary={each.title} />
-                    {openSubmenu[each.id] ? <ExpandLess /> : <ExpandMore />}
                   </ListItem>
-                  <Collapse in={openSubmenu[each.id]}>
-                    <List component="nav" className="drawer-sub-menu">
-                      {(each.subMenu || []).map((subData) => (
-                        <ListItem
-                          style={subData.css}
-                          component={Link}
-                          to={subData.navigation}
-                          key={subData.id}
-                          button
-                        >
-                          <ListItemIcon className='Icon' >
-                            {each.icon}
-                          </ListItemIcon>
-                          <ListItemText primary={subData.name} />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Collapse>
-                </>
-              ) : (
-                <ListItem
-                  component={Link}
-                  to={each.navigation}
-                  style={each.css}
-                  button
-                  key={index}
-                >
-                  <ListItemIcon className='Icon' >
-                    {each.icon}
-                  </ListItemIcon>
-                  <ListItemText primary={each.title} />
-                </ListItem>
-              )}
-            </React.Fragment>
-          ))}
+                )}
+              </React.Fragment>
+            )
+          })}
         </List>
       </Drawer>
     </Box>

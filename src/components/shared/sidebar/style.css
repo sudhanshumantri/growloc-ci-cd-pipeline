@@ -1,3 +1,9 @@
 .drawer-sub-menu{
     margin-left: 20px !important;
 }
+.darwer-icon{
+    color: white !important;
+}
+.drawer-list-container *{
+    color: white !important;
+}
