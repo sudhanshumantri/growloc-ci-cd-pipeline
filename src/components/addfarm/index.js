@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import ButtonCustom from "../shared/button";
@@ -14,6 +15,8 @@ import { nutrientsType } from "../../config";
 import InputLabel from "@mui/material/InputLabel";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
+import "./style.css";
+
 import Autocomplete, { usePlacesWidget } from "react-google-autocomplete";
 
 export default function AddFarm({
@@ -23,8 +26,9 @@ export default function AddFarm({
   isUpdateFarmLoading,
   fecthFarmDetails,
   farmDetailsList,
-  isFarmDetailsListLoading
+  isFarmDetailsListLoading,
 }) {
+  const navigate = useNavigate();
   const [farmData, setFarmData] = useState({
     name: "",
     farmArea: "",
@@ -68,7 +72,7 @@ export default function AddFarm({
     growingArea: false,
     growingPlantCountPerRow: false,
     growingPlantSpacing: false,
-    reservoirCapacity:false,
+    reservoirCapacity: false,
     nutrientWaterReservoirCapacity: false,
     nutrientsType: false,
     location: false,
@@ -83,6 +87,9 @@ export default function AddFarm({
     setFarmData({ ...farmData, [name]: value });
     validation[name] && setValidation({ ...validation, [name]: false });
   };
+  const handleClose = () => {
+    navigate("/");
+  }
 
   const { farmId } = useParams();
 
@@ -93,9 +100,8 @@ export default function AddFarm({
   }, [farmId]);
 
   useEffect(() => {
-    if (isFarmDetailsListLoading === false) {
+    if (isFarmDetailsListLoading === false && farmId) {
       setFarmData(farmDetailsList);
-
     }
   }, [isFarmDetailsListLoading]);
 
@@ -204,7 +210,7 @@ export default function AddFarm({
 
   const handleSave = (payload) => {
     if (farmId) {
-      updateFarm({payload, farmId});
+      updateFarm({ payload, farmId });
     } else {
       addFarm(payload);
     }
@@ -213,31 +219,33 @@ export default function AddFarm({
   const farmBasicInfo = () => {
     return (
       <>
-        <Grid item xs={12} sm={12} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              label={"Name"}
-              name="name"
-              value={farmData.name || ""}
-              InputLabelProps={{ shrink: true }}
-              onChange={handleChange}
-              variant="outlined"
-              error={validation.name}
-              helperText={validation.name ? "Please provide name" : ""}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"FarmArea"}
-              name="farmArea"
-              value={farmData.farmArea || ""}
-              onChange={handleChange}
-              variant="outlined"
-            />
-          </FormControl>
+        <Grid container spacing={2} className="farm-container">
+          <Grid item xs={12} sm={12} md={6}>
+            <FormControl fullWidth>
+              <TextField
+                label={"Name"}
+                name="name"
+                value={farmData.name || ""}
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChange}
+                variant="outlined"
+                error={validation.name}
+                helperText={validation.name ? "Please provide name" : ""}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <FormControl fullWidth>
+              <TextField
+                InputLabelProps={{ shrink: true }}
+                label={"FarmArea"}
+                name="farmArea"
+                value={farmData.farmArea || ""}
+                onChange={handleChange}
+                variant="outlined"
+              />
+            </FormControl>
+          </Grid>
         </Grid>
       </>
     );
@@ -272,73 +280,76 @@ export default function AddFarm({
         <Grid item xs={12} sm={12} md={12}>
           <p className="header-title">Germination Zone</p>
         </Grid>
-        <Grid item xs={12} sm={12} md={12}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-multiple-name-label" variant="outlined">
-              Germination Type
-            </InputLabel>
-            <SingleCustomSelect
-              name="germinationType"
-              lable="Germination Type"
-              value={farmData.germinationType || ""}
-              options={germination}
-              isError={validation.germinationType}
-              errorMessage="Please select a germination zone"
-              handleChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"Germination Area"}
-              name="germinationArea"
-              value={farmData.germinationArea || ""}
-              onChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
+        <br/>
+        <Grid container spacing={2} className="farm-container">
+          <Grid item xs={12} sm={12} md={12}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-multiple-name-label" variant="outlined">
+                Germination Type
+              </InputLabel>
+              <SingleCustomSelect
+                name="germinationType"
+                lable="Germination Type"
+                value={farmData.germinationType || ""}
+                options={germination}
+                isError={validation.germinationType}
+                errorMessage="Please select a germination zone"
+                handleChange={handleChange}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <FormControl fullWidth>
+              <TextField
+                InputLabelProps={{ shrink: true }}
+                label={"Germination Area"}
+                name="germinationArea"
+                value={farmData.germinationArea || ""}
+                onChange={handleChange}
+              />
+            </FormControl>
+          </Grid>
 
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"No. of seeds per plantation"}
-              name="germinationSeedsCount"
-              value={farmData.germinationSeedsCount || ""}
-              onChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-multiple-name-label" variant="outlined">
-              Watering Type
-            </InputLabel>
-            <SingleCustomSelect
-              name="germinationWateringType"
-              lable="Watering Type"
-              value={farmData.germinationWateringType || ""}
-              options={wateringType}
-              isError={validation.germinationWateringType}
-              errorMessage="Please select a germination watering type"
-              handleChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"Watering Schedule"}
-              type="number"
-              name="germinationWateringSchedule"
-              onChange={handleChange}
-              value={farmData.germinationWateringSchedule || ""}
-              InputProps={{ inputProps: { min: 1, max: 10 } }}
-            />
-          </FormControl>
+          <Grid item xs={12} sm={6} md={6}>
+            <FormControl fullWidth>
+              <TextField
+                InputLabelProps={{ shrink: true }}
+                label={"No. of seeds per plantation"}
+                name="germinationSeedsCount"
+                value={farmData.germinationSeedsCount || ""}
+                onChange={handleChange}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-multiple-name-label" variant="outlined">
+                Watering Type
+              </InputLabel>
+              <SingleCustomSelect
+                name="germinationWateringType"
+                lable="Watering Type"
+                value={farmData.germinationWateringType || ""}
+                options={wateringType}
+                isError={validation.germinationWateringType}
+                errorMessage="Please select a germination watering type"
+                handleChange={handleChange}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <FormControl fullWidth>
+              <TextField
+                InputLabelProps={{ shrink: true }}
+                label={"Watering Schedule"}
+                type="number"
+                name="germinationWateringSchedule"
+                onChange={handleChange}
+                value={farmData.germinationWateringSchedule || ""}
+                InputProps={{ inputProps: { min: 1, max: 10 } }}
+              />
+            </FormControl>
+          </Grid>
         </Grid>
       </>
     );
@@ -349,6 +360,8 @@ export default function AddFarm({
         <Grid item xs={12} sm={12} md={12}>
           <p className="header-title">Nursery Zone</p>
         </Grid>
+        <br/>
+        <Grid container spacing={2} className="farm-container">
         <Grid item xs={12} sm={12} md={12}>
           <FormControl fullWidth>
             <InputLabel id="demo-multiple-name-label" variant="outlined">
@@ -417,6 +430,7 @@ export default function AddFarm({
             />
           </FormControl>
         </Grid>
+        </Grid>
       </>
     );
   };
@@ -427,6 +441,8 @@ export default function AddFarm({
         <Grid item xs={12} sm={12} md={12}>
           <p className="header-title">Growring Zone</p>
         </Grid>
+        <br/>
+        <Grid container spacing={2} className="farm-container">
         <Grid item xs={12} sm={12} md={12}>
           <FormControl fullWidth>
             <InputLabel id="demo-multiple-name-label" variant="outlined">
@@ -512,6 +528,7 @@ export default function AddFarm({
             />
           </FormControl>
         </Grid>
+        </Grid>
       </>
     );
   };
@@ -521,6 +538,8 @@ export default function AddFarm({
         <Grid item xs={12} sm={12} md={12}>
           <p className="header-title">Watering Zone</p>
         </Grid>
+        <br/>
+        <Grid container spacing={2} className="farm-container">
         <Grid item xs={12} sm={12} md={12}>
           <FormControl fullWidth>
             <TextField
@@ -609,6 +628,7 @@ export default function AddFarm({
             />
           </FormControl>
         </Grid>
+        </Grid>
       </>
     );
   };
@@ -619,6 +639,8 @@ export default function AddFarm({
         <Grid item xs={12} sm={12} md={12}>
           <p className="header-title">Polyhouse</p>
         </Grid>
+        <Grid container spacing={2} className="farm-container">
+     <br/>
         <Grid item xs={12} sm={6} md={6}>
           <FormControl fullWidth>
             <TextField
@@ -655,6 +677,7 @@ export default function AddFarm({
             />
           </FormControl>
         </Grid>
+        </Grid>
       </>
     );
   };
@@ -664,6 +687,8 @@ export default function AddFarm({
         <Grid item xs={12} sm={12} md={12}>
           <p className="header-title">Geolocation</p>
         </Grid>
+        <br/>
+        <Grid container spacing={2} className="farm-container">
         <Grid item xs={12} sm={12} md={12}>
           <FormControl fullWidth>
             <InputLabel id="demo-multiple-name-label" variant="outlined">
@@ -680,6 +705,7 @@ export default function AddFarm({
             />
           </FormControl>
         </Grid>
+        </Grid>
       </>
     );
   };
@@ -688,20 +714,29 @@ export default function AddFarm({
       <PageHeader title="Manage Farm" buttonArray={[]} />
       {isAddFarmLoading && <Loader title="Adding Farm" />}
       {isUpdateFarmLoading && <Loader title="Updating Farms" />}
-      {isFarmDetailsListLoading && <Loader title="Fetching Farm Details"/>}
+      {isFarmDetailsListLoading && <Loader title="Fetching Farm Details" />}
       <div className="page-container">
-        <Grid container spacing={3}>
-          {farmBasicInfo()}
-          {/* {farmLocation()} */}
-          {germinationZone()}
+        {farmBasicInfo()}
+        <br/>
+        {germinationZone()}
+        <br/>
           {nurseryZone()}
+          <br/>
           {growZoneArea()}
+          <br/>
           {wateringZone()}
+          <br/>
           {geolocationZone()}
+          <br/>
           {PolyhouseZone()}
-        </Grid>
-        <br />
-        <ButtonCustom
+        <br/>
+          <ButtonCustom
+            isLight={true}
+            handleButtonClick={handleClose}
+            title="Cancel"
+          />
+          {" "}
+       <ButtonCustom
           handleButtonClick={handleFarmSave}
           title={farmId ? "Update" : "Save"}
         />
