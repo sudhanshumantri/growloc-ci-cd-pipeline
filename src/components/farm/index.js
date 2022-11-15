@@ -27,7 +27,7 @@ export default function ManageFarm({
   const handleEdit = (e, elem) => {
     e.preventDefault();
      const { farm } = elem;
-    navigate("/add-farm/" + farm.id);
+    navigate("/edit-farm/" + farm.id);
   };
 
   const handleModalToggle = () => {

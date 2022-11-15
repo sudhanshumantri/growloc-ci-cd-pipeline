@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
@@ -15,8 +15,17 @@ import InputLabel from "@mui/material/InputLabel";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
 import Autocomplete, { usePlacesWidget } from "react-google-autocomplete";
-export default function AddFarm({ addFarm, updateFarm, isAddFarmLoading, isUpdateFarmLoading}) {
-    const [farmData, setFarmData] = useState({
+
+export default function AddFarm({
+  addFarm,
+  updateFarm,
+  isAddFarmLoading,
+  isUpdateFarmLoading,
+  fecthFarmDetails,
+  farmDetailsList,
+  isFarmDetailsListLoading
+}) {
+  const [farmData, setFarmData] = useState({
     name: "",
     farmArea: "",
     germinationType: "",
@@ -48,32 +57,25 @@ export default function AddFarm({ addFarm, updateFarm, isAddFarmLoading, isUpdat
   });
 
   const geolocation = ["Climate zone"];
-  const { ref: materialRef } = usePlacesWidget({
-    apiKey: "AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY",
-    onPlaceSelected: (place) => console.log(place),
-    inputAutocompleteValue: "country",
-    options: {
-    },
-  });
 
   const [validation, setValidation] = useState({
-    name: "",
-    germinationType: "",
-    germinationWateringType: "",
-    nurseryType: "",
-    nurseryWateringType: "",
-    growingType: "",
-    growingArea: "",
-    growingPlantCountPerRow: "",
-    growingPlantSpacing: "",
-    reservoirCapacity: "",
-    nutrientWaterReservoirCapacity: "",
-    nutrientsType: "",
-    location: "",
-    polyhouseStructureExpectedLife: "",
-    polyhousePlasticExpectedLife: "",
-    farmLocation:"",
-    liveLocation:""
+    name: false,
+    germinationType: false,
+    germinationWateringType: false,
+    nurseryType: false,
+    nurseryWateringType: false,
+    growingType: false,
+    growingArea: false,
+    growingPlantCountPerRow: false,
+    growingPlantSpacing: false,
+    reservoirCapacity:false,
+    nutrientWaterReservoirCapacity: false,
+    nutrientsType: false,
+    location: false,
+    polyhouseStructureExpectedLife: false,
+    polyhousePlasticExpectedLife: false,
+    farmLocation: false,
+    liveLocation: false,
   });
 
   const handleChange = (e) => {
@@ -83,17 +85,19 @@ export default function AddFarm({ addFarm, updateFarm, isAddFarmLoading, isUpdat
   };
 
   const { farmId } = useParams();
-  const isButtonSelected = (value) => {
-    if (farmData.liveLocation === value) {
-      return true;
-    }
-  };
-
 
   useEffect(() => {
     if (farmId) {
+      fecthFarmDetails(farmId);
     }
   }, [farmId]);
+
+  useEffect(() => {
+    if (isFarmDetailsListLoading === false) {
+      setFarmData(farmDetailsList);
+
+    }
+  }, [isFarmDetailsListLoading]);
 
   const validateFarm = () => {
     let errors = { ...validation };
@@ -200,7 +204,7 @@ export default function AddFarm({ addFarm, updateFarm, isAddFarmLoading, isUpdat
 
   const handleSave = (payload) => {
     if (farmId) {
-      updateFarm(payload);
+      updateFarm({payload, farmId});
     } else {
       addFarm(payload);
     }
@@ -239,28 +243,28 @@ export default function AddFarm({ addFarm, updateFarm, isAddFarmLoading, isUpdat
     );
   };
 
-  const farmLocation = () => {
-    
-    return (
-        <>
-         <Grid item xs={12} sm={12} md={12}>
-         <FormControl fullWidth>
-            <TextField
-              fullWidth
-              variant="outlined"
-              inputRef={materialRef}
-              label={"Farm Location"}
-              name="farmLocation"
-              InputLabelProps={{ shrink: true }}
-            onChange={handleChange}
-             error={validation.farmLocation}
-            helperText={validation.farmLocation ? "Please provide name" : ""}
-            />
-          </FormControl>
-          </Grid>
-        </>
-    )
- }
+  //   const farmLocation = () => {
+
+  //     return (
+  //         <>
+  //          <Grid item xs={12} sm={12} md={12}>
+  //          <FormControl fullWidth>
+  //             <TextField
+  //               fullWidth
+  //               variant="outlined"
+  //               inputRef={materialRef}
+  //               label={"Farm Location"}
+  //               name="farmLocation"
+  //               InputLabelProps={{ shrink: true }}
+  //             onChange={handleChange}
+  //              error={validation.farmLocation}
+  //             helperText={validation.farmLocation ? "Please provide name" : ""}
+  //             />
+  //           </FormControl>
+  //           </Grid>
+  //         </>
+  //     )
+  //  }
 
   const germinationZone = () => {
     return (
@@ -290,7 +294,7 @@ export default function AddFarm({ addFarm, updateFarm, isAddFarmLoading, isUpdat
               InputLabelProps={{ shrink: true }}
               label={"Germination Area"}
               name="germinationArea"
-              value={farmData.nurseryArea || ""}
+              value={farmData.germinationArea || ""}
               onChange={handleChange}
             />
           </FormControl>
@@ -609,7 +613,6 @@ export default function AddFarm({ addFarm, updateFarm, isAddFarmLoading, isUpdat
     );
   };
 
-
   const PolyhouseZone = () => {
     return (
       <>
@@ -684,11 +687,12 @@ export default function AddFarm({ addFarm, updateFarm, isAddFarmLoading, isUpdat
     <div>
       <PageHeader title="Manage Farm" buttonArray={[]} />
       {isAddFarmLoading && <Loader title="Adding Farm" />}
-        {isUpdateFarmLoading && <Loader title="Updating Farms" />}
+      {isUpdateFarmLoading && <Loader title="Updating Farms" />}
+      {isFarmDetailsListLoading && <Loader title="Fetching Farm Details"/>}
       <div className="page-container">
         <Grid container spacing={3}>
           {farmBasicInfo()}
-          {farmLocation()}
+          {/* {farmLocation()} */}
           {germinationZone()}
           {nurseryZone()}
           {growZoneArea()}
@@ -696,7 +700,7 @@ export default function AddFarm({ addFarm, updateFarm, isAddFarmLoading, isUpdat
           {geolocationZone()}
           {PolyhouseZone()}
         </Grid>
-        <br/>
+        <br />
         <ButtonCustom
           handleButtonClick={handleFarmSave}
           title={farmId ? "Update" : "Save"}

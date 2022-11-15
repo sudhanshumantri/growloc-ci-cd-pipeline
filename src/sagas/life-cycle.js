@@ -68,7 +68,6 @@ export function* updateCropToLifecycleSchedule({ data }) {
     let responseData = yield call(callUpdateCropToLifecycleSchedule, data);
     if (responseData?.status == 200 && responseData.data.status) {
         yield put(updateCropToLifecycleScheduleSuccess(responseData.data.data));
-
     } else {
         yield put(updateCropToLifecycleScheduleFailure("Something went wrong"));
     }

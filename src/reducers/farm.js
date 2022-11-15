@@ -12,6 +12,10 @@ import {
   DELETE_FARM_REQUEST,
   DELETE_FARM_SUCCESS,
   DELETE_FARM_FAILURE,
+  FETCH_FARM_DETAILS_REQUEST,
+  FETCH_FARM_DETAILS_SUCCESS,
+  FETCH_FARM_DETAILS_FAILURE,
+
 } from "../actions/actionTypes";
 const INITIAL_STATE = fromJS({
   isFarmListLoading: false,
@@ -24,6 +28,9 @@ const INITIAL_STATE = fromJS({
   farmStatus: true,
   isdeleteFarmLoading: false,
   isdeleteFarmError: false,
+  farmDetailsList:{},
+  isFarmDetailsListLoading: false,
+  addFarmDetailsError: null,
 });
 export default function farmReducer(state = INITIAL_STATE, action = {}) {
   let farmList = state.toJS()["farmList"];
@@ -61,13 +68,12 @@ export default function farmReducer(state = INITIAL_STATE, action = {}) {
         .set("farmStatus", null)
         .set("isupdateFarmError", null);
     case UPDATE_FARM_SUCCESS:
-      const { data } = action.data;
-      const index = farmList.findIndex((farm) => farm.farmId === data.id);
-      farmList[index].farm = data;
+      // const { data } = action.data;
+      // const index = farmList.findIndex((farm) => farm.farmId === data.id);
+      // farmList[index].farm = data;
       return state
       .set("isUpdateFarmLoading", false)
       .set("farmStatus", true)
-      .set("farmList", farmList);
     case UPDATE_FARM_FAILURE:
       return state
         .set("isUpdateFarmLoading", false)
@@ -86,6 +92,22 @@ export default function farmReducer(state = INITIAL_STATE, action = {}) {
         .set("isdeleteFarmError", null);
     case DELETE_FARM_FAILURE:
       return state.set("farmList",farmList);
+
+      case FETCH_FARM_DETAILS_REQUEST:
+        return state
+          .set("isFarmDetailsListLoading", true)
+          .set("farmDetailsList", {})
+          .set("addFarmDetailsError", null);
+      case FETCH_FARM_DETAILS_SUCCESS:
+        return state
+          .set("isFarmDetailsListLoading", false)
+          .set("farmDetailsList", action.data)
+          .set("addFarmDetailsError", null);
+      case FETCH_FARM_DETAILS_FAILURE:
+        return state
+          .set("isFarmDetailsListLoading", false)
+          .set("farmDetailsList", {})
+          .set("addFarmDetailsError", action.error);
     default:
       return state;
   }

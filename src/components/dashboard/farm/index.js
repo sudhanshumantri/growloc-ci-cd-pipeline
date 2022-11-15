@@ -178,8 +178,6 @@ export default function FarmDashboard({
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
   }, []);
 
-  console.log("here is list", dashboardFarmList);
-  console.log("here is dashboard list", dashboardHarvestList);
 
   return (
     <div>

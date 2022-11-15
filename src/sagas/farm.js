@@ -1,11 +1,12 @@
 import { call, all, put, takeLatest } from "redux-saga/effects";
-import { useNavigate } from "react-router-dom";
-
+import store, { browserHistory } from '../store';
+import { addNotification } from "../components/shared/notification";
 import {
   callFetchFarmList,
   callFarmCrop,
   callUpdateFarm,
-  callDeleteFarm
+  callDeleteFarm,
+  callFetchFarmDetailsList
 } from "../utils/api";
 import {
   fetchFarmSuccess,
@@ -16,7 +17,10 @@ import {
   updateFarmFailure,
   deleteFarmSuccess,
   deleteFarmFailure,
+  fetchFarmDetailsSuccess,
+  fetchFarmDetailsFailure,
 } from "../actions/farm";
+
 export function* fetchFarmList({ data }) {
   let responseData = yield call(callFetchFarmList, data);
   if (responseData?.status == 200 && responseData.data.status) {
@@ -39,22 +43,31 @@ export function* addFarm({ data }) {
 //
 export function* updateFarm({ data }) {
   const {farmId, payload} = data;
-  console.log(data,"updateFarm");
   let responseData = yield call(callUpdateFarm, payload, farmId);
   if (responseData?.status == 200) {
     yield put(updateFarmSuccess(responseData.data));
-
+    yield call(browserHistory.push, "/");
+    yield call(browserHistory.go, "/");
+    addNotification("Farm Updated Successfully", 5000,true, "success");
   } else {
     yield put(updateFarmFailure("Something went wrong"));
   }
 }
 export function* deleteFarm({ data }) {
-  console.log(data,"here farmId");
   let responseData = yield call(callDeleteFarm, data);
   if (responseData?.status == 200) {
     yield put(deleteFarmSuccess(data));
   } else {
     yield put(deleteFarmFailure("Something went wrong"));
+  }
+}
+
+export function* fetchFarmDetailsList({ data }) {
+  let responseData = yield call(callFetchFarmDetailsList, data);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(fetchFarmDetailsSuccess(responseData.data.data));
+  } else {
+    yield put(fetchFarmDetailsFailure("Something went wrong"));
   }
 }
 
@@ -64,6 +77,7 @@ export function* farmSagas() {
     takeLatest("ADD_FARM_REQUEST", addFarm),
     takeLatest("UPDATE_FARM_REQUEST", updateFarm),
     takeLatest("DELETE_FARM_REQUEST", deleteFarm),
+    takeLatest("FETCH_FARM_DETAILS_REQUEST", fetchFarmDetailsList),
   ]);
 }
 export default [farmSagas];

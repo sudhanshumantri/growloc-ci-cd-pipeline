@@ -11,6 +11,9 @@ import {
     DELETE_FARM_REQUEST,
     DELETE_FARM_SUCCESS,
     DELETE_FARM_FAILURE,
+    FETCH_FARM_DETAILS_REQUEST,
+    FETCH_FARM_DETAILS_SUCCESS,
+    FETCH_FARM_DETAILS_FAILURE
     } from './actionTypes';
 export function fetchFarmRequest(data) {
     return {
@@ -88,5 +91,26 @@ export function updateFarmFailure(error) {
         error
     };
 }
+
+//
+export function fetchFarmDetailsRequest(data) {
+    return {
+        type: FETCH_FARM_DETAILS_REQUEST,
+        data
+    };
+}
+export function fetchFarmDetailsSuccess(data) {
+    return {
+        type: FETCH_FARM_DETAILS_SUCCESS,
+        data
+    };
+}
+export function fetchFarmDetailsFailure(data) {
+    return {
+        type: FETCH_FARM_DETAILS_FAILURE,
+        data
+    };
+}
+
   
 

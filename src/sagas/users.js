@@ -10,7 +10,7 @@ import {
   deleteUserSuccess,
   deleteUserFailure,
 } from "../actions/users";
-import {addNotification} from "../utils/notification";
+import { addNotification } from "../components/shared/notification";
 export function* fetchUsersList({ data }) {
   let responseData = yield call(callFetchUsersList, data);
   if (responseData?.status == 200 && responseData.data.status) {
@@ -26,7 +26,7 @@ export function* addUser({ data }) {
     if(status) {
     yield put(addUserSuccess(responseData.data.data));
     } else {
-      addNotification({message:error}, 5000);
+      addNotification(error, 5000,true, "danger");
       yield put(addUserFailure("Something went wrong"));
     }
   } else {

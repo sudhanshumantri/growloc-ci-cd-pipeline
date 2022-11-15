@@ -2,7 +2,7 @@ import axios from "axios";
 import { call, all, put, takeLatest } from "redux-saga/effects";
 import { browserHistory } from "../store";
 import { isEmpty, toNumber } from "lodash";
-import { addNotification } from "./notification";
+import { addNotification } from "../components/shared/notification";
 const TOKEN = localStorage.getItem("AUTH_TOKEN");
 function queryParams(params) {
   return Object.keys(params)
@@ -29,7 +29,7 @@ function makeAPICall(originalConfig) {
         localStorage.removeItem("AUTH_TOKEN");
         localStorage.removeItem("AUTH_OBJECT");
       } else {
-        addNotification(error);
+        addNotification(error, 5000,true, "danger");
         return error;
       }
     });

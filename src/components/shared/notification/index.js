@@ -1,9 +1,9 @@
 import { Store } from "react-notifications-component";
 
-export const addNotification = (error, duration = 1000, onScreen = true) => {
+export const addNotification = (message, duration = 1000, onScreen = true, type) => {
   Store.addNotification({
-    title: error.message ? error.message : "Something went wrong",
-    type: "danger",
+    title: message ? message : "Something went wrong",
+    type,
     insert: "top",
     container: "bottom-center",
     animationIn: ["animate__animated", "animate__fadeIn"],
