@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import ButtonCustom from "../shared/button";
@@ -16,7 +15,6 @@ import InputLabel from "@mui/material/InputLabel";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
 import "./style.css";
-
 import Autocomplete, { usePlacesWidget } from "react-google-autocomplete";
 import Geocode from "react-geocode";
 Geocode.setApiKey("AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY");
@@ -29,8 +27,9 @@ export default function AddFarm({
   fecthFarmDetails,
   farmDetailsList,
   isFarmDetailsListLoading,
-}) {
-  const [isCurrentLocation, setIsCurrentLocation] = useState(false)
+}) 
+{
+  const [isCurrentLocation, setIsCurrentLocation] = useState(false);
   const navigate = useNavigate();
   const [farmData, setFarmData] = useState({
     name: "",
@@ -80,11 +79,10 @@ export default function AddFarm({
     location: false,
     polyhouseStructureExpectedLife: false,
     polyhousePlasticExpectedLife: false,
-
   });
   const { ref: materialRef } = usePlacesWidget({
     apiKey: "AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY",
-    onPlaceSelected: (place) => handleLocationUpdate(place)
+    onPlaceSelected: (place) => handleLocationUpdate(place),
     // {
     //   let lat = null;
     //   let lng = null;
@@ -95,16 +93,17 @@ export default function AddFarm({
     //   farmData.location = place.formatted_address;
     //   setFarmData({ ...farmData, location: place.formatted_address })
     // }
-    ,
     // inputAutocompleteValue: "country",
     options: {
       types: ["geocode", "establishment"],
     },
   });
+
   const handleLocationUpdate = (place) => {
     console.log(place, farmData);
 
   }
+
   const handleChange = (e) => {
     const { value, name } = e.target;
     setFarmData({ ...farmData, [name]: value });
@@ -113,7 +112,7 @@ export default function AddFarm({
   };
   const handleClose = () => {
     navigate("/");
-  }
+  };
 
   const { farmId } = useParams();
 
@@ -128,6 +127,7 @@ export default function AddFarm({
       setFarmData(farmDetailsList);
     }
   }, [isFarmDetailsListLoading]);
+
 
   const validateFarm = () => {
     let errors = { ...validation };
@@ -237,21 +237,21 @@ export default function AddFarm({
   const handleGetCurrentLocation = () => {
     setIsCurrentLocation(!isCurrentLocation);
     if (!isCurrentLocation) {
-      navigator.geolocation.getCurrentPosition(position => {
+      navigator.geolocation.getCurrentPosition((position) => {
         let lat = position.coords.latitude;
         let lng = position.coords.longitude;
         Geocode.fromLatLng(lat, lng).then(
           (response) => {
             const address = response.results[0].formatted_address;
-            setFarmData({ ...farmData, 'location': address, lat: lat, lng: lng })
+            setFarmData({ ...farmData, location: address, lat: lat, lng: lng });
           },
           (error) => {
             console.error(error);
           }
         );
-      })
+      });
     }
-  }
+  };
   const handleSave = (payload) => {
     if (farmId) {
       updateFarm({ payload, farmId });
@@ -264,7 +264,7 @@ export default function AddFarm({
     return (
       <>
         <Grid container spacing={2} className="farm-container">
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid item xs={12} sm={12} md={6} >
             <FormControl fullWidth>
               <TextField
                 label={"Name"}
@@ -316,14 +316,19 @@ export default function AddFarm({
           </FormControl>
           <FormControl>
             <FormControlLabel
-              control={<Radio onClick={handleGetCurrentLocation} checked={isCurrentLocation} />}
+              control={
+                <Radio
+                  onClick={handleGetCurrentLocation}
+                  checked={isCurrentLocation}
+                />
+              }
               label="Use My Current Location"
             />
           </FormControl>
         </Grid>
       </>
-    )
-  }
+    );
+  };
   const renderGerminationZone = () => {
     return (
       <>
@@ -543,7 +548,9 @@ export default function AddFarm({
                 value={farmData.growingPlantCountPerRow || ""}
                 error={validation.growingPlantCountPerRow}
                 helperText={
-                  validation.growingPlantCountPerRow ? "Please provide name" : ""
+                  validation.growingPlantCountPerRow
+                    ? "Please provide name"
+                    : ""
                 }
                 onChange={handleChange}
               />
@@ -755,8 +762,7 @@ export default function AddFarm({
           isLight={true}
           handleButtonClick={handleClose}
           title="Cancel"
-        />
-        {" "}
+        />{" "}
         <ButtonCustom
           handleButtonClick={handleFarmSave}
           title={farmId ? "Update" : "Save"}

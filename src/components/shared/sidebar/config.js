@@ -11,7 +11,7 @@ const menuItems = [
     {
         title: 'Farms',
         id: "dashboard",
-        navigation: 'app/dashboard',
+        navigation: '/',
         icon: Irrigation,
         css: { borderBottom: '1px solid white' }
     },
