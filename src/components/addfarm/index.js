@@ -276,9 +276,9 @@ export default function AddFarm({
       <>
         <Grid container spacing={2} className="farm-container">
           <Grid item xs={12} sm={12} md={6}>
+          <span className='input-label'>Name</span>
             <FormControl fullWidth>
               <TextField
-                label={"Name"}
                 name="name"
                 value={farmData.name || ""}
                 InputLabelProps={{ shrink: true }}
@@ -290,10 +290,10 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Farm Area</span>
             <FormControl fullWidth>
               <TextField
                 InputLabelProps={{ shrink: true }}
-                label={"FarmArea"}
                 name="farmArea"
                 value={farmData.farmArea || ""}
                 onChange={handleChange}
@@ -311,12 +311,12 @@ export default function AddFarm({
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
+        <span className='input-label'>Farm Location</span>
           <FormControl fullWidth>
             <TextField
               fullWidth
               variant="outlined"
               inputRef={materialRef}
-              label={"Farm Location"}
               name="location"
               value={farmData.location}
               InputLabelProps={{ shrink: true }}
@@ -349,13 +349,13 @@ export default function AddFarm({
         <br />
         <Grid container spacing={2} className="farm-container">
           <Grid item xs={12} sm={12} md={12}>
+          <span className='input-label'>Germination Type</span>
             <FormControl fullWidth>
               <InputLabel id="demo-multiple-name-label" variant="outlined">
                 Germination Type
               </InputLabel>
               <SingleCustomSelect
                 name="germinationType"
-                lable="Germination Type"
                 value={farmData.germinationType || ""}
                 options={germination}
                 isError={validation.germinationType}
@@ -365,10 +365,10 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Germination Area</span>
             <FormControl fullWidth>
               <TextField
                 InputLabelProps={{ shrink: true }}
-                label={"Germination Area"}
                 name="germinationArea"
                 value={farmData.germinationArea || ""}
                 onChange={handleChange}
@@ -377,10 +377,10 @@ export default function AddFarm({
           </Grid>
 
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>No. of seeds per plantation</span>
             <FormControl fullWidth>
               <TextField
                 InputLabelProps={{ shrink: true }}
-                label={"No. of seeds per plantation"}
                 name="germinationSeedsCount"
                 value={farmData.germinationSeedsCount || ""}
                 onChange={handleChange}
@@ -389,12 +389,13 @@ export default function AddFarm({
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
             <FormControl fullWidth>
-              <InputLabel id="demo-multiple-name-label" variant="outlined">
+              {/* <InputLabel className='input-label' id="demo-multiple-name-label" variant="outlined">
                 Watering Type
-              </InputLabel>
+              </InputLabel> */}
+             <span className='input-label'>Watering Type</span>
               <SingleCustomSelect
                 name="germinationWateringType"
-                lable="Watering Type"
+                // lable="Watering Type"
                 value={farmData.germinationWateringType || ""}
                 options={wateringType}
                 isError={validation.germinationWateringType}
@@ -404,10 +405,10 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Watering Schedule</span>
             <FormControl fullWidth>
               <TextField
                 InputLabelProps={{ shrink: true }}
-                label={"Watering Schedule"}
                 type="number"
                 name="germinationWateringSchedule"
                 onChange={handleChange}
@@ -429,13 +430,10 @@ export default function AddFarm({
         <br />
         <Grid container spacing={2} className="farm-container">
           <Grid item xs={12} sm={12} md={12}>
+          <span className='input-label'>Nursery Type</span>
             <FormControl fullWidth>
-              <InputLabel id="demo-multiple-name-label" variant="outlined">
-                Nursery Zone
-              </InputLabel>
               <SingleCustomSelect
                 name="nurseryType"
-                lable="Nursery Type"
                 value={farmData.nurseryType || ""}
                 options={nursaryType}
                 isError={validation.nurseryType}
@@ -445,10 +443,10 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Nursery Area</span>
             <FormControl fullWidth>
               <TextField
                 InputLabelProps={{ shrink: true }}
-                label={"Nursery Area"}
                 name="nurseryArea"
                 value={farmData.nurseryArea || ""}
                 onChange={handleChange}
@@ -456,10 +454,10 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>No of seeds for Nursery</span>
             <FormControl fullWidth>
               <TextField
                 InputLabelProps={{ shrink: true }}
-                label={"No of seeds for Nursery"}
                 name="nurserySeedsCount"
                 onChange={handleChange}
                 value={farmData.nurserySeedsCount || ""}
@@ -469,12 +467,9 @@ export default function AddFarm({
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
             <FormControl fullWidth>
-              <InputLabel id="demo-multiple-name-label" variant="outlined">
-                Watering Type
-              </InputLabel>
+            <span className='input-label'>Watering Type</span>
               <SingleCustomSelect
                 name="nurseryWateringType"
-                lable="Watering Type"
                 value={farmData.nurseryWateringType || ""}
                 options={wateringType}
                 isError={validation.nurseryWateringType}
@@ -484,10 +479,10 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Watering Schedule</span>
             <FormControl fullWidth>
               <TextField
                 InputLabelProps={{ shrink: true }}
-                label={"Watering Schedule"}
                 type="number"
                 name="nurseryWateringSchedule"
                 value={farmData.nurseryWateringSchedule || ""}
@@ -510,10 +505,8 @@ export default function AddFarm({
         <br />
         <Grid container spacing={2} className="farm-container">
           <Grid item xs={12} sm={12} md={12}>
+          <span className='input-label'>Growing Zone</span>
             <FormControl fullWidth>
-              <InputLabel id="demo-multiple-name-label" variant="outlined">
-                Growing Zone
-              </InputLabel>
               <SingleCustomSelect
                 name="growingType"
                 lable="Growing Zone"
@@ -526,10 +519,10 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Growing Area</span>
             <FormControl fullWidth>
               <TextField
                 InputLabelProps={{ shrink: true }}
-                label={"Growing Area"}
                 name="growingArea"
                 value={farmData.growingArea || ""}
                 error={validation.growingArea}
@@ -540,10 +533,10 @@ export default function AddFarm({
           </Grid>
 
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>No of plants in a row</span>
             <FormControl fullWidth>
               <TextField
                 InputLabelProps={{ shrink: true }}
-                label={"No of plants in a row"}
                 name="growingRowCount"
                 value={farmData.growingRowCount || ""}
                 onChange={handleChange}
@@ -551,10 +544,10 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>No of rows</span>
             <FormControl fullWidth>
               <TextField
                 InputLabelProps={{ shrink: true }}
-                label={"No of rows"}
                 name="growingPlantCountPerRow"
                 value={farmData.growingPlantCountPerRow || ""}
                 error={validation.growingPlantCountPerRow}
@@ -568,10 +561,10 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Watering Schedule</span>
             <FormControl fullWidth>
               <TextField
                 InputLabelProps={{ shrink: true }}
-                label={"Watering Schedule"}
                 name="growingWateringSchedule"
                 type="number"
                 onChange={handleChange}
@@ -581,13 +574,10 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Plant spacing</span>
             <FormControl fullWidth>
-              <InputLabel id="demo-multiple-name-label" variant="outlined">
-                Plant spacing
-              </InputLabel>
               <SingleCustomSelect
                 name="growingPlantSpacing"
-                lable="Plant spacing"
                 value={farmData.growingPlantSpacing || ""}
                 options={plantSpacing}
                 handleChange={handleChange}
@@ -609,9 +599,9 @@ export default function AddFarm({
         <br />
         <Grid container spacing={2} className="farm-container">
           <Grid item xs={12} sm={12} md={12}>
+          <span className='input-label'>Main reservoir capacity</span>
             <FormControl fullWidth>
               <TextField
-                label={"Main reservoir capacity"}
                 InputLabelProps={{ shrink: true }}
                 name="reservoirCapacity"
                 value={farmData.reservoirCapacity || ""}
@@ -627,9 +617,9 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Nutrient water reservoir capacity</span>
             <FormControl fullWidth>
               <TextField
-                label={"Nutrient water reservoir capacity"}
                 InputLabelProps={{ shrink: true }}
                 name="nutrientWaterReservoirCapacity"
                 value={farmData.nutrientWaterReservoirCapacity || ""}
@@ -645,9 +635,9 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Ph up/down reservoir capacity</span>
             <FormControl fullWidth>
               <TextField
-                label={"Ph up/down reservoir capacity"}
                 InputLabelProps={{ shrink: true }}
                 name="phReservoirCapacity"
                 onChange={handleChange}
@@ -657,9 +647,9 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Stock nutrient solution capacity</span>
             <FormControl fullWidth>
               <TextField
-                label={"Stock nutrient solution capacity"}
                 InputLabelProps={{ shrink: true }}
                 name="stockNutrientSolutionCapacity"
                 onChange={handleChange}
@@ -669,9 +659,9 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Nutrient dilution ratio</span>
             <FormControl fullWidth>
               <TextField
-                label={"Nutrient dilution ratio"}
                 InputLabelProps={{ shrink: true }}
                 name="nutrientdilutionRatio"
                 onChange={handleChange}
@@ -681,13 +671,10 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Type of nutrients</span>
             <FormControl fullWidth>
-              <InputLabel id="demo-multiple-name-label" variant="outlined">
-                Type of nutrients{" "}
-              </InputLabel>
               <SingleCustomSelect
                 name="nutrientsType"
-                lable="Type of nutrients"
                 value={farmData.nutrientsType || ""}
                 options={nutrientsType}
                 handleChange={handleChange}
@@ -710,11 +697,11 @@ export default function AddFarm({
         <br />
         <Grid container spacing={2} className="farm-container">
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Polyhouse structure expected life</span>
             <FormControl fullWidth>
               <TextField
                 InputLabelProps={{ shrink: true }}
                 name="polyhouseStructureExpectedLife"
-                label=" Polyhouse structure expected life"
                 value={farmData.polyhouseStructureExpectedLife || ""}
                 onChange={handleChange}
                 variant="outlined"
@@ -728,10 +715,10 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
+          <span className='input-label'>Polyhouse plastic expected life</span>
             <FormControl fullWidth>
               <TextField
                 InputLabelProps={{ shrink: true }}
-                label="Polyhouse plastic expected life"
                 name="polyhousePlasticExpectedLife"
                 value={farmData.polyhousePlasticExpectedLife || ""}
                 onChange={handleChange}
@@ -772,15 +759,19 @@ export default function AddFarm({
         <br />
         {renderPolyhouseZone()}
         <br />
+        <div >
+        <div className="custom-container">
         <ButtonCustom
           isLight={true}
           handleButtonClick={handleClose}
           title="Cancel"
-        />{" "}
+        />
         <ButtonCustom
           handleButtonClick={handleFarmSave}
           title={farmId ? "Update" : "Save"}
         />
+        </div>
+        </div>
       </div>
     </div>
   );

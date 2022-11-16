@@ -10,6 +10,8 @@ import Loader from "../../shared/loader";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import ConfirmDialogBox from "../../shared/dailog/ConfirmDialogBox";
+import AddIcon from '@mui/icons-material/Add';
+
 export default function ManageCrop({
   fetchCrop,
   cropList,
@@ -46,6 +48,7 @@ export default function ManageCrop({
   let buttonArray = [
     {
       label: "Add New",
+      ICON:<AddIcon />,
       handler: handleModalToggle,
     },
   ];

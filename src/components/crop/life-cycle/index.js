@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import DataTable from '../../shared/dataTable';
 import PageHeader from '../../shared/page-header';
 import AddNewCropToLifeCycleModal from './addCropToLifeCycleModal';
+import AddIcon from '@mui/icons-material/Add';
+
 import Loader from '../../shared/loader';
 let headers = [
     {
@@ -74,6 +76,7 @@ export default function CropLifeCycle({
     let buttonArray = [
         {
             label: "Add New",
+            ICON:<AddIcon/>,
             handler: handleModalToggle,
         },
     ];

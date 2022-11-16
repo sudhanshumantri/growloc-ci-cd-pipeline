@@ -7,7 +7,6 @@ function renderButtonArray(buttonArray) {
         buttonArray.map((item, index) => {
             return (
                 <Button ICON={item.ICON} key={index} isLight={item.isLight ? item.isLight : false} title={item.label} handleButtonClick={item.handler} />
-
             )
         })
     )

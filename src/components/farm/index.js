@@ -10,6 +10,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import ConfirmDialogBox from "../shared/dailog/ConfirmDialogBox";
 import CardActions from "@mui/material/CardActions";
+import AddIcon from '@mui/icons-material/Add';
+
 export default function ManageFarm({
   fetchFarm,
   farmList,
@@ -57,7 +59,8 @@ export default function ManageFarm({
 
   let buttonArray = [
     {
-      label: "Add New",
+      label:"Add New",
+      ICON:<AddIcon />,
       handler: handleModalToggle,
     },
   ];

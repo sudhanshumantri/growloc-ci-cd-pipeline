@@ -13,7 +13,7 @@ body {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
-.section-title {
+/* .section-title {
   display: block;
   font-weight: normal;
   font-size: 18px;
@@ -22,8 +22,7 @@ body {
   margin-block-start: 5px;
   margin-block-end: 5px;
   display: block;
-  /* margin: auto; */
-}
+*/
 
 .label-custom {
   font-style: normal;
@@ -100,3 +99,23 @@ a {
   overflow: auto;
   max-height: 500px;
 }
+
+.section-title {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+  color: #000000;
+}
+.input-label {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000000;
+}
+.custom-container {
+  display: flex;  
+  justify-content: center; 
+  margin-bottom: 30px;
+
+}
+.custom-container button{margin-right: 15px;}

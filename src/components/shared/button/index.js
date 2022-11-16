@@ -12,7 +12,7 @@ export default function ButtonCustom({ title, ICON, handleButtonClick, routePath
         className = 'button-custom-light'
     }
     return (
-        <Button className={className} variant="outlined" startIcon={ICON ? <ICON /> : null}
+        <Button className={className} variant="outlined" endIcon={ICON ? ICON : null}
             onClick={() => handleButtonClick()}
         >
             {title}
