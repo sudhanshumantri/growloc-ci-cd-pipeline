@@ -27,11 +27,10 @@ export default function AddFarm({
   fecthFarmDetails,
   farmDetailsList,
   isFarmDetailsListLoading,
-}) 
-{
+}) {
   const [isCurrentLocation, setIsCurrentLocation] = useState(false);
   const navigate = useNavigate();
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState({});
   const [farmData, setFarmData] = useState({
     name: "",
     farmArea: "",
@@ -81,6 +80,7 @@ export default function AddFarm({
     polyhouseStructureExpectedLife: false,
     polyhousePlasticExpectedLife: false,
   });
+  const { farmId } = useParams();
   const { ref: materialRef } = usePlacesWidget({
     apiKey: "AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY",
     onPlaceSelected: (place) => handleLocationUpdate(place),
@@ -100,9 +100,17 @@ export default function AddFarm({
     },
   });
 
-  const handleLocationUpdate = ({ formatted_address }) => {
-    setLocation(formatted_address);
+  const handleLocationUpdate = (place) => {
+    const { formatted_address, geometry } = place;
+    let lat = null;
+    let lng = null;
+    if (geometry?.location) {
+      lat = geometry?.location.lat();
+      lng = geometry?.location.lng();
+    };
+    setLocation({formatted_address, lat, lng});
   };
+
   const handleChange = (e) => {
     const { value, name } = e.target;
     setFarmData({ ...farmData, [name]: value });
@@ -112,8 +120,6 @@ export default function AddFarm({
   const handleClose = () => {
     navigate("/");
   };
-
-  const { farmId } = useParams();
 
   useEffect(() => {
     if (farmId) {
@@ -128,8 +134,11 @@ export default function AddFarm({
   }, [isFarmDetailsListLoading]);
 
   useEffect(() => {
-    setFarmData({ ...farmData, location });
-  }, [location]);
+    if (location?.formatted_address) {
+      const { formatted_address, lat, lng } = location;
+      setFarmData({ ...farmData, lat, lng, location: formatted_address });
+    }
+  }, [location.formatted_address]);
 
   const validateFarm = () => {
     let errors = { ...validation };
@@ -266,7 +275,7 @@ export default function AddFarm({
     return (
       <>
         <Grid container spacing={2} className="farm-container">
-          <Grid item xs={12} sm={12} md={6} >
+          <Grid item xs={12} sm={12} md={6}>
             <FormControl fullWidth>
               <TextField
                 label={"Name"}
@@ -743,7 +752,10 @@ export default function AddFarm({
 
   return (
     <div>
-      <PageHeader title="Add a new farm" buttonArray={[]} />
+      <PageHeader
+        title={farmId ? `Edit ${farmData.name}` : "Add a new farm"}
+        buttonArray={[]}
+      />
       {isAddFarmLoading && <Loader title="Adding Farm" />}
       {isUpdateFarmLoading && <Loader title="Updating Farms" />}
       {isFarmDetailsListLoading && <Loader title="Fetching Farm Details" />}
