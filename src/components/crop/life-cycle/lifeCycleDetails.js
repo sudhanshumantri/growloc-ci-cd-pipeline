@@ -258,7 +258,7 @@ export default function CropLifeCycleDetails({
     filteredHistory = _.orderBy(filteredHistory, ["start_date"], ["desc"]);
     return (
       <Grid item xs={12} sm={6} md={6}>
-        <p className="header-title">
+        <p className="section-title">
           {selectedStageInformation.stage + " History Information"}
         </p>
         <Paper
@@ -307,7 +307,7 @@ export default function CropLifeCycleDetails({
     return (
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={6}>
-          <p className="header-title">
+          <p className="section-title">
             {selectedStageInformation.stage + " Stage Information"}
           </p>
           <div className="life-cycle-details-card">
@@ -344,7 +344,7 @@ export default function CropLifeCycleDetails({
           </div>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
-          <p className="header-title">
+          <p className="section-title">
             {selectedStageInformation.stage + " Parameters Information"}
             {" "}
             <BorderColorIcon className="icon" sx={{ fontSize: '16px' }} onClick={handleEditToggle} />
@@ -363,7 +363,7 @@ export default function CropLifeCycleDetails({
         </Grid>
         {renderHistoryInformation()}
         <Grid item xs={12} sm={6} md={6}>
-          <p className="header-title">Sensors Information </p>
+          <p className="section-title">Sensors Information </p>
           <div className="life-cycle-details-card">
             <p className="label-light">
               {" "}

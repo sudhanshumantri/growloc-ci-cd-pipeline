@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {HashRouter} from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { Provider } from 'react-redux';
-import store , {browserHistory} from './store/';
+import store, { browserHistory } from './store/';
 
 
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {orange} from '@mui/material/colors';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { orange } from '@mui/material/colors';
 import { ReactNotifications, Store } from 'react-notifications-component';
 import '../node_modules/react-notifications-component/dist/theme.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -17,14 +17,21 @@ const theme = createTheme({
     status: {
         danger: orange[500],
     },
+    typography: {
+        fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            'Poppins'
+        ].join(','),
+    }
 });
 
 root.render(
-    <Provider store={store}> 
-      <HashRouter history={browserHistory}>
+    <Provider store={store}>
+        <HashRouter history={browserHistory}>
             <ThemeProvider theme={theme}>
-                  <ReactNotifications />
-                <App/>
+                <ReactNotifications />
+                <App />
             </ThemeProvider>
         </HashRouter>
     </Provider>

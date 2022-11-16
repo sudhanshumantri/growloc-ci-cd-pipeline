@@ -1,6 +1,6 @@
 .page-header-container {
-  padding: 10px;
-  min-height: 48px;
+  padding: 16px;
+  /* min-height: 48px; */
 }
 
 .page-header-top-row {
@@ -10,6 +10,15 @@
   justify-content: space-between;
 }
 
+.page-section-title {
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 45px;
+  color: #000000;
+  margin-block-start: 5px;
+  margin-block-end: 5px;
+  display: block;
+}
 
 .page-header-subtitle {
   font-size: 14px;
@@ -23,6 +32,6 @@
   justify-content: flex-end
 }
 
-.button-container >* {
+.button-container>* {
   margin-left: 5px !important;
 }

@@ -229,7 +229,7 @@ export default function AddFarmModal({
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
-          <p className="header-title">Germination Zone</p>
+          <p className="section-title">Germination Zone</p>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           <FormControl fullWidth>
@@ -304,7 +304,7 @@ export default function AddFarmModal({
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
-          <p className="header-title">Nursery Zone</p>
+          <p className="section-title">Nursery Zone</p>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           <FormControl fullWidth>
@@ -382,7 +382,7 @@ export default function AddFarmModal({
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
-          <p className="header-title">Growring Zone</p>
+          <p className="section-title">Growring Zone</p>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           <FormControl fullWidth>
@@ -476,7 +476,7 @@ export default function AddFarmModal({
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
-          <p className="header-title">Watering Zone</p>
+          <p className="section-title">Watering Zone</p>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           <FormControl fullWidth>
@@ -573,7 +573,7 @@ export default function AddFarmModal({
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
-          <p className="header-title">Geolocation</p>
+          <p className="section-title">Geolocation</p>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           <FormControl fullWidth>
@@ -598,7 +598,7 @@ export default function AddFarmModal({
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
-          <p className="header-title">Polyhouse</p>
+          <p className="section-title">Polyhouse</p>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
           <FormControl fullWidth>

@@ -106,7 +106,7 @@ export default function FarmDashboard({
     return (
       <Grid item xs={12} sm={12} md={12}>
         <div className="card-container">
-          <p className="header-title">Crop Schedules</p>
+          <p className="section-title">Crop Schedules</p>
           <DataTable data={{ headers: headers, rows: cropSchedules || [] }} />
         </div>
       </Grid>
@@ -117,7 +117,7 @@ export default function FarmDashboard({
 
       <Grid item xs={12} sm={12} md={12}>
         <div className="card-container">
-          <p className="header-title">Task Schedules</p>
+          <p className="section-title">Task Schedules</p>
           <DataTable data={{ headers: cropSchedulesHeader, rows: rows }} />
         </div>
       </Grid>
@@ -128,7 +128,7 @@ export default function FarmDashboard({
     return (
       <Grid item xs={12} sm={6} md={6}>
         <div className="card-container">
-          <p className="header-title">Farm Utilization Based On Stages</p>
+          <p className="section-title">Farm Utilization Based On Stages</p>
           <PieChart chartData={stagedBasedQtyData || []} />
         </div>
       </Grid>
@@ -139,7 +139,7 @@ export default function FarmDashboard({
     return (
       <Grid item xs={12} sm={6} md={6}>
         <div className="card-container">
-          <p className="header-title">Farm Utilization Based On Crops</p>
+          <p className="section-title">Farm Utilization Based On Crops</p>
           <PieChart chartData={cropBasedQtyData || []} />
         </div>
       </Grid>
@@ -149,7 +149,7 @@ export default function FarmDashboard({
     return (
       <Grid item xs={12} sm={12} md={12}>
         <div className="card-container">
-          <p className="header-title">Monthly Harvest Breakup</p>
+          <p className="section-title">Monthly Harvest Breakup</p>
           <Grid container justifyContent="end">
           <Grid item xs={3} sm={2} md={2} >
             <FormControl fullWidth>

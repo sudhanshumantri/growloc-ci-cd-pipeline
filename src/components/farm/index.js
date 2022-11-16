@@ -94,7 +94,7 @@ export default function ManageFarm({
             >
               <Card className="farm-list-card-holder" variant="outlined">
                 <CardContent>
-                  <p className="header-title">{elem.farm.name}</p>
+                  <p className="section-title">{elem.farm.name}</p>
                   <CardActions disableSpacing>
                     <CreateIcon
                       onClick={(e) => handleEdit(e, elem)}

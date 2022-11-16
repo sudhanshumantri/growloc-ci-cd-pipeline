@@ -1,6 +1,6 @@
-.farm-container{
-    padding: 10px;
-    background: #FAFAFA;   
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-  }
+.farm-container {
+  padding: 10px 10px 20px 10px;
+  background: #FAFAFA;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}

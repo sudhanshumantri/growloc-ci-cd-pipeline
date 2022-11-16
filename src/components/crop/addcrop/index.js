@@ -170,7 +170,7 @@ export default function AddCropModal({
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
-              <p className="header-title">Stages</p>
+              <p className="section-title">Stages</p>
             </Grid>
             {selectedData.germinationMethod &&
             selectedData.germinationMethod[germinationMethod]

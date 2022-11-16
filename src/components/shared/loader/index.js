@@ -8,7 +8,7 @@ export default function Loader({ title, }) {
         >
             <CircularProgress color="inherit" />
             {title && (
-                <Typography className="header-title" position='absolute'>{title}</Typography>
+                <Typography className="section-title" position='absolute'>{title}</Typography>
             )}
         </Backdrop>
     );
