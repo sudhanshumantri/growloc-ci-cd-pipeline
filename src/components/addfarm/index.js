@@ -15,7 +15,9 @@ import InputLabel from "@mui/material/InputLabel";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
 import Autocomplete, { usePlacesWidget } from "react-google-autocomplete";
-
+import Geocode from "react-geocode";
+Geocode.setApiKey("AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY");
+import { FormControlLabel, RadioGroup, Radio } from "@mui/material";
 export default function AddFarm({
   addFarm,
   updateFarm,
@@ -25,6 +27,7 @@ export default function AddFarm({
   farmDetailsList,
   isFarmDetailsListLoading
 }) {
+  const [isCurrentLocation, setIsCurrentLocation] = useState(false)
   const [farmData, setFarmData] = useState({
     name: "",
     farmArea: "",
@@ -52,12 +55,11 @@ export default function AddFarm({
     cultivableArea: "",
     nutrientdilutionRatio: "",
     location: "",
+    lat: "",
+    lng: "",
     polyhouseStructureExpectedLife: "",
     polyhousePlasticExpectedLife: "",
   });
-
-  const geolocation = ["Climate zone"];
-
   const [validation, setValidation] = useState({
     name: false,
     germinationType: false,
@@ -68,19 +70,41 @@ export default function AddFarm({
     growingArea: false,
     growingPlantCountPerRow: false,
     growingPlantSpacing: false,
-    reservoirCapacity:false,
+    reservoirCapacity: false,
     nutrientWaterReservoirCapacity: false,
     nutrientsType: false,
     location: false,
     polyhouseStructureExpectedLife: false,
     polyhousePlasticExpectedLife: false,
-    farmLocation: false,
-    liveLocation: false,
-  });
 
+  });
+  const { ref: materialRef } = usePlacesWidget({
+    apiKey: "AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY",
+    onPlaceSelected: (place) => handleLocationUpdate(place)
+    // {
+    //   let lat = null;
+    //   let lng = null;
+    //   if (place?.geometry?.location) {
+    //     lat = place?.geometry?.location.lat();
+    //     lng = place?.geometry?.location.lng();
+    //   }
+    //   farmData.location = place.formatted_address;
+    //   setFarmData({ ...farmData, location: place.formatted_address })
+    // }
+    ,
+    // inputAutocompleteValue: "country",
+    options: {
+      types: ["geocode", "establishment"],
+    },
+  });
+  const handleLocationUpdate = (place) => {
+    console.log(place, farmData);
+
+  }
   const handleChange = (e) => {
     const { value, name } = e.target;
     setFarmData({ ...farmData, [name]: value });
+    setIsCurrentLocation(false);
     validation[name] && setValidation({ ...validation, [name]: false });
   };
 
@@ -194,17 +218,37 @@ export default function AddFarm({
       nutrientdilutionRatio: farmData.nutrientdilutionRatio,
       nutrientsType: farmData.nutrientsType,
       location: farmData.location,
+      lat: farmData.lat,
+      lng: farmData.lng,
       polyhouseStructureExpectedLife: farmData.polyhouseStructureExpectedLife,
       polyhousePlasticExpectedLife: farmData.polyhousePlasticExpectedLife,
     };
     if (validateFarm()) {
+    //  console.log(requestFarmData);
       handleSave(requestFarmData);
     }
   };
-
+  const handleGetCurrentLocation = () => {
+    setIsCurrentLocation(!isCurrentLocation);
+    if (!isCurrentLocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        let lat = position.coords.latitude;
+        let lng = position.coords.longitude;
+        Geocode.fromLatLng(lat, lng).then(
+          (response) => {
+            const address = response.results[0].formatted_address;
+            setFarmData({ ...farmData, 'location': address, lat: lat, lng: lng })
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+      })
+    }
+  }
   const handleSave = (payload) => {
     if (farmId) {
-      updateFarm({payload, farmId});
+      updateFarm({ payload, farmId });
     } else {
       addFarm(payload);
     }
@@ -243,29 +287,34 @@ export default function AddFarm({
     );
   };
 
-  //   const farmLocation = () => {
-
-  //     return (
-  //         <>
-  //          <Grid item xs={12} sm={12} md={12}>
-  //          <FormControl fullWidth>
-  //             <TextField
-  //               fullWidth
-  //               variant="outlined"
-  //               inputRef={materialRef}
-  //               label={"Farm Location"}
-  //               name="farmLocation"
-  //               InputLabelProps={{ shrink: true }}
-  //             onChange={handleChange}
-  //              error={validation.farmLocation}
-  //             helperText={validation.farmLocation ? "Please provide name" : ""}
-  //             />
-  //           </FormControl>
-  //           </Grid>
-  //         </>
-  //     )
-  //  }
-
+  const farmLocation = () => {
+    return (
+      <>
+        <Grid item xs={12} sm={12} md={12}>
+          <FormControl fullWidth>
+            <TextField
+              fullWidth
+              variant="outlined"
+              inputRef={materialRef}
+              label={"Farm Location"}
+              name="location"
+              value={farmData.location}
+              InputLabelProps={{ shrink: true }}
+              onChange={handleChange}
+              error={validation.location}
+              helperText={validation.location ? "Please provide name" : ""}
+            />
+          </FormControl>
+          <FormControl>
+            <FormControlLabel
+              control={<Radio onClick={handleGetCurrentLocation} checked={isCurrentLocation} />}
+              label="Use My Current Location"
+            />
+          </FormControl>
+        </Grid>
+      </>
+    )
+  }
   const germinationZone = () => {
     return (
       <>
@@ -658,46 +707,21 @@ export default function AddFarm({
       </>
     );
   };
-  const geolocationZone = () => {
-    return (
-      <>
-        <Grid item xs={12} sm={12} md={12}>
-          <p className="header-title">Geolocation</p>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-multiple-name-label" variant="outlined">
-              Zone
-            </InputLabel>
-            <SingleCustomSelect
-              name="location"
-              lable="Zone"
-              value={farmData.location || ""}
-              options={geolocation}
-              handleChange={handleChange}
-              isError={validation.location}
-              errorMessage="Please select a location"
-            />
-          </FormControl>
-        </Grid>
-      </>
-    );
-  };
   return (
     <div>
       <PageHeader title="Manage Farm" buttonArray={[]} />
       {isAddFarmLoading && <Loader title="Adding Farm" />}
       {isUpdateFarmLoading && <Loader title="Updating Farms" />}
-      {isFarmDetailsListLoading && <Loader title="Fetching Farm Details"/>}
+      {isFarmDetailsListLoading && <Loader title="Fetching Farm Details" />}
       <div className="page-container">
         <Grid container spacing={3}>
           {farmBasicInfo()}
-          {/* {farmLocation()} */}
+          {farmLocation()}
           {germinationZone()}
           {nurseryZone()}
           {growZoneArea()}
           {wateringZone()}
-          {geolocationZone()}
+
           {PolyhouseZone()}
         </Grid>
         <br />
