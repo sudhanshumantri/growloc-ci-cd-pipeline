@@ -31,6 +31,7 @@ export default function AddFarm({
 {
   const [isCurrentLocation, setIsCurrentLocation] = useState(false);
   const navigate = useNavigate();
+  const [location, setLocation] = useState("");
   const [farmData, setFarmData] = useState({
     name: "",
     farmArea: "",
@@ -99,11 +100,9 @@ export default function AddFarm({
     },
   });
 
-  const handleLocationUpdate = (place) => {
-    console.log(place, farmData);
-
-  }
-
+  const handleLocationUpdate = ({ formatted_address }) => {
+    setLocation(formatted_address);
+  };
   const handleChange = (e) => {
     const { value, name } = e.target;
     setFarmData({ ...farmData, [name]: value });
@@ -128,6 +127,9 @@ export default function AddFarm({
     }
   }, [isFarmDetailsListLoading]);
 
+  useEffect(() => {
+    setFarmData({ ...farmData, location });
+  }, [location]);
 
   const validateFarm = () => {
     let errors = { ...validation };
