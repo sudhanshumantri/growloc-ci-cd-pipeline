@@ -97,10 +97,11 @@ export default function AddCropModal({
           <br/>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
+            <span className="input-label"> Crop</span>
             <FormControl fullWidth>
-                <InputLabel id="demo-multiple-name-label" variant="outlined">
+                {/* <InputLabel id="demo-multiple-name-label" variant="outlined">
                   Crop
-                </InputLabel>
+                </InputLabel> */}
               <SingleCustomSelect
                 // inputLable="Crop"
                 label="Select"
@@ -139,10 +140,11 @@ export default function AddCropModal({
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label"> Germination Method</span>
             <FormControl fullWidth>
-                <InputLabel id="demo-multiple-name-label" variant="outlined">
+                {/* <InputLabel id="demo-multiple-name-label" variant="outlined">
                 Germination Method
-                </InputLabel>
+                </InputLabel> */}
               <SingleCustomSelect
                 // inputLable="Germination Method"
                 value={germinationMethod}
@@ -158,10 +160,11 @@ export default function AddCropModal({
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">Units</span>
               <FormControl fullWidth>
                 <TextField
                   InputLabelProps={{ shrink: true }}
-                  label={"Units"}
+                  // label={"Units"}
                   // value={units}
                   value={units}
                   onChange={handleUnitsChange}

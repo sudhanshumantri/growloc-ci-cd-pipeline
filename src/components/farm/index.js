@@ -10,10 +10,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import ConfirmDialogBox from "../shared/dailog/ConfirmDialogBox";
 import CardActions from "@mui/material/CardActions";
-import AddIcon from '@mui/icons-material/Add';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import Collapse from '@mui/material/Collapse';
-
+import AddIcon from "@mui/icons-material/Add";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import Collapse from "@mui/material/Collapse";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { IconButton } from "@mui/material";
+import "./style.css";
 
 export default function ManageFarm({
   fetchFarm,
@@ -31,9 +34,23 @@ export default function ManageFarm({
   const [selectedFarmId, setSeletedFarmId] = useState(null);
   const [expanded, setExpanded] = useState(false);
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const newOpen = Boolean(anchorEl);
+
+  const handleOpenMoreOptions = (event) => {
+    event.preventDefault()
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseMoreOptions = (event) => {
+    event.preventDefault()
+
+    setAnchorEl(null);
+  };
+
   const handleEdit = (e, elem) => {
     e.preventDefault();
-     const { farm } = elem;
+    const { farm } = elem;
     navigate("/edit-farm/" + farm.id);
   };
 
@@ -64,8 +81,8 @@ export default function ManageFarm({
 
   let buttonArray = [
     {
-      label:"Add New",
-      ICON:<AddIcon />,
+      label: "Add New",
+      ICON: <AddIcon />,
       handler: handleModalToggle,
     },
   ];
@@ -80,11 +97,11 @@ export default function ManageFarm({
       handler: handleConfirmRemove,
     },
   ];
- const handleExpandClick = (e) => {
-  e.preventDefault();
-  setExpanded(!expanded);
- }
- 
+  const handleExpandClick = (e) => {
+    e.preventDefault();
+    setExpanded(!expanded);
+  };
+
   return (
     <div>
       <PageHeader title="Manage Farm" buttonArray={buttonArray} />
@@ -107,25 +124,53 @@ export default function ManageFarm({
               <Card className="farm-list-card-holder" variant="outlined">
                 <CardContent>
                   <div className="section-card-title">
-                  <p>Crop name-{elem.farm.name}</p>
-                  <p>Farm area-{elem.farm.farmArea}</p>
-                  <p>Germination Zone-{elem.farm.germinationType}</p>
-                  <p>Nursery Zone-{elem.farm.nurseryType}</p>
+                    <p>Farm area-{elem.farm.farmArea}</p>
+                    <p>Germination Zone-{elem.farm.germinationType}</p>
+                    <p>Nursery Zone-{elem.farm.nurseryType}</p>
                   </div>
-                  <MoreHorizIcon expand={expanded} onClick={(e)=>handleExpandClick(e)}/>
-                  <Collapse in={expanded}  >
-                  <CardActions className="action-button" disableSpacing>
-                    <CreateIcon
-                      onClick={(e) => handleEdit(e, elem)}
-                      sx={{ color: "#1E90FF" }}
-                    />
-                    <DeleteIcon
-                      onClick={(e) => handleDelete(e, elem)}
-                      sx={{ color: "#696906" }}
-                      />
-                  </CardActions>
-                  </Collapse>
                 </CardContent>
+                <CardActions
+                  className="farm-card-bottom-container"
+                  disableSpacing
+                >
+                  <Grid container >
+                    <Grid item xs={10} sm={6} md={6}>
+                      <p className="farm-card-title">{elem.farm.name}</p>
+                    </Grid>
+                    <Grid item className="farm-card-item" xs={8} sm={6} md={6}>
+                      <IconButton
+                        className="farm-card-icon"
+                        aria-label="settings"
+                      >
+                        <MoreHorizIcon
+                          id="basic-button"
+                          aria-controls={newOpen ? "basic-menu" : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={newOpen ? "true" : undefined}
+                          onClick={handleOpenMoreOptions}
+                        />
+                      </IconButton>
+                      <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={newOpen}
+                        onClose={handleCloseMoreOptions}
+                        MenuListProps={{
+                          "aria-labelledby": "basic-button",
+                        }}
+                      >
+                        <MenuItem>
+                          <CreateIcon onClick={(e) => handleEdit(e, elem)} />
+                          Edit
+                        </MenuItem>
+                        <MenuItem>
+                          <DeleteIcon onClick={(e) => handleDelete(e, elem)} />
+                          Delete
+                        </MenuItem>
+                      </Menu>
+                    </Grid>
+                  </Grid>
+                </CardActions>
               </Card>
             </Grid>
           ))}

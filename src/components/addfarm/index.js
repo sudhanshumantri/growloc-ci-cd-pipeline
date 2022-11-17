@@ -285,11 +285,8 @@ export default function AddFarm({
               <TextBox
                 name="name"
                 isWhite={true}
-                // sx={{ background: "white" }}
                 value={farmData.name || ""}
-                // InputLabelProps={{ shrink: true }}
                 onChange={handleChange}
-                variant="outlined"
                 error={validation.name}
                 helperText={validation.name ? "Please provide name" : ""}
               />
@@ -299,12 +296,10 @@ export default function AddFarm({
             <span className="input-label">Farm Area</span>
             <FormControl fullWidth>
               <TextBox
-                InputLabelProps={{ shrink: true }}
                 isWhite={true}
                 name="farmArea"
                 value={farmData.farmArea || ""}
                 onChange={handleChange}
-                variant="outlined"
               />
             </FormControl>
           </Grid>
@@ -324,11 +319,9 @@ export default function AddFarm({
             <TextBox
               fullWidth
               isWhite={true}
-              variant="outlined"
               inputRef={materialRef}
               name="location"
               value={farmData.location}
-              InputLabelProps={{ shrink: true }}
               onChange={handleChange}
               error={validation.location}
               helperText={validation.location ? "Please provide name" : ""}
@@ -398,14 +391,10 @@ export default function AddFarm({
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
             <FormControl fullWidth>
-              {/* <InputLabel className='input-label' id="demo-multiple-name-label" variant="outlined">
-                Watering Type
-              </InputLabel> */}
               <span className="input-label">Watering Type</span>
               <SingleCustomSelect
                 isWhite={true}
                 name="germinationWateringType"
-                // lable="Watering Type"
                 value={farmData.germinationWateringType || ""}
                 options={wateringType}
                 isError={validation.germinationWateringType}
@@ -424,7 +413,6 @@ export default function AddFarm({
                 name="germinationWateringSchedule"
                 onChange={handleChange}
                 value={farmData.germinationWateringSchedule || ""}
-                InputProps={{ inputProps: { min: 1, max: 10 } }}
               />
             </FormControl>
           </Grid>
@@ -475,7 +463,6 @@ export default function AddFarm({
                 name="nurserySeedsCount"
                 onChange={handleChange}
                 value={farmData.nurserySeedsCount || ""}
-                InputProps={{ inputProps: { min: 1, max: 10 } }}
               />
             </FormControl>
           </Grid>
@@ -503,7 +490,6 @@ export default function AddFarm({
                 name="nurseryWateringSchedule"
                 value={farmData.nurseryWateringSchedule || ""}
                 onChange={handleChange}
-                InputProps={{ inputProps: { min: 1, max: 10 } }}
               />
             </FormControl>
           </Grid>
@@ -526,7 +512,6 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="growingType"
-                lable="Growing Zone"
                 value={farmData.growingType || ""}
                 options={growingZone}
                 isError={validation.growingType}
@@ -555,7 +540,6 @@ export default function AddFarm({
             <FormControl fullWidth>
               <TextBox
                 isWhite={true}
-                InputLabelProps={{ shrink: true }}
                 name="growingRowCount"
                 value={farmData.growingRowCount || ""}
                 onChange={handleChange}
@@ -587,10 +571,8 @@ export default function AddFarm({
                 isWhite={true}
                 InputLabelProps={{ shrink: true }}
                 name="growingWateringSchedule"
-                type="number"
                 onChange={handleChange}
                 value={farmData.growingWateringSchedule || ""}
-                InputProps={{ inputProps: { min: 1, max: 10 } }}
               />
             </FormControl>
           </Grid>
@@ -625,7 +607,6 @@ export default function AddFarm({
             <FormControl fullWidth>
               <TextBox
                 isWhite={true}
-                InputLabelProps={{ shrink: true }}
                 name="reservoirCapacity"
                 value={farmData.reservoirCapacity || ""}
                 onChange={handleChange}
@@ -646,7 +627,6 @@ export default function AddFarm({
             <FormControl fullWidth>
               <TextBox
                 isWhite={true}
-                InputLabelProps={{ shrink: true }}
                 name="nutrientWaterReservoirCapacity"
                 value={farmData.nutrientWaterReservoirCapacity || ""}
                 onChange={handleChange}
@@ -656,7 +636,6 @@ export default function AddFarm({
                     ? "Please provide Nutrient water reservoir capacity"
                     : ""
                 }
-                variant="outlined"
               />
             </FormControl>
           </Grid>
@@ -665,11 +644,9 @@ export default function AddFarm({
             <FormControl fullWidth>
               <TextBox
                 isWhite={true}
-                InputLabelProps={{ shrink: true }}
                 name="phReservoirCapacity"
                 onChange={handleChange}
                 value={farmData.phReservoirCapacity || ""}
-                variant="outlined"
               />
             </FormControl>
           </Grid>
@@ -680,11 +657,9 @@ export default function AddFarm({
             <FormControl fullWidth>
               <TextBox
                 isWhite={true}
-                InputLabelProps={{ shrink: true }}
                 name="stockNutrientSolutionCapacity"
                 onChange={handleChange}
                 value={farmData.stockNutrientSolutionCapacity || ""}
-                variant="outlined"
               />
             </FormControl>
           </Grid>
@@ -693,11 +668,9 @@ export default function AddFarm({
             <FormControl fullWidth>
               <TextBox
                 isWhite={true}
-                InputLabelProps={{ shrink: true }}
                 name="nutrientdilutionRatio"
                 onChange={handleChange}
                 value={farmData.nutrientdilutionRatio || ""}
-                variant="outlined"
               />
             </FormControl>
           </Grid>
@@ -738,7 +711,6 @@ export default function AddFarm({
                 name="polyhouseStructureExpectedLife"
                 value={farmData.polyhouseStructureExpectedLife || ""}
                 onChange={handleChange}
-                variant="outlined"
                 error={validation.polyhouseStructureExpectedLife}
                 helperText={
                   validation.polyhouseStructureExpectedLife
@@ -762,7 +734,6 @@ export default function AddFarm({
                     ? "Please provide Polyhouse plastic expected life"
                     : ""
                 }
-                variant="outlined"
               />
             </FormControl>
           </Grid>

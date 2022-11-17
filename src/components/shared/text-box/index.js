@@ -4,7 +4,6 @@ import TextField from "@mui/material/TextField";
 
 const TextBox = ({
   disabled,
-  label,
   value,
   onChange,
   name,
@@ -12,8 +11,6 @@ const TextBox = ({
   helperText,
   isWhite,
   inputRef
-  
-  
 }) => {
   return (
     <>
@@ -23,7 +20,6 @@ const TextBox = ({
           }
           disabled={disabled}
           name ={name}
-          label={label}
           value={value}
           onChange={onChange}
           error ={error}

@@ -6,8 +6,6 @@
   padding: "30px 30px 0px 30px";
   /* box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
     0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%); */
-  min-width: 280px;
-  max-width: 280px;
   background-color: white !important;
   /*
      ...theme.typography.body2,
@@ -27,5 +25,30 @@
     
     */
 }
-
+.section-card-title p {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.farm-card-bottom-container {
+  background: linear-gradient(270deg, #e5e4d7 29.63%, #bfc9b1 89.97%);
+  border-radius: 0px 0px 10px 10px;
+  height: 84px;
+}
+.farm-card-title {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+  /* identical to box height */
+  color: #000000;
+}
  
+.farm-card-item{
+  text-align: right;
+   padding: 21px 0px;
+   color: #000000;
+
+
+}

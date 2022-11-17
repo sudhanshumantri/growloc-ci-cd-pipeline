@@ -96,7 +96,7 @@ export default function FarmDashboard({
   ];
 
   const handleChange = (event) => {
-    const {value} = event.target; 
+    const { value } = event.target;
     setMonth(value);
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month: value });
   };
@@ -114,7 +114,6 @@ export default function FarmDashboard({
   };
   const renderTaskSchedules = () => {
     return (
-
       <Grid item xs={12} sm={12} md={12}>
         <div className="card-container">
           <p className="section-title">Task Schedules</p>
@@ -151,25 +150,27 @@ export default function FarmDashboard({
         <div className="card-container">
           <p className="section-title">Monthly Harvest Breakup</p>
           <Grid container justifyContent="end">
-          <Grid item xs={3} sm={2} md={2} >
-            <FormControl fullWidth>
-              <InputLabel id="demo-multiple-name-label" variant="outlined">
+
+            <Grid item xs={3} sm={2} md={2}>
+            <span className="input-label"> Select Month</span>
+
+              <FormControl fullWidth>
+                {/* <InputLabel id="demo-multiple-name-label" variant="outlined">
                 Select Month
-              </InputLabel>
-              <SingleCustomSelect
-                value={month}
-                valueKey="value"
-                labelKey="name"
-                lable="Select Month"
-                options={options}
-                handleChange={handleChange}
-              />
-            </FormControl>
+              </InputLabel> */}
+                <SingleCustomSelect
+                  value={month}
+                  valueKey="value"
+                  labelKey="name"
+                  // lable="Select Month"
+                  options={options}
+                  handleChange={handleChange}
+                />
+              </FormControl>
             </Grid>
           </Grid>
-          <BarChart chartData={dashboardHarvestList || []}/>
+          <BarChart chartData={dashboardHarvestList || []} />
         </div>
-       
       </Grid>
     );
   };
@@ -178,16 +179,13 @@ export default function FarmDashboard({
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
   }, []);
 
-
   return (
     <div>
       <PageHeader title="Farm Dashboard" buttonArray={[]} />
-      {isDashboardHarvestListLoading && <Loader title="Fetching Details" />
- }
+      {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
       <div className="page-container">
         <Grid container item sx={8} spacing={2}>
-                {isDashboardHarvestListLoading && <Loader title="Fetching Details" />
-}
+          {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
           {renderCropSchedules()}
           {renderTaskSchedules()}
           {renderMonthlyHarvestBreakup()}
