@@ -11,6 +11,9 @@ import CreateIcon from "@mui/icons-material/Create";
 import ConfirmDialogBox from "../shared/dailog/ConfirmDialogBox";
 import CardActions from "@mui/material/CardActions";
 import AddIcon from '@mui/icons-material/Add';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import Collapse from '@mui/material/Collapse';
+
 
 export default function ManageFarm({
   fetchFarm,
@@ -26,6 +29,8 @@ export default function ManageFarm({
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [farmInfo, setFarmInfo] = useState({});
   const [selectedFarmId, setSeletedFarmId] = useState(null);
+  const [expanded, setExpanded] = useState(false);
+
   const handleEdit = (e, elem) => {
     e.preventDefault();
      const { farm } = elem;
@@ -75,7 +80,11 @@ export default function ManageFarm({
       handler: handleConfirmRemove,
     },
   ];
-
+ const handleExpandClick = (e) => {
+  e.preventDefault();
+  setExpanded(!expanded);
+ }
+ 
   return (
     <div>
       <PageHeader title="Manage Farm" buttonArray={buttonArray} />
@@ -97,8 +106,15 @@ export default function ManageFarm({
             >
               <Card className="farm-list-card-holder" variant="outlined">
                 <CardContent>
-                  <p className="section-title">{elem.farm.name}</p>
-                  <CardActions disableSpacing>
+                  <div className="section-card-title">
+                  <p>Crop name-{elem.farm.name}</p>
+                  <p>Farm area-{elem.farm.farmArea}</p>
+                  <p>Germination Zone-{elem.farm.germinationType}</p>
+                  <p>Nursery Zone-{elem.farm.nurseryType}</p>
+                  </div>
+                  <MoreHorizIcon expand={expanded} onClick={(e)=>handleExpandClick(e)}/>
+                  <Collapse in={expanded}  >
+                  <CardActions className="action-button" disableSpacing>
                     <CreateIcon
                       onClick={(e) => handleEdit(e, elem)}
                       sx={{ color: "#1E90FF" }}
@@ -106,8 +122,9 @@ export default function ManageFarm({
                     <DeleteIcon
                       onClick={(e) => handleDelete(e, elem)}
                       sx={{ color: "#696906" }}
-                    />
+                      />
                   </CardActions>
+                  </Collapse>
                 </CardContent>
               </Card>
             </Grid>

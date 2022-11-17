@@ -124,4 +124,16 @@ a {
 .input-custom {
     height: 50px;
 }
+.section-card-title p {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: rgba(0, 0, 0, 0.5);
+}
+  .action-button{
+    display: grid !important;
+
+}
 
