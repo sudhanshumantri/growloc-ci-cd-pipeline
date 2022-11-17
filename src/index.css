@@ -112,10 +112,9 @@ a {
   line-height: 24px;
   color: #000000;
 }
-.custom-container {
+.flex-row-justify-center-container {
   display: flex;  
   justify-content: center; 
-  margin-bottom: 30px;
-
+ 
 }
 .custom-container button{margin-right: 15px;}
