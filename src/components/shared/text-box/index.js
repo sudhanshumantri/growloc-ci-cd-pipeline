@@ -2,19 +2,35 @@ import React from "react";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 
-const TextBox = ({disabled, InputLabelProps, label, value, onChange,variant}) => {
+const TextBox = ({
+  disabled,
+  label,
+  value,
+  onChange,
+  name,
+  error,
+  helperText,
+  isWhite,
+  inputRef
+  
+  
+}) => {
   return (
     <>
-      <FormControl fullWidth >
         <TextField
+          className={
+            isWhite ? "input-custom-white input-custom" : "input-custom"
+          }
           disabled={disabled}
-          InputLabelProps={InputLabelProps}
+          name ={name}
           label={label}
           value={value}
           onChange={onChange}
-          variant ={variant}
+          error ={error}
+          helperText={helperText}
+          inputRef ={inputRef}
+
         />
-      </FormControl>
     </>
   );
 };

@@ -11,10 +11,10 @@ export const WEEKDAYS = [
   { label: "F", value: "5" },
   { label: "Sa", value: "6" },
 ];
-export const germination = ["Tray with coco peat", "oasis cubes", "coco plugs"];
-export const wateringType = ["manual", "automated"];
+export const germination = ["Tray with coco peat", "Oasis cubes", "Coco plugs"];
+export const wateringType = ["Manual", "Automated"];
 export const nursaryType = [
-  "open(No humidity control)",
+  "Open(No humidity control)",
   "Closed dome (Humidity control)",
 ];
 export const growingZone = [
@@ -24,7 +24,7 @@ export const growingZone = [
   "Dutch bucket system",
 ];
 export const plantSpacing = ["Plant to Plant", "Row to Row"];
-export const nutrientsType = ["2 part mix", "3 part mix", "Custom nutrient mix"]
+export const nutrientsType = ["2 Part mix", "3 Part mix", "Custom nutrient mix"]
 export const options = [
   {
     name: "3 Months",

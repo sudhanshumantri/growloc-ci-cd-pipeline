@@ -117,4 +117,11 @@ a {
   justify-content: center; 
  
 }
-.custom-container button{margin-right: 15px;}
+
+.input-custom-white {
+  background: #ffffff;
+}
+.input-custom {
+    height: 50px;
+}
+
