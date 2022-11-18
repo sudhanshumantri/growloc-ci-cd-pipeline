@@ -15,7 +15,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Collapse from "@mui/material/Collapse";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { IconButton } from "@mui/material";
+import { IconButton, ListItemIcon, ListItemText, Divider } from "@mui/material";
 import "./style.css";
 
 export default function ManageFarm({
@@ -124,20 +124,20 @@ export default function ManageFarm({
               <Card className="farm-list-card-holder" variant="outlined">
                 <CardContent>
                   <div className="section-card-title">
-                    <p>Farm area-{elem.farm.farmArea}</p>
-                    <p>Germination Zone-{elem.farm.germinationType}</p>
-                    <p>Nursery Zone-{elem.farm.nurseryType}</p>
+                    <p><b>Farm area-</b>{elem.farm.farmArea}</p>
+                    <p><b>Germination Zone-</b>{elem.farm.germinationType}</p>
+                    <p><b>Nursery Zone-</b>{elem.farm.nurseryType}</p>
                   </div>
                 </CardContent>
                 <CardActions
                   className="farm-card-bottom-container"
                   disableSpacing
                 >
-                  <Grid container >
-                    <Grid item xs={10} sm={6} md={6}>
+                  <Grid container spacing={2} alignItems="center">
+                    <Grid item xs={10} sm={10} md={10}>
                       <p className="farm-card-title">{elem.farm.name}</p>
                     </Grid>
-                    <Grid item className="farm-card-item" xs={8} sm={6} md={6}>
+                    <Grid item xs={2} sm={2} md={2}>
                       <IconButton
                         className="farm-card-icon"
                         aria-label="settings"
@@ -154,18 +154,31 @@ export default function ManageFarm({
                         id="basic-menu"
                         anchorEl={anchorEl}
                         open={newOpen}
+                        className='popup-menu-action-container'
+                        PaperProps={{
+                          sx: {
+                            width: '300px',
+                            border: '2px solid #E5E4D7',
+                            borderRadius: '10px'
+                          }
+                        }}
                         onClose={handleCloseMoreOptions}
                         MenuListProps={{
                           "aria-labelledby": "basic-button",
                         }}
                       >
-                        <MenuItem>
-                          <CreateIcon onClick={(e) => handleEdit(e, elem)} />
-                          Edit
+                        <MenuItem onClick={(e) => handleEdit(e, elem)}>
+                          <ListItemIcon>
+                            <CreateIcon />
+                          </ListItemIcon>
+                          <ListItemText>Edit</ListItemText>
                         </MenuItem>
-                        <MenuItem>
-                          <DeleteIcon onClick={(e) => handleDelete(e, elem)} />
-                          Delete
+                        <Divider />
+                        <MenuItem onClick={(e) => handleDelete(e, elem)} >
+                          <ListItemIcon>
+                            <DeleteIcon />
+                          </ListItemIcon>
+                          <ListItemText>Delete</ListItemText>
                         </MenuItem>
                       </Menu>
                     </Grid>
@@ -183,7 +196,7 @@ export default function ManageFarm({
           />
         )}
       </div>
-    </div>
+    </div >
   );
 }
 

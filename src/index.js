@@ -19,9 +19,9 @@ const theme = createTheme({
     },
     typography: {
         fontFamily: [
+            'Poppins',
             '-apple-system',
             'BlinkMacSystemFont',
-            'Poppins'
         ].join(','),
     }
 });

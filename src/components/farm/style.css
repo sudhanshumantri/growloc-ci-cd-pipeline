@@ -1,30 +1,9 @@
 .farm-list-card-holder {
-  border-radius: 10px !important;
-  margin: 8px;
-  /* background: #FFFFFF; */
   border: 2px solid #e5e4d7;
-  padding: "30px 30px 0px 30px";
-  /* box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
-    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%); */
+  border-radius: 10px !important;
   background-color: white !important;
-  /*
-     ...theme.typography.body2,
-    padding: '30px 30px 0px 30px',
-    // minHeight: '337px',
-    columnGap: '150px',
-    // maxHeight: '337px',
-    display: 'flex',
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    justifyContent: 'start',
-    // paddingTop:'35px',
-    textAlign: 'left',
-    background: 'white',
-    boxshadow: '0px 1px 4px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.02), 0px 1px 12px rgba(0, 0, 0, 0.12)',
-    borderradius: '4px',
-    
-    */
 }
+
 .section-card-title p {
   font-style: normal;
   font-weight: 400;
@@ -32,23 +11,17 @@
   line-height: 21px;
   color: rgba(0, 0, 0, 0.5);
 }
+
 .farm-card-bottom-container {
   background: linear-gradient(270deg, #e5e4d7 29.63%, #bfc9b1 89.97%);
-  border-radius: 0px 0px 10px 10px;
+  padding: 16px !important;
   height: 84px;
 }
+
 .farm-card-title {
   font-weight: 400;
   font-size: 24px;
   line-height: 36px;
   /* identical to box height */
   color: #000000;
-}
- 
-.farm-card-item{
-  text-align: right;
-   padding: 21px 0px;
-   color: #000000;
-
-
 }

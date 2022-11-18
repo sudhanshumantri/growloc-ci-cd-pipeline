@@ -106,22 +106,31 @@ a {
   line-height: 36px;
   color: #000000;
 }
+
 .input-label {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   color: #000000;
 }
+
 .flex-row-justify-center-container {
-  display: flex;  
-  justify-content: center; 
- 
+  display: flex;
+  justify-content: center;
+
 }
 
 .input-custom-white {
   background: #ffffff;
 }
+
 .input-custom {
-    height: 50px;
+  height: 50px;
 }
 
+.popup-menu-action-container {
+  border: 2px solid #E5E4D7;
+  border-radius: 10px;
+  width: 298px;
+
+}
