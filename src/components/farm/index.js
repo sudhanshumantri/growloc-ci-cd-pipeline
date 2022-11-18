@@ -39,11 +39,11 @@ export default function ManageFarm({
   const newOpen = Boolean(anchorEl);
 
   const handleOpenMoreOptions = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     setAnchorEl(event.currentTarget);
   };
   const handleCloseMoreOptions = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     setAnchorEl(null);
   };
@@ -84,6 +84,9 @@ export default function ManageFarm({
       label: "Add New",
       ICON: <AddIcon />,
       handler: handleModalToggle,
+      isAuthRequired: true,
+      from: "farms",
+      action: "create",
     },
   ];
   let conFirmbuttons = [
@@ -124,9 +127,18 @@ export default function ManageFarm({
               <Card className="farm-list-card-holder" variant="outlined">
                 <CardContent>
                   <div className="section-card-title">
-                    <p><b>Farm area-</b>{elem.farm.farmArea}</p>
-                    <p><b>Germination Zone-</b>{elem.farm.germinationType}</p>
-                    <p><b>Nursery Zone-</b>{elem.farm.nurseryType}</p>
+                    <p>
+                      <b>Farm area-</b>
+                      {elem.farm.farmArea}
+                    </p>
+                    <p>
+                      <b>Germination Zone-</b>
+                      {elem.farm.germinationType}
+                    </p>
+                    <p>
+                      <b>Nursery Zone-</b>
+                      {elem.farm.nurseryType}
+                    </p>
                   </div>
                 </CardContent>
                 <CardActions
@@ -154,13 +166,12 @@ export default function ManageFarm({
                         id="basic-menu"
                         anchorEl={anchorEl}
                         open={newOpen}
-                        className='popup-menu-action-container'
                         PaperProps={{
                           sx: {
-                            width: '300px',
-                            border: '2px solid #E5E4D7',
-                            borderRadius: '10px'
-                          }
+                            width: "300px",
+                            border: "2px solid #E5E4D7",
+                            borderRadius: "10px",
+                          },
                         }}
                         onClose={handleCloseMoreOptions}
                         MenuListProps={{
@@ -174,7 +185,7 @@ export default function ManageFarm({
                           <ListItemText>Edit</ListItemText>
                         </MenuItem>
                         <Divider />
-                        <MenuItem onClick={(e) => handleDelete(e, elem)} >
+                        <MenuItem onClick={(e) => handleDelete(e, elem)}>
                           <ListItemIcon>
                             <DeleteIcon />
                           </ListItemIcon>
@@ -196,7 +207,7 @@ export default function ManageFarm({
           />
         )}
       </div>
-    </div >
+    </div>
   );
 }
 

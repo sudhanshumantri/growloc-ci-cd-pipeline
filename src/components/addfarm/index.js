@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
 import ButtonCustom from "../shared/button";
 import SingleCustomSelect from "../shared/select";
 import { Grid } from "@mui/material";
@@ -13,7 +12,6 @@ import {
   plantSpacing,
   nutrientsType,
 } from "../../config";
-import InputLabel from "@mui/material/InputLabel";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
 import "./style.css";
@@ -22,7 +20,6 @@ import Geocode from "react-geocode";
 Geocode.setApiKey("AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY");
 import { FormControlLabel, RadioGroup, Radio } from "@mui/material";
 import TextBox from "../shared/text-box";
-
 export default function AddFarm({
   addFarm,
   updateFarm,
@@ -84,6 +81,7 @@ export default function AddFarm({
     polyhouseStructureExpectedLife: false,
     polyhousePlasticExpectedLife: false,
   });
+
   const { farmId } = useParams();
   const { ref: materialRef } = usePlacesWidget({
     apiKey: "AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY",
@@ -356,7 +354,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="germinationType"
-                value={farmData.germinationType || ""}
+                value={farmData.germinationType }
                 options={germination}
                 isError={validation.germinationType}
                 errorMessage="Please select a germination zone"
@@ -763,7 +761,7 @@ export default function AddFarm({
   return (
     <div>
       <PageHeader
-        title={farmId ? `Edit ${farmData.name}` : "Add a new farm"}
+        title={farmId ?`Edit ${farmData.name || ""}` : "Add a new farm"}
         buttonArray={[]}
       />
       {isAddFarmLoading && <Loader title="Adding Farm" />}

@@ -40,3 +40,26 @@ export const options = [
   },
 ];
 
+export const role_based_access = {
+  // key : end-point
+  farms: {
+    // key: role, value: access
+    farmowner: ["create", "edit", "delete", "view"],
+    farmmanager: ["view"],
+    Agronomist: ["view"],
+    suprevisor: ["view"],
+  },
+  crops: {
+    farmowner: ["create", "edit", "delete", "view"],
+    farmmanager: ["create", "edit", "delete", "view"],
+    Agronomist: ["view"],
+    suprevisor: ["view"],
+  },
+  lifeCycle: {
+    farmowner: ["create", "edit", "delete", "view"],
+    farmmanager: ["create", "edit", "delete", "view"],
+    Agronomist: [ "view"],
+    suprevisor: [],
+  },
+};
+
