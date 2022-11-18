@@ -46,20 +46,20 @@ export const role_based_access = {
     // key: role, value: access
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["view"],
-    Agronomist: ["view"],
-    suprevisor: ["view"],
+    ergonomists: ["view"],
+    supervisor: ["view"],
   },
   crops: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
-    Agronomist: ["view"],
-    suprevisor: ["view"],
+    ergonomists: ["view"],
+    supervisor: ["view"],
   },
   lifeCycle: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
-    Agronomist: [ "view"],
-    suprevisor: [],
+    ergonomists: [ "view"],
+    supervisor: [],
   },
 };
 
