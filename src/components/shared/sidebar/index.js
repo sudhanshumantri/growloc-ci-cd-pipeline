@@ -88,7 +88,7 @@ export default function SideBar({ router }) {
   useEffect(() => {
     if (location?.pathname) {
       const route = location.pathname.split("/");
-      if (route.includes("farm")) {
+      if (route.includes("farm") || route.includes("lifecycle")) {
         setItems(farmMenuItems);
       } else {
         setItems(menuItems);
