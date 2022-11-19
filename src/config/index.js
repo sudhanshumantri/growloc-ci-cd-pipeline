@@ -49,6 +49,7 @@ export const role_based_access = {
     ergonomists: ["view"],
     supervisor: ["view"],
   },
+  
   crops: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
