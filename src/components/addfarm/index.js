@@ -327,6 +327,7 @@ export default function AddFarm({
           </FormControl>
           <FormControl>
             <FormControlLabel
+            className="farm-location"
               control={
                 <Radio
                   onClick={handleGetCurrentLocation}

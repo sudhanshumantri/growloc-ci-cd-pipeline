@@ -83,6 +83,9 @@ export default function FarmDashboard({
       redirection: true,
       redirectionKey: "lifecycleId",
       baseEndPoint: "#/crops/lifecycle/details/",
+      isAuthRequired: true,
+      from: "lifeCycle",
+      action: "view",
     },
 
     {
@@ -104,22 +107,30 @@ export default function FarmDashboard({
   const renderCropSchedules = () => {
     const { cropSchedules } = dashboardFarmList;
     return (
-      <Grid item xs={12} sm={12} md={12}>
-        <div className="card-container">
+      <>
+          <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Crop Schedules</p>
-          <DataTable data={{ headers: headers, rows: cropSchedules || [] }} />
-        </div>
-      </Grid>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12}>
+          <div className="card-container">
+            <DataTable data={{ headers: headers, rows: cropSchedules || [] }} />
+          </div>
+        </Grid>
+      </>
     );
   };
   const renderTaskSchedules = () => {
     return (
+      <>
+      <Grid item xs={12} sm={12} md={12}>
+          <p className="section-title">Task Schedules</p>
+        </Grid>
       <Grid item xs={12} sm={12} md={12}>
         <div className="card-container">
-          <p className="section-title">Task Schedules</p>
           <DataTable data={{ headers: cropSchedulesHeader, rows: rows }} />
         </div>
       </Grid>
+      </>
     );
   };
   const renderFarmUtilization = () => {
@@ -150,9 +161,8 @@ export default function FarmDashboard({
         <div className="card-container">
           <p className="section-title">Monthly Harvest Breakup</p>
           <Grid container justifyContent="end">
-
             <Grid item xs={3} sm={2} md={2}>
-            <span className="input-label"> Select Month</span>
+              <span className="input-label"> Select Month</span>
 
               <FormControl fullWidth>
                 {/* <InputLabel id="demo-multiple-name-label" variant="outlined">

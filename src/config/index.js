@@ -24,7 +24,11 @@ export const growingZone = [
   "Dutch bucket system",
 ];
 export const plantSpacing = ["Plant to Plant", "Row to Row"];
-export const nutrientsType = ["2 Part mix", "3 Part mix", "Custom nutrient mix"]
+export const nutrientsType = [
+  "2 Part mix",
+  "3 Part mix",
+  "Custom nutrient mix",
+];
 export const options = [
   {
     name: "3 Months",
@@ -49,7 +53,7 @@ export const role_based_access = {
     ergonomists: ["view"],
     supervisor: ["view"],
   },
-  
+
   crops: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
@@ -59,8 +63,13 @@ export const role_based_access = {
   lifeCycle: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
-    ergonomists: [ "view"],
+    ergonomists: ["view"],
     supervisor: [],
   },
+  users: {
+    farmowner: ["create", "edit", "delete", "view"],
+    farmmanager:["create"],
+    ergonomists: [ "view"],
+    supervisor: ["view"],
+  },
 };
-

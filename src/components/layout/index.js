@@ -114,3 +114,4 @@ function withRouter(Component) {
   return ComponentWithRouterProp;
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout));
+  

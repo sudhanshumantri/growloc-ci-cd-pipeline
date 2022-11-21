@@ -50,6 +50,9 @@ export default function ManageCrop({
       label: "Add New",
       ICON:<AddIcon />,
       handler: handleModalToggle,
+      isAuthRequired: true,
+      from: "crops",
+      action: "create",
     },
   ];
   React.useEffect(() => {
@@ -125,12 +128,18 @@ export default function ManageCrop({
           handler: handleEdit,
           icon: <CreateIcon />,
           color: "primary",
+          isAuthRequired: true,
+          from: "crops",
+          action: "edit",
         },
         {
           label: "Delete",
           type: "icon",
           icon: <DeleteIcon aria-label="delete" />,
           handler: handleDelete,
+          isAuthRequired: true,
+          from: "crops",
+          action: "delete",
           // color: "warning",
         },
       ],

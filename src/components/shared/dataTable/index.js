@@ -7,12 +7,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableContainer from "@mui/material/TableContainer";
 import Button from "@mui/material/Button";
-import IconButton from '@mui/material/IconButton';
+import IconButton from "@mui/material/IconButton";
 import moment from "moment";
 import "./style.css";
+import AuthOutlet from "../authoutlet";
 function DataTable({ data }) {
   const { headers, rows } = data;
-  const handleRedirection = (key) => { };
+  const handleRedirection = (key) => {};
   const validateValue = (row, key) => {
     if (key.indexOf(".") > -1) {
       const keys = key.split(".");
@@ -24,10 +25,34 @@ function DataTable({ data }) {
   };
   const renderButtonArray = (buttonArray, rowData) => {
     return buttonArray.map((item, index) => {
-      return (item.type === 'icon' ? <IconButton title={item.label} key={index} color={item.color} onClick={() => item.handler(rowData)}>{item.icon}</IconButton>
-        : <Button key={index + item.label} onClick={() => item.handler(rowData)}>{item.label}</Button>)
+      return (
+        <AuthOutlet
+          isAuthRequired={item.isAuthRequired}
+          from={item.from}
+          action={item.action}
+        >
+          {item.type === "icon" ? (
+            <IconButton
+              title={item.label}
+              key={index}
+              color={item.color}
+              onClick={() => item.handler(rowData)}
+            >
+              {item.icon}
+            </IconButton>
+          ) : (
+            <Button
+              key={index + item.label}
+              onClick={() => item.handler(rowData)}
+            >
+              {item.label}
+            </Button>
+          )}
+        </AuthOutlet>
+      );
     });
   };
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
@@ -50,30 +75,31 @@ function DataTable({ data }) {
               {headers.map((header, headerIndex) => {
                 if (header.redirection) {
                   return (
-                    <TableCell
-                      key={headerIndex}
-                      component="td"
-                      scope="row"
-                    >
-                      <a
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                        }}
-                        href={header.baseEndPoint + row[header.redirectionKey]}
+                    <TableCell key={headerIndex} component="td" scope="row">
+                      <AuthOutlet
+                        isAuthRequired={header.isAuthRequired}
+                        from={header.from}
+                        action={header.action}
+                        defaultReturn={validateValue(row, header.key)}
                       >
-                        {validateValue(row, header.key)}
-                      </a>
+                        <a
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                          }}
+                          href={
+                            header.baseEndPoint + row[header.redirectionKey]
+                          }
+                        >
+                          {validateValue(row, header.key)}
+                        </a>
+                      </AuthOutlet>
                     </TableCell>
                   );
                 } else {
                   return (
-                    <TableCell
-                      key={headerIndex}
-                      component="td"
-                      scope="row"
-                    >
+                    <TableCell key={headerIndex} component="td" scope="row">
                       {header.isButton ? (
                         <div
                           style={{
@@ -89,7 +115,11 @@ function DataTable({ data }) {
                           "YYYY-MM-DD"
                         )
                       ) : header.isBoolean ? (
-                        validateValue(row, header.key) ? header.trueLabel : header.falseLabel
+                        validateValue(row, header.key) ? (
+                          header.trueLabel
+                        ) : (
+                          header.falseLabel
+                        )
                       ) : (
                         validateValue(row, header.key)
                       )}

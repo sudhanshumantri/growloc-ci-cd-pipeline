@@ -18,8 +18,19 @@ export function* loginHandler({ data }) {
   }
 }
 
+function* logoutHandler() {
+  localStorage.removeItem('AUTH_TOKEN');
+  localStorage.removeItem('AUTH_OBJECT');
+  yield call(browserHistory.push, "/");
+  yield call(browserHistory.go, "/");
+
+}
+
+
 export function* loginSagas() {
   yield all([takeLatest("LOGIN_REQUEST", loginHandler)]);
+  yield all([takeLatest("LOGOUT", logoutHandler)]);
+
 }
 
 export default [loginSagas];

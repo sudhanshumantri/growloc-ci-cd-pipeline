@@ -6,8 +6,10 @@ import { useParams } from "react-router-dom";
 import Loader from "../../shared/loader";
 import AddUsersModal from "../adduser";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
-import DeleteIcon from '@mui/icons-material/Delete';
-import CreateIcon from '@mui/icons-material/Create';
+import DeleteIcon from "@mui/icons-material/Delete";
+import CreateIcon from "@mui/icons-material/Create";
+import AddIcon from "@mui/icons-material/Add";
+
 export default function ManageUsers({
   usersList,
   fetchUsers,
@@ -23,8 +25,8 @@ export default function ManageUsers({
   const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [userInfo, setUserInfo] = useState({});
-  const [userLat, setUserLat]= useState();
-const  [userLong, setUserLong]= useState();
+  const [userLat, setUserLat] = useState();
+  const [userLong, setUserLong] = useState();
 
   const handleEdit = (userData) => {
     const { user, userId } = userData;
@@ -76,15 +78,21 @@ const  [userLong, setUserLong]= useState();
         {
           label: "Edit",
           handler: handleEdit,
-          type: 'icon',
+          type: "icon",
           icon: <CreateIcon />,
-          color: 'primary'
+          color: "primary",
+          isAuthRequired: true,
+          from: "users",
+          action: "edit",
         },
         {
           label: "Delete",
           handler: handleDelete,
-          type: 'icon',
+          type: "icon",
           icon: <DeleteIcon aria-label="delete" />,
+          isAuthRequired: true,
+          from: "users",
+          action: "delete",
           // color:'warning'
         },
       ],
@@ -123,7 +131,11 @@ const  [userLong, setUserLong]= useState();
   let buttonArray = [
     {
       label: "Add New",
+      ICON: <AddIcon />,
       handler: handleModalToggle,
+      isAuthRequired: true,
+      from: "users",
+      action: "create",
     },
   ];
   React.useEffect(() => {
@@ -131,14 +143,13 @@ const  [userLong, setUserLong]= useState();
   }, []);
 
   // let test = {lat: parseFloat(userLat), lng: parseFloat(userLong)}
-  React.useEffect(()=> {
-    navigator.geolocation.getCurrentPosition(position =>{
+  React.useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
       setUserLat(position.coords.latitude);
       setUserLong(position.coords.longitude);
       console.log(userLat, userLong);
-  
-    })
-  },[]);
+    });
+  }, []);
 
   // { userId: parseInt(userId) }
   return (

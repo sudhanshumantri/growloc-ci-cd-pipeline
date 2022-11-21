@@ -3,6 +3,7 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
+    LOGOUT,
 } from './actionTypes';
 export function loadAuthToken(data) {
     return {
@@ -26,5 +27,11 @@ export function loginFailure(error) {
     return {
         type: LOGIN_FAILURE,
         error
+    };
+}
+
+export function logout() {
+    return {
+        type: LOGOUT
     };
 }

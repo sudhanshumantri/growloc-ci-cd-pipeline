@@ -17,6 +17,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { IconButton, ListItemIcon, ListItemText, Divider } from "@mui/material";
 import "./style.css";
+import AuthOutlet from "../shared/authoutlet";
 
 export default function ManageFarm({
   fetchFarm,
@@ -150,18 +151,24 @@ export default function ManageFarm({
                       <p className="farm-card-title">{elem.farm.name}</p>
                     </Grid>
                     <Grid item xs={2} sm={2} md={2}>
-                      <IconButton
-                        className="farm-card-icon"
-                        aria-label="settings"
+                      <AuthOutlet
+                        isAuthRequired={true}
+                        from="farms"
+                        action="edit"
                       >
-                        <MoreHorizIcon
-                          id="basic-button"
-                          aria-controls={newOpen ? "basic-menu" : undefined}
-                          aria-haspopup="true"
-                          aria-expanded={newOpen ? "true" : undefined}
-                          onClick={handleOpenMoreOptions}
-                        />
-                      </IconButton>
+                        <IconButton
+                          className="farm-card-icon"
+                          aria-label="settings"
+                        >
+                          <MoreHorizIcon
+                            id="basic-button"
+                            aria-controls={newOpen ? "basic-menu" : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={newOpen ? "true" : undefined}
+                            onClick={handleOpenMoreOptions}
+                          />
+                        </IconButton>
+                      </AuthOutlet>
                       <Menu
                         id="basic-menu"
                         anchorEl={anchorEl}

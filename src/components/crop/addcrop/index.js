@@ -99,9 +99,6 @@ export default function AddCropModal({
             <Grid item xs={12} sm={12} md={12}>
             <span className="input-label"> Crop</span>
             <FormControl fullWidth>
-                {/* <InputLabel id="demo-multiple-name-label" variant="outlined">
-                  Crop
-                </InputLabel> */}
               <SingleCustomSelect
                 // inputLable="Crop"
                 label="Select"

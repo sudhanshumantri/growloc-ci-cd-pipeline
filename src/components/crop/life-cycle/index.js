@@ -78,6 +78,9 @@ export default function CropLifeCycle({
             label: "Add New",
             ICON:<AddIcon/>,
             handler: handleModalToggle,
+            isAuthRequired: true,
+            from: "lifeCycle",
+            action: "create",
         },
     ];
     return (

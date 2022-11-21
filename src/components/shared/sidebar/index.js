@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -10,16 +10,15 @@ import ListItemText from "@mui/material/ListItemText";
 import CssBaseline from "@mui/material/CssBaseline";
 import Collapse from "@mui/material/Collapse";
 import ListItem from "@mui/material/ListItem";
-import IconButton from "@mui/material/IconButton";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemIcon from "@mui/material/ListItemIcon";
 import { Link } from "react-router-dom";
 import TopHeader from "../header/";
 import { farmMenuItems, menuItems } from "./config";
-import '../../../../public/assets/Irrigation.png';
-const ASSETS_URL = '../../../../public/assets/';
-import './style.css';
+import "../../../../public/assets/Irrigation.png";
+import LogoutIcon from "@mui/icons-material/Logout";
+const ASSETS_URL = "../../../../public/assets/";
+import "./style.css";
+import AuthOutlet from "../authoutlet";
 const drawerWidth = 300;
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -74,8 +73,7 @@ const Drawer = styled(MuiDrawer, {
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
 }));
-export default function SideBar({ router }) {
-
+export default function SideBar({ router, logout }) {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
   const [openSubmenu, toggleSubmenu] = useState(false);
@@ -98,6 +96,11 @@ export default function SideBar({ router }) {
   const handleClick = (id) => {
     toggleSubmenu((prevState) => ({ ...prevState, [id]: !prevState[id] }));
   };
+
+  const logoutHandler = () => {
+    logout();
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -107,64 +110,90 @@ export default function SideBar({ router }) {
         drawerWidth={drawerWidth}
       />
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader sx={{ background: "#517223" }}>
-        </DrawerHeader>
-        <List className='drawer-list-container' sx={{ width: "100%", maxWidth: 360 }} component="nav">
+        <DrawerHeader sx={{ background: "#517223" }}></DrawerHeader>
+        <List
+          className="drawer-list-container"
+          sx={{ width: "100%", maxWidth: 360 }}
+          component="nav"
+        >
           {items.map((each, index) => {
-            console.log(each.icon);
             return (
               <React.Fragment key={index}>
                 {each.subMenu && each.subMenu.length ? (
                   <>
-                    <ListItem
-                      button
-                      onClick={() => handleClick(each.id)}
-                      style={each.css}
+                    <AuthOutlet
+                      isAuthRequired={each.isAuthRequired}
+                      from={each.from}
+                      action={each.action}
                     >
-                      <ListItemIcon className='darwer-icon' >
-                        <img src={each.icon} />
-                      </ListItemIcon>
-                      <ListItemText primary={each.title} />
-                      {openSubmenu[each.id] ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
+                      <ListItem
+                        button
+                        onClick={() => handleClick(each.id)}
+                        style={each.css}
+                      >
+                        <ListItemIcon className="darwer-icon">
+                          <img src={each.icon} />
+                        </ListItemIcon>
+                        <ListItemText primary={each.title} />
+                        {openSubmenu[each.id] ? <ExpandLess /> : <ExpandMore />}
+                      </ListItem>
+                    </AuthOutlet>
                     <Collapse in={openSubmenu[each.id]}>
                       <List component="nav" className="drawer-sub-menu">
                         {(each.subMenu || []).map((subData) => (
-                          <ListItem
-                            style={subData.css}
-                            component={Link}
-                            to={subData.navigation}
+                          <AuthOutlet
                             key={subData.id}
-                            button
+                            isAuthRequired={subData.isAuthRequired}
+                            from={subData.from}
+                            action={subData.action}
                           >
-                            <ListItemIcon className='darwer-icon' >
-                              <img src={subData.icon} />
-                            </ListItemIcon>
-                            <ListItemText primary={subData.name} />
-                          </ListItem>
-                        )
-                        )}
+                            <ListItem
+                              style={subData.css}
+                              component={Link}
+                              to={subData.navigation}
+                              key={subData.id}
+                              button
+                            >
+                              <ListItemIcon className="darwer-icon">
+                                <img src={subData.icon} />
+                              </ListItemIcon>
+                              <ListItemText primary={subData.name} />
+                            </ListItem>
+                          </AuthOutlet>
+                        ))}
                       </List>
                     </Collapse>
                   </>
                 ) : (
-                  <ListItem
-                    component={Link}
-                    to={each.navigation}
-                    style={each.css}
-                    button
-                    key={index}
+                  <AuthOutlet
+                    isAuthRequired={each.isAuthRequired}
+                    from={each.from}
+                    action={each.action}
                   >
-                    <ListItemIcon className='darwer-icon' >
-                      <img src={each.icon} />
-                      {/* <img src={require('../../../../public/assets/Irrigation.png')} /> */}
-                    </ListItemIcon>
-                    <ListItemText primary={each.title} />
-                  </ListItem>
+                    <ListItem
+                      component={Link}
+                      to={each.navigation}
+                      style={each.css}
+                      button
+                      key={index}
+                    >
+                      <ListItemIcon className="darwer-icon">
+                        <img src={each.icon} />
+                        {/* <img src={require('../../../../public/assets/Irrigation.png')} /> */}
+                      </ListItemIcon>
+                      <ListItemText primary={each.title} />
+                    </ListItem>
+                  </AuthOutlet>
                 )}
               </React.Fragment>
-            )
+            );
           })}
+          <ListItem component={Link} onClick={() => logoutHandler()}>
+            <ListItemIcon className="darwer-icon">
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItem>
         </List>
       </Drawer>
     </Box>

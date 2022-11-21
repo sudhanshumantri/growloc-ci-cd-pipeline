@@ -61,6 +61,9 @@ const farmMenuItems = [
         navigation: "/crops/lifecycle",
         link: "/crops/lifecycle",
         icon: CropsLifecycle,
+        isAuthRequired: true,
+        from: "lifeCycle",
+        action: "view",
       },
     ],
   },
@@ -138,6 +141,15 @@ const farmMenuItems = [
     icon: Account,
     css: { borderBottom: "1px solid white" },
   },
+  // {
+  //   title: "Logout",
+  //   id: "Logout",
+  //   isChildToFarmId: true,
+  //   navigation: null,
+  //   css: { borderBottom: "1px solid white" },
+  //   action: 'logout'
+
+  // },
 ];
 
 export { farmMenuItems, menuItems };
