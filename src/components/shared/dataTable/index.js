@@ -54,10 +54,10 @@ function DataTable({ data }) {
   };
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} >
       <Table aria-label="simple table">
         <TableHead className="table-header-row">
-          <TableRow>
+          <TableRow >
             {headers.map((header, index) => (
               <TableCell key={index} className="table-header" align="left">
                 {header.label}
@@ -65,17 +65,18 @@ function DataTable({ data }) {
             ))}
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody >
           {rows.map((row, index) => (
             <TableRow
               align="center"
               key={index}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              sx={{"&:last-child td, &:last-child th": { border: 0 } }}
+              
             >
               {headers.map((header, headerIndex) => {
                 if (header.redirection) {
                   return (
-                    <TableCell key={headerIndex} component="td" scope="row">
+                    <TableCell key={headerIndex} component="td" scope="row" >
                       <AuthOutlet
                         isAuthRequired={header.isAuthRequired}
                         from={header.from}
@@ -99,7 +100,7 @@ function DataTable({ data }) {
                   );
                 } else {
                   return (
-                    <TableCell key={headerIndex} component="td" scope="row">
+                    <TableCell key={headerIndex} component="td" scope="row" >
                       {header.isButton ? (
                         <div
                           style={{

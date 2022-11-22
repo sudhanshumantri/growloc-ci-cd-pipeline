@@ -9,7 +9,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import AddIcon from "@mui/icons-material/Add";
-
+import { Grid } from "@mui/material";
 export default function ManageUsers({
   usersList,
   fetchUsers,
@@ -175,7 +175,11 @@ export default function ManageUsers({
           subHeading={`Are you sure to delete ${userInfo.name} ?`}
         />
       )}
-      <DataTable data={{ headers: headers, rows: usersList || [] }} />
+      <Grid container className="farm-container">
+        <Grid item xs={12} sm={12} md={12}>
+          <DataTable data={{ headers: headers, rows: usersList || [] }} />
+        </Grid>
+      </Grid>
     </div>
   );
 }

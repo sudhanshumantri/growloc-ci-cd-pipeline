@@ -45,6 +45,7 @@ const SingleCustomSelect = ({
             <MenuItem
               value={valueKey ? option[valueKey] || index : option}
               key={index}
+              className="menu-item-dropdown-item"
             >
               {labelKey ? option[labelKey] : option}
             </MenuItem>

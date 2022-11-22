@@ -21,6 +21,7 @@ import CustomButton from "../../shared/button";
 import SingleCustomSelect from "../../shared/select";
 import { Box } from "@mui/system";
 import { Grid } from "@mui/material";
+import TextBox from "../../shared/text-box"
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -97,15 +98,16 @@ export default function AddCropModal({
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
           <br />
-          <Grid container spacing={2}>
+          <Grid container spacing={2} className="farm-container">
             <Grid item xs={12} sm={12} md={12}>
               <FormControl fullWidth>
                 <InputLabel id="demo-multiple-name-label" variant="outlined">
                   Crop
                 </InputLabel>
-                <Select
+                <Select     
                   labelId="demo-multiple-name-label"
                   id="demo-multiple-name"
+                  sx={{background:"FFFFFF"}}
                   value={selectedCrop}
                   onChange={(e) => {
                     isCropError && setIsCropError(false);
@@ -128,10 +130,10 @@ export default function AddCropModal({
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
+            <span className="input-label">Units</span>
               <FormControl fullWidth>
-                <TextField
-                  label={"Units"}
-                  InputLabelProps={{ shrink: true }}
+                <TextBox
+                isWhite={true}
                   value={units}
                   error={isUnitsError}
                   helperText={isUnitsError ? unitErrorMessage : ""}
@@ -139,7 +141,6 @@ export default function AddCropModal({
                     isUnitsError && setIsUnitsError(false);
                     handleUnitsChange(e);
                   }}
-                  variant="outlined"
                 />
               </FormControl>
             </Grid>

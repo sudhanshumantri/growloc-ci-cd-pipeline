@@ -10,7 +10,8 @@ const TextBox = ({
   error,
   helperText,
   isWhite,
-  inputRef
+  inputRef,
+  key
 }) => {
   return (
     <>
@@ -25,6 +26,7 @@ const TextBox = ({
           error ={error}
           helperText={helperText}
           inputRef ={inputRef}
+          key={key}
 
         />
     </>

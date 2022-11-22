@@ -4,12 +4,11 @@ import { useParams } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import TextField from "@mui/material/TextField";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import CustomButton from "../../shared/button";
 import SingleCustomSelect from "../../shared/select";
-import InputLabel from "@mui/material/InputLabel";
+import TextBox from "../../shared/text-box";
 import { Grid } from "@mui/material";
 export default function AddCropModal({
   modalData,
@@ -35,7 +34,7 @@ export default function AddCropModal({
   }, [modalData]);
 
   const handleCropChange = (event, isFromEdit = false) => {
-    isCropError && setIsCropError(false)
+    isCropError && setIsCropError(false);
     const selectedItem = modalData.find(
       (item) => item.name === event.target.value
     );
@@ -50,7 +49,7 @@ export default function AddCropModal({
     }
   };
   const handleGerminationChange = (event) => {
-    isMethodError && setIsMethodError(false)
+    isMethodError && setIsMethodError(false);
     setGerminationMethod(event.target.value);
   };
   const handleUnitsChange = (event) => {
@@ -86,6 +85,23 @@ export default function AddCropModal({
       handleSave(data);
     }
   };
+
+  const renderActionButton = () => {
+    return (
+      <>
+        <div className="flex-row-justify-center-container">
+          <DialogActions>
+            <CustomButton
+              isLight={true}
+              handleButtonClick={handleClose}
+              title="Cancel"
+            />
+            <CustomButton handleButtonClick={handleSaveCrop} title="Save" />
+          </DialogActions>
+        </div>
+      </>
+    );
+  };
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -94,78 +110,71 @@ export default function AddCropModal({
           {cropDetails.id ? "Update crop" : "Add a new crop"}
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
-          <br/>
-          <Grid container spacing={2}>
+          <br />
+          <Grid container spacing={2} className="farm-container">
             <Grid item xs={12} sm={12} md={12}>
-            <span className="input-label"> Crop</span>
-            <FormControl fullWidth>
-              <SingleCustomSelect
-                // inputLable="Crop"
-                label="Select"
-                valueKey="name"
-                labelKey="name"
-                lable="Crop"
-                value={cropListName}
-                disabled={cropDetails.isEditMode}
-                options={modalData}
-                handleChange = {(e)=>handleCropChange(e)}
-                isError={isCropError}
-                errorMessage="Please select a crop"
-              />
+              <span className="input-label"> Crop</span>
+              <FormControl fullWidth>
+                <SingleCustomSelect
+                  isWhite={true}
+                  label="Select"
+                  valueKey="name"
+                  labelKey="name"
+                  lable="Crop"
+                  value={cropListName}
+                  disabled={cropDetails.isEditMode}
+                  options={modalData}
+                  handleChange={(e) => handleCropChange(e)}
+                  isError={isCropError}
+                  errorMessage="Please select a crop"
+                />
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
+              <span className="input-label">Variety</span>
               <FormControl fullWidth>
-                <TextField
+                <TextBox
                   disabled={true}
+                  isWhite={true}
                   label={"Variety"}
-                  InputLabelProps={{ shrink: true }}
                   value={selectedData.variety}
-                  variant="outlined"
                 />
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
+              <span className="input-label">Scientific Name</span>
               <FormControl fullWidth>
-                <TextField
+                <TextBox
+                  isWhite={true}
                   disabled={true}
-                  InputLabelProps={{ shrink: true }}
-                  label={"Scientific Name"}
                   value={selectedData.scientificName}
-                  variant="outlined"
                 />
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-            <span className="input-label"> Germination Method</span>
-            <FormControl fullWidth>
-                {/* <InputLabel id="demo-multiple-name-label" variant="outlined">
-                Germination Method
-                </InputLabel> */}
-              <SingleCustomSelect
-                // inputLable="Germination Method"
-                value={germinationMethod}
-                valueKey="index"
-                labelKey="type"
-                lable="Germination Method"
-                disabled={cropDetails.isEditMode}
-                options={selectedData.germinationMethod}
-                handleChange ={(e)=>handleGerminationChange(e)}
-                isError={isMethodError}
-                errorMessage="Please select a method"
-              />
+              <span className="input-label"> Germination Method</span>
+              <FormControl fullWidth>
+                <SingleCustomSelect
+                  value={germinationMethod}
+                  isWhite={true}
+                  valueKey="index"
+                  labelKey="type"
+                  lable="Germination Method"
+                  disabled={cropDetails.isEditMode}
+                  options={selectedData.germinationMethod}
+                  handleChange={(e) => handleGerminationChange(e)}
+                  isError={isMethodError}
+                  errorMessage="Please select a method"
+                />
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-            <span className="input-label">Units</span>
+              <span className="input-label">Units</span>
               <FormControl fullWidth>
-                <TextField
-                  InputLabelProps={{ shrink: true }}
-                  // label={"Units"}
-                  // value={units}
+                <TextBox
+                  isWhite={true}
                   value={units}
                   onChange={handleUnitsChange}
-                  variant="outlined"
                 />
               </FormControl>
             </Grid>
@@ -178,26 +187,19 @@ export default function AddCropModal({
                   selectedData.germinationMethod[germinationMethod].stages || []
                 ).map((item) => (
                   <Grid item xs={4}>
-                    <TextField
+                    <span className="input-label">{item.name}</span>
+                    <TextBox
+                      isWhite={true}
                       disabled={true}
                       key={item.duration}
-                      label={item.name}
                       value={item.duration}
-                      variant="outlined"
                     />
                   </Grid>
                 ))
               : ""}
           </Grid>
         </DialogContent>
-        <DialogActions>
-          <CustomButton
-            isLight={true}
-            handleButtonClick={handleClose}
-            title="Cancel"
-          />
-          <CustomButton handleButtonClick={handleSaveCrop} title="Save" />
-        </DialogActions>
+        {renderActionButton()}
       </Dialog>
     </div>
   );

@@ -10,8 +10,11 @@ import Loader from "../../shared/loader";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import ConfirmDialogBox from "../../shared/dailog/ConfirmDialogBox";
-import AddIcon from '@mui/icons-material/Add';
-
+import AddIcon from "@mui/icons-material/Add";
+import { Grid } from "@mui/material";
+import { color } from "@mui/system";
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 export default function ManageCrop({
   fetchCrop,
   cropList,
@@ -35,7 +38,7 @@ export default function ManageCrop({
     if (cropInfo.id) {
       const { qty } = addCropData;
       const { id } = cropInfo;
-      updateCrop({id, qty});
+      updateCrop({ id, qty });
     } else {
       addCrop(addCropData);
     }
@@ -48,7 +51,7 @@ export default function ManageCrop({
   let buttonArray = [
     {
       label: "Add New",
-      ICON:<AddIcon />,
+      ICON: <AddIcon />,
       handler: handleModalToggle,
       isAuthRequired: true,
       from: "crops",
@@ -60,7 +63,7 @@ export default function ManageCrop({
     fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
   const handleEdit = (cropData) => {
-    const { id, crop, farmId , qty} = cropData;
+    const { id, crop, farmId, qty } = cropData;
     const cropDetails = {
       name: crop.name,
       id,
@@ -68,7 +71,6 @@ export default function ManageCrop({
       germinationMethod: crop.germinationMethod,
       qty,
       isEditMode: true,
-
     };
     setCropInfo(cropDetails);
     setOpen(true);
@@ -126,8 +128,8 @@ export default function ManageCrop({
           label: "Edit",
           type: "icon",
           handler: handleEdit,
-          icon: <CreateIcon />,
-          color: "primary",
+          icon: <EditOutlinedIcon sx={{color:"#517223"}}/>,
+          // color: "primary",
           isAuthRequired: true,
           from: "crops",
           action: "edit",
@@ -135,7 +137,7 @@ export default function ManageCrop({
         {
           label: "Delete",
           type: "icon",
-          icon: <DeleteIcon aria-label="delete" />,
+          icon: <DeleteOutlineOutlinedIcon sx={{color:"#517223"}} />,
           handler: handleDelete,
           isAuthRequired: true,
           from: "crops",
@@ -162,6 +164,15 @@ export default function ManageCrop({
     fetchCrop();
     fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
+
+  const cropTittle = () => {
+    return(
+      <Grid item xs={12} sm={12} md={12}>
+      <p className="section-title">Crop Schedules</p>
+    </Grid>
+
+    )
+  }
   return (
     <div>
       <PageHeader title="Manage Crops" buttonArray={buttonArray} />
@@ -169,26 +180,30 @@ export default function ManageCrop({
         {isFarmCropListLoading && <Loader title="Fetching Crops" />}
         {isAddCropLoading && <Loader title="Adding Crops" />}
         {isupdateFarmCropsLoading && <Loader title="Updating Crop  " />}
-       {isdeleteFarmCropsLoading && <Loader title="Deleting  Crop" />}
+        {isdeleteFarmCropsLoading && <Loader title="Deleting  Crop" />}
         {open && (
           <AddCropModal
             modalData={cropList}
             open={open}
             handleSave={handleCropSave}
             handleClose={handleModalToggle}
-            cropDetails ={cropInfo}
-            data ={cropFarmList}
+            cropDetails={cropInfo}
+            data={cropFarmList}
           />
         )}
-
         {isDeleteModelOpen && (
           <ConfirmDialogBox
             dialogState={isDeleteModelOpen}
             buttonArray={conFirmbuttons}
             subHeading={`Are you sure to delete ${cropInfo.name} ?`}
           />
-        )}
+        )} 
+        {cropTittle()}
+        <Grid container className="farm-container">
+        <Grid item xs={12} sm={12} md={12}>
         <DataTable data={{ headers: headers, rows: cropFarmList }} />
+        </Grid>
+        </Grid>
       </div>
     </div>
   );

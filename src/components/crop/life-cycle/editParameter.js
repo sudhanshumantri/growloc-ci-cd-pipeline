@@ -7,13 +7,14 @@ import DialogContent from "@mui/material/DialogContent";
 import CustomButton from "../../shared/button";
 import { Grid } from "@mui/material";
 import DialogTitle from "@mui/material/DialogTitle";
+import TextBox from "../../shared/text-box";
 
 export default function EditParameters({
   open,
   modalData,
   activeStep,
   handleSave,
-  handleClose
+  handleClose,
 }) {
   const { FarmCropLifecycleStages } = modalData.cropDetails;
   const selectedStageInformation = FarmCropLifecycleStages[activeStep];
@@ -23,6 +24,26 @@ export default function EditParameters({
     tempData.parameters[index]["value"] = e.target.value;
     setStagaData(tempData);
   };
+
+  const renderActionBuutons = () => {
+    return (
+      <>
+        <div className="flex-row-justify-center-container">
+          <DialogActions>
+            <CustomButton
+              isLight={true}
+              handleButtonClick={handleClose}
+              title="Cancel"
+            />
+            <CustomButton
+              handleButtonClick={() => handleSave(stageData)}
+              title="Save"
+            />
+          </DialogActions>
+        </div>
+      </>
+    );
+  };
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -31,14 +52,14 @@ export default function EditParameters({
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
           <br />
-          <Grid container spacing={2}>
+          <Grid container spacing={2} className="farm-container">
             {stageData.parameters.map((parameter, index) => (
               <Grid item xs={12} sm={6} md={6} key={index}>
+                <span className="input-label">{parameter.name}</span>
                 <FormControl fullWidth>
-                  <TextField
-                    InputLabelProps={{ shrink: true }}
-                    variant="outlined"
-                    label={parameter.name}
+                  <TextBox
+                    // InputLabelProps={{ shrink: true }}
+                    // label={parameter.name}
                     value={parameter.value}
                     onChange={(e) => handleChange(e, index)}
                   />
@@ -47,14 +68,7 @@ export default function EditParameters({
             ))}
           </Grid>
         </DialogContent>
-        <DialogActions>
-          <CustomButton
-            isLight={true}
-            handleButtonClick={handleClose}
-            title="Cancel"
-          />
-          <CustomButton handleButtonClick={()=>handleSave(stageData)} title="Save" />
-        </DialogActions>
+        {renderActionBuutons()}
       </Dialog>
     </div>
   );

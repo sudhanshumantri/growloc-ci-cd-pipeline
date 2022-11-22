@@ -1,37 +1,50 @@
 .step-label {
-    color: rgb(54, 66, 83);
-    font-weight: bold;
+  color: rgb(54, 66, 83);
+  font-weight: bold;
 }
 
 .life-cycle-details-card {
-    border-radius: 4px !important;
-    padding: 30px 30px 30px 30px;
-    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
-    background-color: white !important;
+  border-radius: 10px !important;
+  padding: 30px 30px 30px 30px;
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  background: #ffffff !important;
+  border: 2px solid #e5e4d7 !important;
 }
 
 .rounder-icon-stepper {
-    /* font-size: 40px; */
-    border: 1px solid rgb(247, 206, 106);
-    background-color: rgb(247, 206, 106);
-    width: 40px !important;
-    height: 40px !important;
-    border-radius: 50%;
-    padding: 6px;
-    margin-left: -5px;
+  /* font-size: 40px; */
+  border: 1px solid rgb(247, 206, 106);
+  background-color: rgb(247, 206, 106);
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%;
+  padding: 6px;
+  margin-left: -5px;
 }
 
 .MuiStepConnector-root {
-    top: 19px !important;
-    left: calc(-50% + 22px) !important;
-    right: calc(50% + 22px) !important;
+  top: 19px !important;
+  left: calc(-50% + 22px) !important;
+  right: calc(50% + 22px) !important;
 }
 
 .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
-    color: rgb(81, 114, 35) !important;
+  color: rgb(81, 114, 35) !important;
 }
-.repeat-days-container{
-    display: flex;
-    justify-content: space-around;
-    width: 350px;
+.repeat-days-container {
+  display: flex;
+  justify-content: space-around;
+  width: 350px;
+}
+.life-cycle-details-history {
+  background: #ffffff;
+  border: 2px solid #e5e4d7;
+  border-radius: 10px;
+}
+.sub-tittle {
+  font-size: 30px;
+  line-height: 45px;
+
+  color: #000000;
 }

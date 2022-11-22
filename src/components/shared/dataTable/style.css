@@ -3,14 +3,9 @@
   
 }
 .table-header {
-  font-size: 13px;
+  font-size: 13px ;
   font-weight: bold;
 }
-.table-section{
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 30px;
-  /* identical to box height */
-  color: #000000;
+.table-row{
+  border-radius: 10px;
 }
-

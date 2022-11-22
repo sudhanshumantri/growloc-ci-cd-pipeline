@@ -108,13 +108,15 @@ export default function FarmDashboard({
     const { cropSchedules } = dashboardFarmList;
     return (
       <>
-          <Grid item xs={12} sm={12} md={12}>
+        <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Crop Schedules</p>
         </Grid>
-        <Grid item xs={12} sm={12} md={12}>
-          <div className="card-container">
-            <DataTable data={{ headers: headers, rows: cropSchedules || [] }} />
-          </div>
+        <Grid container className="farm-container">
+          <Grid item xs={12} sm={12} md={12}>
+              <DataTable
+                data={{ headers: headers, rows: cropSchedules || [] }}
+              />
+          </Grid>
         </Grid>
       </>
     );
@@ -122,14 +124,14 @@ export default function FarmDashboard({
   const renderTaskSchedules = () => {
     return (
       <>
-      <Grid item xs={12} sm={12} md={12}>
+        <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Task Schedules</p>
         </Grid>
-      <Grid item xs={12} sm={12} md={12}>
-        <div className="card-container">
-          <DataTable data={{ headers: cropSchedulesHeader, rows: rows }} />
-        </div>
-      </Grid>
+        <Grid container className="farm-container">
+          <Grid item xs={12} sm={12} md={12}>
+            <DataTable data={{ headers: cropSchedulesHeader, rows: rows }} />
+          </Grid>
+        </Grid>
       </>
     );
   };

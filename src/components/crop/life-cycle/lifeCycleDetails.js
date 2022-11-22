@@ -176,8 +176,9 @@ export default function CropLifeCycleDetails({
   };
   const renderHeader = () => {
     let { cropDetails } = lifecycleDetails;
-    let title = cropDetails.batchNo + "-" + cropDetails.crop.crop.name;
+    let title = cropDetails.batchNo + " " + cropDetails.crop.crop.name;
     let subtitle = "(Units :" + cropDetails.qty + ")";
+    
     let info = [
       {
         title: "Variety",
@@ -208,7 +209,7 @@ export default function CropLifeCycleDetails({
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     return (
       <>
-        <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+        <Stepper alternativeLabel nonLinear activeStep={activeStep} >
           {FarmCropLifecycleStages.map((data, index) => (
             <Step key={index}>
               <StepLabel
@@ -390,7 +391,7 @@ export default function CropLifeCycleDetails({
       {
         !isLifecycleDetailsLoading && (
           <>
-            {renderHeader()}
+               {renderHeader()}
             <div className="page-container">
               {renderStepper()}
               {renderNotification()}
