@@ -13,7 +13,9 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-
+import TextBox from "../../shared/text-box";
+import Checkbox from "@mui/material/Checkbox";
+import FormGroup from '@mui/material/FormGroup';
 export default function AddUsersModal({
   open,
   handleClose,
@@ -29,10 +31,9 @@ export default function AddUsersModal({
   const { farmId } = useParams();
   const [userData, setUserData] = useState(userDetails);
   const [isNameError, setIsNameError] = useState(false);
-  const [isPhoneError,setIsPhoneError] = useState(false)
-  const [isPasswordError,setIsPasswordError] = useState(false)
+  const [isPhoneError, setIsPhoneError] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
   const handleChange = (e) => {
-    
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });
   };
@@ -47,12 +48,12 @@ export default function AddUsersModal({
       setIsPhoneError(true);
       isError = true;
     }
-    if(userData.password !==userData.confirmpassword) {
+    if (userData.password !== userData.confirmpassword) {
       setIsPasswordError(true);
-      isError = true;   
+      isError = true;
     }
     return isError;
-  }
+  };
   const handleSaveUser = () => {
     let payload = {
       farmId: parseInt(farmId),
@@ -61,135 +62,21 @@ export default function AddUsersModal({
       phone: parseInt(userData.phone),
       role: userData.role,
     };
-    let isError = handleUserValidation(payload)
+    let isError = handleUserValidation(payload);
     if (!isError) {
-      handleSave(payload)
+      handleSave(payload);
+    }
   };
-}
   const isButtonSelected = (value) => {
     if (userData.role === value) {
       return true;
     }
   };
 
-
-
-  return (
-    <div>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle className="dialog-title-container">{userDetails.userId? "Update user": "Add a user"}</DialogTitle>
-        <DialogContent sx={{ paddingTop: "10px" }}>
-          <Grid container sx={{ margin: "1px", width: 500 }} spacing={2}>
-            <Grid item xs={12} sm={6} md={12}>
-              <br />
-              <FormControl fullWidth>
-                <TextField
-                  fullWidth
-                  label={"Name"}
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                  id="name"
-                  name="name"
-                  value={userData.name}
-                  error={isNameError}
-                  helperText={isNameError ? 'Please provide name' : ""}
-                  onChange={(e) => {isNameError && setIsNameError(false)
-                    handleChange(e)}}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6} md={12}>
-              <FormControl fullWidth>
-                <TextField
-                  fullWidth
-                  label={"Phone Number"}
-                  id="phone"
-                  name="phone"
-                  disabled={userData.isEditMode}
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                  InputProps={{ inputProps: { maxLength: 10 } }}
-                  value={userData.phone}
-                  error={isPhoneError}
-                  helperText={isPhoneError ? 'Please provide phone number' : ""}
-                  onChange={(e) => {isPhoneError && setIsPhoneError(false)
-                    handleChange(e)}}
-                />
-              </FormControl>
-              </Grid>
-            <Grid item xs={12} sm={6} md={12} hidden={userData.isEditMode}>
-              <FormControl fullWidth>
-                <TextField
-                  fullWidth
-                  label={"Password"}
-                  id="password"
-                  name="password"
-                  disabled={userData.isEditMode}
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                  value={userData.password}
-                  onChange={(e) => handleChange(e)}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6} md={12} hidden={userData.isEditMode}>
-              <FormControl fullWidth>
-                <TextField
-                  fullWidth
-                  label={"Confirm Password"}
-                  id="confirmpassword"
-                  name="confirmpassword"
-                  InputLabelProps={{ shrink: true }}
-                  variant="outlined"
-                  value={userData.confirmpassword}
-                  error={isPasswordError}
-                  helperText={isPasswordError ? 'Password does not match' : ""}              
-                  onChange={(e) =>{isPasswordError && setIsPasswordError(false)
-                     handleChange(e)}}
-                />
-              </FormControl>
-            </Grid>
-              <br/>
-              {" "}
-              <FormControl>
-                <br/>
-                {" "}
-              <FormLabel id="demo-row-radio-buttons-group-label" >
-                    Select Role
-                  </FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  // name="row-radio-buttons-group"
-                  value={userData.role}
-                  name="role"
-                  id="role"
-                >
-                  <FormControlLabel
-                    value="farmmanager"
-                    control={<Radio />}
-                    label="FarManager"
-                    checked={isButtonSelected("farmmanager")}
-                    onChange={(e) => handleChange(e)}
-                  />
-                  <FormControlLabel
-                    value="ergonomists"
-                    control={<Radio />}
-                    label="Ergonomists"
-                    checked={isButtonSelected("ergonomists")}
-                    onChange={(e) => handleChange(e)}
-                  />
-                  <FormControlLabel
-                    value="supervisor"
-                    control={<Radio />}
-                    label="Supervisor"
-                    checked={isButtonSelected("supervisor")}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-        </DialogContent>
+  const renderActionButtons = () => {
+    return (
+      <>
+       <div className="flex-row-justify-center-container"> 
         <DialogActions>
           <CustomButton
             isLight={true}
@@ -198,6 +85,130 @@ export default function AddUsersModal({
           />
           <CustomButton handleButtonClick={handleSaveUser} title="Save" />
         </DialogActions>
+        </div>
+
+      </>
+    );
+  };
+
+  return (
+    <div>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle className="dialog-title-container">
+          {userDetails.userId ? "Update user" : "Add a user"}
+        </DialogTitle>
+        <DialogContent sx={{ paddingTop: "10px" }}>
+          <Grid
+            container
+            sx={{ margin: "1px", width: 500 }}
+            spacing={2}
+            className="farm-container"
+          >
+            <Grid item xs={12} sm={6} md={12}>
+              <br />
+              <span className="input-label">Name</span>
+              <FormControl fullWidth>
+                <TextBox
+                  isWhite={true}
+                  name="name"
+                  value={userData.name}
+                  error={isNameError}
+                  helperText={isNameError ? "Please provide name" : ""}
+                  onChange={(e) => {
+                    isNameError && setIsNameError(false);
+                    handleChange(e);
+                  }}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6} md={12}>
+              <span className="input-label">Phone Number</span>
+              <FormControl fullWidth>
+                <TextBox
+                  isWhite={true}
+                  name="phone"
+                  disabled={userData.isEditMode}
+                  value={userData.phone}
+                  error={isPhoneError}
+                  helperText={isPhoneError ? "Please provide phone number" : ""}
+                  onChange={(e) => {
+                    isPhoneError && setIsPhoneError(false);
+                    handleChange(e);
+                  }}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6} md={12} hidden={userData.isEditMode}>
+              <span className="input-label"> Password</span>
+
+              <FormControl fullWidth>
+                <TextBox
+                  isWhite={true}
+                  name="password"
+                  disabled={userData.isEditMode}
+                  variant="outlined"
+                  value={userData.password}
+                  onChange={(e) => handleChange(e)}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6} md={12} hidden={userData.isEditMode}>
+              <span className="input-label">Confirm Password</span>
+
+              <FormControl fullWidth>
+                <TextBox
+                  isWhite={true}
+                  name="confirmpassword"
+                  value={userData.confirmpassword}
+                  error={isPasswordError}
+                  helperText={isPasswordError ? "Password does not match" : ""}
+                  onChange={(e) => {
+                    isPasswordError && setIsPasswordError(false);
+                    handleChange(e);
+                  }}
+                />
+              </FormControl>
+            </Grid>
+            <br />{" "}
+            <FormControl>
+              <br />{" "}
+              <FormLabel id="demo-row-radio-buttons-group-label">
+                Select Role
+              </FormLabel>
+              <FormGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                value={userData.role}
+                name="role"
+              >
+                <FormControlLabel
+                  value="farmmanager"
+                  control={<Checkbox />}
+                  label="FarManager"
+                  checked={isButtonSelected("farmmanager")}
+                  onChange={(e) => handleChange(e)}
+                />
+                <FormControlLabel
+                  value="ergonomists"
+                  control={<Checkbox />}
+                  label="Ergonomists"
+                  checked={isButtonSelected("ergonomists")}
+                  onChange={(e) => handleChange(e)}
+                />
+                <FormControlLabel
+                  value="supervisor"
+                  control={<Checkbox />}
+                  label="Supervisor"
+                  checked={isButtonSelected("supervisor")}
+                  onChange={(e) => handleChange(e)}
+                />
+
+                
+              </FormGroup >
+            </FormControl>
+          </Grid>
+        </DialogContent>
+        {renderActionButtons()}
       </Dialog>
     </div>
   );
