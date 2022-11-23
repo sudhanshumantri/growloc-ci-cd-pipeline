@@ -42,9 +42,6 @@ body {
   color: #606a72;
   margin: auto;
   letter-spacing: 0.01em;
-  border-bottom: 0.5px solid rgba(0, 0, 0, 0.25);
-  margin-bottom: 5px;
-  padding-bottom: 10px;
 }
 
 .label-white {
@@ -86,12 +83,7 @@ body {
 }
 
 /* Dialogue styling*/
-.dialog-title-container {
-  background: #e5e4d7 !important;
-  margin-bottom: 16px !important;
-  border-radius: 10px !important;
-  margin: 30px !important;
-}
+
 
 a {
   text-decoration: none !important;
@@ -131,7 +123,7 @@ a {
 }
 
 .input-custom {
-  height: 50px;
+  height: 55px;
 }
 
 .popup-menu-action-container {

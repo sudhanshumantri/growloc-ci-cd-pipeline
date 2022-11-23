@@ -10,6 +10,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import AddIcon from "@mui/icons-material/Add";
 import { Grid } from "@mui/material";
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+
 export default function ManageUsers({
   usersList,
   fetchUsers,
@@ -79,7 +82,7 @@ export default function ManageUsers({
           label: "Edit",
           handler: handleEdit,
           type: "icon",
-          icon: <CreateIcon />,
+          icon: <EditOutlinedIcon sx={{color:"#517223"}}/>,
           color: "primary",
           isAuthRequired: true,
           from: "users",
@@ -89,7 +92,7 @@ export default function ManageUsers({
           label: "Delete",
           handler: handleDelete,
           type: "icon",
-          icon: <DeleteIcon aria-label="delete" />,
+          icon: <DeleteOutlineOutlinedIcon sx={{color:"#517223"}} />,
           isAuthRequired: true,
           from: "users",
           action: "delete",

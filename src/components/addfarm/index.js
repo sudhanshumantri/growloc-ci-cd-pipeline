@@ -327,7 +327,7 @@ export default function AddFarm({
           </FormControl>
           <FormControl>
             <FormControlLabel
-            className="farm-location"
+              className="farm-location"
               control={
                 <Radio
                   onClick={handleGetCurrentLocation}
@@ -355,7 +355,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="germinationType"
-                value={farmData.germinationType }
+                value={farmData.germinationType}
                 options={germination}
                 isError={validation.germinationType}
                 errorMessage="Please select a germination zone"
@@ -706,7 +706,7 @@ export default function AddFarm({
             </span>
             <FormControl fullWidth>
               <TextBox
-                InputLabelProps={{ shrink: true }}
+                isWhite={true}
                 name="polyhouseStructureExpectedLife"
                 value={farmData.polyhouseStructureExpectedLife || ""}
                 onChange={handleChange}
@@ -723,7 +723,7 @@ export default function AddFarm({
             <span className="input-label">Polyhouse plastic expected life</span>
             <FormControl fullWidth>
               <TextBox
-                InputLabelProps={{ shrink: true }}
+                isWhite={true}
                 name="polyhousePlasticExpectedLife"
                 value={farmData.polyhousePlasticExpectedLife || ""}
                 onChange={handleChange}
@@ -762,7 +762,7 @@ export default function AddFarm({
   return (
     <div>
       <PageHeader
-        title={farmId ?`Edit ${farmData.name || ""}` : "Add a new farm"}
+        title={farmId ? `Edit ${farmData.name || ""}` : "Add a new farm"}
         buttonArray={[]}
       />
       {isAddFarmLoading && <Loader title="Adding Farm" />}

@@ -15,7 +15,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import TextBox from "../../shared/text-box";
 import Checkbox from "@mui/material/Checkbox";
-import FormGroup from '@mui/material/FormGroup';
+import FormGroup from "@mui/material/FormGroup";
+import "./style.css";
 export default function AddUsersModal({
   open,
   handleClose,
@@ -76,17 +77,16 @@ export default function AddUsersModal({
   const renderActionButtons = () => {
     return (
       <>
-       <div className="flex-row-justify-center-container"> 
-        <DialogActions>
-          <CustomButton
-            isLight={true}
-            handleButtonClick={handleClose}
-            title="Cancel"
-          />
-          <CustomButton handleButtonClick={handleSaveUser} title="Save" />
-        </DialogActions>
+        <div className="flex-row-justify-center-container">
+          <DialogActions>
+            <CustomButton
+              isLight={true}
+              handleButtonClick={handleClose}
+              title="Cancel"
+            />
+            <CustomButton handleButtonClick={handleSaveUser} title="Save" />
+          </DialogActions>
         </div>
-
       </>
     );
   };
@@ -98,12 +98,7 @@ export default function AddUsersModal({
           {userDetails.userId ? "Update user" : "Add a user"}
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
-          <Grid
-            container
-            sx={{ margin: "1px", width: 500 }}
-            spacing={2}
-            className="farm-container"
-          >
+          <Grid container sx={{ margin: "1px", width: 500 }} spacing={2}>
             <Grid item xs={12} sm={6} md={12}>
               <br />
               <span className="input-label">Name</span>
@@ -170,18 +165,18 @@ export default function AddUsersModal({
               </FormControl>
             </Grid>
             <br />{" "}
-            <FormControl>
+            <FormControl sx={{ margin: "15px" }}>
               <br />{" "}
               <FormLabel id="demo-row-radio-buttons-group-label">
                 Select Role
               </FormLabel>
-              <FormGroup
+              {/* <FormGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 value={userData.role}
                 name="role"
-              >
-                <FormControlLabel
+              > */}
+              {/* <FormControlLabel
                   value="farmmanager"
                   control={<Checkbox />}
                   label="FarManager"
@@ -202,9 +197,31 @@ export default function AddUsersModal({
                   checked={isButtonSelected("supervisor")}
                   onChange={(e) => handleChange(e)}
                 />
-
-                
-              </FormGroup >
+ */}
+              <FormGroup value={userData.role} name="role">
+                <FormControlLabel
+                  value="farmmanager"
+                  control={<Checkbox />}
+                  label={<p className="input-label">FarManager</p>}
+                  checked={isButtonSelected("FarManager")}
+                  onChange={(e) => handleChange(e)}
+                />
+                <FormControlLabel
+                  value="ergonomists"
+                  control={<Checkbox />}
+                  label={<p className="input-label">Ergonomists</p>}
+                  checked={isButtonSelected("ergonomists")}
+                  onChange={(e) => handleChange(e)}
+                />
+                <FormControlLabel
+                  value="supervisor"
+                  control={<Checkbox />}
+                  label={<p className="input-label">Supervisor</p>}
+                  checked={isButtonSelected("ergonomists")}
+                  onChange={(e) => handleChange(e)}
+                />
+              </FormGroup>
+              {/* </FormGroup > */}
             </FormControl>
           </Grid>
         </DialogContent>

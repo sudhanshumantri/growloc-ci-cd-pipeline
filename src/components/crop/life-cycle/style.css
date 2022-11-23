@@ -14,13 +14,16 @@
 
 .rounder-icon-stepper {
   /* font-size: 40px; */
-  border: 1px solid rgb(247, 206, 106);
-  background-color: rgb(247, 206, 106);
+  border: 2px solid #51722375;;
+  /* background-color: rgb(247, 206, 106); */
   width: 40px !important;
   height: 40px !important;
   border-radius: 50%;
-  padding: 6px;
+  padding: 3px;
   margin-left: -5px;
+}
+.MuiStepper-root {
+  margin: 30px 0px ;
 }
 
 .MuiStepConnector-root {
@@ -29,8 +32,12 @@
   right: calc(50% + 22px) !important;
 }
 
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root{color: #51722375 !important;
+}
 .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
-  color: rgb(81, 114, 35) !important;
+  color: #517223 !important;
+  border: 2px solid  #517223 !important;
+
 }
 .repeat-days-container {
   display: flex;
@@ -47,4 +54,15 @@
   line-height: 45px;
 
   color: #000000;
+}
+.life-cycle-spacing .label-light{
+padding: 5px 0px;
+}
+.life-cycle-header {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 30px;
+  color: #000000;
+  padding: 0px 5px;
+  
 }

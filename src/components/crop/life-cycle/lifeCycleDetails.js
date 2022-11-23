@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { sortBy } from "lodash";
 import PageHeader from "../../shared/page-header";
 import Loader from "../../shared/loader";
+import Divider from "@mui/material/Divider";
+
 import {
   Stack,
   Stepper,
@@ -14,7 +16,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Alert
+  Alert,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import moment from "moment";
@@ -23,7 +25,7 @@ import MoveCropLifeCycleModal from "./moveCropLifecycleModal";
 import ScheduleHarvestingModal from "./scheduleHarvestingModal";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import EditParameters from "./editParameter";
-import { WEEKDAYS } from '../../../config'
+import { WEEKDAYS } from "../../../config";
 export default function CropLifeCycleDetails({
   fetchCropsLifecycleDetails,
   lifecycleDetails,
@@ -33,10 +35,11 @@ export default function CropLifeCycleDetails({
   isTransitionLoading,
   addCropToLifecycleParameters,
   isAddLifecycleParametersLoading,
-  updateCropToLifecycleSchedule
+  updateCropToLifecycleSchedule,
 }) {
   const [open, setOpen] = useState(false);
-  const [openScheduleHarvestingModal, setScheduleHarvestingModal] = useState(false);
+  const [openScheduleHarvestingModal, setScheduleHarvestingModal] =
+    useState(false);
   const [isStageEditOpen, setIsStageEditOpen] = useState(false);
   let { lifecycleId } = useParams();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -52,44 +55,45 @@ export default function CropLifeCycleDetails({
   };
   const handleScheduleHarvestingModalToggle = () => {
     if (!openScheduleHarvestingModal) {
-      setHarvestingSchedules((lifecycleDetails.cropDetails.FarmCropLifecycleSchedules && lifecycleDetails.cropDetails.FarmCropLifecycleSchedules.length > 0) ? lifecycleDetails.cropDetails.FarmCropLifecycleSchedules[0].repeatsOn : [])
+      setHarvestingSchedules(
+        lifecycleDetails.cropDetails.FarmCropLifecycleSchedules &&
+          lifecycleDetails.cropDetails.FarmCropLifecycleSchedules.length > 0
+          ? lifecycleDetails.cropDetails.FarmCropLifecycleSchedules[0].repeatsOn
+          : []
+      );
     }
     setScheduleHarvestingModal(!openScheduleHarvestingModal);
   };
   const handleScheduleHarvestChange = (value) => {
     let daysIndex = harvestingSchedules.indexOf(value);
     if (daysIndex != -1) {
-      setHarvestingSchedules(
-        harvestingSchedules.filter(a =>
-          a !== value
-        )
-      );
+      setHarvestingSchedules(harvestingSchedules.filter((a) => a !== value));
     } else {
-      setHarvestingSchedules([
-        ...harvestingSchedules, value
-      ]
-      )
+      setHarvestingSchedules([...harvestingSchedules, value]);
     }
-  }
+  };
   const handleScheduleHarvestSave = () => {
     let scheduleHarvestingData = null;
-    if (lifecycleDetails.cropDetails.FarmCropLifecycleSchedules && lifecycleDetails.cropDetails.FarmCropLifecycleSchedules.length > 0) {
+    if (
+      lifecycleDetails.cropDetails.FarmCropLifecycleSchedules &&
+      lifecycleDetails.cropDetails.FarmCropLifecycleSchedules.length > 0
+    ) {
       scheduleHarvestingData = {
         id: lifecycleDetails.cropDetails.FarmCropLifecycleSchedules[0].id,
         cropLifeCycleId: lifecycleId,
-        repeatsOn: harvestingSchedules
-      }
+        repeatsOn: harvestingSchedules,
+      };
       //edit is happening
     } else {
       scheduleHarvestingData = {
         cropLifeCycleId: lifecycleId,
-        repeatsOn: harvestingSchedules
-      }
+        repeatsOn: harvestingSchedules,
+      };
       //add is happening
     }
     updateCropToLifecycleSchedule(scheduleHarvestingData);
     handleScheduleHarvestingModalToggle();
-  }
+  };
   const handleEditToggle = () => {
     setIsStageEditOpen(!isStageEditOpen);
   };
@@ -120,7 +124,7 @@ export default function CropLifeCycleDetails({
         currentStageId: selectedStageInformation.id,
         nextStageId: nextStageInforamtion ? nextStageInforamtion.id : null,
         isDispose: isHarvestStage ? true : false,
-        isCompleted: isHarvestStage ? isComplete : false
+        isCompleted: isHarvestStage ? isComplete : false,
       };
       handleModalToggle();
       cropsLifecycleTransition(requestData);
@@ -152,12 +156,17 @@ export default function CropLifeCycleDetails({
       } else {
         //this is the last step and it is harvesting
 
-        if (cropDetails.crop.crop.variety == 'Vine' || cropDetails.crop.crop.variety == 'Herb') {
+        if (
+          cropDetails.crop.crop.variety == "Vine" ||
+          cropDetails.crop.crop.variety == "Herb"
+        ) {
           buttonArray.push({
             label: "Harvest",
             handler: handleModalToggle,
           });
-          let cropsSchedule = lifecycleDetails?.cropDetails?.FarmCropLifecycleSchedules.length > 0;
+          let cropsSchedule =
+            lifecycleDetails?.cropDetails?.FarmCropLifecycleSchedules.length >
+            0;
           if (!cropsSchedule) {
             buttonArray.push({
               label: "Schedule",
@@ -178,7 +187,22 @@ export default function CropLifeCycleDetails({
     let { cropDetails } = lifecycleDetails;
     let title = cropDetails.batchNo + " " + cropDetails.crop.crop.name;
     let subtitle = "(Units :" + cropDetails.qty + ")";
+    let buttonArray = handleActionButton();
+    return (
+      <div>
+        <PageHeader
+          title={title}
+          subtitle={subtitle}
+          // info={info}
+          buttonArray={buttonArray}
+        />
+      </div>
+    );
+  };
+  const renderStepper = () => {
     
+    let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
+    let { cropDetails } = lifecycleDetails;
     let info = [
       {
         title: "Variety",
@@ -193,23 +217,21 @@ export default function CropLifeCycleDetails({
         value: moment(cropDetails.start_date).format("MMMM Do YYYY hh:mm:ss A"),
       },
     ];
-    let buttonArray = handleActionButton();
-    return (
-      <div>
-        <PageHeader
-          title={title}
-          subtitle={subtitle}
-          info={info}
-          buttonArray={buttonArray}
-        />
-      </div>
-    );
-  };
-  const renderStepper = () => {
-    let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     return (
       <>
-        <Stepper alternativeLabel nonLinear activeStep={activeStep} >
+        {info.map((data, index) => (
+              <span className="label-light life-cycle-header">
+                {data.title && (
+                  <>
+                    <b>{data.title}</b>:
+                  </>
+                )}
+
+                {data.value}
+                {info.length - 1 != index && <>, </>}
+              </span>
+            ))}
+        <Stepper alternativeLabel nonLinear activeStep={activeStep}>
           {FarmCropLifecycleStages.map((data, index) => (
             <Step key={index}>
               <StepLabel
@@ -218,7 +240,9 @@ export default function CropLifeCycleDetails({
                   classes: { root: "rounder-icon-stepper" },
                 }}
               >
-                <p className="step-label">{data.stage + "(" + data.qty + ")"}</p>
+                <p className="step-label">
+                  {data.stage + "(" + data.qty + ")"}
+                </p>
               </StepLabel>
             </Step>
           ))}
@@ -227,28 +251,32 @@ export default function CropLifeCycleDetails({
     );
   };
   const renderNotification = () => {
-    let cropsSchedule = lifecycleDetails?.cropDetails?.FarmCropLifecycleSchedules.length > 0;
+    let cropsSchedule =
+      lifecycleDetails?.cropDetails?.FarmCropLifecycleSchedules.length > 0;
     if (cropsSchedule) {
-      cropsSchedule = lifecycleDetails?.cropDetails?.FarmCropLifecycleSchedules[0];
+      cropsSchedule =
+        lifecycleDetails?.cropDetails?.FarmCropLifecycleSchedules[0];
       let repeatsOn = _.orderBy(cropsSchedule.repeatsOn, [], ["asc"]);
       return (
-        <Alert severity="info">Crop Harvesting would be repeated on following days:
+        <Alert severity="info">
+          Crop Harvesting would be repeated on following days:
           {repeatsOn.map((date, index) => {
             let dayObject = _.find(WEEKDAYS, { value: date });
             let daysText = dayObject.label;
             if (index != repeatsOn.length - 1) {
-              daysText = daysText + ', '
+              daysText = daysText + ", ";
             }
-            return (
-              <b> {daysText}</b>
-            )
+            return <b> {daysText}</b>;
           })}
-          <BorderColorIcon className="icon" sx={{ fontSize: '14px', marginLeft: '5px', color: '#517223' }} onClick={handleScheduleHarvestingModalToggle} />
+          <BorderColorIcon
+            className="icon"
+            sx={{ fontSize: "14px", marginLeft: "5px", color: "#517223" }}
+            onClick={handleScheduleHarvestingModalToggle}
+          />
         </Alert>
-      )
+      );
     }
-
-  }
+  };
   const renderHistoryInformation = () => {
     let { FarmCropLifecycleStages, FarmCropLifecycleHistory } =
       lifecycleDetails.cropDetails;
@@ -282,7 +310,10 @@ export default function CropLifeCycleDetails({
                     <TableCell component="th" scope="row">
                       <p className="label-light">
                         <span className="label-bold"> {data.qty}</span> units
-                        <span className="label-bold"> {data.kgs ? '(' + data.kgs + ' Kg) ' : ''}</span>
+                        <span className="label-bold">
+                          {" "}
+                          {data.kgs ? "(" + data.kgs + " Kg) " : ""}
+                        </span>
                         were moved {data.movement == 1 ? " in to" : "out from"}{" "}
                         the {selectedStageInformation.stage} stage on{" "}
                         <span className="label-bold">
@@ -295,6 +326,7 @@ export default function CropLifeCycleDetails({
                   </TableRow>
                 );
               })}
+              <Divider />
             </TableBody>
           </Table>
         </Paper>
@@ -311,53 +343,68 @@ export default function CropLifeCycleDetails({
           <p className="section-title">
             {selectedStageInformation.stage + " Stage Information"}
           </p>
-          <div className="life-cycle-details-card">
-            <p className="label-light">
+          <div className="life-cycle-details-card life-cycle-spacing ">
+            <p className="label-light ">
               <span className="label-light-bold">Crop Name: </span>{" "}
               {lifecycleDetails.cropDetails.crop.crop.name}
             </p>
+            <Divider />
+
             <p className="label-light">
               <span className="label-light-bold">Current Stage: </span>{" "}
               {selectedStageInformation.stage}
             </p>
+            <Divider />
+
             <p className="label-light">
               <span className="label-light-bold">Units: </span>{" "}
               {selectedStageInformation.qty}
             </p>
+            <Divider />
+
             <p className="label-light">
               <span className="label-light-bold">Expected Start Date : </span>
               {moment(selectedStageInformation.expected_start_date).format(
                 "MMMM Do YYYY"
               )}
             </p>
+            <Divider />
             <p className="label-light">
               <span className="label-light-bold">Actual Start Date : </span>
               {selectedStageInformation.start_date
                 ? moment(selectedStageInformation.start_date).format(
-                  "MMMM Do YYYY hh:mm:ss A"
-                )
+                    "MMMM Do YYYY hh:mm:ss A"
+                  )
                 : "Not Yet Started"}
             </p>
+            <Divider />
             <p className="label-light">
               <span className="label-light-bold">Duration: </span>{" "}
               {selectedStageInformation.duration}
             </p>
+            <Divider />
           </div>
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
           <p className="section-title">
-            {selectedStageInformation.stage + " Parameters Information"}
-            {" "}
-            <BorderColorIcon className="icon" sx={{ fontSize: '16px' }} onClick={handleEditToggle} />
+            {selectedStageInformation.stage + " Parameters Information"}{" "}
+            <BorderColorIcon
+              className="icon"
+              sx={{ fontSize: "16px" }}
+              onClick={handleEditToggle}
+            />
           </p>
 
-          <div className="life-cycle-details-card">
+          <div className="life-cycle-details-card life-cycle-spacing">
             {selectedStageInformation.parameters.map((param) => {
               return (
-                <p className="label-light">
-                  <span className="label-light-bold">{param.name}: </span>{" "}
-                  {param.value} <b>{param.unit}</b>
-                </p>
+                <>
+                  <p className="label-light">
+                    <span className="label-light-bold">{param.name}: </span>{" "}
+                    {param.value} <b>{param.unit}</b>
+                  </p>
+                  <Divider />
+                </>
               );
             })}
           </div>
@@ -365,19 +412,22 @@ export default function CropLifeCycleDetails({
         {renderHistoryInformation()}
         <Grid item xs={12} sm={6} md={6}>
           <p className="section-title">Sensors Information </p>
-          <div className="life-cycle-details-card">
+          <div className="life-cycle-details-card life-cycle-spacing">
             <p className="label-light">
               {" "}
               <span className="label-light-bold">Crop Name: </span> Crop Name
             </p>
+            <Divider />
             <p className="label-light">
               {" "}
               <span className="label-light-bold">Variety: </span> Variety
             </p>
+            <Divider />
             <p className="label-light">
               {" "}
               <span className="label-light-bold">Quantity: </span> Quantity
             </p>
+            <Divider />
           </div>
         </Grid>
       </Grid>
@@ -386,61 +436,65 @@ export default function CropLifeCycleDetails({
 
   return (
     <>
-      {isLifecycleDetailsLoading && <Loader title="Fetching Details" />
-      }
-      {
-        !isLifecycleDetailsLoading && (
-          <>
-               {renderHeader()}
-            <div className="page-container">
-              {renderStepper()}
-              {renderNotification()}
-              {renderSelectedStageInformation()}
-              {open && (
-                <MoveCropLifeCycleModal
-                  open={open}
-                  handleClose={handleModalToggle}
-                  title={isHarvestStage ? "Dispose Plants" : "Transplant crops "}
-                  handleClick={handleCropTransationModalSave}
-                  modalData={lifecycleDetails}
-                  isHarvestStage={isHarvestStage}
-                  isContiniousHarvet={(lifecycleDetails.cropDetails.crop.crop.variety == 'Vine' || lifecycleDetails.cropDetails.crop.crop.variety == 'Herb') ? true : false}
-                  maxQty={
-                    maxQty
-                      ? maxQty
-                      : lifecycleDetails.cropDetails.FarmCropLifecycleStages[
+      {isLifecycleDetailsLoading && <Loader title="Fetching Details" />}
+      {!isLifecycleDetailsLoading && (
+        <>
+          {renderHeader()}
+          <div className="page-container">
+            {renderStepper()}
+            {renderNotification()}
+            {renderSelectedStageInformation()}
+            {open && (
+              <MoveCropLifeCycleModal
+                open={open}
+                handleClose={handleModalToggle}
+                title={isHarvestStage ? "Dispose Plants" : "Transplant crops "}
+                handleClick={handleCropTransationModalSave}
+                modalData={lifecycleDetails}
+                isHarvestStage={isHarvestStage}
+                isContiniousHarvet={
+                  lifecycleDetails.cropDetails.crop.crop.variety == "Vine" ||
+                  lifecycleDetails.cropDetails.crop.crop.variety == "Herb"
+                    ? true
+                    : false
+                }
+                maxQty={
+                  maxQty
+                    ? maxQty
+                    : lifecycleDetails.cropDetails.FarmCropLifecycleStages[
                         activeStep
                       ].qty
-                  }
-                />
-              )}
-              {openScheduleHarvestingModal && (
-                <ScheduleHarvestingModal
-                  open={openScheduleHarvestingModal}
-                  handleClose={handleScheduleHarvestingModalToggle}
-                  handleChange={handleScheduleHarvestChange}
-                  data={harvestingSchedules}
-                  handleSave={handleScheduleHarvestSave}
-                />
-              )}
+                }
+              />
+            )}
+            {openScheduleHarvestingModal && (
+              <ScheduleHarvestingModal
+                open={openScheduleHarvestingModal}
+                handleClose={handleScheduleHarvestingModalToggle}
+                handleChange={handleScheduleHarvestChange}
+                data={harvestingSchedules}
+                handleSave={handleScheduleHarvestSave}
+              />
+            )}
 
-              {isTransitionLoading && (
-                <Loader title="Migrating Crops to another stage" />
-              )}
-              {isAddLifecycleParametersLoading && (<Loader title="updating parameters" />)}
-              {isStageEditOpen && (
-                <EditParameters
-                  open={isStageEditOpen}
-                  handleClose={handleEditToggle}
-                  modalData={lifecycleDetails}
-                  activeStep={activeStep}
-                  handleSave={handleParametersSave}
-                />
-              )}
-            </div>
-          </>
-        )
-      }
+            {isTransitionLoading && (
+              <Loader title="Migrating Crops to another stage" />
+            )}
+            {isAddLifecycleParametersLoading && (
+              <Loader title="updating parameters" />
+            )}
+            {isStageEditOpen && (
+              <EditParameters
+                open={isStageEditOpen}
+                handleClose={handleEditToggle}
+                modalData={lifecycleDetails}
+                activeStep={activeStep}
+                handleSave={handleParametersSave}
+              />
+            )}
+          </div>
+        </>
+      )}
     </>
   );
 }

@@ -100,20 +100,18 @@ export default function AddCropModal({
           <br />
           <Grid container spacing={2} className="farm-container">
             <Grid item xs={12} sm={12} md={12}>
+            <span className="input-label">Crop</span>
               <FormControl fullWidth>
-                <InputLabel id="demo-multiple-name-label" variant="outlined">
-                  Crop
-                </InputLabel>
-                <Select     
+                <Select  
+                sx={{background:"white"}}   
                   labelId="demo-multiple-name-label"
                   id="demo-multiple-name"
-                  sx={{background:"FFFFFF"}}
                   value={selectedCrop}
                   onChange={(e) => {
                     isCropError && setIsCropError(false);
                     handleCropChange(e);
                   }}
-                  input={<OutlinedInput label="crop" />}
+                  // input={<OutlinedInput label="crop" />}
                   MenuProps={MenuProps}
                 >
                   {(modalData || []).map((e, keyIndex) => (
