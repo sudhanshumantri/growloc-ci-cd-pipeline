@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import { fetchDashboardFarmRequest,fetchDashboardHarvestRequest } from "../../actions/dashboard";
+import { fetchUsersRequest} from "../../actions/users";
 import FarmDashboard from "../../components/dashboard/farm";
 import {
   selectFarmDashboardList,
@@ -12,6 +13,9 @@ import {
   selectFarmDashboardHarvestListError,
   selectFarmDashboardHarvestList,
 } from "../../selectors/dashboard";
+import {
+  selectUsersList
+} from "../../selectors/users"
 const mapStateToProps = createStructuredSelector({
   dashboardFarmList: selectFarmDashboardList(),
   isDashboardFarmListLoading: selectIsFarmDashboardListLoading(),
@@ -19,10 +23,15 @@ const mapStateToProps = createStructuredSelector({
   isDashboardHarvestListLoading:selectIsFarmDashboardHarvestListLoading(),
   DashboardHarvestListError:selectFarmDashboardHarvestListError(),
   dashboardHarvestList:selectFarmDashboardHarvestList(),
+  usersList: selectUsersList(),
+
+
 });
 const mapDispatchToProps = {
   fetchFarmDashboard: fetchDashboardFarmRequest,
   fetchFarmDashboardHarvest:fetchDashboardHarvestRequest,
+  fetchUsers: fetchUsersRequest,
+
 };
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {

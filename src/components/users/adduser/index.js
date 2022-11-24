@@ -4,15 +4,11 @@ import { useParams } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import TextField from "@mui/material/TextField";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import CustomButton from "../../shared/button";
 import { Grid } from "@mui/material";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
 import TextBox from "../../shared/text-box";
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
@@ -34,6 +30,7 @@ export default function AddUsersModal({
   const [isNameError, setIsNameError] = useState(false);
   const [isPhoneError, setIsPhoneError] = useState(false);
   const [isPasswordError, setIsPasswordError] = useState(false);
+
   const handleChange = (e) => {
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });
@@ -69,9 +66,7 @@ export default function AddUsersModal({
     }
   };
   const isButtonSelected = (value) => {
-    if (userData.role === value) {
-      return true;
-    }
+   return !!(userData.role === value);
   };
 
   const renderActionButtons = () => {
@@ -164,64 +159,47 @@ export default function AddUsersModal({
                 />
               </FormControl>
             </Grid>
-            <br />{" "}
-            <FormControl sx={{ margin: "15px" }}>
-              <br />{" "}
-              <FormLabel id="demo-row-radio-buttons-group-label">
-                Select Role
-              </FormLabel>
-              {/* <FormGroup
-                row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                value={userData.role}
-                name="role"
-              > */}
-              {/* <FormControlLabel
-                  value="farmmanager"
-                  control={<Checkbox />}
-                  label="FarManager"
-                  checked={isButtonSelected("farmmanager")}
+            <br />
+            <FormControl sx={{width:"100px"}} >
+              <br />
+           
+              <span className="input-label">Select Role</span>
+              <FormGroup row name="role">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value="farmmanager"
+                      name="role"
+                      checked={isButtonSelected("farmmanager")}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  }
+                  label={<p className="input-label">Farmmanager</p>}
                   onChange={(e) => handleChange(e)}
                 />
                 <FormControlLabel
-                  value="ergonomists"
-                  control={<Checkbox />}
-                  label="Ergonomists"
-                  checked={isButtonSelected("ergonomists")}
-                  onChange={(e) => handleChange(e)}
-                />
-                <FormControlLabel
-                  value="supervisor"
-                  control={<Checkbox />}
-                  label="Supervisor"
-                  checked={isButtonSelected("supervisor")}
-                  onChange={(e) => handleChange(e)}
-                />
- */}
-              <FormGroup value={userData.role} name="role">
-                <FormControlLabel
-                  value="farmmanager"
-                  control={<Checkbox />}
-                  label={<p className="input-label">FarManager</p>}
-                  checked={isButtonSelected("FarManager")}
-                  onChange={(e) => handleChange(e)}
-                />
-                <FormControlLabel
-                  value="ergonomists"
-                  control={<Checkbox />}
+                  control={
+                    <Checkbox
+                      value="ergonomists"
+                      name="role"
+                      checked={isButtonSelected("ergonomists")}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  }
                   label={<p className="input-label">Ergonomists</p>}
-                  checked={isButtonSelected("ergonomists")}
-                  onChange={(e) => handleChange(e)}
                 />
                 <FormControlLabel
-                  value="supervisor"
-                  control={<Checkbox />}
+                  control={
+                    <Checkbox
+                      value="supervisor"
+                      name="role"
+                      checked={isButtonSelected("supervisor")}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  }
                   label={<p className="input-label">Supervisor</p>}
-                  checked={isButtonSelected("ergonomists")}
-                  onChange={(e) => handleChange(e)}
                 />
               </FormGroup>
-              {/* </FormGroup > */}
             </FormControl>
           </Grid>
         </DialogContent>

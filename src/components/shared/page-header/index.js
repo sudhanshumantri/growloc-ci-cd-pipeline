@@ -26,6 +26,7 @@ export default function PageHeader({
   buttonArray,
   info,
   customButton,
+
 }) {
   //export default class PageHeader extends React.Component {
   return (
@@ -45,7 +46,8 @@ export default function PageHeader({
         {info && (
           <Grid item xs={12} sm={12} md={12}>
             {info.map((data, index) => (
-              <span className="label-light">
+              <span className="label-light" key={index}>
+
                 {data.title && (
                   <>
                     <b>{data.title}</b>:
@@ -55,11 +57,11 @@ export default function PageHeader({
                 {data.value}
                 {info.length - 1 != index && <>, </>}
               </span>
+              
             ))}
           </Grid>
         )}
       </Grid>
-      <Divider />
     </>
   );
 }

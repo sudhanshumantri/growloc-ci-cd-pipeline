@@ -355,7 +355,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="germinationType"
-                value={farmData.germinationType}
+                value={farmData.germinationType }
                 options={germination}
                 isError={validation.germinationType}
                 errorMessage="Please select a germination zone"
@@ -394,7 +394,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="germinationWateringType"
-                value={farmData.germinationWateringType || ""}
+                value={farmData.germinationWateringType }
                 options={wateringType}
                 isError={validation.germinationWateringType}
                 errorMessage="Please select a germination watering type"
@@ -407,7 +407,6 @@ export default function AddFarm({
             <FormControl fullWidth>
               <TextBox
                 isWhite={true}
-                InputLabelProps={{ shrink: true }}
                 type="number"
                 name="germinationWateringSchedule"
                 onChange={handleChange}
@@ -433,7 +432,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="nurseryType"
-                value={farmData.nurseryType || ""}
+                value={farmData.nurseryType }
                 options={nursaryType}
                 isError={validation.nurseryType}
                 errorMessage="Please select a nursery zone"
@@ -471,7 +470,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="nurseryWateringType"
-                value={farmData.nurseryWateringType || ""}
+                value={farmData.nurseryWateringType }
                 options={wateringType}
                 isError={validation.nurseryWateringType}
                 errorMessage="Please select a nursery watering type"
@@ -511,7 +510,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="growingType"
-                value={farmData.growingType || ""}
+                value={farmData.growingType }
                 options={growingZone}
                 isError={validation.growingType}
                 errorMessage="Please select a growing type"
@@ -581,7 +580,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="growingPlantSpacing"
-                value={farmData.growingPlantSpacing || ""}
+                value={farmData.growingPlantSpacing }
                 options={plantSpacing}
                 handleChange={handleChange}
                 isError={validation.growingPlantSpacing}
@@ -679,7 +678,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="nutrientsType"
-                value={farmData.nutrientsType || ""}
+                value={farmData.nutrientsType }
                 options={nutrientsType}
                 handleChange={handleChange}
                 isError={validation.nutrientsType}

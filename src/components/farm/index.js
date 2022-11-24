@@ -159,13 +159,14 @@ export default function ManageFarm({
                         <IconButton
                           className="farm-card-icon"
                           aria-label="settings"
+                          onClick={handleOpenMoreOptions}
+
                         >
                           <MoreHorizIcon
                             id="basic-button"
                             aria-controls={newOpen ? "basic-menu" : undefined}
                             aria-haspopup="true"
                             aria-expanded={newOpen ? "true" : undefined}
-                            onClick={handleOpenMoreOptions}
                           />
                         </IconButton>
                       </AuthOutlet>

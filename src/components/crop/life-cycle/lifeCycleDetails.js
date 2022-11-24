@@ -4,6 +4,8 @@ import { sortBy } from "lodash";
 import PageHeader from "../../shared/page-header";
 import Loader from "../../shared/loader";
 import Divider from "@mui/material/Divider";
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+
 
 import {
   Stack,
@@ -220,7 +222,7 @@ export default function CropLifeCycleDetails({
     return (
       <>
         {info.map((data, index) => (
-              <span className="label-light life-cycle-header">
+              <span className="label-light-bold">
                 {data.title && (
                   <>
                     <b>{data.title}</b>:
@@ -291,13 +293,13 @@ export default function CropLifeCycleDetails({
           {selectedStageInformation.stage + " History Information"}
         </p>
         <Paper
-          style={{
-            height: 250,
-            width: "100%",
-            overflowY: "scroll",
-            boxShadow: "none",
-          }}
-          className="bordered-table"
+          // style={{
+          //   height: 250,
+          //   width: "100%",
+          //   overflowY: "scroll",
+          //   boxShadow: "none",
+          // }}
+          className="life-cycle-details-card life-cycle-spacing "         
         >
           <Table size="small" aria-label="a dense table">
             <TableBody>
@@ -326,9 +328,11 @@ export default function CropLifeCycleDetails({
                   </TableRow>
                 );
               })}
-              <Divider />
             </TableBody>
+
           </Table>
+          <Divider />
+
         </Paper>
       </Grid>
     );
@@ -388,9 +392,9 @@ export default function CropLifeCycleDetails({
         <Grid item xs={12} sm={6} md={6}>
           <p className="section-title">
             {selectedStageInformation.stage + " Parameters Information"}{" "}
-            <BorderColorIcon
+            <EditOutlinedIcon
               className="icon"
-              sx={{ fontSize: "16px" }}
+              sx={{color:"#517223"}}              
               onClick={handleEditToggle}
             />
           </p>
@@ -440,6 +444,7 @@ export default function CropLifeCycleDetails({
       {!isLifecycleDetailsLoading && (
         <>
           {renderHeader()}
+          <Divider/>
           <div className="page-container">
             {renderStepper()}
             {renderNotification()}

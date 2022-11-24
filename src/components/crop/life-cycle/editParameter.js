@@ -52,7 +52,7 @@ export default function EditParameters({
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
           <br />
-          <Grid container spacing={2} className="farm-container">
+          <Grid container spacing={2} >
             {stageData.parameters.map((parameter, index) => (
               <Grid item xs={12} sm={6} md={6} key={index} >
                 <span className="input-label">{parameter.name}</span>

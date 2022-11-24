@@ -15,7 +15,6 @@ import {
   } from "./actionTypes";
   
   export function fetchUsersRequest() {
-    console.log("jjjj");
     return {
       type: FETCH_USERS_REQUEST,
     };

@@ -73,3 +73,5 @@ export const role_based_access = {
     supervisor: ["view"],
   },
 };
+
+export const addTask = ["Cleaning","WaterQuality","Soil Preparation","Plantation","Irrigation","Crop Maintenance","Fertilizer","Scouting","Defence","Harvest","Processing","Storage","Packing","Loading","Transportation","Selling"];

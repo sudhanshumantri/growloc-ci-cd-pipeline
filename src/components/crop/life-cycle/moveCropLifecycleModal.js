@@ -12,6 +12,7 @@ import Checkbox from "@mui/material/Checkbox";
 import ButtonCustom from "../../shared/button";
 import { Grid } from "@mui/material";
 import TextBox from "../../shared/text-box";
+
 export default function MoveCropLifeCycleModal({
   title,
   open,
@@ -65,7 +66,7 @@ export default function MoveCropLifeCycleModal({
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">{title}</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} className="farm-container">
+          <Grid container spacing={2} >
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">No of plants</span>
               <br />

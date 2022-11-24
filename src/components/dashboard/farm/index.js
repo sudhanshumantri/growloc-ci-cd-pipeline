@@ -17,6 +17,10 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { options } from "../../../config";
 import Loader from "../../shared/loader";
+import AddIcon from "@mui/icons-material/Add";
+import ButtonCustom from "../../shared/button";
+import AddTaskModal from "../addtask";
+
 
 let cropSchedulesHeader = [
   {
@@ -73,9 +77,14 @@ export default function FarmDashboard({
   fetchFarmDashboardHarvest,
   dashboardHarvestList,
   isDashboardHarvestListLoading,
+  usersList,
+  fetchUsers
 }) {
+  console.log(usersList,"userlist");
   const { farmId } = useParams();
   const [month, setMonth] = useState(3);
+  const [open, setOpen] = useState(false);
+
   const headers = [
     {
       label: "Batch Number",
@@ -98,6 +107,10 @@ export default function FarmDashboard({
     },
   ];
 
+  const handleModalToggle = () => {
+     setOpen(!open);
+  };
+
   const handleChange = (event) => {
     const { value } = event.target;
     setMonth(value);
@@ -113,9 +126,7 @@ export default function FarmDashboard({
         </Grid>
         <Grid container className="farm-container">
           <Grid item xs={12} sm={12} md={12}>
-              <DataTable
-                data={{ headers: headers, rows: cropSchedules || [] }}
-              />
+            <DataTable data={{ headers: headers, rows: cropSchedules || [] }} />
           </Grid>
         </Grid>
       </>
@@ -124,8 +135,16 @@ export default function FarmDashboard({
   const renderTaskSchedules = () => {
     return (
       <>
-        <Grid item xs={12} sm={12} md={12}>
+        <Grid item xs={6} sm={6} md={6}>
           <p className="section-title">Task Schedules</p>
+        </Grid>
+        <Grid item xs={6} sm={6} md={6} sx={{alignItems:"center"}} className="button-container">
+          <ButtonCustom
+            title="Add New Task"
+
+            ICON={<AddIcon />}
+            handleButtonClick={handleModalToggle}
+          />
         </Grid>
         <Grid container className="farm-container">
           <Grid item xs={12} sm={12} md={12}>
@@ -189,6 +208,9 @@ export default function FarmDashboard({
   React.useEffect(() => {
     fetchFarmDashboard(farmId);
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
+    if(usersList.length <= 0) {
+      fetchUsers({farmId})
+    }
   }, []);
 
   return (
@@ -204,6 +226,7 @@ export default function FarmDashboard({
           {renderFarmUtilization()}
           {renderCropsUtilization()}
         </Grid>
+        {open && <AddTaskModal open={open} handleClose={handleModalToggle} usersList={usersList}/>}
       </div>
     </div>
   );

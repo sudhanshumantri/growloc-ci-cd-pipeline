@@ -10,6 +10,7 @@ import CustomButton from "../../shared/button";
 import SingleCustomSelect from "../../shared/select";
 import TextBox from "../../shared/text-box";
 import { Grid } from "@mui/material";
+
 export default function AddCropModal({
   modalData,
   open,
@@ -111,7 +112,7 @@ export default function AddCropModal({
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
           <br />
-          <Grid container spacing={2} className="farm-container">
+          <Grid container spacing={2} >
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label"> Crop</span>
               <FormControl fullWidth>
