@@ -1,16 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import FormControl from "@mui/material/FormControl";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
+import {FormControl,Dialog,DialogTitle,DialogContent,DialogActions,Grid} from "@mui/material/";
 import CustomButton from "../../shared/button";
 import SingleCustomSelect from "../../shared/select";
 import TextBox from "../../shared/text-box";
-import { Grid } from "@mui/material";
-
 export default function AddCropModal({
   modalData,
   open,
@@ -28,6 +22,7 @@ export default function AddCropModal({
   const [isMethodError, setIsMethodError] = useState(false);
   const [isCropError, setIsCropError] = useState(false);
   const [units, setUnits] = useState(1);
+
   React.useEffect(() => {
     if (open && cropDetails.name) {
       handleCropChange({ target: { value: cropDetails.name } }, true);
@@ -39,6 +34,7 @@ export default function AddCropModal({
     const selectedItem = modalData.find(
       (item) => item.name === event.target.value
     );
+    console.log(selectedItem,"hello");
     setCropListName(event.target.value);
     setSelectedData(selectedItem);
     if (isFromEdit) {
@@ -57,7 +53,7 @@ export default function AddCropModal({
     setUnits(event.target.value);
   };
   const handleSaveCrop = () => {
-    // console.log(germinationMethod,selectedData);
+    console.log(germinationMethod,selectedData);
     let isError = false;
     let cropData = {
       name: cropListName,
@@ -137,7 +133,6 @@ export default function AddCropModal({
                 <TextBox
                   disabled={true}
                   isWhite={true}
-                  label={"Variety"}
                   value={selectedData.variety}
                 />
               </FormControl>
@@ -156,13 +151,13 @@ export default function AddCropModal({
               <span className="input-label"> Germination Method</span>
               <FormControl fullWidth>
                 <SingleCustomSelect
-                  value={germinationMethod}
                   isWhite={true}
                   valueKey="index"
                   labelKey="type"
-                  lable="Germination Method"
+                  // lable="Germination Method"
                   disabled={cropDetails.isEditMode}
                   options={selectedData.germinationMethod}
+                  value={germinationMethod}
                   handleChange={(e) => handleGerminationChange(e)}
                   isError={isMethodError}
                   errorMessage="Please select a method"

@@ -1,16 +1,19 @@
 import * as React from "react";
 import { useState } from "react";
-import FormControl from "@mui/material/FormControl";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import TextField from "@mui/material/TextField";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import {
+  FormControl,
+  Dialog,
+  DialogActions,
+  TextField,
+  DialogTitle,
+  DialogContent,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Grid,
+} from "@mui/material/";
+
 import ButtonCustom from "../../shared/button";
-import { Grid } from "@mui/material";
 import TextBox from "../../shared/text-box";
 
 export default function MoveCropLifeCycleModal({
@@ -66,7 +69,7 @@ export default function MoveCropLifeCycleModal({
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">{title}</DialogTitle>
         <DialogContent>
-          <Grid container spacing={2} >
+          <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">No of plants</span>
               <br />
@@ -108,7 +111,6 @@ export default function MoveCropLifeCycleModal({
                             checked-={complete}
                           />
                         }
-                        
                         label="Do you want to dispose  the crops after this harvest?"
                       />
                     </FormGroup>

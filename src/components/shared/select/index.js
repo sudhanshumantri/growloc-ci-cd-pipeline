@@ -1,10 +1,6 @@
 import React from "react";
-import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
-import './style.css';
+import { Select, MenuItem, FormHelperText } from "@mui/material/";
+import "./style.css";
 
 const SingleCustomSelect = ({
   inputLable,
@@ -18,25 +14,14 @@ const SingleCustomSelect = ({
   isError,
   errorMessage,
   disabled,
-  isWhite
+  isWhite,
 }) => {
   return (
     <>
-      {/* // <FormControl fullWidth>
-    //   <InputLabel id="test-select-label" variant="outlined">
-    //     {inputLable}
-    //   </InputLabel> */}
       <Select
-        className={
-          isWhite
-            ? "input-custom-white input-custom"
-            : "input-custom"
-        }
-        // labelId={lable + "multiple-name-label"}
-        // id={lable + "test-select-label"}
+        className={isWhite ? "input-custom-white input-custom" : "input-custom"}
         name={name}
-        value={value || ""}
-        // lable={lable}
+        value={value ?? ""}
         onChange={handleChange}
         disabled={disabled}
       >

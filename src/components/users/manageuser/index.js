@@ -5,9 +5,6 @@ import PageHeader from "../../shared/page-header";
 import { useParams } from "react-router-dom";
 import Loader from "../../shared/loader";
 import AddUsersModal from "../adduser";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
-import DeleteIcon from "@mui/icons-material/Delete";
-import CreateIcon from "@mui/icons-material/Create";
 import AddIcon from "@mui/icons-material/Add";
 import { Grid } from "@mui/material";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -175,7 +172,7 @@ export default function ManageUsers({
         <ConfirmDialogBox
           dialogState={isDeleteModelOpen}
           buttonArray={conFirmbuttons}
-          subHeading={`Are you sure to delete ${userInfo.name} ?`}
+          subHeading={`Are you sure to delete "${userInfo.name}" ?`}
         />
       )}
       <Grid container className="farm-container">

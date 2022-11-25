@@ -281,9 +281,10 @@ export default function AddFarm({
             <span className="input-label">Name</span>
             <FormControl fullWidth>
               <TextBox
+                defaultValue=""
                 name="name"
                 isWhite={true}
-                value={farmData.name || ""}
+                value={farmData.name }
                 onChange={handleChange}
                 error={validation.name}
                 helperText={validation.name ? "Please provide name" : ""}
@@ -294,9 +295,10 @@ export default function AddFarm({
             <span className="input-label">Farm Area</span>
             <FormControl fullWidth>
               <TextBox
+                defaultValue=""
                 isWhite={true}
                 name="farmArea"
-                value={farmData.farmArea || ""}
+                value={farmData.farmArea}
                 onChange={handleChange}
               />
             </FormControl>
@@ -315,6 +317,7 @@ export default function AddFarm({
           <span className="input-label">Farm Location</span>
           <FormControl fullWidth>
             <TextBox
+              defaultValue=""
               fullWidth
               isWhite={true}
               inputRef={materialRef}
@@ -355,7 +358,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="germinationType"
-                value={farmData.germinationType }
+                value={farmData.germinationType}
                 options={germination}
                 isError={validation.germinationType}
                 errorMessage="Please select a germination zone"
@@ -370,8 +373,9 @@ export default function AddFarm({
                 isWhite={true}
                 InputLabelProps={{ shrink: true }}
                 name="germinationArea"
-                value={farmData.germinationArea || ""}
+                value={farmData.germinationArea }
                 onChange={handleChange}
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -383,8 +387,9 @@ export default function AddFarm({
                 isWhite={true}
                 InputLabelProps={{ shrink: true }}
                 name="germinationSeedsCount"
-                value={farmData.germinationSeedsCount || ""}
+                value={farmData.germinationSeedsCount }
                 onChange={handleChange}
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -394,7 +399,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="germinationWateringType"
-                value={farmData.germinationWateringType }
+                value={farmData.germinationWateringType}
                 options={wateringType}
                 isError={validation.germinationWateringType}
                 errorMessage="Please select a germination watering type"
@@ -410,7 +415,8 @@ export default function AddFarm({
                 type="number"
                 name="germinationWateringSchedule"
                 onChange={handleChange}
-                value={farmData.germinationWateringSchedule || ""}
+                value={farmData.germinationWateringSchedule }
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -432,7 +438,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="nurseryType"
-                value={farmData.nurseryType }
+                value={farmData.nurseryType}
                 options={nursaryType}
                 isError={validation.nurseryType}
                 errorMessage="Please select a nursery zone"
@@ -447,8 +453,9 @@ export default function AddFarm({
                 isWhite={true}
                 InputLabelProps={{ shrink: true }}
                 name="nurseryArea"
-                value={farmData.nurseryArea || ""}
+                value={farmData.nurseryArea}
                 onChange={handleChange}
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -460,7 +467,8 @@ export default function AddFarm({
                 InputLabelProps={{ shrink: true }}
                 name="nurserySeedsCount"
                 onChange={handleChange}
-                value={farmData.nurserySeedsCount || ""}
+                value={farmData.nurserySeedsCount }
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -470,7 +478,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="nurseryWateringType"
-                value={farmData.nurseryWateringType }
+                value={farmData.nurseryWateringType}
                 options={wateringType}
                 isError={validation.nurseryWateringType}
                 errorMessage="Please select a nursery watering type"
@@ -486,8 +494,9 @@ export default function AddFarm({
                 InputLabelProps={{ shrink: true }}
                 type="number"
                 name="nurseryWateringSchedule"
-                value={farmData.nurseryWateringSchedule || ""}
+                value={farmData.nurseryWateringSchedule}
                 onChange={handleChange}
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -510,7 +519,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="growingType"
-                value={farmData.growingType }
+                value={farmData.growingType}
                 options={growingZone}
                 isError={validation.growingType}
                 errorMessage="Please select a growing type"
@@ -525,10 +534,11 @@ export default function AddFarm({
                 isWhite={true}
                 InputLabelProps={{ shrink: true }}
                 name="growingArea"
-                value={farmData.growingArea || ""}
+                value={farmData.growingArea}
                 error={validation.growingArea}
                 helperText={validation.growingArea ? "Please provide name" : ""}
                 onChange={handleChange}
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -539,8 +549,9 @@ export default function AddFarm({
               <TextBox
                 isWhite={true}
                 name="growingRowCount"
-                value={farmData.growingRowCount || ""}
+                value={farmData.growingRowCount}
                 onChange={handleChange}
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -551,7 +562,7 @@ export default function AddFarm({
                 isWhite={true}
                 InputLabelProps={{ shrink: true }}
                 name="growingPlantCountPerRow"
-                value={farmData.growingPlantCountPerRow || ""}
+                value={farmData.growingPlantCountPerRow }
                 error={validation.growingPlantCountPerRow}
                 helperText={
                   validation.growingPlantCountPerRow
@@ -559,6 +570,7 @@ export default function AddFarm({
                     : ""
                 }
                 onChange={handleChange}
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -570,7 +582,8 @@ export default function AddFarm({
                 InputLabelProps={{ shrink: true }}
                 name="growingWateringSchedule"
                 onChange={handleChange}
-                value={farmData.growingWateringSchedule || ""}
+                value={farmData.growingWateringSchedule }
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -580,11 +593,12 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="growingPlantSpacing"
-                value={farmData.growingPlantSpacing }
+                value={farmData.growingPlantSpacing}
                 options={plantSpacing}
                 handleChange={handleChange}
                 isError={validation.growingPlantSpacing}
                 errorMessage="Please select Plant spacing"
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -606,7 +620,7 @@ export default function AddFarm({
               <TextBox
                 isWhite={true}
                 name="reservoirCapacity"
-                value={farmData.reservoirCapacity || ""}
+                value={farmData.reservoirCapacity }
                 onChange={handleChange}
                 error={validation.growingPlantCountPerRow}
                 helperText={
@@ -626,7 +640,7 @@ export default function AddFarm({
               <TextBox
                 isWhite={true}
                 name="nutrientWaterReservoirCapacity"
-                value={farmData.nutrientWaterReservoirCapacity || ""}
+                value={farmData.nutrientWaterReservoirCapacity }
                 onChange={handleChange}
                 error={validation.nutrientWaterReservoirCapacity}
                 helperText={
@@ -644,7 +658,7 @@ export default function AddFarm({
                 isWhite={true}
                 name="phReservoirCapacity"
                 onChange={handleChange}
-                value={farmData.phReservoirCapacity || ""}
+                value={farmData.phReservoirCapacity}
               />
             </FormControl>
           </Grid>
@@ -657,7 +671,8 @@ export default function AddFarm({
                 isWhite={true}
                 name="stockNutrientSolutionCapacity"
                 onChange={handleChange}
-                value={farmData.stockNutrientSolutionCapacity || ""}
+                value={farmData.stockNutrientSolutionCapacity }
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -668,7 +683,8 @@ export default function AddFarm({
                 isWhite={true}
                 name="nutrientdilutionRatio"
                 onChange={handleChange}
-                value={farmData.nutrientdilutionRatio || ""}
+                value={farmData.nutrientdilutionRatio }
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -678,7 +694,7 @@ export default function AddFarm({
               <SingleCustomSelect
                 isWhite={true}
                 name="nutrientsType"
-                value={farmData.nutrientsType }
+                value={farmData.nutrientsType}
                 options={nutrientsType}
                 handleChange={handleChange}
                 isError={validation.nutrientsType}
@@ -707,7 +723,7 @@ export default function AddFarm({
               <TextBox
                 isWhite={true}
                 name="polyhouseStructureExpectedLife"
-                value={farmData.polyhouseStructureExpectedLife || ""}
+                value={farmData.polyhouseStructureExpectedLife }
                 onChange={handleChange}
                 error={validation.polyhouseStructureExpectedLife}
                 helperText={
@@ -715,6 +731,7 @@ export default function AddFarm({
                     ? "Please provide polyhouse structure expected life"
                     : ""
                 }
+                defaultValue=""
               />
             </FormControl>
           </Grid>
@@ -724,7 +741,7 @@ export default function AddFarm({
               <TextBox
                 isWhite={true}
                 name="polyhousePlasticExpectedLife"
-                value={farmData.polyhousePlasticExpectedLife || ""}
+                value={farmData.polyhousePlasticExpectedLife }
                 onChange={handleChange}
                 error={validation.polyhousePlasticExpectedLife}
                 helperText={
@@ -732,6 +749,7 @@ export default function AddFarm({
                     ? "Please provide Polyhouse plastic expected life"
                     : ""
                 }
+                defaultValue=""
               />
             </FormControl>
           </Grid>

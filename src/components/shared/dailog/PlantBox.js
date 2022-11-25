@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { useState } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import Box from '@mui/material/Box';
-
-
+import * as React from "react";
+import { useState } from "react";
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  Box,
+} from "@mui/material/";
 
 export default function PlantFormDialog() {
   const [open, setOpen] = useState(false);
@@ -24,34 +24,16 @@ export default function PlantFormDialog() {
       <Dialog open={open} onClose={handleClose}>
         <Box
           sx={{
-            display: 'flex-box',
-            alignItems: 'center',
-            '& > :not(style)': { m: 1 },
+            display: "flex-box",
+            alignItems: "center",
+            "& > :not(style)": { m: 1 },
           }}
         >
-          <TextField
-            id="name"
-            label="Name"
-          />
-          <TextField
-            id="type"
-            label="type"
-          />
-          <TextField
-            helperText=" "
-            id="height"
-            label="height"
-          />
-          <TextField
-            id="rate"
-            label="rate"
-          />
-          <TextField
-            helperText=" "
-            id="quantity"
-            label="Quantity"
-
-          />
+          <TextField id="name" label="Name" />
+          <TextField id="type" label="type" />
+          <TextField helperText=" " id="height" label="height" />
+          <TextField id="rate" label="rate" />
+          <TextField helperText=" " id="quantity" label="Quantity" />
         </Box>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

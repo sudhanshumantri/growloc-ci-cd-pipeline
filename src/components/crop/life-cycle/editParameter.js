@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import FormControl from "@mui/material/FormControl";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import TextField from "@mui/material/TextField";
-import DialogContent from "@mui/material/DialogContent";
-import CustomButton from "../../shared/button";
-import { Grid } from "@mui/material";
-import DialogTitle from "@mui/material/DialogTitle";
+import {
+  FormControl,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Grid,
+  DialogTitle,
+} from "@mui/material/";
 import TextBox from "../../shared/text-box";
-import Divider from '@mui/material/Divider';
+import CustomButton from "../../shared/button";
 export default function EditParameters({
   open,
   modalData,
@@ -52,9 +52,9 @@ export default function EditParameters({
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
           <br />
-          <Grid container spacing={2} >
+          <Grid container spacing={2}>
             {stageData.parameters.map((parameter, index) => (
-              <Grid item xs={12} sm={6} md={6} key={index} >
+              <Grid item xs={12} sm={6} md={6} key={index}>
                 <span className="input-label">{parameter.name}</span>
                 <FormControl fullWidth>
                   <TextBox

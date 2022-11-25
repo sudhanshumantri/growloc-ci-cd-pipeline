@@ -1,40 +1,43 @@
 import React, { useCallback, useEffect } from "react";
 import { useState } from "react";
-import FormControl from "@mui/material/FormControl";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import CustomButton from "../../shared/button";
+import {
+  FormControl,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  DialogContent,
+  Grid,
+} from "@mui/material/";
 import TextBox from "../../shared/text-box";
+import CustomButton from "../../shared/button";
 import SingleCustomSelect from "../../shared/select";
-import { Grid } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopTimePicker } from "@mui/x-date-pickers/DesktopTimePicker";
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { addTask } from "../../../config";
 import dayjs from "dayjs";
-export default function AddTaskModal({ open, handleClose,usersList}) {
-
-    const [taskData,setTaskData] = useState({
-        category:"",
-        taskName:"",
-        desCription:"",
-        assignTask: "",
-    })
+export default function AddTaskModal({
+  open,
+  handleSave,
+  handleClose,
+  usersList,
+}) {
+  const [taskData, setTaskData] = useState({
+    category: "",
+    taskName: "",
+    desCription: "",
+    assignTask: "",
+  });
   const [value, setValue] = React.useState(dayjs("2018-01-01T00:00:00.000Z"));
   const [endTime, setEndTime] = React.useState(
     dayjs("2018-01-01T00:00:00.000Z")
   );
-
   const [date, setDate] = React.useState(dayjs());
-
   const handleChange = (e) => {
     const { value, name } = e.target;
     setTaskData({ ...taskData, [name]: value });
   };
-
 
   const getOptions = useCallback(() => {
     const options = [];
@@ -48,6 +51,15 @@ export default function AddTaskModal({ open, handleClose,usersList}) {
     }
     return options;
   }, [usersList]);
+  const handleTaskSave = () => {
+    let payload = {
+      category: taskData.category,
+      taskName: taskData.taskName,
+      desCription: taskData.desCription,
+      assignTask: taskData.assignTask,
+    };
+    handleSave(payload);
+  };
 
   const renderActionButton = () => {
     return (
@@ -59,7 +71,7 @@ export default function AddTaskModal({ open, handleClose,usersList}) {
               handleButtonClick={handleClose}
               title="Cancel"
             />
-            <CustomButton title="Save" />
+            <CustomButton title="Save" handleButtonClick={handleTaskSave} />
           </DialogActions>
         </div>
       </>
@@ -73,18 +85,28 @@ export default function AddTaskModal({ open, handleClose,usersList}) {
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
           <br />
-          <Grid container spacing={2} >
+          <Grid container spacing={2}>
             <Grid item xs={12} sm={6} md={6}>
               <span className="input-label">Category</span>
               <FormControl fullWidth>
-                <SingleCustomSelect name="category" value={taskData.category} isWhite={true} options={addTask} handleChange={handleChange}
- />
+                <SingleCustomSelect
+                  name="category"
+                  value={taskData.category}
+                  isWhite={true}
+                  options={addTask}
+                  handleChange={handleChange}
+                />
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <span className="input-label">Task Name</span>
               <FormControl fullWidth>
-                <TextBox isWhite={true} name="taskName" value={taskData.taskName} onChange={handleChange} />
+                <TextBox
+                  isWhite={true}
+                  name="taskName"
+                  value={taskData.taskName}
+                  onChange={handleChange}
+                />
               </FormControl>
             </Grid>
 
@@ -94,14 +116,16 @@ export default function AddTaskModal({ open, handleClose,usersList}) {
                 <FormControl fullWidth>
                   <DatePicker
                     disableFuture
-                    views={['day','year']}
+                    views={["day", "year"]}
                     inputFormat="MMMM DD"
                     disableMaskedInput={true}
                     value={date}
                     onChange={(newValue) => {
-                        setDate(newValue);
+                      setDate(newValue);
                     }}
-                    renderInput={(params) => <TextBox {...params} isWhite={true} />}
+                    renderInput={(params) => (
+                      <TextBox {...params} isWhite={true} />
+                    )}
                   />
                 </FormControl>
               </LocalizationProvider>
@@ -116,7 +140,9 @@ export default function AddTaskModal({ open, handleClose,usersList}) {
                     onChange={(newValue) => {
                       setValue(newValue);
                     }}
-                    renderInput={(params) => <TextBox {...params} isWhite={true} />}
+                    renderInput={(params) => (
+                      <TextBox {...params} isWhite={true} />
+                    )}
                   />
                 </FormControl>
               </LocalizationProvider>
@@ -130,7 +156,9 @@ export default function AddTaskModal({ open, handleClose,usersList}) {
                     onChange={(newValue) => {
                       setEndTime(newValue);
                     }}
-                    renderInput={(params) => <TextBox {...params} isWhite={true} />}
+                    renderInput={(params) => (
+                      <TextBox {...params} isWhite={true} />
+                    )}
                   />
                 </FormControl>
               </LocalizationProvider>
@@ -138,8 +166,12 @@ export default function AddTaskModal({ open, handleClose,usersList}) {
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">Description</span>
               <FormControl fullWidth>
-                <TextBox isWhite={true} name="desCription" value={taskData.desCription} onChange={handleChange}
-/>
+                <TextBox
+                  isWhite={true}
+                  name="desCription"
+                  value={taskData.desCription}
+                  onChange={handleChange}
+                />
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
@@ -147,16 +179,15 @@ export default function AddTaskModal({ open, handleClose,usersList}) {
                 Who would you want the task to be assigned to?
               </span>
               <FormControl fullWidth>
-                  <SingleCustomSelect
-                    labelKey="label"
-                    valueKey="value"
-                    name="assignTask"
-                    isWhite={true}
-                    value={taskData.assignTask}
-                    options={getOptions()}
-                    handleChange={handleChange}
-                  />
-
+                <SingleCustomSelect
+                  labelKey="label"
+                  valueKey="value"
+                  name="assignTask"
+                  isWhite={true}
+                  value={taskData.assignTask}
+                  options={getOptions()}
+                  handleChange={handleChange}
+                />
               </FormControl>
             </Grid>
           </Grid>

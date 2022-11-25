@@ -87,7 +87,7 @@ export default function CropLifeCycle({
   ];
   return (
     <>
-      <PageHeader title="Crop Lifecycle" buttonArray={buttonArray} />
+      <PageHeader  title="Crop Lifecycle" buttonArray={buttonArray} />
       <div className="page-container">
         {isAddLifecycleLoading && <Loader title="Adding Crop To Lifecycle" />}
         {isCropLifeCycleListLoading && <Loader title="Fetching Crops" />}

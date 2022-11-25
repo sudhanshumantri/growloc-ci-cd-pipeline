@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
-import { fetchDashboardFarmRequest,fetchDashboardHarvestRequest } from "../../actions/dashboard";
+import { fetchDashboardFarmRequest,fetchDashboardHarvestRequest ,addTaskSheduleTaskRequest} from "../../actions/dashboard";
 import { fetchUsersRequest} from "../../actions/users";
 import FarmDashboard from "../../components/dashboard/farm";
 import {
@@ -12,6 +12,9 @@ import {
   selectIsFarmDashboardHarvestListLoading,
   selectFarmDashboardHarvestListError,
   selectFarmDashboardHarvestList,
+  selectIsTaskScheduleTaskLoading,
+  selectTaskScheduleTaskListError
+
 } from "../../selectors/dashboard";
 import {
   selectUsersList
@@ -24,6 +27,8 @@ const mapStateToProps = createStructuredSelector({
   DashboardHarvestListError:selectFarmDashboardHarvestListError(),
   dashboardHarvestList:selectFarmDashboardHarvestList(),
   usersList: selectUsersList(),
+  isTaskScheduleTaskLoading:selectIsTaskScheduleTaskLoading(),
+  TaskScheduleTaskListError:selectTaskScheduleTaskListError(),
 
 
 });
@@ -31,6 +36,7 @@ const mapDispatchToProps = {
   fetchFarmDashboard: fetchDashboardFarmRequest,
   fetchFarmDashboardHarvest:fetchDashboardHarvestRequest,
   fetchUsers: fetchUsersRequest,
+  addTaskScheduleTask:addTaskSheduleTaskRequest,
 
 };
 function withRouter(Component) {

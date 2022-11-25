@@ -2,23 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
-import Grid from "@mui/material/Grid";
-import { Card } from "@mui/material";
-import { CardContent } from "@mui/material";
+import { Card,Grid,CardContent,CardActions,Menu,MenuItem ,IconButton, ListItemIcon, ListItemText, Divider} from "@mui/material";
 import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import ConfirmDialogBox from "../shared/dailog/ConfirmDialogBox";
-import CardActions from "@mui/material/CardActions";
 import AddIcon from "@mui/icons-material/Add";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import Collapse from "@mui/material/Collapse";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { IconButton, ListItemIcon, ListItemText, Divider } from "@mui/material";
 import "./style.css";
 import AuthOutlet from "../shared/authoutlet";
-
 export default function ManageFarm({
   fetchFarm,
   farmList,
@@ -175,10 +167,10 @@ export default function ManageFarm({
                         anchorEl={anchorEl}
                         open={newOpen}
                         PaperProps={{
-                          sx: {
+                           sx: {
                             width: "300px",
-                            border: "2px solid #E5E4D7",
-                            borderRadius: "10px",
+                           border: "2px solid #E5E4D7",
+                           borderRadius: "10px",
                           },
                         }}
                         onClose={handleCloseMoreOptions}

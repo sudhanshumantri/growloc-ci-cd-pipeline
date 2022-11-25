@@ -2,7 +2,6 @@ import React from "react";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import { parsePath } from "history";
-
 const TextBox = ({
   disabled,
   value,
@@ -13,6 +12,7 @@ const TextBox = ({
   isWhite,
   inputRef,
   key,
+  defaultValue,
   ...params
 }) => {
   return (
@@ -24,7 +24,7 @@ const TextBox = ({
           }
           disabled={disabled}
           name ={name}
-          value={value}
+          value={value || "" }
           onChange={onChange}
           error ={error}
           helperText={helperText}

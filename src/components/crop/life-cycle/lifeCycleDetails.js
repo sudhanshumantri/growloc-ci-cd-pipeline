@@ -5,8 +5,6 @@ import PageHeader from "../../shared/page-header";
 import Loader from "../../shared/loader";
 import Divider from "@mui/material/Divider";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-
-
 import {
   Stack,
   Stepper,
@@ -331,7 +329,7 @@ export default function CropLifeCycleDetails({
             </TableBody>
 
           </Table>
-          <Divider />
+                        <Divider />
 
         </Paper>
       </Grid>

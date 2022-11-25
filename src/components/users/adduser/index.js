@@ -1,17 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import FormControl from "@mui/material/FormControl";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
+import {FormControl,Dialog,DialogActions,DialogTitle,DialogContent,Grid,FormControlLabel,Checkbox,FormGroup} from "@mui/material/";
 import CustomButton from "../../shared/button";
-import { Grid } from "@mui/material";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import TextBox from "../../shared/text-box";
-import Checkbox from "@mui/material/Checkbox";
-import FormGroup from "@mui/material/FormGroup";
 import "./style.css";
 export default function AddUsersModal({
   open,
@@ -160,7 +152,7 @@ export default function AddUsersModal({
               </FormControl>
             </Grid>
             <br />
-            <FormControl sx={{width:"100px"}} >
+            <FormControl sx={{width:"100px",margin:"15px"}} >
               <br />
            
               <span className="input-label">Select Role</span>

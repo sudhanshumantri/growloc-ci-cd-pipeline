@@ -22,3 +22,14 @@ export const selectIsFarmDashboardHarvestListLoading = () =>
 export const selectFarmDashboardHarvestListError = () =>
   createSelector(selectFarmDashboard, (services) => services.toJS()["DashboardHarvestListError"]);
 
+  //
+  export const selectIsTaskScheduleTaskLoading = () =>
+  createSelector(
+    selectFarmDashboard,
+    (services) => services.toJS()["isTaskScheduleTaskLoading"]
+  );
+
+export const selectTaskScheduleTaskListError = () =>
+  createSelector(selectFarmDashboard, (services) => services.toJS()["TaskScheduleTaskListError"]);
+
+

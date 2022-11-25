@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import {Box,Toolbar,IconButton,Typography} from '@mui/material/';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open, drawerWidth }) => ({
+})(({ theme, open, drawerwidth }) => ({
     zIndex: theme.zIndex.drawer + 1,
     backgroundColor: '#F8F8F8',
     transition: theme.transitions.create(['width', 'margin'], {
@@ -17,8 +14,8 @@ const AppBar = styled(MuiAppBar, {
         duration: theme.transitions.duration.leavingScreen,
     }),
     ...(open && {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: drawerwidth,
+        width: `calc(100% - ${drawerwidth}px)`,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -31,7 +28,7 @@ export default function TopHeader({ open, toggleDrawer, drawerWidth }) {
         <AppBar
             position="fixed"
             open={open}
-            drawerWidth={drawerWidth}
+            drawerwidth={drawerWidth}
         >
             <Toolbar>
                 <IconButton

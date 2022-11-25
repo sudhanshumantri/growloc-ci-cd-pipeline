@@ -1,13 +1,6 @@
 import React from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableContainer from "@mui/material/TableContainer";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
+import {Paper,Table,TableBody,TableCell,TableHead,TableRow,TableContainer,Button,IconButton} from "@mui/material/";
+
 import moment from "moment";
 import "./style.css";
 import AuthOutlet from "../authoutlet";
@@ -30,11 +23,12 @@ function DataTable({ data }) {
           isAuthRequired={item.isAuthRequired}
           from={item.from}
           action={item.action}
+          key={index}
+
         >
           {item.type === "icon" ? (
             <IconButton
               title={item.label}
-              key={index}
               color={item.color}
               onClick={() => item.handler(rowData)}
             >

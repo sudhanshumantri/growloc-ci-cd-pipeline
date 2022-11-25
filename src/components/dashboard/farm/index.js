@@ -1,27 +1,16 @@
 import React, { useState } from "react";
-import {
-  Card,
-  Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@mui/material";
+import { Grid, FormControl } from "@mui/material";
 import { useParams } from "react-router-dom";
 import PageHeader from "../../shared/page-header";
 import DataTable from "../../shared/dataTable";
 import PieChart from "../../shared/chart/pieChart";
 import BarChart from "../../shared/chart/barChart";
 import SingleCustomSelect from "../../shared/select";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
 import { options } from "../../../config";
 import Loader from "../../shared/loader";
 import AddIcon from "@mui/icons-material/Add";
 import ButtonCustom from "../../shared/button";
 import AddTaskModal from "../addtask";
-
-
 let cropSchedulesHeader = [
   {
     label: "Batch Number",
@@ -78,9 +67,10 @@ export default function FarmDashboard({
   dashboardHarvestList,
   isDashboardHarvestListLoading,
   usersList,
-  fetchUsers
+  fetchUsers,
+  addTaskScheduleTask,
 }) {
-  console.log(usersList,"userlist");
+  console.log(usersList, "userlist");
   const { farmId } = useParams();
   const [month, setMonth] = useState(3);
   const [open, setOpen] = useState(false);
@@ -108,13 +98,20 @@ export default function FarmDashboard({
   ];
 
   const handleModalToggle = () => {
-     setOpen(!open);
+    setOpen(!open);
   };
 
   const handleChange = (event) => {
     const { value } = event.target;
     setMonth(value);
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month: value });
+  };
+
+  const handleTaskSave = (data) => {
+    if (data) {
+      addTaskScheduleTask(data);
+    }
+    handleModalToggle();
   };
 
   const renderCropSchedules = () => {
@@ -138,10 +135,16 @@ export default function FarmDashboard({
         <Grid item xs={6} sm={6} md={6}>
           <p className="section-title">Task Schedules</p>
         </Grid>
-        <Grid item xs={6} sm={6} md={6} sx={{alignItems:"center"}} className="button-container">
+        <Grid
+          item
+          xs={6}
+          sm={6}
+          md={6}
+          sx={{ alignItems: "center" }}
+          className="button-container"
+        >
           <ButtonCustom
             title="Add New Task"
-
             ICON={<AddIcon />}
             handleButtonClick={handleModalToggle}
           />
@@ -184,16 +187,11 @@ export default function FarmDashboard({
           <Grid container justifyContent="end">
             <Grid item xs={3} sm={2} md={2}>
               <span className="input-label"> Select Month</span>
-
               <FormControl fullWidth>
-                {/* <InputLabel id="demo-multiple-name-label" variant="outlined">
-                Select Month
-              </InputLabel> */}
                 <SingleCustomSelect
                   value={month}
                   valueKey="value"
                   labelKey="name"
-                  // lable="Select Month"
                   options={options}
                   handleChange={handleChange}
                 />
@@ -208,8 +206,8 @@ export default function FarmDashboard({
   React.useEffect(() => {
     fetchFarmDashboard(farmId);
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
-    if(usersList.length <= 0) {
-      fetchUsers({farmId})
+    if (usersList.length <= 0) {
+      fetchUsers({ farmId });
     }
   }, []);
 
@@ -218,7 +216,7 @@ export default function FarmDashboard({
       <PageHeader title="Farm Dashboard" buttonArray={[]} />
       {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
       <div className="page-container">
-        <Grid container item sx={8} spacing={2}>
+        <Grid container item spacing={2}>
           {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
           {renderCropSchedules()}
           {renderTaskSchedules()}
@@ -226,7 +224,14 @@ export default function FarmDashboard({
           {renderFarmUtilization()}
           {renderCropsUtilization()}
         </Grid>
-        {open && <AddTaskModal open={open} handleClose={handleModalToggle} usersList={usersList}/>}
+        {open && (
+          <AddTaskModal
+            open={open}
+            handleSave={handleTaskSave}
+            handleClose={handleModalToggle}
+            usersList={usersList}
+          />
+        )}
       </div>
     </div>
   );

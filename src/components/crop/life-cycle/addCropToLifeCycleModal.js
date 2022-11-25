@@ -1,21 +1,19 @@
 import * as React from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
-import Select from "@mui/material/Select";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import TextField from "@mui/material/TextField";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
+import {
+  MenuItem,
+  FormControl,
+  FormHelperText,
+  Select,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  DialogContent,
+  Grid,
+} from "@mui/material/";
 import CustomButton from "../../shared/button";
-import SingleCustomSelect from "../../shared/select";
-import { Box } from "@mui/system";
-import { Grid } from "@mui/material";
-import TextBox from "../../shared/text-box"
+import TextBox from "../../shared/text-box";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -47,7 +45,7 @@ export default function AddCropModal({
       setIsCropError(true);
       isError = true;
     }
-    
+
     if (!units) {
       setIsUnitsError(true);
       setUnitErrorMessage("Unit is required");
@@ -94,10 +92,10 @@ export default function AddCropModal({
           <br />
           <Grid container spacing={2} className="farm-container">
             <Grid item xs={12} sm={12} md={12}>
-            <span className="input-label">Crop</span>
+              <span className="input-label">Crop</span>
               <FormControl fullWidth>
-                <Select  
-                  sx={{background:"white"}}   
+                <Select
+                  sx={{ background: "white" }}
                   labelId="demo-multiple-name-label"
                   id="demo-multiple-name"
                   value={selectedCrop}
@@ -122,10 +120,10 @@ export default function AddCropModal({
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
-            <span className="input-label">Units</span>
+              <span className="input-label">Units</span>
               <FormControl fullWidth>
                 <TextBox
-                isWhite={true}
+                  isWhite={true}
                   value={units}
                   error={isUnitsError}
                   helperText={isUnitsError ? unitErrorMessage : ""}

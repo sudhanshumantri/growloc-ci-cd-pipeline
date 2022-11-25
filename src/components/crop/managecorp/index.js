@@ -1,18 +1,12 @@
 import React, { useState } from "react";
-import axios from "../../../api/index";
 import AddCropModal from "../addcrop";
 import DataTable from "../../shared/dataTable";
 import PageHeader from "../../shared/page-header";
-import { connect } from "react-redux";
-import { fetchCropList } from "../../../sagas/crops";
 import { useParams } from "react-router-dom";
 import Loader from "../../shared/loader";
-import DeleteIcon from "@mui/icons-material/Delete";
-import CreateIcon from "@mui/icons-material/Create";
 import ConfirmDialogBox from "../../shared/dailog/ConfirmDialogBox";
 import AddIcon from "@mui/icons-material/Add";
 import { Grid } from "@mui/material";
-import { color } from "@mui/system";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 export default function ManageCrop({
@@ -195,7 +189,7 @@ export default function ManageCrop({
           <ConfirmDialogBox
             dialogState={isDeleteModelOpen}
             buttonArray={conFirmbuttons}
-            subHeading={`Are you sure to delete ${cropInfo.name} ?`}
+            subHeading={`Are you sure to delete "${cropInfo.name}" ?`}
           />
         )} 
         {cropTittle()}

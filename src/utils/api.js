@@ -26,6 +26,7 @@ const urls = {
     "fetch-farm-all-dashboard": "farm/get-farm-dashboard-data/",
     "fetch-farm-harvest-dashboard":"farm/get-farm-harvesteed-breakup",
     "fetch-farm-details": "farm/get-farm-details/",
+    "add-taskschedule-task":""
 
   },
 };
@@ -214,6 +215,15 @@ export function callFetchFarmDetailsList(routeParams) {
   });
 }
 //
+
+export function callAddTaskScheduleTask(data) {
+  return callApi(getEndpoint("add-taskschedule-task"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data,
+  });
+}
+
 
 
 
