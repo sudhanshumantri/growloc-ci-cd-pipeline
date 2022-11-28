@@ -72,6 +72,15 @@ export const role_based_access = {
     ergonomists: [ "view"],
     supervisor: ["view"],
   },
+  farmItems: {
+    farmowner: ["create", "edit", "delete", "view"],
+    farmmanager:["create", "edit", "delete", "view"],
+    ergonomists:[ "view"],
+    supervisor: ["view"],
+  },
+
+
 };
 
 export const addTask = ["Cleaning","WaterQuality","Soil Preparation","Plantation","Irrigation","Crop Maintenance","Fertilizer","Scouting","Defence","Harvest","Processing","Storage","Packing","Loading","Transportation","Selling"];
+export const inventoryData = ["gms","ml","kgs","Litres","Pieces","Packet","other"];

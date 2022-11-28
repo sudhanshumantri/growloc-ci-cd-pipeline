@@ -11,7 +11,6 @@ const TextBox = ({
   helperText,
   isWhite,
   inputRef,
-  key,
   defaultValue,
   ...params
 }) => {
@@ -29,8 +28,6 @@ const TextBox = ({
           error ={error}
           helperText={helperText}
           inputRef ={inputRef}
-          key={key}
-
         />
     </>
   );

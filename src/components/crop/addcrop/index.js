@@ -5,6 +5,7 @@ import {FormControl,Dialog,DialogTitle,DialogContent,DialogActions,Grid} from "@
 import CustomButton from "../../shared/button";
 import SingleCustomSelect from "../../shared/select";
 import TextBox from "../../shared/text-box";
+
 export default function AddCropModal({
   modalData,
   open,
@@ -34,7 +35,6 @@ export default function AddCropModal({
     const selectedItem = modalData.find(
       (item) => item.name === event.target.value
     );
-    console.log(selectedItem,"hello");
     setCropListName(event.target.value);
     setSelectedData(selectedItem);
     if (isFromEdit) {
@@ -182,7 +182,7 @@ export default function AddCropModal({
               ? (
                   selectedData.germinationMethod[germinationMethod].stages || []
                 ).map((item) => (
-                  <Grid item xs={4}>
+                  <Grid item xs={4} key={item.name}>
                     <span className="input-label">{item.name}</span>
                     <TextBox
                       isWhite={true}

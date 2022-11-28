@@ -220,7 +220,7 @@ export default function CropLifeCycleDetails({
     return (
       <>
         {info.map((data, index) => (
-              <span className="label-light-bold">
+              <span className="label-light-bold" key={index}>
                 {data.title && (
                   <>
                     <b>{data.title}</b>:
@@ -266,7 +266,7 @@ export default function CropLifeCycleDetails({
             if (index != repeatsOn.length - 1) {
               daysText = daysText + ", ";
             }
-            return <b> {daysText}</b>;
+            return <b key={index}> {daysText}</b>;
           })}
           <BorderColorIcon
             className="icon"
@@ -401,7 +401,7 @@ export default function CropLifeCycleDetails({
             {selectedStageInformation.parameters.map((param) => {
               return (
                 <>
-                  <p className="label-light">
+                  <p className="label-light" >
                     <span className="label-light-bold">{param.name}: </span>{" "}
                     {param.value} <b>{param.unit}</b>
                   </p>

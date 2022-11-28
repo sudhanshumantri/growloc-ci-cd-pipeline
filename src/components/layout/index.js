@@ -24,15 +24,19 @@ import usersReducer from "../../reducers/users";
 import cropsReducer from "../../reducers/crops";
 import lifeCycleReducer from "../../reducers/life-cycle";
 import dashboardFarmReducer from "../../reducers/dashboard";
+import inventoryReducer from "../../reducers/inventory";
 import loginSagas from "../../sagas/login";
 import cropsSagas from "../../sagas/crops";
 import farmSagas from "../../sagas/farm";
 import userSagas from "../../sagas/users";
 import farmDashboardSagas from "../../sagas/dashboard";
 import lifeCycleSagas from "../../sagas/life-cycle";
+import inventorySagas from "../../sagas/inventory";
 import { selectToken } from "../../selectors/login";
 import { loadAuthToken } from "../../actions/login";
 import AddFarm from "../../container/addfarm";
+// import ManageItem from "../inventory/manageitem";
+import ManageItem from "../../container/inventory"
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
 injectReducer("crops", cropsReducer);
 injectReducer("login", loginReducer);
@@ -40,12 +44,14 @@ injectReducer("farm", farmReducer);
 injectReducer("life-cycle", lifeCycleReducer);
 injectReducer("dashboard", dashboardFarmReducer);
 injectReducer("users", usersReducer);
+injectReducer("inventory",inventoryReducer)
 injectSagas(farmSagas);
 injectSagas(userSagas);
 injectSagas(loginSagas);
 injectSagas(cropsSagas);
 injectSagas(lifeCycleSagas);
 injectSagas(farmDashboardSagas);
+injectSagas(inventorySagas)
 const drawerWidth = 240;
 const Layout = () => {  
   const token = localStorage.getItem("AUTH_TOKEN");
@@ -93,6 +99,7 @@ const Layout = () => {
             <Route path="users" element={<AddUsers />} />
             <Route path="crops/manage" element={<ManageCrop />} />
             <Route path="crops/lifecycle" element={<CropLifeCycle />} />
+            <Route path="inventory/items" element={<ManageItem/>} />
           </Route>
           <Route path="crops/lifecycle/details/:lifecycleId" element={<CropLifeCycleDetails />} />
           <Route path="login" element={<Login />} />

@@ -26,8 +26,11 @@ const urls = {
     "fetch-farm-all-dashboard": "farm/get-farm-dashboard-data/",
     "fetch-farm-harvest-dashboard":"farm/get-farm-harvesteed-breakup",
     "fetch-farm-details": "farm/get-farm-details/",
-    "add-taskschedule-task":""
-
+    "add-taskschedule-task":"",
+    "fetch-farm-all-inventory":"farm/inventory/",
+    "add-farm-inventory":"farm/inventory/",
+    "update-farm-inventory" : "farm/inventory/",
+    "delete-farm-inventory" : "farm/inventory/",
   },
 };
 function getEndpoint(endpoint) {
@@ -223,6 +226,43 @@ export function callAddTaskScheduleTask(data) {
     data,
   });
 }
+//
+export function callfetchFarmInventoryDetails(routeParams) {
+  return callApi(getEndpoint("fetch-farm-all-inventory"), {
+    method: "get",
+    removeAuthorizationHeader: false,
+    routeParams
+  });
+}
+
+export function callAddFarmInventory(data) {
+  return callApi(getEndpoint("add-farm-inventory"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data,
+  });
+}
+//
+
+export function callUpdateFarmInventory(data,routeParams) {
+  return callApi(getEndpoint("update-farm-inventory"), {
+    method: "PUT",
+    removeAuthorizationHeader: false,
+    data: data,
+    routeParams
+
+  });
+}
+//
+export function callDeleteFarmInventory(routeParams) {
+  return callApi(getEndpoint("delete-farm-inventory"), {
+    method: "delete",
+    removeAuthorizationHeader: false,
+    routeParams
+  });
+}
+
+
 
 
 

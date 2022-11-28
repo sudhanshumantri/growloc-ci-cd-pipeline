@@ -24,7 +24,6 @@ const INITIAL_STATE = fromJS({
   userStatus: true,
   isdeleteUserLoading: false,
   isdeleteUserError: false,
-  
 });
 
 export default function usersReducer(state = INITIAL_STATE, action = {}) {

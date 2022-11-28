@@ -104,7 +104,12 @@ const farmMenuItems = [
     navigation: "inventory",
     css: { borderBottom: "1px solid white" },
     subMenu: [
-      { id: "1", name: "Items", navigation: "inventory/items" },
+      {
+        id: "1",
+        name: "Items",
+        link: "/inventory/items",
+        navigation: "inventory/items",
+      },
       { id: "2", name: "Equipments", navigation: "inventory/equipments" },
       { id: "3", name: "Replenish", navigation: "inventory/replenish" },
     ],
