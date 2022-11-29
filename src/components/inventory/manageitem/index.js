@@ -27,7 +27,7 @@ export default function ManageItem({
   const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [itemInfo, setItemInfo] = useState({});
-  
+
   const handleModalToggle = () => {
     setOpen(!open);
     setItemInfo({});
@@ -119,6 +119,10 @@ export default function ManageItem({
       label: "Add New",
       ICON: <AddIcon />,
       handler: handleModalToggle,
+      isAuthRequired: true,
+      from: "farmItems",
+      action: "create",
+
     },
   ];
   useEffect(() => {

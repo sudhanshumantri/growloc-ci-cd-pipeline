@@ -57,6 +57,7 @@ export default function AddTaskModal({
       taskName: taskData.taskName,
       desCription: taskData.desCription,
       assignTask: taskData.assignTask,
+      da
     };
     handleSave(payload);
   };

@@ -53,7 +53,7 @@ export default function AddCropModal({
     setUnits(event.target.value);
   };
   const handleSaveCrop = () => {
-    console.log(germinationMethod,selectedData);
+
     let isError = false;
     let cropData = {
       name: cropListName,
@@ -70,7 +70,7 @@ export default function AddCropModal({
       crop: cropData,
       qty: parseInt(units),
     };
-    if (cropListName === null) {
+    if (!cropListName) {
       setIsCropError(true);
       isError = true;
     }

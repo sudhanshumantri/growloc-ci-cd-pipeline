@@ -85,7 +85,7 @@ export default function inventoryReducer(state = INITIAL_STATE, action = {}) {
       const  id = action.data;
       const filteredList = FarmInventoryList.filter((item) => item.id !== id);
       return state
-        .set("isDeleteFarmInventoryError", false)
+        .set("isDeleteFarmInventoryLoading", false)
         .set("FarmInventoryList",filteredList)
         .set("isDeleteFarmInventoryError", null);
     case DELETE_FARM_INVENTORY_FAILURE:

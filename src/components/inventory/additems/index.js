@@ -26,10 +26,21 @@ export default function AddInventoryItems({
 }) {
   let { farmId } = useParams();
   const [itemData, setItemData] = useState(itemDetails);
+  const [nameError, setNameError] = useState(false);
 
   const handleChange = (e) => {
+    nameError && setNameError(false);
     const { value, name } = e.target;
     setItemData({ ...itemData, [name]: value });
+  };
+
+  const handleFarmItem = () => {
+    let isError = false;
+    if (!itemData.name) {
+      setNameError(true);
+      isError = true;
+    }
+    return isError;
   };
   const handleFarmInventorySave = () => {
     let payload = {
@@ -38,7 +49,10 @@ export default function AddInventoryItems({
       qty: itemData.qty,
       units: itemData.units,
     };
-    handleSave(payload);
+    let isError = handleFarmItem(payload);
+    if (!isError) {
+      handleSave(payload);
+    }
   };
 
   const renderActionButtons = () => {
@@ -64,7 +78,9 @@ export default function AddInventoryItems({
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle className="dialog-title-container">{itemDetails.id? "Update item":"Add a item"}</DialogTitle>
+        <DialogTitle className="dialog-title-container">
+          {itemDetails.id ? "Update item" : "Add a item"}
+        </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
           <Grid container sx={{ margin: "1px", width: 500 }} spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
@@ -75,6 +91,8 @@ export default function AddInventoryItems({
                   name="name"
                   value={itemData.name}
                   onChange={handleChange}
+                  error={nameError}
+                  helperText={nameError ? "Please provide name" : ""}
                 />
               </FormControl>
             </Grid>

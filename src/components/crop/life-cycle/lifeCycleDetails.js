@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { sortBy } from "lodash";
 import PageHeader from "../../shared/page-header";
@@ -26,6 +26,7 @@ import ScheduleHarvestingModal from "./scheduleHarvestingModal";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import EditParameters from "./editParameter";
 import { WEEKDAYS } from "../../../config";
+
 export default function CropLifeCycleDetails({
   fetchCropsLifecycleDetails,
   lifecycleDetails,
@@ -47,6 +48,7 @@ export default function CropLifeCycleDetails({
   const [maxQty, setMaxQty] = React.useState(null);
   const [modalHeaderText, setModalHeaderText] = React.useState("");
   const [harvestingSchedules, setHarvestingSchedules] = React.useState([]);
+
   React.useEffect(() => {
     fetchCropsLifecycleDetails(parseInt(lifecycleId));
   }, []);
@@ -304,6 +306,7 @@ export default function CropLifeCycleDetails({
               {filteredHistory.map((data, index) => {
                 return (
                   <TableRow
+                    // key={index}
                     key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
@@ -398,15 +401,15 @@ export default function CropLifeCycleDetails({
           </p>
 
           <div className="life-cycle-details-card life-cycle-spacing">
-            {selectedStageInformation.parameters.map((param) => {
+            {selectedStageInformation.parameters.map((param,index) => {
               return (
-                <>
-                  <p className="label-light" >
+                <div key={index}>
+                  <p className="label-light" key={index}>
                     <span className="label-light-bold">{param.name}: </span>{" "}
                     {param.value} <b>{param.unit}</b>
                   </p>
                   <Divider />
-                </>
+                </div>
               );
             })}
           </div>

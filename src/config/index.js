@@ -1,6 +1,7 @@
 export const api = {
-  host: "https://growloc-backend.herokuapp.com/api/",
-  // host: 'http://localhost:8000/api/'
+  //host: "https://growloc-backend.herokuapp.com/api/",
+  host: 'http://44.202.123.160:8000/api/'
+
 };
 export const WEEKDAYS = [
   { label: "S", value: "7" },
