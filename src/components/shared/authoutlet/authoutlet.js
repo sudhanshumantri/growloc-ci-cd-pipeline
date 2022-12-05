@@ -3,7 +3,6 @@ import { Outlet, useParams } from "react-router-dom";
 import { role_based_access } from "../../../config";
 
 const AuthOutlet = ({ children, isAuthRequired, from, action, defaultReturn }) => {
-  //console.log(children, isAuthRequired, from, action);
   const [isAuthorized, setIsAuthorized] = useState(false);
   useEffect(() => {
     if (isAuthRequired) {

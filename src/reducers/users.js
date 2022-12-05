@@ -35,7 +35,6 @@ export default function usersReducer(state = INITIAL_STATE, action = {}) {
         .set("usersList", [])
         .set("UsersListError", null);
     case FETCH_USERS_SUCCESS:
-      console.log("FETCH_USERS_SUCCESS", action.data);
       return state
         .set("isUsersListLoading", false)
         .set("usersList", action.data)

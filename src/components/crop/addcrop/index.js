@@ -61,7 +61,9 @@ export default function AddCropModal({
       variety: selectedData.variety,
       parameters: selectedData.parameters,
       germinationMethod:
-        germinationMethod !== null
+        germinationMethod !== null &&
+        germinationMethod !== undefined &&
+        germinationMethod !== ""
           ? selectedData.germinationMethod[germinationMethod]
           : null,
     };

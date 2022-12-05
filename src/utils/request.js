@@ -17,7 +17,6 @@ function handleError(error) {
 }
 
 function makeAPICall(originalConfig) {
-  console.log(originalConfig);
   return axios(originalConfig)
     .then((nextResponse) => {
       return nextResponse;

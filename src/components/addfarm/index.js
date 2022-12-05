@@ -244,7 +244,6 @@ export default function AddFarm({
       polyhousePlasticExpectedLife: farmData.polyhousePlasticExpectedLife,
     };
     if (validateFarm()) {
-      //  console.log(requestFarmData);
       handleSave(requestFarmData);
     }
   };

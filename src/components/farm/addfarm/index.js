@@ -188,7 +188,6 @@ export default function AddFarmModal({
       polyhousePlasticExpectedLife: farmData.polyhousePlasticExpectedLife,
     };
     if (validateFarm()) {
-      console.log("hey", requestFarmData);
       handleSave(requestFarmData);
     }
   };
@@ -655,7 +654,6 @@ export default function AddFarmModal({
         userLong =             
            position.coords.longitude 
         ;
-        console.log(userLat, userLong);
       })
     },[]);
 
@@ -667,7 +665,6 @@ export default function AddFarmModal({
             <Autocomplete
               apiKey={"AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY"}
               onPlaceSelected={(place) => {
-                console.log(place);
               }}
               types={["address"]}
             />

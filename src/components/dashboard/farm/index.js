@@ -69,8 +69,9 @@ export default function FarmDashboard({
   usersList,
   fetchUsers,
   addTaskScheduleTask,
+  fetchFarmInventory,
+  FarmInventoryList
 }) {
-  console.log(usersList, "userlist");
   const { farmId } = useParams();
   const [month, setMonth] = useState(3);
   const [open, setOpen] = useState(false);
@@ -107,7 +108,7 @@ export default function FarmDashboard({
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month: value });
   };
 
-  const handleTaskSave = (data) => {
+  const   handleTaskSave = (data) => {
     if (data) {
       addTaskScheduleTask(data);
     }
@@ -206,6 +207,7 @@ export default function FarmDashboard({
   React.useEffect(() => {
     fetchFarmDashboard(farmId);
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
+    fetchFarmInventory(farmId);
     if (usersList.length <= 0) {
       fetchUsers({ farmId });
     }
@@ -230,6 +232,7 @@ export default function FarmDashboard({
             handleSave={handleTaskSave}
             handleClose={handleModalToggle}
             usersList={usersList}
+            FarmInventoryList={FarmInventoryList}
           />
         )}
       </div>

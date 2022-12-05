@@ -78,7 +78,6 @@ export default function AddCropModal({
     };
     let isError = handleDataValidation(requestData);
     if (!isError) {
-      console.log(requestData);
       handleSave(requestData);
     }
   };

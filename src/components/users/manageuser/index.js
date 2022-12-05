@@ -147,7 +147,6 @@ export default function ManageUsers({
     navigator.geolocation.getCurrentPosition((position) => {
       setUserLat(position.coords.latitude);
       setUserLong(position.coords.longitude);
-      console.log(userLat, userLong);
     });
   }, []);
 

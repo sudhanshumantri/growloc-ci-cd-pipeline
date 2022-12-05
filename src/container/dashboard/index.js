@@ -4,6 +4,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import { fetchDashboardFarmRequest,fetchDashboardHarvestRequest ,addTaskSheduleTaskRequest} from "../../actions/dashboard";
 import { fetchUsersRequest} from "../../actions/users";
+import { fetchFarmInventoryRequest} from "../../actions/inventory";
+
 import FarmDashboard from "../../components/dashboard/farm";
 import {
   selectFarmDashboardList,
@@ -19,6 +21,10 @@ import {
 import {
   selectUsersList
 } from "../../selectors/users"
+import {
+  selectFarmInventoryList,
+} from "../../selectors/inventory";
+
 const mapStateToProps = createStructuredSelector({
   dashboardFarmList: selectFarmDashboardList(),
   isDashboardFarmListLoading: selectIsFarmDashboardListLoading(),
@@ -29,14 +35,16 @@ const mapStateToProps = createStructuredSelector({
   usersList: selectUsersList(),
   isTaskScheduleTaskLoading:selectIsTaskScheduleTaskLoading(),
   TaskScheduleTaskListError:selectTaskScheduleTaskListError(),
-
-
+  FarmInventoryList:selectFarmInventoryList(),
+  
 });
 const mapDispatchToProps = {
   fetchFarmDashboard: fetchDashboardFarmRequest,
   fetchFarmDashboardHarvest:fetchDashboardHarvestRequest,
   fetchUsers: fetchUsersRequest,
   addTaskScheduleTask:addTaskSheduleTaskRequest,
+  fetchFarmInventory:fetchFarmInventoryRequest,
+
 
 };
 function withRouter(Component) {

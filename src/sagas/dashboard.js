@@ -14,7 +14,6 @@ import {
 } from "../actions/dashboard";
 
 export function* fetchFarmDashboardList({ data }) {
-    console.log("hello", data);
     let responseData = yield call(callFetchDashboardFarmList, data);
     if (responseData?.status == 200 && responseData.data.status) {
         yield put(fetchDashboardFarmSuccess(responseData.data.data));

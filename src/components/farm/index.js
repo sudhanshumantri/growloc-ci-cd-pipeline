@@ -26,7 +26,6 @@ export default function ManageFarm({
   const [farmInfo, setFarmInfo] = useState({});
   const [selectedFarmId, setSeletedFarmId] = useState(null);
   const [expanded, setExpanded] = useState(false);
-
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const newOpen = Boolean(anchorEl);
@@ -152,7 +151,6 @@ export default function ManageFarm({
                           className="farm-card-icon"
                           aria-label="settings"
                           onClick={handleOpenMoreOptions}
-
                         >
                           <MoreHorizIcon
                             id="basic-button"
@@ -203,7 +201,7 @@ export default function ManageFarm({
           <ConfirmDialogBox
             dialogState={isDeleteModelOpen}
             buttonArray={conFirmbuttons}
-            subHeading={`Are you sure to delete ${farmInfo.name} ?`}
+            subHeading={`Are you sure to delete "${farmInfo.name}" ?`}
           />
         )}
       </div>

@@ -46,7 +46,6 @@ export function callFetchCropsList() {
   });
 }
 export function callAddCropToFarm(data) {
-  console.log(data);
   return callApi(getEndpoint("add-crop-to-farm"), {
     method: "POST",
     removeAuthorizationHeader: false,
@@ -114,7 +113,6 @@ export function callfetchCropsLifecycleDetails(routeParams) {
 }
 
 export function callUpdateCropCycleParameters(data) {
-  console.log(data);
   return callApi(getEndpoint("update-crop-lifecycle-parameters"), {
     method: "POST",
     removeAuthorizationHeader: false,
@@ -123,7 +121,6 @@ export function callUpdateCropCycleParameters(data) {
 }
 
 export function callUpdateCropToLifecycleSchedule(data) {
-  console.log(data);
   return callApi(getEndpoint("update-crop-lifecycle-schedule"), {
     method: "POST",
     removeAuthorizationHeader: false,
@@ -139,7 +136,6 @@ export function callFetchUsersList(data) {
 }
 
 export function callAddUser(data) {
-  console.log(data, "hello here is data");
   return callApi(getEndpoint("add-user"), {
     method: "POST",
     removeAuthorizationHeader: false,

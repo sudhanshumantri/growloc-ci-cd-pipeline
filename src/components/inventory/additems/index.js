@@ -26,21 +26,34 @@ export default function AddInventoryItems({
 }) {
   let { farmId } = useParams();
   const [itemData, setItemData] = useState(itemDetails);
-  const [nameError, setNameError] = useState(false);
+  // const [nameError, setNameError] = useState(false);
+  // const [unitsError, setUnitsError] = useState(false);
+  const [validation, setValidation] = useState({
+    name: false,
+    units: false,
+  });
+
+
 
   const handleChange = (e) => {
-    nameError && setNameError(false);
     const { value, name } = e.target;
     setItemData({ ...itemData, [name]: value });
-  };
+    validation[name] && setValidation({ ...validation, [name]: false });
 
+  };
   const handleFarmItem = () => {
-    let isError = false;
+    let errors = {...validation};
+    let isValid = true;
     if (!itemData.name) {
-      setNameError(true);
-      isError = true;
+      errors.name = true;
+      isValid = false;
     }
-    return isError;
+    if (!itemData.units) {
+      errors.units = true;
+      isValid = false;
+    }
+    setValidation(errors);
+    return isValid;
   };
   const handleFarmInventorySave = () => {
     let payload = {
@@ -49,8 +62,7 @@ export default function AddInventoryItems({
       qty: itemData.qty,
       units: itemData.units,
     };
-    let isError = handleFarmItem(payload);
-    if (!isError) {
+    if(handleFarmItem()){
       handleSave(payload);
     }
   };
@@ -91,8 +103,8 @@ export default function AddInventoryItems({
                   name="name"
                   value={itemData.name}
                   onChange={handleChange}
-                  error={nameError}
-                  helperText={nameError ? "Please provide name" : ""}
+                  error={validation.name}
+                  helperText={validation.name ? "Please provide name" : ""}
                 />
               </FormControl>
             </Grid>
@@ -116,6 +128,9 @@ export default function AddInventoryItems({
                   value={itemData.units}
                   handleChange={handleChange}
                   options={inventoryData}
+                  isError={validation.units}
+                  errorMessage="Please select units"
+  
                 />
               </FormControl>
             </Grid>
