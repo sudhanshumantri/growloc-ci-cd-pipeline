@@ -14,9 +14,6 @@ import { ReactNotifications, Store } from 'react-notifications-component';
 import '../node_modules/react-notifications-component/dist/theme.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const theme = createTheme({
-    status: {
-        danger: orange[500],
-    },
     typography: {
         fontFamily: [
             'Poppins',
