@@ -10,7 +10,8 @@ import { HARVEST_MONTH_OPTIONS, TASK_HEADER } from "../../../config";
 import Loader from "../../shared/loader";
 import AddIcon from "@mui/icons-material/Add";
 import ButtonCustom from "../../shared/button";
-import AddTaskModal from "../addtask";
+// import AddTaskModal from "../addtask";
+import AddTaskModal from "../../shared/addtask/addtask";
 
 let cropSchedulesHeader = [
   {
@@ -84,7 +85,7 @@ export default function FarmDashboard({
       key: "lifecycleId",
       redirection: true,
       redirectionKey: "lifecycleId",
-      baseEndPoint: "#/crops/lifecycle/details/",
+      baseEndPoint: `#/farm/${farmId}/crops/lifecycle/details/`,
       isAuthRequired: true,
       from: "lifeCycle",
       action: "view",
@@ -116,7 +117,7 @@ export default function FarmDashboard({
       data.farmId = parseInt(farmId);
       addTaskScheduleTask(data);
     }
-    //  handleModalToggle();
+     handleModalToggle();
   };
 
   const renderCropSchedules = () => {

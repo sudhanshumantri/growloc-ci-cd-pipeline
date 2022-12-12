@@ -12,18 +12,17 @@ import TextBox from "../../shared/text-box";
 import CustomButton from "../../shared/button";
 import SingleCustomSelect from "../../shared/select";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { DesktopTimePicker } from "@mui/x-date-pickers/DesktopTimePicker";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TASK_CATEGORY } from "../../../config";
-import moment from 'moment';
+import moment from "moment";
+
 export default function AddTaskModal({
   open,
   handleSave,
   handleClose,
   usersList,
   farmInventoryList,
-
 }) {
   const [taskData, setTaskData] = useState({
     category: null,
@@ -34,7 +33,7 @@ export default function AddTaskModal({
     startTime: null,
     endTime: null,
     itemName: null,
-    qty: null
+    qty: null,
   });
   const [dueDate, setDueDate] = React.useState(moment());
   const [unitErrorMessage, setUnitErrorMessage] = useState("");
@@ -49,16 +48,17 @@ export default function AddTaskModal({
     unitErrorMessage: false,
   });
   const cleanObject = (obj) => {
-    Object.keys(obj).forEach((k) => (!obj[k] && obj[k] !== undefined && obj[k] != 0) && delete obj[k]);
+    Object.keys(obj).forEach(
+      (k) => !obj[k] && obj[k] !== undefined && obj[k] != 0 && delete obj[k]
+    );
     return obj;
-  }
+  };
   const handleChange = (e) => {
     const { value, name } = e.target;
     setTaskData({ ...taskData, [name]: value });
-    setUnitErrorMessage(false)
+    setUnitErrorMessage(false);
     validation[name] && setValidation({ ...validation, [name]: false });
   };
-
   const validateTask = () => {
     let errors = { ...validation };
     let isValid = true;
@@ -80,9 +80,8 @@ export default function AddTaskModal({
         isValid = false;
         setUnitErrorMessage("Unit can't be empty ");
       } else {
-        const targetUnits = farmInventoryList.find(
-          (k) => k.id == taskData.inventory
-        ) || {};
+        const targetUnits =
+          farmInventoryList.find((k) => k.id == taskData.inventory) || {};
         if (parseInt(taskData.qty) > parseInt(targetUnits.qty)) {
           errors.units = true;
           setUnitErrorMessage("Unit can't be greater than " + targetUnits.qty);
@@ -99,20 +98,19 @@ export default function AddTaskModal({
       usersList.forEach((list) => {
         if (list?.user?.profile?.name) {
           const { userId, name } = list.user.profile;
-          options.push({ label: name, value: userId});
+          options.push({ label: name, value: userId });
         }
       });
     }
     return options;
   }, [usersList]);
-  
 
   const handleTaskSave = () => {
     if (validateTask()) {
       let requestObject = cleanObject(taskData);
-       handleSave(requestObject);
+      handleSave(requestObject);
     }
-  }
+  };
   const renderActionButton = () => {
     return (
       <>
@@ -162,7 +160,6 @@ export default function AddTaskModal({
                   onChange={handleChange}
                   error={validation.taskName}
                   helperText={validation.taskName ? "Please provide name" : ""}
-
                 />
               </FormControl>
             </Grid>

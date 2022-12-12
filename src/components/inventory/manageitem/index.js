@@ -10,7 +10,6 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import ConfirmDialogBox from "../../shared/dailog/ConfirmDialogBox";
 import Loader from "../../shared/loader";
 
-
 export default function ManageItem({
   fetchFarmInventory,
   FarmInventoryList,

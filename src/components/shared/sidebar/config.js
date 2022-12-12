@@ -18,12 +18,18 @@ const menuItems = [
     navigation: "/",
     icon: Irrigation,
     css: { borderBottom: "1px solid white" },
+    isAuthRequired: true,
+    from: "dashboard",
+    action: "view",
   },
   {
     title: "Reports",
     id: "Reports",
     icon: Report,
     navigation: "reports",
+    from: "reports",
+    isAuthRequired: true,
+    action: "view",
     css: { borderBottom: "1px solid white" },
     subMenu: [
       {
@@ -33,6 +39,16 @@ const menuItems = [
       },
       { id: "2", name: "Farm Efficiency", navigation: "reports/efficiency" },
     ],
+  },
+  {
+    title: "Task",
+    id: "Task",
+    navigation: "task",
+    link: "task",
+    isAuthRequired: true,
+    from: "task",
+    action: "view",
+    css: { borderBottom: "1px solid white" },
   },
 ];
 
@@ -44,6 +60,9 @@ const farmMenuItems = [
     navigation: "/dashboard",
     link: "/dashboard",
     css: { borderBottom: "1px solid white" },
+    isAuthRequired: true,
+    from: "crops",
+    action: "view",
   },
   {
     title: "Crop",
@@ -52,6 +71,9 @@ const farmMenuItems = [
     isChildToFarmId: true,
     navigation: "corp",
     css: { borderBottom: "1px solid white" },
+    isAuthRequired: true,
+    from: "crops",
+    action: "view",
     subMenu: [
       {
         id: "1",
@@ -73,13 +95,29 @@ const farmMenuItems = [
     ],
   },
   {
+    title: "Task",
+    id: "Task",
+    navigation: "/task",
+    link: "/task",
+    css: { borderBottom: "1px solid white" },
+  },
+  {
     title: "Water Management",
     id: "Water",
     icon: WaterManagement,
     navigation: "water",
+    isAuthRequired: true,
+    from: "waterManagement",
+    action: "view",
+
     css: { borderBottom: "1px solid white" },
     subMenu: [
-      { id: "1", name: "Storage & History",icon:WaterHistory, navigation: "water/storage" }
+      {
+        id: "1",
+        name: "Storage & History",
+        icon: WaterHistory,
+        navigation: "water/storage",
+      },
     ],
   },
   {
@@ -87,6 +125,10 @@ const farmMenuItems = [
     id: "Monitors",
     icon: null,
     navigation: "monitors",
+    isAuthRequired: true,
+    from: "monitors",
+    action: "view",
+
     css: { borderBottom: "1px solid white" },
     subMenu: [
       { id: "1", name: "Data Inputs", navigation: "monitors/datainputs" },
@@ -105,6 +147,10 @@ const farmMenuItems = [
     id: "Inventory",
     icon: Inventory,
     navigation: "inventory",
+    isAuthRequired: true,
+    from: "inventory",
+    action: "view",
+
     css: { borderBottom: "1px solid white" },
     subMenu: [
       {
@@ -113,7 +159,7 @@ const farmMenuItems = [
         icon: InventoryItem,
         link: "/inventory/items",
         navigation: "inventory/items",
-      }
+      },
     ],
   },
   {
@@ -121,6 +167,9 @@ const farmMenuItems = [
     id: "Reports",
     icon: Report,
     navigation: "reports",
+    isAuthRequired: true,
+    from: "reports",
+    action: "view",
     css: { borderBottom: "1px solid white" },
     subMenu: [
       {
@@ -146,6 +195,9 @@ const farmMenuItems = [
     navigation: "users",
     link: "/users",
     icon: Account,
+    isAuthRequired: true,
+    from: "users",
+    action: "view",
     css: { borderBottom: "1px solid white" },
   },
   // {
@@ -159,4 +211,14 @@ const farmMenuItems = [
   // },
 ];
 
-export { farmMenuItems, menuItems };
+const supervisorMenuItems = [
+  {
+    title: "Task",
+    id: "Task",
+    navigation: "task",
+    link: "/task",
+    css: { borderBottom: "1px solid white" },
+  },
+];
+
+export { farmMenuItems, menuItems, supervisorMenuItems };

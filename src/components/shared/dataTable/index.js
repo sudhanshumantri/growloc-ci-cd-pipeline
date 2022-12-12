@@ -1,19 +1,29 @@
-import React from "react";
-import { Paper, Table, TableBody, TableCell, TableHead, TableRow, TableContainer, Button, IconButton } from "@mui/material/";
-
+import React, { useState } from "react";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableContainer,
+  Button,
+  IconButton,
+} from "@mui/material/";
 import moment from "moment";
 import "./style.css";
 import AuthOutlet from "../authoutlet";
 function DataTable({ data }) {
   const { headers, rows } = data;
-  const handleRedirection = (key) => { };
+  const handleRedirection = (key) => {};
+
   const validateValue = (row, key) => {
     if (key.indexOf(".") > -1) {
       const keys = key.split(".");
       const value = keys.reduce((a, v) => a[v], row);
-      return value ? value : '-';
+      return value ? value : "-";
     } else {
-      return row[key] || row[key]==0 ? row[key] : '-';
+      return row[key] || row[key] == 0 ? row[key] : "-";
     }
   };
   const renderButtonArray = (buttonArray, rowData) => {
@@ -24,7 +34,6 @@ function DataTable({ data }) {
           from={item.from}
           action={item.action}
           key={index}
-
         >
           {item.type === "icon" ? (
             <IconButton
@@ -48,10 +57,10 @@ function DataTable({ data }) {
   };
 
   return (
-    <TableContainer component={Paper} >
+    <TableContainer component={Paper}>
       <Table aria-label="simple table">
         <TableHead className="table-header-row">
-          <TableRow >
+          <TableRow>
             {headers.map((header, index) => (
               <TableCell key={index} className="table-header" align="left">
                 {header.label}
@@ -59,18 +68,17 @@ function DataTable({ data }) {
             ))}
           </TableRow>
         </TableHead>
-        <TableBody >
+        <TableBody>
           {rows.map((row, index) => (
             <TableRow
               align="center"
               key={index}
-              sx={{"&:last-child td, &:last-child th": { border: 0 } }}
-
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               {headers.map((header, headerIndex) => {
                 if (header.redirection) {
                   return (
-                    <TableCell key={headerIndex} component="td" scope="row" >
+                    <TableCell key={headerIndex} component="td" scope="row">
                       <AuthOutlet
                         isAuthRequired={header.isAuthRequired}
                         from={header.from}
@@ -94,7 +102,7 @@ function DataTable({ data }) {
                   );
                 } else {
                   return (
-                    <TableCell key={headerIndex} component="td" scope="row" >
+                    <TableCell key={headerIndex} component="td" scope="row">
                       {header.isButton ? (
                         <div
                           style={{

@@ -59,7 +59,7 @@ export const role_based_access = {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
     ergonomists: ["view"],
-    supervisor: ["view"],
+    supervisor: [],
   },
   lifeCycle: {
     farmowner: ["create", "edit", "delete", "view"],
@@ -71,14 +71,53 @@ export const role_based_access = {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create"],
     ergonomists: ["view"],
-    supervisor: ["view"],
+    supervisor: [],
   },
   farmItems: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
     ergonomists: ["view"],
+    supervisor: [],
+  },
+  dashboard : {
+    farmowner: ["create", "edit", "delete", "view"],
+    farmmanager: ["create", "edit", "delete", "view"],
+    ergonomists: ["view"],
+    supervisor: [],
+  },
+  reports:{
+    farmowner: ["create", "edit", "delete", "view"],
+    farmmanager: ["create", "edit", "delete", "view"],
+    ergonomists: ["view"],
+    supervisor: [],
+  },
+  inventory : {
+    farmowner: ["create", "edit", "delete", "view"],
+    farmmanager: ["create", "edit", "delete", "view"],
+    ergonomists: ["view"],
+    supervisor: [],
+  },
+  monitors : {
+    farmowner: ["create", "edit", "delete", "view"],
+    farmmanager: ["create", "edit", "delete", "view"],
+    ergonomists: ["view"],
+    supervisor: [],
+  },
+  waterManagement : {
+    farmowner: ["create", "edit", "delete", "view"],
+    farmmanager: ["create", "edit", "delete", "view"],
+    ergonomists: ["view"],
+    supervisor: [],
+  },
+  task: {
+    farmowner: [],
+    farmmanager: [],
+    ergonomists: [],
     supervisor: ["view"],
   },
+
+
+
 
 
 };

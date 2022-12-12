@@ -4,7 +4,8 @@ import { sortBy } from "lodash";
 import PageHeader from "../../shared/page-header";
 import Loader from "../../shared/loader";
 import Divider from "@mui/material/Divider";
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import AddIcon from "@mui/icons-material/Add";
 import {
   Stack,
   Stepper,
@@ -26,7 +27,7 @@ import ScheduleHarvestingModal from "./scheduleHarvestingModal";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import EditParameters from "./editParameter";
 import { WEEKDAYS } from "../../../config";
-
+import AddTaskModal from "../../shared/addtask/addtask";
 export default function CropLifeCycleDetails({
   fetchCropsLifecycleDetails,
   lifecycleDetails,
@@ -37,24 +38,51 @@ export default function CropLifeCycleDetails({
   addCropToLifecycleParameters,
   isAddLifecycleParametersLoading,
   updateCropToLifecycleSchedule,
+  fetchFarmInventory,
+  fetchUsers,
+  usersList,
+  farmInventoryList,
+  addTaskScheduleTask,
+  loginObject,
 }) {
+
+  let { farmId } = useParams();
+  let { lifecycleId } = useParams();
   const [open, setOpen] = useState(false);
   const [openScheduleHarvestingModal, setScheduleHarvestingModal] =
     useState(false);
   const [isStageEditOpen, setIsStageEditOpen] = useState(false);
-  let { lifecycleId } = useParams();
   const [activeStep, setActiveStep] = React.useState(0);
   const [isHarvestStage, setHarvestStage] = React.useState(false);
   const [maxQty, setMaxQty] = React.useState(null);
   const [modalHeaderText, setModalHeaderText] = React.useState("");
   const [harvestingSchedules, setHarvestingSchedules] = React.useState([]);
+  const [openTaskModal, setTaskModal] = useState(false)
 
   React.useEffect(() => {
     fetchCropsLifecycleDetails(parseInt(lifecycleId));
+    fetchFarmInventory(farmId);
+    if (usersList.length <= 0) {
+      fetchUsers({ farmId });
+    }
   }, []);
+
+  const handleTaskLifeCycleSave = (data) => {
+    if (data) {
+      data.createdBy = loginObject?.profile.id;
+      data.cropLifeCycleId = parseInt(lifecycleId);
+      data.farmId = parseInt(farmId);
+      addTaskScheduleTask(data);
+    }
+    handleTaskModalToggle()
+  };
   const handleModalToggle = () => {
     setOpen(!open);
   };
+  const handleTaskModalToggle = () => {
+    setTaskModal(!openTaskModal);
+  };
+
   const handleScheduleHarvestingModalToggle = () => {
     if (!openScheduleHarvestingModal) {
       setHarvestingSchedules(
@@ -143,6 +171,14 @@ export default function CropLifeCycleDetails({
   };
   const handleActionButton = () => {
     let buttonArray = [];
+
+    let buttonTaskLabel ="Add New Task"
+    buttonArray.push({
+      label: buttonTaskLabel,
+      ICON: <AddIcon />,
+      handler: handleTaskModalToggle,
+    });
+
     let { cropDetails } = lifecycleDetails;
     //  cropDetails.crop.crop.variety
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
@@ -155,6 +191,7 @@ export default function CropLifeCycleDetails({
           label: buttonLable,
           handler: handleModalToggle,
         });
+
       } else {
         //this is the last step and it is harvesting
 
@@ -181,6 +218,7 @@ export default function CropLifeCycleDetails({
             handler: handleModalToggle,
           });
         }
+
       }
     }
     return buttonArray;
@@ -190,6 +228,7 @@ export default function CropLifeCycleDetails({
     let title = cropDetails.batchNo + " " + cropDetails.crop.crop.name;
     let subtitle = "(Units :" + cropDetails.qty + ")";
     let buttonArray = handleActionButton();
+
     return (
       <div>
         <PageHeader
@@ -202,7 +241,6 @@ export default function CropLifeCycleDetails({
     );
   };
   const renderStepper = () => {
-
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let { cropDetails } = lifecycleDetails;
     let info = [
@@ -330,10 +368,8 @@ export default function CropLifeCycleDetails({
                 );
               })}
             </TableBody>
-
           </Table>
           <Divider />
-
         </Paper>
       </Grid>
     );
@@ -378,8 +414,8 @@ export default function CropLifeCycleDetails({
               <span className="label-light-bold">Actual Start Date : </span>
               {selectedStageInformation.start_date
                 ? moment(selectedStageInformation.start_date).format(
-                  "MMMM Do YYYY hh:mm:ss A"
-                )
+                    "MMMM Do YYYY hh:mm:ss A"
+                  )
                 : "Not Yet Started"}
             </p>
             <Divider />
@@ -449,6 +485,16 @@ export default function CropLifeCycleDetails({
             {renderStepper()}
             {renderNotification()}
             {renderSelectedStageInformation()}
+            {openTaskModal && ( 
+            <AddTaskModal
+            open={openTaskModal}
+            handleSave={handleTaskLifeCycleSave}
+            handleClose={handleTaskModalToggle}
+            usersList={usersList}
+            farmInventoryList={farmInventoryList}
+            />)}
+
+
             {open && (
               <MoveCropLifeCycleModal
                 open={open}
@@ -459,7 +505,7 @@ export default function CropLifeCycleDetails({
                 isHarvestStage={isHarvestStage}
                 isContiniousHarvet={
                   lifecycleDetails.cropDetails.crop.crop.variety == "Vine" ||
-                    lifecycleDetails.cropDetails.crop.crop.variety == "Herb"
+                  lifecycleDetails.cropDetails.crop.crop.variety == "Herb"
                     ? true
                     : false
                 }
@@ -467,8 +513,8 @@ export default function CropLifeCycleDetails({
                   maxQty
                     ? maxQty
                     : lifecycleDetails.cropDetails.FarmCropLifecycleStages[
-                      activeStep
-                    ].qty
+                        activeStep
+                      ].qty
                 }
               />
             )}
@@ -497,6 +543,9 @@ export default function CropLifeCycleDetails({
                 handleSave={handleParametersSave}
               />
             )}
+
+
+
           </div>
         </>
       )}

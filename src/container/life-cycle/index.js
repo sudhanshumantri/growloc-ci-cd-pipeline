@@ -20,6 +20,7 @@ const mapStateToProps = createStructuredSelector({
   lifecycleCropsList: selectLifecycleCropsList(),
   isAddLifecycleLoading: selectIsAddLifecycleLoading(),
   addLifecycleError: selectAddLifecycleError(),
+  
  
 });
 const mapDispatchToProps = {

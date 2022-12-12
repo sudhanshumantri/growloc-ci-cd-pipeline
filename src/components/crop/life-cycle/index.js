@@ -6,50 +6,7 @@ import AddNewCropToLifeCycleModal from "./addCropToLifeCycleModal";
 import AddIcon from "@mui/icons-material/Add";
 import { Grid } from "@mui/material";
 import Loader from "../../shared/loader";
-let headers = [
-  {
-    label: "Batch No",
-    // key: 'batchName',
-    key: "id",
-    redirection: true,
-    redirectionKey: "id",
-    baseEndPoint: "#/crops/lifecycle/details/",
-  },
-  {
-    label: "Crop",
-    key: "crop.crop.name",
-    redirection: false,
-  },
-  {
-    label: "Variety",
-    key: "crop.crop.variety",
-    redirection: false,
-  },
-  {
-    label: "Start Date ",
-    key: "start_date",
-    redirection: false,
-    isDate: true,
-  },
-  {
-    label: "Total Harvested (Kgs/Units)",
-    key: "harvestedData",
-    redirection: false,
-  },
-  {
-    label: "Completed",
-    key: "isComplete",
-    redirection: false,
-    isBoolean: true,
-    falseLabel: "In-process",
-    trueLabel: "Completed",
-  },
-  {
-    label: "No. of Seeds",
-    key: "qty",
-    redirection: false,
-  },
-];
+
 export default function CropLifeCycle({
   fecthCropFarm,
   fetchAllCropsLifecycle,
@@ -63,6 +20,50 @@ export default function CropLifeCycle({
   isCropLifeCycleListLoading,
 }) {
   let { farmId } = useParams();
+  let headers = [
+    {
+      label: "Batch No",
+      // key: 'batchName',
+      key: "id",
+      redirection: true,
+      redirectionKey: "id",
+      baseEndPoint: `#/farm/${farmId}/crops/lifecycle/details/`,
+    },
+    {
+      label: "Crop",
+      key: "crop.crop.name",
+      redirection: false,
+    },
+    {
+      label: "Variety",
+      key: "crop.crop.variety",
+      redirection: false,
+    },
+    {
+      label: "Start Date ",
+      key: "start_date",
+      redirection: false,
+      isDate: true,
+    },
+    {
+      label: "Total Harvested (Kgs/Units)",
+      key: "harvestedData",
+      redirection: false,
+    },
+    {
+      label: "Completed",
+      key: "isComplete",
+      redirection: false,
+      isBoolean: true,
+      falseLabel: "In-process",
+      trueLabel: "Completed",
+    },
+    {
+      label: "No. of Seeds",
+      key: "qty",
+      redirection: false,
+    },
+  ];
   React.useEffect(() => {
     fecthCropFarm({ farmId: parseInt(farmId) });
     fetchAllCropsLifecycle({ farmId: parseInt(farmId) });

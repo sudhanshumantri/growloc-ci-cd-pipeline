@@ -31,6 +31,9 @@ const urls = {
     "add-farm-inventory":"farm/inventory/",
     "update-farm-inventory" : "farm/inventory/",
     "delete-farm-inventory" : "farm/inventory/",
+    "fetch-farm-all-task":"farm/task/",
+
+
   },
 };
 function getEndpoint(endpoint) {
@@ -257,6 +260,15 @@ export function callDeleteFarmInventory(routeParams) {
     routeParams
   });
 }
+//
+export function callfetchFarmTaskDetails(routeParams) {
+  return callApi(getEndpoint("fetch-farm-all-task"), {
+    method: "get",
+    removeAuthorizationHeader: false,
+    routeParams
+  });
+}
+
 
 
 

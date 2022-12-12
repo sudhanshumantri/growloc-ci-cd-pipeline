@@ -62,7 +62,7 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
             case ADD_TASK_SUCCESS:
               return state
                 .set("isTaskScheduleTaskLoading", false)
-                .set("dashboardFarmList", dashboardFarmList)
+                // .set("dashboardFarmList", dashboardFarmList)
                 .set("TaskScheduleTaskListError", null);
             case ADD_TASK_FAILURE:
               return state
