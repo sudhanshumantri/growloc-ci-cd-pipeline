@@ -79,7 +79,7 @@ export default function ManageUsers({
           label: "Edit",
           handler: handleEdit,
           type: "icon",
-          icon: <EditOutlinedIcon sx={{color:"#517223"}}/>,
+          icon: <EditOutlinedIcon sx={{ color: "#517223" }} />,
           color: "primary",
           isAuthRequired: true,
           from: "users",
@@ -89,7 +89,7 @@ export default function ManageUsers({
           label: "Delete",
           handler: handleDelete,
           type: "icon",
-          icon: <DeleteOutlineOutlinedIcon sx={{color:"#517223"}} />,
+          icon: <DeleteOutlineOutlinedIcon sx={{ color: "#517223" }} />,
           isAuthRequired: true,
           from: "users",
           action: "delete",
@@ -154,31 +154,33 @@ export default function ManageUsers({
   return (
     <div>
       <PageHeader title="Users" buttonArray={buttonArray} />
-      {isAddUserLoading && <Loader title="Adding User" />}
-      {isUsersListLoading && <Loader title="Fetching Users" />}
-      {isUpdateUserLoading && <Loader title="Updating User  " />}
-      {isdeleteUserLoading && <Loader title="Deleting  User" />}
-      {open && (
-        <AddUsersModal
-          open={open}
-          handleSave={handleCropSave}
-          handleClose={handleModalToggle}
-          userDetails={userInfo}
-          data={usersList}
-        />
-      )}
-      {isDeleteModelOpen && (
-        <ConfirmDialogBox
-          dialogState={isDeleteModelOpen}
-          buttonArray={conFirmbuttons}
-          subHeading={`Are you sure to delete "${userInfo.name}" ?`}
-        />
-      )}
-      <Grid container className="farm-container">
-        <Grid item xs={12} sm={12} md={12}>
-          <DataTable data={{ headers: headers, rows: usersList || [] }} />
+      <div className="page-container">
+        <Grid container spacing={2}>
+          <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
+            <DataTable data={{ headers: headers, rows: usersList || [] }} />
+          </Grid>
         </Grid>
-      </Grid>
+        {isAddUserLoading && <Loader title="Adding User" />}
+        {isUsersListLoading && <Loader title="Fetching Users" />}
+        {isUpdateUserLoading && <Loader title="Updating User  " />}
+        {isdeleteUserLoading && <Loader title="Deleting  User" />}
+        {open && (
+          <AddUsersModal
+            open={open}
+            handleSave={handleCropSave}
+            handleClose={handleModalToggle}
+            userDetails={userInfo}
+            data={usersList}
+          />
+        )}
+        {isDeleteModelOpen && (
+          <ConfirmDialogBox
+            dialogState={isDeleteModelOpen}
+            buttonArray={conFirmbuttons}
+            subHeading={`Are you sure to delete "${userInfo.name}" ?`}
+          />
+        )}
+      </div>
     </div>
   );
 }

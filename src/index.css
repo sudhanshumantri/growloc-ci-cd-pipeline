@@ -79,7 +79,8 @@ body {
 } */
 
 .page-container {
-  margin: 31px;
+  /* margin: 31px; */
+  padding: 16px;
 }
 
 /* Dialogue styling*/
@@ -100,9 +101,9 @@ a {
 }
 
 .section-title {
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 36px;
+  font-weight: 500;
+  font-size: 18px;
+  /* line-height: 36px; */
   color: #000000;
 }
 
@@ -139,7 +140,8 @@ a {
   /* identical to box height */
   color: #000000;
 }
-.farm-container {
+.card-outline-container {
+  margin: 12px !important;
   padding: 10px 10px 20px 10px;
   background: #f8f8f8;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
@@ -151,4 +153,10 @@ a {
 }
 .horizontalline {
   border: 0.5px solid rgba(0, 0, 0, 0.2);
+}
+.MuiFormHelperText-root {
+  margin-left: 0px !important;
+}
+.graph-container{
+  height: 400px !important;
 }

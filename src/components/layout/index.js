@@ -44,7 +44,7 @@ injectReducer("farm", farmReducer);
 injectReducer("life-cycle", lifeCycleReducer);
 injectReducer("dashboard", dashboardFarmReducer);
 injectReducer("users", usersReducer);
-injectReducer("inventory",inventoryReducer)
+injectReducer("inventory", inventoryReducer)
 injectSagas(farmSagas);
 injectSagas(userSagas);
 injectSagas(loginSagas);
@@ -53,16 +53,20 @@ injectSagas(lifeCycleSagas);
 injectSagas(farmDashboardSagas);
 injectSagas(inventorySagas)
 const drawerWidth = 240;
-const Layout = () => {  
+const Layout = ({ loadAuthToken }) => {
   const token = localStorage.getItem("AUTH_TOKEN");
   let loginObject = localStorage.getItem("AUTH_OBJECT");
   if (loginObject) {
     loginObject = JSON.parse(loginObject);
   }
+  loadAuthToken({
+    token,
+    loginObject
+  });
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      {token && <SideBar />}
+      {token && <SideBar loginObject={loginObject}/>}
 
       <Box
         component="main"
@@ -83,8 +87,8 @@ const Layout = () => {
               </PrivateOutlet>
             }
           />
-          <Route path="add-farm/" element={<AddFarm/>} />
-          <Route path="edit-farm/:farmId" element={<AddFarm/>} />
+          <Route path="add-farm/" element={<AddFarm />} />
+          <Route path="edit-farm/:farmId" element={<AddFarm />} />
           <Route
             path="farm/:farmId"
             element={
@@ -98,7 +102,7 @@ const Layout = () => {
             <Route path="users" element={<AddUsers />} />
             <Route path="crops/manage" element={<ManageCrop />} />
             <Route path="crops/lifecycle" element={<CropLifeCycle />} />
-            <Route path="inventory/items" element={<ManageItem/>} />
+            <Route path="inventory/items" element={<ManageItem />} />
           </Route>
           <Route path="crops/lifecycle/details/:lifecycleId" element={<CropLifeCycleDetails />} />
           <Route path="login" element={<Login />} />
@@ -120,4 +124,3 @@ function withRouter(Component) {
   return ComponentWithRouterProp;
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Layout));
-  

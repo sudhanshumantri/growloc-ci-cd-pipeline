@@ -99,8 +99,8 @@ export default function CropLifeCycle({
             handleClose={handleModalToggle}
           />
         )}
-        <Grid container className="farm-container">
-          <Grid item xs={12} sm={12} md={12}>
+        <Grid container spacing={2} >
+          <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
             <DataTable data={{ headers: headers, rows: lifecycleCropsList }} />
           </Grid>
         </Grid>

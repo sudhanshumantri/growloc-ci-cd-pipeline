@@ -6,7 +6,7 @@ import AuthOutlet from "../authoutlet";
 function renderButtonArray(buttonArray) {
   return buttonArray.map((item, index) => {
     return (
-      <AuthOutlet  key={index} isAuthRequired={item.isAuthRequired} from={item.from} action={item.action}>
+      <AuthOutlet key={index} isAuthRequired={item.isAuthRequired} from={item.from} action={item.action}>
         <Button
           ICON={item.ICON}
           isLight={item.isLight ? item.isLight : false}
@@ -57,11 +57,12 @@ export default function PageHeader({
                 {data.value}
                 {info.length - 1 != index && <>, </>}
               </span>
-              
+
             ))}
           </Grid>
         )}
       </Grid>
+      <Divider />
     </>
   );
 }

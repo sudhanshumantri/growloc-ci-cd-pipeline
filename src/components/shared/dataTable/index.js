@@ -1,19 +1,19 @@
 import React from "react";
-import {Paper,Table,TableBody,TableCell,TableHead,TableRow,TableContainer,Button,IconButton} from "@mui/material/";
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow, TableContainer, Button, IconButton } from "@mui/material/";
 
 import moment from "moment";
 import "./style.css";
 import AuthOutlet from "../authoutlet";
 function DataTable({ data }) {
   const { headers, rows } = data;
-  const handleRedirection = (key) => {};
+  const handleRedirection = (key) => { };
   const validateValue = (row, key) => {
     if (key.indexOf(".") > -1) {
       const keys = key.split(".");
       const value = keys.reduce((a, v) => a[v], row);
-      return value;
+      return value ? value : '-';
     } else {
-      return row[key];
+      return row[key] || row[key]==0 ? row[key] : '-';
     }
   };
   const renderButtonArray = (buttonArray, rowData) => {
@@ -65,7 +65,7 @@ function DataTable({ data }) {
               align="center"
               key={index}
               sx={{"&:last-child td, &:last-child th": { border: 0 } }}
-              
+
             >
               {headers.map((header, headerIndex) => {
                 if (header.redirection) {

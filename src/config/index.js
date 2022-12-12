@@ -1,5 +1,5 @@
 export const api = {
-  //host: "https://growloc-backend.herokuapp.com/api/",
+  //host: "http://localhost:8000/api/",
   host: 'http://44.202.123.160:8000/api/'
 
 };
@@ -30,7 +30,7 @@ export const nutrientsType = [
   "3 Part mix",
   "Custom nutrient mix",
 ];
-export const options = [
+export const HARVEST_MONTH_OPTIONS = [
   {
     name: "3 Months",
     value: 3,
@@ -69,20 +69,73 @@ export const role_based_access = {
   },
   users: {
     farmowner: ["create", "edit", "delete", "view"],
-    farmmanager:["create"],
-    ergonomists: [ "view"],
+    farmmanager: ["create"],
+    ergonomists: ["view"],
     supervisor: ["view"],
   },
   farmItems: {
     farmowner: ["create", "edit", "delete", "view"],
-    farmmanager:["create", "edit", "delete", "view"],
-    ergonomists:[ "view"],
+    farmmanager: ["create", "edit", "delete", "view"],
+    ergonomists: ["view"],
     supervisor: ["view"],
   },
 
 
 };
-
-export const addTask = ["Cleaning","WaterQuality","Soil Preparation","Plantation","Irrigation","Crop Maintenance","Fertilizer","Scouting","Defence","Harvest","Processing","Storage","Packing","Loading","Transportation","Selling"];
-export const inventoryData = ["gms","ml","kgs","Litres","Pieces","Packet","other"];
-
+export const TASK_CATEGORY = ["Cleaning", "WaterQuality", "Soil Preparation", "Plantation", "Irrigation", "Crop Maintenance", "Fertilizer", "Scouting", "Defence", "Harvest", "Processing", "Storage", "Packing", "Loading", "Transportation", "Selling"];
+export const INVENTORY_UNITS = ["Gms", "Ml", "kgs", "Litres", "Pieces", "Packet", "Other"];
+export const TASK_HEADER = [
+  {
+    label: "Category",
+    key: "category",
+    redirection: false,
+    redirectionKey: "link",
+  },
+  {
+    label: "Task Name",
+    key: "taskName",
+    redirection: false,
+    redirectionKey: "link",
+  },
+  {
+    label: "Description",
+    key: "description",
+    redirection: false,
+  },
+  {
+    label: "Batch Number",
+    key: "batchNo",
+    redirection: false,
+  },
+  {
+    label: "Crop Name",
+    key: "cropName",
+    redirection: false,
+  },
+  {
+    label: "Created By",
+    key: "createdByProfile.name",
+    redirection: false,
+  },
+  {
+    label: "Created For",
+    key: "createdForProfile.name",
+    redirection: false,
+  },
+  {
+    label: "Created On",
+    key: "dueDate",
+    redirection: false,
+    isDate: true,
+  },
+  {
+    label: "Due Date",
+    key: "dueDate",
+    redirection: false,
+    isDate: true,
+  },
+  {
+    label: "Action",
+    key: "",
+  }
+]

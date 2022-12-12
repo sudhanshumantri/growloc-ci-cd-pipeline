@@ -1,9 +1,17 @@
-.drawer-sub-menu{
+.drawer-sub-menu {
     margin-left: 20px !important;
 }
-.darwer-icon{
+
+.darwer-icon {
     color: white !important;
 }
-.drawer-list-container *{
+
+.drawer-list-container * {
     color: white !important;
+}
+
+.drawer-header-logo {
+    cursor: pointer;
+    padding-left: 17px;
+    width: 350px !important;
 }

@@ -5,9 +5,9 @@ import {
   FETCH_ALL_DASHBOARD_HARVEST_REQUEST,
   FETCH_ALL_DASHBOARD_HARVEST_SUCCESS,
   FETCH_ALL_DASHBOARD_HARVEST_FAILURE,
-  ADD_DASHBORAD_FARM_TASKSCHEDULES_TASK_REQUEST,
-  ADD_DASHBORAD_FARM_TASKSCHEDULES_TASK_SUCCESS,
-  ADD_DASHBORAD_FARM_TASKSCHEDULES_TASK_FAILURE,
+  ADD_TASK_REQUEST,
+  ADD_TASK_SUCCESS,
+  ADD_TASK_FAILURE,
 } from "./actionTypes";
 export function fetchDashboardFarmRequest(data) {
   return {
@@ -49,19 +49,19 @@ export function fetchDashboardHarvestFailure(data) {
 
 export function addTaskSheduleTaskRequest(data) {
   return {
-    type: ADD_DASHBORAD_FARM_TASKSCHEDULES_TASK_REQUEST,
+    type: ADD_TASK_REQUEST,
     data,
   };
 }
 export function addTaskSheduleTaskSuccess(data) {
   return {
-    type: ADD_DASHBORAD_FARM_TASKSCHEDULES_TASK_SUCCESS,
+    type: ADD_TASK_SUCCESS,
     data,
   };
 }
 export function addTaskSheduleTaskFailure(error) {
   return {
-    type: ADD_DASHBORAD_FARM_TASKSCHEDULES_TASK_FAILURE,
+    type: ADD_TASK_FAILURE,
     error,
   };
 }

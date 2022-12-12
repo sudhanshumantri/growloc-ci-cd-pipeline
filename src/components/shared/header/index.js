@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import {Box,Toolbar,IconButton,Typography} from '@mui/material/';
+import { Box, Toolbar, IconButton, Typography, Avatar } from '@mui/material/';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open, drawerwidth }) => ({
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: 'rgb(81,114,35)',
     transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -22,8 +22,11 @@ const AppBar = styled(MuiAppBar, {
         }),
     }),
 }));
-export default function TopHeader({ open, toggleDrawer, drawerWidth }) {
-    
+export default function TopHeader({ open, toggleDrawer, drawerWidth, loginObject }) {
+    //console.log(loginObject);
+    let userName = loginObject?.profile?.name;
+    let userNameArray = userName.split(" ");
+    let avatarName = userNameArray[0]?.charAt(0);
     return (
         <AppBar
             position="fixed"
@@ -31,32 +34,15 @@ export default function TopHeader({ open, toggleDrawer, drawerWidth }) {
             drawerwidth={drawerWidth}
         >
             <Toolbar>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={toggleDrawer}
-                    edge="start"
-                    sx={{
-                        marginRight: 5,
-                        ...(open && { display: 'none' }),
-                    }}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography sx={{color:'black'}} variant="h6" noWrap component="div">
-                    Growloc
-                </Typography>
-                <Box sx={{ flexGrow: 1 }} />
-                <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                    <IconButton
-                        size="large"
-                        edge="end"
-                        aria-label="account of current user"
-                        aria-haspopup="true"
-                        color="inherit"
-                    >
-                        <AccountCircle />
+                <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                    <IconButton sx={{ p: 0 }}>
+                        <Avatar sx={{ width: '25px', height: '25px', fontSize: '14px', marginRight: '8px', borderRadius: '4px', fontWeight: 500 }} >
+                            {avatarName}
+                        </Avatar>
                     </IconButton>
+                    <Typography variant="p" className='label-white' bold noWrap component="div" sx={{ cursor: 'pointer' }} >
+                        Hi, {userName}
+                    </Typography>
                 </Box>
             </Toolbar>
         </AppBar>

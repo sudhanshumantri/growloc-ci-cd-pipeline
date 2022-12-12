@@ -2,9 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
-import { fetchDashboardFarmRequest,fetchDashboardHarvestRequest ,addTaskSheduleTaskRequest} from "../../actions/dashboard";
-import { fetchUsersRequest} from "../../actions/users";
-import { fetchFarmInventoryRequest} from "../../actions/inventory";
+import { fetchDashboardFarmRequest, fetchDashboardHarvestRequest, addTaskSheduleTaskRequest } from "../../actions/dashboard";
+import { fetchUsersRequest } from "../../actions/users";
+import { fetchFarmInventoryRequest } from "../../actions/inventory";
 
 import FarmDashboard from "../../components/dashboard/farm";
 import {
@@ -24,28 +24,30 @@ import {
 import {
   selectFarmInventoryList,
 } from "../../selectors/inventory";
+import {
+  selectLoginObject
+} from "../../selectors/login";
 
 const mapStateToProps = createStructuredSelector({
   dashboardFarmList: selectFarmDashboardList(),
   isDashboardFarmListLoading: selectIsFarmDashboardListLoading(),
   DashboardFarmListError: selectFarmDashboardListError(),
-  isDashboardHarvestListLoading:selectIsFarmDashboardHarvestListLoading(),
-  DashboardHarvestListError:selectFarmDashboardHarvestListError(),
-  dashboardHarvestList:selectFarmDashboardHarvestList(),
+  isDashboardHarvestListLoading: selectIsFarmDashboardHarvestListLoading(),
+  DashboardHarvestListError: selectFarmDashboardHarvestListError(),
+  dashboardHarvestList: selectFarmDashboardHarvestList(),
   usersList: selectUsersList(),
-  isTaskScheduleTaskLoading:selectIsTaskScheduleTaskLoading(),
-  TaskScheduleTaskListError:selectTaskScheduleTaskListError(),
-  FarmInventoryList:selectFarmInventoryList(),
+  isTaskScheduleTaskLoading: selectIsTaskScheduleTaskLoading(),
+  TaskScheduleTaskListError: selectTaskScheduleTaskListError(),
+  farmInventoryList: selectFarmInventoryList(),
+  loginObject: selectLoginObject(),
   
 });
 const mapDispatchToProps = {
   fetchFarmDashboard: fetchDashboardFarmRequest,
-  fetchFarmDashboardHarvest:fetchDashboardHarvestRequest,
+  fetchFarmDashboardHarvest: fetchDashboardHarvestRequest,
   fetchUsers: fetchUsersRequest,
-  addTaskScheduleTask:addTaskSheduleTaskRequest,
-  fetchFarmInventory:fetchFarmInventoryRequest,
-
-
+  addTaskScheduleTask: addTaskSheduleTaskRequest,
+  fetchFarmInventory: fetchFarmInventoryRequest,
 };
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {

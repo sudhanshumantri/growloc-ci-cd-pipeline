@@ -145,34 +145,37 @@ export default function ManageItem({
 
   return (
     <div>
-      <PageHeader title="Items" buttonArray={buttonArray} />
-      {isFarmInventoryListLoading && <Loader title="Fetching items" />}
-      {isAddFarmInventoryLoading && <Loader title="Adding item" />}
-      {isUpdateFarmInventoryLoading && <Loader title="Updating items  " />}
-      {isDeleteFarmInventoryLoading && <Loader title="Deleting  items" />}
-      {open && (
-        <AddInventoryItems
-          open={open}
-          handleSave={handleFarmIneventorySave}
-          handleClose={handleModalToggle}
-          itemDetails={itemInfo}
-          data={FarmInventoryList}
-        />
-      )}
-      <Grid container className="farm-container">
-        <Grid item xs={12} sm={12} md={12}>
-          <DataTable
-            data={{ headers: headers, rows: FarmInventoryList || [] }}
-          />
+      <PageHeader title="Inventory" buttonArray={buttonArray} />
+      <div className="page-container">
+        <Grid container spacing={2}>
+          <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
+            <DataTable
+              data={{ headers: headers, rows: FarmInventoryList || [] }}
+            />
+          </Grid>
         </Grid>
-      </Grid>
-      {isDeleteModelOpen && (
-        <ConfirmDialogBox
-          dialogState={isDeleteModelOpen}
-          buttonArray={conFirmbuttons}
-          subHeading={`Are you sure to delete "${itemInfo.name}" ?`}
-        />
-      )}
+        {isFarmInventoryListLoading && <Loader title="Fetching items" />}
+        {isAddFarmInventoryLoading && <Loader title="Adding item" />}
+        {isUpdateFarmInventoryLoading && <Loader title="Updating items  " />}
+        {isDeleteFarmInventoryLoading && <Loader title="Deleting  items" />}
+        {open && (
+          <AddInventoryItems
+            open={open}
+            handleSave={handleFarmIneventorySave}
+            handleClose={handleModalToggle}
+            itemDetails={itemInfo}
+            data={FarmInventoryList}
+          />
+        )}
+
+        {isDeleteModelOpen && (
+          <ConfirmDialogBox
+            dialogState={isDeleteModelOpen}
+            buttonArray={conFirmbuttons}
+            subHeading={`Are you sure to delete "${itemInfo.name}" ?`}
+          />
+        )}
+      </div>
     </div>
   );
 }

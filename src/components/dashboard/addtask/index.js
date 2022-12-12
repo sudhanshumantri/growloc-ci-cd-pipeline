@@ -12,119 +12,107 @@ import TextBox from "../../shared/text-box";
 import CustomButton from "../../shared/button";
 import SingleCustomSelect from "../../shared/select";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DesktopTimePicker } from "@mui/x-date-pickers/DesktopTimePicker";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { addTask} from "../../../config";
-import dayjs from "dayjs";
+import { TASK_CATEGORY } from "../../../config";
+import moment from 'moment';
 export default function AddTaskModal({
   open,
   handleSave,
   handleClose,
   usersList,
-  FarmInventoryList,
+  farmInventoryList,
 
 }) {
   const [taskData, setTaskData] = useState({
-    category: "",
-    taskname: "",
-    description: "",
-    assigntask: "",
-    inventory:"",
-    units:"",
+    category: null,
+    taskName: null,
+    description: null,
+    createdFor: null,
+    dueDate: moment(),
+    startTime: null,
+    endTime: null,
+    itemName: null,
+    qty: null
   });
-
-  const [value, setValue] = React.useState(dayjs("2018-01-01T00:00:00.000Z"));
+  console.log(usersList)
+  const [dueDate, setDueDate] = React.useState(moment());
   const [unitErrorMessage, setUnitErrorMessage] = useState("");
-  const [endTime, setEndTime] = React.useState(
-    dayjs("2018-01-01T00:00:00.000Z")
-  );
-  const [date, setDate] = React.useState(dayjs());
+  // const [endTime, setEndTime] = React.useState(
+  //   dayjs("2018-01-01T00:00:00.000Z")
+  // );
   const [validation, setValidation] = useState({
     category: false,
-    taskname: false,
-    description: false,
-    assigntask: false,
-    units: false,
-    unitErrorMessage:false,
-
-    
+    taskName: false,
+    createdFor: false,
+    qty: false,
+    unitErrorMessage: false,
   });
+  const cleanObject = (obj) => {
+    Object.keys(obj).forEach((k) => (!obj[k] && obj[k] !== undefined && obj[k] != 0) && delete obj[k]);
+    return obj;
+  }
   const handleChange = (e) => {
     const { value, name } = e.target;
     setTaskData({ ...taskData, [name]: value });
     setUnitErrorMessage(false)
     validation[name] && setValidation({ ...validation, [name]: false });
   };
-  
+
   const validateTask = () => {
-    let errors = {...validation};
+    let errors = { ...validation };
     let isValid = true;
     if (!taskData.category) {
       errors.category = true;
       isValid = false;
     }
-    if (!taskData.taskname) {
-      errors.taskname = true;
+    if (!taskData.createdFor) {
+      errors.createdFor = true;
       isValid = false;
     }
-    if(!taskData.units) {
-      errors.units =true;
+    if (!taskData.taskName) {
+      errors.taskName = true;
       isValid = false;
-    } else {
-      const targetUnits = FarmInventoryList.find(
-        (k) => k.id == taskData.inventory
-      ) || {};
-          if (parseInt(taskData.units) > parseInt(targetUnits.qty)) {
-            errors.units =true;
-            setUnitErrorMessage("Unit can't be greater than " + targetUnits.qty);
-            isValid = false;
-          }
+    }
+    if (taskData.itemName) {
+      if (!taskData.qty) {
+        errors.qty = true;
+        isValid = false;
+        setUnitErrorMessage("Unit can't be empty ");
+      } else {
+        const targetUnits = farmInventoryList.find(
+          (k) => k.id == taskData.inventory
+        ) || {};
+        if (parseInt(taskData.qty) > parseInt(targetUnits.qty)) {
+          errors.units = true;
+          setUnitErrorMessage("Unit can't be greater than " + targetUnits.qty);
+          isValid = false;
         }
+      }
+    }
     setValidation(errors);
     return isValid;
   };
-
-
-  const getOptions = useCallback(() => {
+  const getUserListOptions = useCallback(() => {
     const options = [];
     if (usersList.length) {
       usersList.forEach((list) => {
         if (list?.user?.profile?.name) {
           const { userId, name } = list.user.profile;
-          options.push({ label: name, value: userId });
+          options.push({ label: name, value: userId});
         }
       });
     }
     return options;
   }, [usersList]);
 
-  const getInventoryOptions = useCallback(() => {
-    const options = [];
-    if (FarmInventoryList.length) {
-      FarmInventoryList.forEach((inventory) => {
-        if (inventory?.name) {
-          const { id, name } = inventory;
-          options.push({ label: name, value: id});
-        }
-      });
-    }
-    return options;
-  }, [FarmInventoryList]);
-
   const handleTaskSave = () => {
-    let payload = {
-      category: taskData.category,
-      taskName: taskData.taskname,
-      description: taskData.description,
-      assignTask: taskData.assigntask,
-      inventory:taskData.inventory,
-      qty:parseInt(taskData.units),
-    };
-    if(validateTask()) {
-      handleSave(payload);
+    if (validateTask()) {
+      let requestObject = cleanObject(taskData);
+       handleSave(requestObject);
     }
-    }
+  }
   const renderActionButton = () => {
     return (
       <>
@@ -150,80 +138,47 @@ export default function AddTaskModal({
         <DialogContent sx={{ paddingTop: "10px" }}>
           <br />
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={6}>
-              <span className="input-label">Category</span>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <span className="input-label">Category*</span>
               <FormControl fullWidth>
                 <SingleCustomSelect
                   name="category"
                   value={taskData.category}
                   isWhite={true}
-                  options={addTask}
+                  options={TASK_CATEGORY}
                   handleChange={handleChange}
                   isError={validation.category}
                   errorMessage="Please select a category"
                 />
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <span className="input-label">Task Name</span>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <span className="input-label">Task Name*</span>
               <FormControl fullWidth>
                 <TextBox
                   isWhite={true}
-                  name="taskname"
-                  value={taskData.taskname}
+                  name="taskName"
+                  value={taskData.taskName}
                   onChange={handleChange}
-                  error={validation.taskname}
-                  helperText={validation.taskname ? "Please provide name" : ""}
-    
+                  error={validation.taskName}
+                  helperText={validation.taskName ? "Please provide name" : ""}
+
                 />
               </FormControl>
             </Grid>
-
             <Grid item xs={12} sm={12} md={12}>
-              <span className="input-label">When is it due ?</span>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <span className="input-label">When is it due ?*</span>
+              <LocalizationProvider dateAdapter={AdapterMoment}>
                 <FormControl fullWidth>
                   <DatePicker
-                    disableFuture
-                    views={["day", "year"]}
+                    disablePast
+                    name="dueDate"
+                    // views={["day", "year"]}
                     inputFormat="MMMM DD"
                     disableMaskedInput={true}
-                    value={date}
+                    value={dueDate}
                     onChange={(newValue) => {
-                      setDate(newValue);
-                    }}
-                    renderInput={(params) => (
-                      <TextBox {...params} isWhite={true} />
-                    )}
-                  />
-                </FormControl>
-              </LocalizationProvider>
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={6}>
-              <span className="input-label">Start Time</span>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <FormControl fullWidth>
-                  <DesktopTimePicker
-                    value={value}
-                    onChange={(newValue) => {
-                      setValue(newValue);
-                    }}
-                    renderInput={(params) => (
-                      <TextBox {...params} isWhite={true} />
-                    )}
-                  />
-                </FormControl>
-              </LocalizationProvider>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <span className="input-label">End Time</span>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <FormControl fullWidth>
-                  <DesktopTimePicker
-                    value={endTime}
-                    onChange={(newValue) => {
-                      setEndTime(newValue);
+                      setDueDate(newValue);
                     }}
                     renderInput={(params) => (
                       <TextBox {...params} isWhite={true} />
@@ -245,16 +200,18 @@ export default function AddTaskModal({
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">
-                Who would you want the task to be assigned to?
+                Who would you want the task to be assigned to? *
               </span>
               <FormControl fullWidth>
                 <SingleCustomSelect
+                  isError={validation.createdFor}
+                  errorMessage="Please select a user"
                   labelKey="label"
                   valueKey="value"
-                  name="assigntask"
+                  name="createdFor"
                   isWhite={true}
-                  value={taskData.assigntask}
-                  options={getOptions()}
+                  value={taskData.createdFor}
+                  options={getUserListOptions()}
                   handleChange={handleChange}
                 />
               </FormControl>
@@ -263,12 +220,12 @@ export default function AddTaskModal({
               <span className="input-label">Add inventory</span>
               <FormControl fullWidth>
                 <SingleCustomSelect
-                  name="inventory"
-                  labelKey="label"
-                  valueKey="value"
-                  value={taskData.inventory}
+                  name="itemName"
+                  labelKey="name"
+                  valueKey="id"
+                  value={taskData.itemName}
                   isWhite={true}
-                  options={getInventoryOptions()}
+                  options={farmInventoryList}
                   handleChange={handleChange}
                 />
               </FormControl>
@@ -278,11 +235,11 @@ export default function AddTaskModal({
               <FormControl fullWidth>
                 <TextBox
                   isWhite={true}
-                  name="units"
-                  value={taskData.units}
+                  name="qty"
+                  value={taskData.qty}
                   onChange={handleChange}
-                  error={validation.units}
-                  helperText={validation.units ? unitErrorMessage : ""}
+                  error={validation.qty}
+                  helperText={validation.qty ? unitErrorMessage : ""}
                 />
               </FormControl>
             </Grid>

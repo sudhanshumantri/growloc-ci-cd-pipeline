@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
+import Dashboard from "../../../../public/assets/Dashboard.png";
 import Irrigation from "../../../../public/assets/Irrigation.png";
 import Account from "../../../../public/assets/Account.png";
 import Report from "../../../../public/assets/Report.png";
 import ManageCrops from "../../../../public/assets/LawnCare.png";
 import Crops from "../../../../public/assets/Crops.png";
 import CropsLifecycle from "../../../../public/assets/Irrigation.png";
+import Inventory from "../../../../public/assets/Inventory.png";
+import InventoryItem from "../../../../public/assets/InventoryItem.png";
+import WaterManagement from "../../../../public/assets/WaterManagement.png";
+import WaterHistory from "../../../../public/assets/WaterHistory.png";
 
 const menuItems = [
   {
@@ -35,7 +40,7 @@ const farmMenuItems = [
   {
     title: "Dashboard",
     id: "dashboard",
-    icon: Irrigation,
+    icon: Dashboard,
     navigation: "/dashboard",
     link: "/dashboard",
     css: { borderBottom: "1px solid white" },
@@ -70,13 +75,11 @@ const farmMenuItems = [
   {
     title: "Water Management",
     id: "Water",
-    icon: null,
+    icon: WaterManagement,
     navigation: "water",
     css: { borderBottom: "1px solid white" },
     subMenu: [
-      { id: "1", name: "Storage", navigation: "water/storage" },
-      { id: "2", name: "Refil History", navigation: "water/refill" },
-      { id: "3", name: "Consumption History", navigation: "water/consumption" },
+      { id: "1", name: "Storage & History",icon:WaterHistory, navigation: "water/storage" }
     ],
   },
   {
@@ -100,18 +103,17 @@ const farmMenuItems = [
   {
     title: "Inventory",
     id: "Inventory",
-    icon: null,
+    icon: Inventory,
     navigation: "inventory",
     css: { borderBottom: "1px solid white" },
     subMenu: [
       {
         id: "1",
         name: "Items",
+        icon: InventoryItem,
         link: "/inventory/items",
         navigation: "inventory/items",
-      },
-      { id: "2", name: "Equipments", navigation: "inventory/equipments" },
-      { id: "3", name: "Replenish", navigation: "inventory/replenish" },
+      }
     ],
   },
   {

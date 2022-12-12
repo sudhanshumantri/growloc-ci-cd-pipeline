@@ -122,7 +122,7 @@ export default function ManageCrop({
           label: "Edit",
           type: "icon",
           handler: handleEdit,
-          icon: <EditOutlinedIcon sx={{color:"#517223"}}/>,
+          icon: <EditOutlinedIcon sx={{ color: "#517223" }} />,
           // color: "primary",
           isAuthRequired: true,
           from: "crops",
@@ -131,7 +131,7 @@ export default function ManageCrop({
         {
           label: "Delete",
           type: "icon",
-          icon: <DeleteOutlineOutlinedIcon sx={{color:"#517223"}} />,
+          icon: <DeleteOutlineOutlinedIcon sx={{ color: "#517223" }} />,
           handler: handleDelete,
           isAuthRequired: true,
           from: "crops",
@@ -158,19 +158,15 @@ export default function ManageCrop({
     fetchCrop();
     fecthCropFarm({ farmId: parseInt(farmId) });
   }, []);
-
-  const cropTittle = () => {
-    return(
-      <Grid item xs={12} sm={12} md={12}>
-      <p className="section-title">Crop Schedules</p>
-    </Grid>
-
-    )
-  }
   return (
     <div>
       <PageHeader title="Manage Crops" buttonArray={buttonArray} />
       <div className="page-container">
+        <Grid container spacing={2}>
+          <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
+            <DataTable data={{ headers: headers, rows: cropFarmList }} />
+          </Grid>
+        </Grid>
         {isFarmCropListLoading && <Loader title="Fetching Crops" />}
         {isAddCropLoading && <Loader title="Adding Crops" />}
         {isupdateFarmCropsLoading && <Loader title="Updating Crop  " />}
@@ -191,13 +187,8 @@ export default function ManageCrop({
             buttonArray={conFirmbuttons}
             subHeading={`Are you sure to delete "${cropInfo.name}" ?`}
           />
-        )} 
-        {cropTittle()}
-        <Grid container className="farm-container">
-        <Grid item xs={12} sm={12} md={12}>
-        <DataTable data={{ headers: headers, rows: cropFarmList }} />
-        </Grid>
-        </Grid>
+        )}
+
       </div>
     </div>
   );

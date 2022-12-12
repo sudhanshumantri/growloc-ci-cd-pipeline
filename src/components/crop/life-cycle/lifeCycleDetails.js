@@ -202,7 +202,7 @@ export default function CropLifeCycleDetails({
     );
   };
   const renderStepper = () => {
-    
+
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let { cropDetails } = lifecycleDetails;
     let info = [
@@ -222,17 +222,17 @@ export default function CropLifeCycleDetails({
     return (
       <>
         {info.map((data, index) => (
-              <span className="label-light-bold" key={index}>
-                {data.title && (
-                  <>
-                    <b>{data.title}</b>:
-                  </>
-                )}
+          <span className="label-light-bold" key={index}>
+            {data.title && (
+              <>
+                <b>{data.title}</b>:
+              </>
+            )}
 
-                {data.value}
-                {info.length - 1 != index && <>, </>}
-              </span>
-            ))}
+            {data.value}
+            {info.length - 1 != index && <>, </>}
+          </span>
+        ))}
         <Stepper alternativeLabel nonLinear activeStep={activeStep}>
           {FarmCropLifecycleStages.map((data, index) => (
             <Step key={index}>
@@ -299,7 +299,7 @@ export default function CropLifeCycleDetails({
           //   overflowY: "scroll",
           //   boxShadow: "none",
           // }}
-          className="life-cycle-details-card life-cycle-spacing "         
+          className="life-cycle-details-card life-cycle-spacing "
         >
           <Table size="small" aria-label="a dense table">
             <TableBody>
@@ -332,7 +332,7 @@ export default function CropLifeCycleDetails({
             </TableBody>
 
           </Table>
-                        <Divider />
+          <Divider />
 
         </Paper>
       </Grid>
@@ -378,8 +378,8 @@ export default function CropLifeCycleDetails({
               <span className="label-light-bold">Actual Start Date : </span>
               {selectedStageInformation.start_date
                 ? moment(selectedStageInformation.start_date).format(
-                    "MMMM Do YYYY hh:mm:ss A"
-                  )
+                  "MMMM Do YYYY hh:mm:ss A"
+                )
                 : "Not Yet Started"}
             </p>
             <Divider />
@@ -395,13 +395,13 @@ export default function CropLifeCycleDetails({
             {selectedStageInformation.stage + " Parameters Information"}{" "}
             <EditOutlinedIcon
               className="icon"
-              sx={{color:"#517223"}}              
+              sx={{ color: "#517223" }}
               onClick={handleEditToggle}
             />
           </p>
 
           <div className="life-cycle-details-card life-cycle-spacing">
-            {selectedStageInformation.parameters.map((param,index) => {
+            {selectedStageInformation.parameters.map((param, index) => {
               return (
                 <div key={index}>
                   <p className="label-light" key={index}>
@@ -445,7 +445,6 @@ export default function CropLifeCycleDetails({
       {!isLifecycleDetailsLoading && (
         <>
           {renderHeader()}
-          <Divider/>
           <div className="page-container">
             {renderStepper()}
             {renderNotification()}
@@ -460,7 +459,7 @@ export default function CropLifeCycleDetails({
                 isHarvestStage={isHarvestStage}
                 isContiniousHarvet={
                   lifecycleDetails.cropDetails.crop.crop.variety == "Vine" ||
-                  lifecycleDetails.cropDetails.crop.crop.variety == "Herb"
+                    lifecycleDetails.cropDetails.crop.crop.variety == "Herb"
                     ? true
                     : false
                 }
@@ -468,8 +467,8 @@ export default function CropLifeCycleDetails({
                   maxQty
                     ? maxQty
                     : lifecycleDetails.cropDetails.FarmCropLifecycleStages[
-                        activeStep
-                      ].qty
+                      activeStep
+                    ].qty
                 }
               />
             )}

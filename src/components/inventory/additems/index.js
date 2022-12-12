@@ -12,7 +12,7 @@ import {
 import CustomButton from "../../shared/button";
 import TextBox from "../../shared/text-box";
 import SingleCustomSelect from "../../shared/select";
-import { inventoryData } from "../../../config";
+import { INVENTORY_UNITS } from "../../../config";
 
 export default function AddInventoryItems({
   open,
@@ -127,7 +127,7 @@ export default function AddInventoryItems({
                   name="units"
                   value={itemData.units}
                   handleChange={handleChange}
-                  options={inventoryData}
+                  options={INVENTORY_UNITS}
                   isError={validation.units}
                   errorMessage="Please select units"
   

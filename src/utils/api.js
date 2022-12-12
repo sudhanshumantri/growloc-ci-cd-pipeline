@@ -26,7 +26,7 @@ const urls = {
     "fetch-farm-all-dashboard": "farm/get-farm-dashboard-data/",
     "fetch-farm-harvest-dashboard":"farm/get-farm-harvesteed-breakup",
     "fetch-farm-details": "farm/get-farm-details/",
-    "add-taskschedule-task":"",
+    "add-taskschedule-task":"farm/task/",
     "fetch-farm-all-inventory":"farm/inventory/",
     "add-farm-inventory":"farm/inventory/",
     "update-farm-inventory" : "farm/inventory/",

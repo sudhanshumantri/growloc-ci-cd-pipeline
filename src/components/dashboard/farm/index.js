@@ -6,11 +6,12 @@ import DataTable from "../../shared/dataTable";
 import PieChart from "../../shared/chart/pieChart";
 import BarChart from "../../shared/chart/barChart";
 import SingleCustomSelect from "../../shared/select";
-import { options } from "../../../config";
+import { HARVEST_MONTH_OPTIONS, TASK_HEADER } from "../../../config";
 import Loader from "../../shared/loader";
 import AddIcon from "@mui/icons-material/Add";
 import ButtonCustom from "../../shared/button";
 import AddTaskModal from "../addtask";
+
 let cropSchedulesHeader = [
   {
     label: "Batch Number",
@@ -70,7 +71,8 @@ export default function FarmDashboard({
   fetchUsers,
   addTaskScheduleTask,
   fetchFarmInventory,
-  FarmInventoryList
+  farmInventoryList,
+  loginObject
 }) {
   const { farmId } = useParams();
   const [month, setMonth] = useState(3);
@@ -108,11 +110,13 @@ export default function FarmDashboard({
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month: value });
   };
 
-  const   handleTaskSave = (data) => {
+  const handleTaskSave = (data) => {
     if (data) {
+      data.createdBy = loginObject?.profile.id;
+      data.farmId = parseInt(farmId);
       addTaskScheduleTask(data);
     }
-    handleModalToggle();
+    //  handleModalToggle();
   };
 
   const renderCropSchedules = () => {
@@ -122,27 +126,26 @@ export default function FarmDashboard({
         <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Crop Schedules</p>
         </Grid>
-        <Grid container className="farm-container">
-          <Grid item xs={12} sm={12} md={12}>
-            <DataTable data={{ headers: headers, rows: cropSchedules || [] }} />
-          </Grid>
+        <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
+          <DataTable data={{ headers: headers, rows: cropSchedules || [] }} />
         </Grid>
       </>
     );
   };
   const renderTaskSchedules = () => {
+    const { farmdDetails } = dashboardFarmList;
     return (
       <>
-        <Grid item xs={6} sm={6} md={6}>
-          <p className="section-title">Task Schedules</p>
+        <Grid item xs={6} sm={6} md={9} lg={9}>
+          <p className="section-title">Tasks</p>
         </Grid>
         <Grid
           item
           xs={6}
           sm={6}
-          md={6}
+          md={3}
+          lg={3}
           sx={{ alignItems: "center" }}
-          className="button-container"
         >
           <ButtonCustom
             title="Add New Task"
@@ -150,10 +153,8 @@ export default function FarmDashboard({
             handleButtonClick={handleModalToggle}
           />
         </Grid>
-        <Grid container className="farm-container">
-          <Grid item xs={12} sm={12} md={12}>
-            <DataTable data={{ headers: cropSchedulesHeader, rows: rows }} />
-          </Grid>
+        <Grid className="card-outline-container " item xs={12} sm={12} md={12}>
+          <DataTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }} />
         </Grid>
       </>
     );
@@ -161,47 +162,59 @@ export default function FarmDashboard({
   const renderFarmUtilization = () => {
     const { stagedBasedQtyData } = dashboardFarmList;
     return (
-      <Grid item xs={12} sm={6} md={6}>
-        <div className="card-container">
-          <p className="section-title">Farm Utilization Based On Stages</p>
-          <PieChart chartData={stagedBasedQtyData || []} />
-        </div>
-      </Grid>
+      <>
+        <Grid item xs={6} sm={6} md={6} lg={6}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <p className="section-title">Farm Utilization Based On Stages</p>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12} className='card-outline-container graph-container'>
+              <PieChart chartData={stagedBasedQtyData || []} />
+            </Grid>
+          </Grid>
+        </Grid>
+      </>
     );
   };
   const renderCropsUtilization = () => {
     const { cropBasedQtyData } = dashboardFarmList;
     return (
-      <Grid item xs={12} sm={6} md={6}>
-        <div className="card-container">
-          <p className="section-title">Farm Utilization Based On Crops</p>
-          <PieChart chartData={cropBasedQtyData || []} />
-        </div>
+      <Grid item xs={6} sm={6} md={6} lg={6}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <p className="section-title">Farm Utilization Based On Crops</p>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12} className='card-outline-container graph-container'>
+            <PieChart chartData={cropBasedQtyData || []} />
+          </Grid>
+        </Grid>
       </Grid>
+      // <>
+      //   <Grid item xs={6} sm={6} md={6} lg={6}>
+      //     <p className="section-title">Farm Utilization Based On Crops</p>
+      //   </Grid>
+      //   <Grid item xs={6} sm={6} md={6} lg={6} className='card-outline-container'>
+      //     <PieChart chartData={cropBasedQtyData || []} />
+      //   </Grid>
+      // </>
+      // <Grid item xs={12} sm={6} md={6}>
+      //   <div className="card-container">
+      //     <p className="section-title">Farm Utilization Based On Crops</p>
+      //     <PieChart chartData={cropBasedQtyData || []} />
+      //   </div>
+      // </Grid>
     );
   };
   const renderMonthlyHarvestBreakup = () => {
     return (
-      <Grid item xs={12} sm={12} md={12}>
-        <div className="card-container">
+      <>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
           <p className="section-title">Monthly Harvest Breakup</p>
-          <Grid container justifyContent="end">
-            <Grid item xs={3} sm={2} md={2}>
-              <span className="input-label"> Select Month</span>
-              <FormControl fullWidth>
-                <SingleCustomSelect
-                  value={month}
-                  valueKey="value"
-                  labelKey="name"
-                  options={options}
-                  handleChange={handleChange}
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12} className='card-outline-container graph-container'>
           <BarChart chartData={dashboardHarvestList || []} />
-        </div>
-      </Grid>
+        </Grid>
+      </>
     );
   };
   React.useEffect(() => {
@@ -218,8 +231,7 @@ export default function FarmDashboard({
       <PageHeader title="Farm Dashboard" buttonArray={[]} />
       {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
       <div className="page-container">
-        <Grid container item spacing={2}>
-          {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
+        <Grid container spacing={2}>
           {renderCropSchedules()}
           {renderTaskSchedules()}
           {renderMonthlyHarvestBreakup()}
@@ -232,7 +244,7 @@ export default function FarmDashboard({
             handleSave={handleTaskSave}
             handleClose={handleModalToggle}
             usersList={usersList}
-            FarmInventoryList={FarmInventoryList}
+            farmInventoryList={farmInventoryList}
           />
         )}
       </div>

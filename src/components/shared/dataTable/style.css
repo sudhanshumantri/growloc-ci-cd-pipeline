@@ -6,6 +6,6 @@
   font-size: 13px ;
   font-weight: bold;
 }
-.table-row{
-  border-radius: 10px;
+.custom-table-row{
+  background-color: red;
 }
