@@ -11,52 +11,39 @@ import {
 import TextBox from "../../shared/text-box";
 import CustomButton from "../../shared/button";
 
-export default function AddFarmTaskComment({
-   open,
-  handleSave,
-  handleClose,
-}) {
-
-    const [taskComment,setTaskComments] = useState("")
-  
-    const handleChange = (e) => {
-        setTaskComments(e.target.value)
-    }
-    //   const taskCommentsValidations = () => {
-    //     let isError = false;
-    //     if (!taskComment.comment) {
-    //         setTaskCommentError(true);
-    //         isError = true;
-    //       }
-    //   return isError;
-    //   }
-      const handleSaveComment = () => {
-        let payload = {
-            comment:taskComment
-        };
-          handleSave(payload);
-      };
-    
-    const renderActionButton = () => {
-        return (
-          <>
-            <div className="flex-row-justify-center-container">
-              <DialogActions>
-                <CustomButton
-                  isLight={true}
-                  handleButtonClick={handleClose}
-                  title="Cancel"
-                />
-                <CustomButton title="Save" handleButtonClick={handleSaveComment} />
-              </DialogActions>
-            </div>
-          </>
-        );
-      };
+export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
+  const [taskComment, setTaskComments] = useState("");
+  const handleChange = (e) => {
+    setTaskComments(e.target.value);
+  };
+  const handleSaveComment = () => {
+    let payload = {
+      comment: taskComment,
+    };
+      handleSave(payload);
+  };
+  const renderActionButton = () => {
+    return (
+      <>
+        <div className="flex-row-justify-center-container">
+          <DialogActions>
+            <CustomButton
+              isLight={true}
+              handleButtonClick={handleClose}
+              title="Cancel"
+            />
+            <CustomButton title="Save" handleButtonClick={handleSaveComment} />
+          </DialogActions>
+        </div>
+      </>
+    );
+  };
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle className="dialog-title-container">Add a Comment</DialogTitle>
+        <DialogTitle className="dialog-title-container">
+          Add a Comment
+        </DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>

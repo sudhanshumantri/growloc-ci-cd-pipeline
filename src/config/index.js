@@ -4,8 +4,8 @@ import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 export const api = {
   //host: "http://localhost:8000/api/",
  // host: 'http://44.202.123.160:8000/api/'
-  //host:'https://growlock-backend.onrender.com/api/'
-  host: "http://localhost:4000/api/",
+  host:'https://growlock-backend.onrender.com/api/'
+  // host: "http://localhost:4000/api/",
  // host: 'http://44.202.123.160:8000/api/'
 // host:'https://growlock-backend.onrender.com/api/'
 };
@@ -121,10 +121,6 @@ export const role_based_access = {
     ergonomists: [],
     supervisor: ["view"],
   },
-
-
-
-
 
 };
 export const TASK_CATEGORY = ["Cleaning", "WaterQuality", "Soil Preparation", "Plantation", "Irrigation", "Crop Maintenance", "Fertilizer", "Scouting", "Defence", "Harvest", "Processing", "Storage", "Packing", "Loading", "Transportation", "Selling"];

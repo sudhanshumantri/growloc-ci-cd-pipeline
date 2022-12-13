@@ -2,7 +2,9 @@ import {
     FETCH_ALL_FARM_TASKS_REQUEST,
     FETCH_ALL_FARM_TASKS_SUCCESS,
     FETCH_ALL_FARM_TASKS_FAILURE,
-   
+    ADD_TASKS_COMMENTS_REQUEST,
+    ADD_TASKS_COMMENTS_SUCCESS,
+    ADD_TASKS_COMMENTS_FAILURE,
  } from "./actionTypes";
   
   export function fetchFarmTaskRequest(data) {
@@ -23,3 +25,24 @@ import {
       error,
     };
   }
+  //
+
+  export function addTaskCommentRequest(data) {
+    return {
+      type: ADD_TASKS_COMMENTS_REQUEST,
+      data,
+    };
+  }
+  export function addTaskCommentSuccess(data) {
+    return {
+      type: ADD_TASKS_COMMENTS_SUCCESS,
+      data,
+    };
+  }
+  export function addTaskCommentFailure(error) {
+    return {
+      type: ADD_TASKS_COMMENTS_FAILURE,
+      error,
+    };
+  }
+  

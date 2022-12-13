@@ -17,3 +17,13 @@ export const selectFarmTaskListError = () =>
     selectTask,
     (services) => services.toJS()["FarmTaskListError"]
   );
+
+  export const selectIsTaskCommentLoading= () =>
+  createSelector(
+    selectTask,
+    (services) => services.toJS()["isTaskCommentLoading"]
+  );
+
+export const selectTaskCommentError = () =>
+  createSelector(selectTask, (services) => services.toJS()["taskCommentError"]);
+

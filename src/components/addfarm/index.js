@@ -623,9 +623,9 @@ export default function AddFarm({
                 name="reservoirCapacity"
                 value={farmData.reservoirCapacity}
                 onChange={handleChange}
-                error={validation.growingPlantCountPerRow}
+                error={validation.reservoirCapacity}
                 helperText={
-                  validation.growingPlantCountPerRow
+                  validation.reservoirCapacity
                     ? "Please provide reservoircapacity"
                     : ""
                 }

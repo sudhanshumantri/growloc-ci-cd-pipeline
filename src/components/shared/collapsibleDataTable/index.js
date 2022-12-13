@@ -1,6 +1,5 @@
 import * as React from "react";
 import moment from "moment";
-
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -14,8 +13,10 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
 
-function Row({ row }) {
+import "./style.css";
+function Row({ row, handleCommentModalToggle }) {
   const [open, setOpen] = React.useState(false);
   return (
     <React.Fragment>
@@ -29,19 +30,42 @@ function Row({ row }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell
+          component="th"
+          scope="row"
+          className="table-header"
+          align="left"
+        >
           {row.category}
         </TableCell>
-        <TableCell align="right">{row.taskName}</TableCell>
-        <TableCell align="right">{row.description}</TableCell>
-        <TableCell align="right">{row.createdBy}</TableCell>
-        <TableCell align="right">
+        <TableCell className="table-header" align="left">
+          {row.taskName}
+        </TableCell>
+        <TableCell className="table-header" align="left">
+          {row.description}
+        </TableCell>
+        <TableCell className="table-header" align="left">
+          {row.createdByProfile.name}
+        </TableCell>
+        <TableCell className="table-header" align="left">
           {moment(row.createdOn).format("YYYY-MM-DD")}
         </TableCell>
-        <TableCell align="right">{row.createdFor}</TableCell>
-        <TableCell align="right">{row.itemName}</TableCell>
-        <TableCell align="right">
+        <TableCell className="table-header" align="left">
+          {row.createdForProfile.name}
+        </TableCell>
+        <TableCell className="table-header" align="left">
+          Inventory Name
+        </TableCell>
+        <TableCell className="table-header" align="left">
           {moment(row.dueDate).format("YYYY-MM-DD")}
+        </TableCell>
+        <TableCell>
+          <IconButton
+            title="Add New"
+            onClick={() => handleCommentModalToggle(row)}
+          >
+            <AddCommentOutlinedIcon sx={{ color: "#517223" }} />,
+          </IconButton>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -64,13 +88,12 @@ function Row({ row }) {
                     <TableRow key={historyRow.createdOn}>
                       <TableCell component="th" scope="row">
                         {historyRow.comment}
-                        
                       </TableCell>
                       {/* <TableCell>{historyRow.createdOn}</TableCell> */}
                       <TableCell>
                         {moment(historyRow.createdOn).format("YYYY-MM-DD")}
                       </TableCell>
-                      <TableCell>{historyRow.user.name}</TableCell>
+                      <TableCell>{historyRow.user?.name}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -83,7 +106,7 @@ function Row({ row }) {
   );
 }
 
-export default function CollapsibleTable({ data }) {
+export default function CollapsibleTable({ data, handleCommentModalToggle }) {
   const { headers, rows } = data;
   console.log(rows, "og");
 
@@ -98,11 +121,16 @@ export default function CollapsibleTable({ data }) {
                 {header.label}
               </TableCell>
             ))}
+            <TableCell>Comment</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.id} row={row} />
+            <Row
+              key={row.id}
+              row={row}
+              handleCommentModalToggle={handleCommentModalToggle}
+            />
           ))}
         </TableBody>
       </Table>

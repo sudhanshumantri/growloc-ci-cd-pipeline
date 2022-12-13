@@ -23,9 +23,10 @@ const INITIAL_STATE = fromJS({
   isTaskScheduleTaskLoading: false,
   TaskScheduleTaskListError: null,
   isFarmTaskCommentLoading: false,
-  farmTaskCommentError:null,
+  farmTaskCommentError: null,
 });
 export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
+  let dashboardFarmList = state.toJS()["dashboardFarmList"];
   switch (action.type) {
     case FETCH_ALL_DASHBOARD_FARM_REQUEST:
       return state
@@ -64,31 +65,36 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
         .set("isTaskScheduleTaskLoading", true)
         .set("TaskScheduleTaskListError", null);
     case ADD_TASK_SUCCESS:
-      return (
-        state
-          .set("isTaskScheduleTaskLoading", false)
-          // .set("dashboardFarmList", dashboardFarmList)
-          .set("TaskScheduleTaskListError", null)
-      );
+      return state
+        .set("isTaskScheduleTaskLoading", false)
+        .set("dashboardFarmList", dashboardFarmList)
+        .set("TaskScheduleTaskListError", null);
     case ADD_TASK_FAILURE:
       return state
         .set("isTaskScheduleTaskLoading", false)
         .set("TaskScheduleTaskListError", action.error);
-
-        //
-        case ADD_FARM_TASKS_COMMENTS_REQUEST:
-          return state
-          .set("isFarmTaskCommentLoading", true)
-          .set("farmTaskCommentError", null);
-        case ADD_FARM_TASKS_COMMENTS_SUCCESS:
-          return state
-            .set("isFarmTaskCommentLoading", false)
-            .set("farmTaskCommentError", null);
-        case ADD_FARM_TASKS_COMMENTS_FAILURE:
-          return state
-            .set("isFarmTaskCommentLoading", false)
-            .set("farmTaskCommentError", action.error);
-
+    //
+    case ADD_FARM_TASKS_COMMENTS_REQUEST:
+      return state
+        .set("isFarmTaskCommentLoading", true)
+        .set("farmTaskCommentError", null);
+    case ADD_FARM_TASKS_COMMENTS_SUCCESS:
+      const { farmdDetails } = dashboardFarmList;
+      console.log(farmdDetails, "hello farm details");
+      const taskRow = farmdDetails.Tasks.findIndex(
+        (l) => l.id == action.data.taskId
+      );
+      const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
+      const user = AUTH_OBJECT.profile;
+      farmdDetails.Tasks[taskRow].TasksHistory.push({ ...action.data, user });
+      return state
+        .set("isFarmTaskCommentLoading", false)
+        .set("dashboardFarmList", dashboardFarmList)
+        .set("farmTaskCommentError", null);
+    case ADD_FARM_TASKS_COMMENTS_FAILURE:
+      return state
+        .set("isFarmTaskCommentLoading", false)
+        .set("farmTaskCommentError", action.error);
     default:
       return state;
   }

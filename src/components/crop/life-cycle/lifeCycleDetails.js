@@ -158,6 +158,7 @@ export default function CropLifeCycleDetails({
       };
       handleModalToggle();
       cropsLifecycleTransition(requestData);
+      setActiveStep((prevStep) => prevStep + 1);
     }
   };
   const handleParametersSave = (data) => {

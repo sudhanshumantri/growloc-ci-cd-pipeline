@@ -5,13 +5,10 @@ import PageHeader from "../../shared/page-header";
 import DataTable from "../../shared/dataTable";
 import PieChart from "../../shared/chart/pieChart";
 import BarChart from "../../shared/chart/barChart";
-import SingleCustomSelect from "../../shared/select";
-import { HARVEST_MONTH_OPTIONS} from "../../../config";
+import CollapsibleTable from "../../shared/collapsibleDataTable";
 import Loader from "../../shared/loader";
 import AddIcon from "@mui/icons-material/Add";
 import ButtonCustom from "../../shared/button";
-import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
-// import AddTaskModal from "../addtask";
 import AddTaskModal from "../../shared/addtask/addtask";
 import AddFarmTaskComment from "../addfarmtaskcomment";
 
@@ -78,13 +75,13 @@ export default function FarmDashboard({
   farmInventoryList,
   loginObject,
   addFarmTaskComment,
+  isFarmTaskCommentLoading,
 
 }) {
   const { farmId } = useParams();
   const [month, setMonth] = useState(3);
   const [open, setOpen] = useState(false);
   const [openCommetTask,setCommetTask] = useState(false)
-  const [taskCommentData,setTaskCommentData] = useState({})
   const [rowdata,setRowData] = useState({})
   const headers = [
     {
@@ -157,16 +154,6 @@ export default function FarmDashboard({
       redirection: false,
     },
     {
-      label: "Batch Number",
-      key: "batchNo",
-      redirection: false,
-    },
-    {
-      label: "Crop Name",
-      key: "cropName",
-      redirection: false,
-    },
-    {
       label: "Created By",
       key: "createdByProfile.name",
       redirection: false,
@@ -183,25 +170,17 @@ export default function FarmDashboard({
       isDate: true,
     },
     {
+      label: "Item Name",
+      key: "itemName",
+      redirection: false,
+      isDate: true,
+    },
+    {
       label: "Due Date",
       key: "dueDate",
       redirection: false,
       isDate: true,
     },
-    {
-      label: "Comment",
-      isButton: true,
-      buttonArray: [
-        {
-          label: "Add New",
-          handler: handleCommentModalToggle,
-          type: "icon",
-          icon: <AddCommentOutlinedIcon sx={{ color: "#517223" }} />,
-        },
-        
-      ],
-    },
-  
   ]
   const renderCropSchedules = () => {
     const { cropSchedules } = dashboardFarmList;
@@ -239,7 +218,8 @@ export default function FarmDashboard({
           />
         </Grid>
         <Grid className="card-outline-container " item xs={12} sm={12} md={12}>
-          <DataTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }} />
+          {/* <DataTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }} /> */}
+          <CollapsibleTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }} handleCommentModalToggle={handleCommentModalToggle}/>
         </Grid>
       </>
     );
@@ -315,6 +295,8 @@ export default function FarmDashboard({
     <div>
       <PageHeader title="Farm Dashboard" buttonArray={[]} />
       {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
+      {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
+
       <div className="page-container">
         <Grid container spacing={2}>
           {renderCropSchedules()}

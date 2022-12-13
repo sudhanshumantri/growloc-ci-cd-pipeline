@@ -34,10 +34,7 @@ const urls = {
     "delete-farm-inventory" : "farm/inventory/",
     "fetch-farm-all-task":"farm/task/",
     "add-farm-task-comment":"farm/task/add-comments/",
-
-
-
-
+    "add-task-comment":"farm/task/add-comments/",
   },
 };
 function getEndpoint(endpoint) {
@@ -283,6 +280,15 @@ export function callfetchFarmTaskDetails(routeParams) {
 
 export function callAddFarmTaskComment(data) {
   return callApi(getEndpoint("add-farm-task-comment"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data,
+  });
+}
+//
+
+export function callAddTaskComment(data) {
+  return callApi(getEndpoint("add-task-comment"), {
     method: "POST",
     removeAuthorizationHeader: false,
     data,
