@@ -6,12 +6,14 @@ import DataTable from "../../shared/dataTable";
 import PieChart from "../../shared/chart/pieChart";
 import BarChart from "../../shared/chart/barChart";
 import SingleCustomSelect from "../../shared/select";
-import { HARVEST_MONTH_OPTIONS, TASK_HEADER } from "../../../config";
+import { HARVEST_MONTH_OPTIONS} from "../../../config";
 import Loader from "../../shared/loader";
 import AddIcon from "@mui/icons-material/Add";
 import ButtonCustom from "../../shared/button";
+import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 // import AddTaskModal from "../addtask";
 import AddTaskModal from "../../shared/addtask/addtask";
+import AddFarmTaskComment from "../addfarmtaskcomment";
 
 let cropSchedulesHeader = [
   {
@@ -62,6 +64,7 @@ let rows = [
   },
 ];
 
+
 export default function FarmDashboard({
   dashboardFarmList,
   fetchFarmDashboard,
@@ -73,12 +76,16 @@ export default function FarmDashboard({
   addTaskScheduleTask,
   fetchFarmInventory,
   farmInventoryList,
-  loginObject
+  loginObject,
+  addFarmTaskComment,
+
 }) {
   const { farmId } = useParams();
   const [month, setMonth] = useState(3);
   const [open, setOpen] = useState(false);
-
+  const [openCommetTask,setCommetTask] = useState(false)
+  const [taskCommentData,setTaskCommentData] = useState({})
+  const [rowdata,setRowData] = useState({})
   const headers = [
     {
       label: "Batch Number",
@@ -120,6 +127,82 @@ export default function FarmDashboard({
      handleModalToggle();
   };
 
+  const handleCommentModalToggle = (rowData) => {
+    setRowData(rowData)
+    setCommetTask(!openCommetTask);
+  };
+
+  const handleTaskCommentSave = (data) => {
+    if (data) {
+      addFarmTaskComment({...data, taskId:parseInt(rowdata.id), userId:parseInt(rowdata.createdByProfile.id)});
+    }
+    handleCommentModalToggle();
+  };
+  const TASK_HEADER = [
+    {
+      label: "Category",
+      key: "category",
+      redirection: false,
+      redirectionKey: "link",
+    },
+    {
+      label: "Task Name",
+      key: "taskName",
+      redirection: false,
+      redirectionKey: "link",
+    },
+    {
+      label: "Description",
+      key: "description",
+      redirection: false,
+    },
+    {
+      label: "Batch Number",
+      key: "batchNo",
+      redirection: false,
+    },
+    {
+      label: "Crop Name",
+      key: "cropName",
+      redirection: false,
+    },
+    {
+      label: "Created By",
+      key: "createdByProfile.name",
+      redirection: false,
+    },
+    {
+      label: "Created For",
+      key: "createdForProfile.name",
+      redirection: false,
+    },
+    {
+      label: "Created On",
+      key: "dueDate",
+      redirection: false,
+      isDate: true,
+    },
+    {
+      label: "Due Date",
+      key: "dueDate",
+      redirection: false,
+      isDate: true,
+    },
+    {
+      label: "Comment",
+      isButton: true,
+      buttonArray: [
+        {
+          label: "Add New",
+          handler: handleCommentModalToggle,
+          type: "icon",
+          icon: <AddCommentOutlinedIcon sx={{ color: "#517223" }} />,
+        },
+        
+      ],
+    },
+  
+  ]
   const renderCropSchedules = () => {
     const { cropSchedules } = dashboardFarmList;
     return (
@@ -135,6 +218,7 @@ export default function FarmDashboard({
   };
   const renderTaskSchedules = () => {
     const { farmdDetails } = dashboardFarmList;
+    console.log(farmdDetails, "here is farm details");
     return (
       <>
         <Grid item xs={6} sm={6} md={9} lg={9}>
@@ -248,6 +332,15 @@ export default function FarmDashboard({
             farmInventoryList={farmInventoryList}
           />
         )}
+       {openCommetTask && (
+          <AddFarmTaskComment
+            open={openCommetTask}
+            handleSave={handleTaskCommentSave}
+            handleClose={handleCommentModalToggle}
+
+          />
+        )}
+
       </div>
     </div>
   );

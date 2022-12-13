@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
-import { fetchDashboardFarmRequest, fetchDashboardHarvestRequest, addTaskSheduleTaskRequest } from "../../actions/dashboard";
+import { fetchDashboardFarmRequest, fetchDashboardHarvestRequest, addTaskSheduleTaskRequest,addFarmTaskCommentRequest } from "../../actions/dashboard";
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
 
@@ -15,8 +15,9 @@ import {
   selectFarmDashboardHarvestListError,
   selectFarmDashboardHarvestList,
   selectIsTaskScheduleTaskLoading,
-  selectTaskScheduleTaskListError
-
+  selectTaskScheduleTaskListError,
+  selectIsisFarmTaskCommentLoading,
+  selectfarmTaskCommentError,
 } from "../../selectors/dashboard";
 import {
   selectUsersList
@@ -40,7 +41,8 @@ const mapStateToProps = createStructuredSelector({
   TaskScheduleTaskListError: selectTaskScheduleTaskListError(),
   farmInventoryList: selectFarmInventoryList(),
   loginObject: selectLoginObject(),
-  
+  isFarmTaskCommentLoading:selectIsisFarmTaskCommentLoading(),
+  farmTaskCommentError:selectfarmTaskCommentError(),
 });
 const mapDispatchToProps = {
   fetchFarmDashboard: fetchDashboardFarmRequest,
@@ -48,6 +50,7 @@ const mapDispatchToProps = {
   fetchUsers: fetchUsersRequest,
   addTaskScheduleTask: addTaskSheduleTaskRequest,
   fetchFarmInventory: fetchFarmInventoryRequest,
+  addFarmTaskComment: addFarmTaskCommentRequest,
 };
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {

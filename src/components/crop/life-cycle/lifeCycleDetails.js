@@ -58,7 +58,7 @@ export default function CropLifeCycleDetails({
   const [modalHeaderText, setModalHeaderText] = React.useState("");
   const [harvestingSchedules, setHarvestingSchedules] = React.useState([]);
   const [openTaskModal, setTaskModal] = useState(false)
-
+  const [openTaskCommentModal,setTaskCommentModal] = useState(false)
   React.useEffect(() => {
     fetchCropsLifecycleDetails(parseInt(lifecycleId));
     fetchFarmInventory(farmId);
@@ -493,8 +493,6 @@ export default function CropLifeCycleDetails({
             usersList={usersList}
             farmInventoryList={farmInventoryList}
             />)}
-
-
             {open && (
               <MoveCropLifeCycleModal
                 open={open}

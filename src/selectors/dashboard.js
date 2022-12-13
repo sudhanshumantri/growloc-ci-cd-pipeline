@@ -32,4 +32,16 @@ export const selectFarmDashboardHarvestListError = () =>
 export const selectTaskScheduleTaskListError = () =>
   createSelector(selectFarmDashboard, (services) => services.toJS()["TaskScheduleTaskListError"]);
 
+  //
+
+  export const selectIsisFarmTaskCommentLoading = () =>
+  createSelector(
+    selectFarmDashboard,
+    (services) => services.toJS()["isFarmTaskCommentLoading"]
+  );
+
+export const selectfarmTaskCommentError = () =>
+  createSelector(selectFarmDashboard, (services) => services.toJS()["farmTaskCommentError"]);
+
+
 

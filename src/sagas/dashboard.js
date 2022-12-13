@@ -2,7 +2,8 @@ import { call, all, put, takeLatest } from "redux-saga/effects";
 import {
   callFetchDashboardFarmList,
   callFetchDashboardHarvestList,
-  callAddTaskScheduleTask
+  callAddTaskScheduleTask,
+  callAddFarmTaskComment,
 } from "../utils/api";
 import {
   fetchDashboardFarmSuccess,
@@ -11,6 +12,8 @@ import {
   fetchDashboardHarvestFailure,
   addTaskSheduleTaskSuccess,
   addTaskSheduleTaskFailure,
+  addFarmTaskCommentSuccess,
+  addFarmTaskCommentFailure
 } from "../actions/dashboard";
 
 export function* fetchFarmDashboardList({ data }) {
@@ -32,7 +35,7 @@ export function* fetchFarmDashboardHarvestList({ data }) {
 }
 
 export function* addTaskScheduleTask({ data }) {
-  console.log(data);
+  console.log(data,"hello sagar");
   let responseData = yield call(callAddTaskScheduleTask, data);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(addTaskSheduleTaskSuccess(responseData.data.data));
@@ -41,11 +44,21 @@ export function* addTaskScheduleTask({ data }) {
   }
 }
 
+export function* addFarmTaskComment( {data} ) {
+  let responseData = yield call(callAddFarmTaskComment, data);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(addFarmTaskCommentSuccess(responseData.data.data));
+  } else {
+    yield put(addFarmTaskCommentFailure("Something went wrong"));
+  }
+}
+
 export function* farmDashboardSagas() {
   yield all([
     takeLatest("FETCH_ALL_DASHBOARD_FARM_REQUEST", fetchFarmDashboardList),
     takeLatest("FETCH_ALL_DASHBOARD_HARVEST_REQUEST", fetchFarmDashboardHarvestList),
     takeLatest("ADD_TASK_REQUEST", addTaskScheduleTask),
+    takeLatest("ADD_FARM_TASKS_COMMENTS_REQUEST", addFarmTaskComment),
   ]);
 }
 export default [farmDashboardSagas];

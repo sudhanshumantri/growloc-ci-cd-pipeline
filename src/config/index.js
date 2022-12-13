@@ -1,3 +1,6 @@
+import * as React from "react";
+
+import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 export const api = {
   //host: "http://localhost:8000/api/",
  // host: 'http://44.202.123.160:8000/api/'
@@ -174,7 +177,17 @@ export const TASK_HEADER = [
     isDate: true,
   },
   {
-    label: "Action",
-    key: "",
-  }
+    label: "Actons",
+    isButton: true,
+    buttonArray: [
+      {
+        label: "Edit",
+        type: "icon",
+        icon: <AddCommentOutlinedIcon sx={{ color: "#517223" }} />,
+        color: "primary",
+      },
+      
+    ],
+  },
+
 ]

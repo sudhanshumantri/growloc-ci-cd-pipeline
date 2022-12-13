@@ -8,6 +8,9 @@ import {
   ADD_TASK_REQUEST,
   ADD_TASK_SUCCESS,
   ADD_TASK_FAILURE,
+  ADD_FARM_TASKS_COMMENTS_REQUEST,
+  ADD_FARM_TASKS_COMMENTS_SUCCESS,
+  ADD_FARM_TASKS_COMMENTS_FAILURE,
 } from "./actionTypes";
 export function fetchDashboardFarmRequest(data) {
   return {
@@ -65,3 +68,25 @@ export function addTaskSheduleTaskFailure(error) {
     error,
   };
 }
+
+//
+
+export function addFarmTaskCommentRequest(data) {
+  return {
+    type: ADD_FARM_TASKS_COMMENTS_REQUEST,
+    data,
+  };
+}
+export function addFarmTaskCommentSuccess(data) {
+  return {
+    type: ADD_FARM_TASKS_COMMENTS_SUCCESS,
+    data,
+  };
+}
+export function addFarmTaskCommentFailure(error) {
+  return {
+    type: ADD_FARM_TASKS_COMMENTS_FAILURE,
+    error,
+  };
+}
+

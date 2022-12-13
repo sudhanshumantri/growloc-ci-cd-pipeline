@@ -4,7 +4,7 @@ import { Grid } from "@mui/material";
 import PageHeader from "../shared/page-header";
 import DataTable from "../shared/dataTable";
 import Loader from "../shared/loader";
-
+import CollapsibleTable from "../shared/collapsibleDataTable";
 export default function ManageTasks({
   FarmTaskList,
   fetchFarmTask,
@@ -43,7 +43,7 @@ export default function ManageTasks({
       key: "createdForProfile.name",
     },
     {
-      label: "itemName",
+      label: "Item Name",
       key: "itemName",
     },
     {
@@ -53,6 +53,8 @@ export default function ManageTasks({
       isDate: true,
   
     },
+
+
   ];
 
   return (
@@ -62,9 +64,11 @@ export default function ManageTasks({
       <div className="page-container">
         <Grid container spacing={2}>
           <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
-            <DataTable
+            {/* <DataTable
               data={{ headers: headers, rows: FarmTaskList || [] }}
-            />
+            /> */}
+            <CollapsibleTable data={{ headers: headers, rows: FarmTaskList || [] }}/>
+            
           </Grid>
         </Grid>
       </div>

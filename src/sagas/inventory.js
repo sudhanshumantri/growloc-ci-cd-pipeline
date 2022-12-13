@@ -19,9 +19,7 @@ export function* fetchFarmInventoryList({ data }) {
     yield put(fetchFarmInventoryFailure("Something went wrong"));
   }
 }
-
 export function* addFarmInventory({ data }) {
-
   let responseData = yield call(callAddFarmInventory, data);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(addFarmInventorySuccess(responseData.data.data));
@@ -29,7 +27,6 @@ export function* addFarmInventory({ data }) {
     yield put(addFarmInventoryFailure("Something went wrong"));
   }
 }
-
 export function* updateFarmInventory({ data }) {
   const {payload, id} = data;
   let responseData = yield call(callUpdateFarmInventory, payload, id);
