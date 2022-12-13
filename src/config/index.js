@@ -1,7 +1,10 @@
 export const api = {
   //host: "http://localhost:8000/api/",
  // host: 'http://44.202.123.160:8000/api/'
-  host:'https://growlock-backend.onrender.com/api/'
+  //host:'https://growlock-backend.onrender.com/api/'
+  host: "http://localhost:4000/api/",
+ // host: 'http://44.202.123.160:8000/api/'
+// host:'https://growlock-backend.onrender.com/api/'
 };
 export const WEEKDAYS = [
   { label: "S", value: "7" },

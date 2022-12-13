@@ -4,6 +4,7 @@ const endpointLocation = "remote";
 const urls = {
   remote: {
     login: "auth/login",
+    'signup': 'auth/register',
     "fetch-farms-list": "farm/get-all-farm",
     "fetch-crops-list": "crop/get-all-crops",
     "add-farm": "farm/add-new-farm",
@@ -67,6 +68,13 @@ export function callLoginHandler(data) {
     method: "POST",
     removeAuthorizationHeader: true,
     data,
+  });
+}
+export function callRegisterHandler(data) {
+  return callApi(getEndpoint('signup'), {
+      method: 'POST',
+      removeAuthorizationHeader: true,
+      data
   });
 }
 export function callFetchFarmList() {

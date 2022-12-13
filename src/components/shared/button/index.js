@@ -6,15 +6,14 @@ import Button from '@mui/material/Button';
  * if ICON component is not present, it skips the rendering
  * 
  */
-export default function ButtonCustom({ title, ICON, handleButtonClick, routePath, isLight, isFullWidth }) {
+export default function ButtonCustom({ title, ICON, handleButtonClick, routePath, isLight,disabled, isFullWidth, ENDICON, variant, type }) {
     let className = 'button-custom';
     if (isLight) {
         className = 'button-custom-light'
     }
     return (
-        <Button className={className} variant="outlined" endIcon={ICON ? ICON : null}
-            onClick={() => handleButtonClick()}
-        >
+        <Button disabled={disabled ? disabled : false} className={disabled ? 'button-custom-light' : className} type={type ? type : ''} fullWidth={isFullWidth ? isFullWidth : false} variant={variant ? variant : "outlined"} startIcon={ICON ? ICON : null} endIcon={ENDICON ? ENDICON : null}
+            onClick={() => handleButtonClick ? handleButtonClick() : () => { }}>
             {title}
         </Button>
     )

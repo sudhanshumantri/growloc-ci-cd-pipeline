@@ -24,28 +24,31 @@ const AppBar = styled(MuiAppBar, {
 }));
 export default function TopHeader({ open, toggleDrawer, drawerWidth, loginObject }) {
     //console.log(loginObject);
-    let userName = loginObject?.profile?.name;
-    let userNameArray = userName.split(" ");
-    let avatarName = userNameArray[0]?.charAt(0);
-    return (
-        <AppBar
-            position="fixed"
-            open={open}
-            drawerwidth={drawerWidth}
-        >
-            <Toolbar>
-                <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <IconButton sx={{ p: 0 }}>
-                        <Avatar sx={{ width: '25px', height: '25px', fontSize: '14px', marginRight: '8px', borderRadius: '4px', fontWeight: 500 }} >
-                            {avatarName}
-                        </Avatar>
-                    </IconButton>
-                    <Typography variant="p" className='label-white' bold noWrap component="div" sx={{ cursor: 'pointer' }} >
-                        Hi, {userName}
-                    </Typography>
-                </Box>
-            </Toolbar>
-        </AppBar>
-    );
+    if (loginObject) {
+        let userName = loginObject?.profile?.name;
+        let userNameArray = userName?.split(" ");
+        if (userNameArray) { }
+        let avatarName = userNameArray[0]?.charAt(0);
+        return (
+            <AppBar
+                position="fixed"
+                open={open}
+                drawerwidth={drawerWidth}
+            >
+                <Toolbar>
+                    <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                        <IconButton sx={{ p: 0 }}>
+                            <Avatar sx={{ width: '25px', height: '25px', fontSize: '14px', marginRight: '8px', borderRadius: '4px', fontWeight: 500 }} >
+                                {avatarName}
+                            </Avatar>
+                        </IconButton>
+                        <Typography variant="p" className='label-white' bold noWrap component="div" sx={{ cursor: 'pointer' }} >
+                            Hi, {userName}
+                        </Typography>
+                    </Box>
+                </Toolbar>
+            </AppBar>
+        );
+    }
 }
 

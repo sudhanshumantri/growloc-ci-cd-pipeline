@@ -23,8 +23,8 @@ export function* loginHandler({ data }) {
 function* logoutHandler() {
   localStorage.removeItem("AUTH_TOKEN");
   localStorage.removeItem("AUTH_OBJECT");
-  yield call(browserHistory.push, "/");
-  yield call(browserHistory.go, "/");
+  yield call(browserHistory.push, "/login");
+  yield call(browserHistory.go, "/login");
 }
 
 export function* loginSagas() {
