@@ -4,8 +4,8 @@ import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 export const api = {
   //host: "http://localhost:8000/api/",
  // host: 'http://44.202.123.160:8000/api/'
-  host:'https://growlock-backend.onrender.com/api/'
-  // host: "http://localhost:4000/api/",
+  //host:'https://growlock-backend.onrender.com/api/'
+  host: "http://localhost:4000/api/",
  // host: 'http://44.202.123.160:8000/api/'
 // host:'https://growlock-backend.onrender.com/api/'
 };
@@ -85,31 +85,31 @@ export const role_based_access = {
     ergonomists: ["view"],
     supervisor: [],
   },
-  dashboard : {
+  dashboard: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
     ergonomists: ["view"],
     supervisor: [],
   },
-  reports:{
+  reports: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
     ergonomists: ["view"],
     supervisor: [],
   },
-  inventory : {
+  inventory: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
     ergonomists: ["view"],
     supervisor: [],
   },
-  monitors : {
+  monitors: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
     ergonomists: ["view"],
     supervisor: [],
   },
-  waterManagement : {
+  waterManagement: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
     ergonomists: ["view"],
@@ -185,7 +185,7 @@ export const TASK_HEADER = [
         icon: <AddCommentOutlinedIcon sx={{ color: "#517223" }} />,
         color: "primary",
       },
-      
+
     ],
   },
 

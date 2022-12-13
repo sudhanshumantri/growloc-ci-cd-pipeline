@@ -31,14 +31,14 @@ const menuItems = [
     isAuthRequired: true,
     action: "view",
     css: { borderBottom: "1px solid white" },
-    subMenu: [
-      {
-        id: "1",
-        name: "Avg Weight Per Plant",
-        navigation: "reports/avgweight",
-      },
-      { id: "2", name: "Farm Efficiency", navigation: "reports/efficiency" },
-    ],
+    // subMenu: [
+    //   {
+    //     id: "1",
+    //     name: "Avg Weight Per Plant",
+    //     navigation: "reports/avgweight",
+    //   },
+    //   { id: "2", name: "Farm Efficiency", navigation: "reports/efficiency" },
+    // ],
   },
   {
     title: "Task",
@@ -105,20 +105,20 @@ const farmMenuItems = [
     title: "Water Management",
     id: "Water",
     icon: WaterManagement,
-    navigation: "water",
     isAuthRequired: true,
     from: "waterManagement",
     action: "view",
-
+    link: "/water-management",
+    navigation: "water-management",
     css: { borderBottom: "1px solid white" },
-    subMenu: [
-      {
-        id: "1",
-        name: "Storage & History",
-        icon: WaterHistory,
-        navigation: "water/storage",
-      },
-    ],
+    // subMenu: [
+    //   {
+    //     id: "1",
+    //     name: "Storage & History",
+    //     icon: WaterHistory,
+    //     navigation: "water/storage",
+    //   },
+    // ],
   },
   {
     title: "Monitors",
@@ -130,37 +130,38 @@ const farmMenuItems = [
     action: "view",
 
     css: { borderBottom: "1px solid white" },
-    subMenu: [
-      { id: "1", name: "Data Inputs", navigation: "monitors/datainputs" },
-      { id: "2", name: "Status", navigation: "monitors/status" },
-      { id: "3", name: "Data Plots", navigation: "monitors/dataplots" },
-      {
-        id: "4",
-        name: "Consulatant Reporting",
-        navigation: "monitors/reporting",
-      },
-      { id: "5", name: "My Reports", navigation: "monitors/myreports" },
-    ],
+    // subMenu: [
+    //   { id: "1", name: "Data Inputs", navigation: "monitors/datainputs" },
+    //   { id: "2", name: "Status", navigation: "monitors/status" },
+    //   { id: "3", name: "Data Plots", navigation: "monitors/dataplots" },
+    //   {
+    //     id: "4",
+    //     name: "Consulatant Reporting",
+    //     navigation: "monitors/reporting",
+    //   },
+    //   { id: "5", name: "My Reports", navigation: "monitors/myreports" },
+    // ],
   },
   {
     title: "Inventory",
     id: "Inventory",
     icon: Inventory,
-    navigation: "inventory",
+    link: "/inventory/items",
+    navigation: "inventory/items",
     isAuthRequired: true,
     from: "inventory",
     action: "view",
 
     css: { borderBottom: "1px solid white" },
-    subMenu: [
-      {
-        id: "1",
-        name: "Items",
-        icon: InventoryItem,
-        link: "/inventory/items",
-        navigation: "inventory/items",
-      },
-    ],
+    // subMenu: [
+    //   {
+    //     id: "1",
+    //     name: "Items",
+    //     icon: InventoryItem,
+    //     link: "/inventory/items",
+    //     navigation: "inventory/items",
+    //   },
+    // ],
   },
   {
     title: "Reports",

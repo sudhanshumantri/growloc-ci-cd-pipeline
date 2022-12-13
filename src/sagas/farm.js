@@ -42,12 +42,17 @@ export function* addFarm({ data }) {
 }
 //
 export function* updateFarm({ data }) {
-  const {farmId, payload} = data;
+  const {farmId, payload, shouldRedirect} = data;
   let responseData = yield call(callUpdateFarm, payload, farmId);
   if (responseData?.status == 200) {
     yield put(updateFarmSuccess(responseData.data));
-    yield call(browserHistory.push, "/");
-    yield call(browserHistory.go, "/");
+    if(shouldRedirect==false){
+
+    }else{
+      yield call(browserHistory.push, "/");
+      yield call(browserHistory.go, "/");
+    }
+    
     addNotification("Farm Updated Successfully", 5000,true, "success");
   } else {
     yield put(updateFarmFailure("Something went wrong"));

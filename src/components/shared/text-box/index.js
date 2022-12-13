@@ -17,6 +17,7 @@ const TextBox = ({
   return (
     <>
         <TextField
+          size="small"
           {...params}
           className={
             isWhite ? "input-custom-white input-custom" : "input-custom"
