@@ -11,6 +11,7 @@ import PrivateOutlet from "../privateroute";
 import FarmDashboard from "../../container/dashboard";
 import ManageCrop from "../../container/managecrops";
 import Login from "../../container/login";
+import Register from "../../container/register";
 import SideBar from "../../container/sidebar";
 import Farms from "../../container/farm";
 import AddUsers from "../../container/users"
@@ -19,6 +20,7 @@ import CropLifeCycleDetails from "../../container/life-cycle/lifeCycleDetails";
 import FarmOutlet from "../farmoutlet";
 import { getAsyncInjectors } from "../../utils/asyncInjectors";
 import loginReducer from "../../reducers/login";
+import registerReducer from '../../reducers/register'
 import farmReducer from "../../reducers/farm";
 import usersReducer from "../../reducers/users";
 import cropsReducer from "../../reducers/crops";
@@ -27,6 +29,7 @@ import dashboardFarmReducer from "../../reducers/dashboard";
 import inventoryReducer from "../../reducers/inventory";
 import taskReducer from "../../reducers/task";
 import loginSagas from "../../sagas/login";
+import registerSagas from '../../sagas/register';
 import cropsSagas from "../../sagas/crops";
 import farmSagas from "../../sagas/farm";
 import userSagas from "../../sagas/users";
@@ -44,6 +47,8 @@ import ManageTasks from "../../container/task";
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
 injectReducer("crops", cropsReducer);
 injectReducer("login", loginReducer);
+injectReducer('register', registerReducer);
+injectSagas(registerSagas);
 injectReducer("farm", farmReducer);
 injectReducer("life-cycle", lifeCycleReducer);
 injectReducer("dashboard", dashboardFarmReducer);
@@ -73,7 +78,6 @@ const Layout = ({ loadAuthToken }) => {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       {token && <SideBar loginObject={loginObject}/>}
-
       <Box
         component="main"
         sx={{
@@ -82,7 +86,6 @@ const Layout = ({ loadAuthToken }) => {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        <Toolbar />
         <Routes>
           <Route
             exact
@@ -114,6 +117,8 @@ const Layout = ({ loadAuthToken }) => {
           </Route>
           <Route path="task" element={<PrivateOutlet token={token}><ManageTasks /></PrivateOutlet>} />
           <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          
         </Routes>
       </Box>
     </Box>

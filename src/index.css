@@ -160,3 +160,8 @@ a {
 .graph-container{
   height: 400px !important;
 }
+.custom-anchor-tag {
+  color: #000000!important;
+  cursor: pointer;
+  text-decoration: none!important;
+}
