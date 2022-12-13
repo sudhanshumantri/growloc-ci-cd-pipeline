@@ -21,6 +21,7 @@ const SingleCustomSelect = ({
       <Select
         className={isWhite ? "input-custom-white input-custom" : "input-custom"}
         name={name}
+        size="small"
         value={value ?? ""}
         onChange={handleChange}
         disabled={disabled}

@@ -12,6 +12,7 @@ import FarmDashboard from "../../container/dashboard";
 import ManageCrop from "../../container/managecrops";
 import Login from "../../container/login";
 import Register from "../../container/register";
+import WaterManagement from "../../container/waterManagement";
 import SideBar from "../../container/sidebar";
 import Farms from "../../container/farm";
 import AddUsers from "../../container/users"
@@ -111,9 +112,12 @@ const Layout = ({ loadAuthToken }) => {
             <Route path="users" element={<AddUsers />} />
             <Route path="crops/manage" element={<ManageCrop />} />
             <Route path="crops/lifecycle" element={<CropLifeCycle />} />
+          
+            
             <Route path="inventory/items" element={<ManageItem />} />
             <Route path="crops/lifecycle/details/:lifecycleId" element={<CropLifeCycleDetails />} />  
             <Route path="task" element={<ManageTasks />} />
+            <Route path="water-management" element={<WaterManagement />} />
           </Route>
           <Route path="task" element={<PrivateOutlet token={token}><ManageTasks /></PrivateOutlet>} />
           <Route path="login" element={<Login />} />
