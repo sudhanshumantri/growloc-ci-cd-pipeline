@@ -62,7 +62,6 @@ export default function ManageTasks({
     }
 
   ];
-
   const handleTaskCommentSave = (data) => {
     if (data) {
       addTaskComment({...data, taskId:parseInt(rowdata.id), userId:parseInt(rowdata.createdByProfile.id)});

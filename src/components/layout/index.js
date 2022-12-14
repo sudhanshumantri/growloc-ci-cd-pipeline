@@ -10,6 +10,7 @@ import PrivateOutlet from "../privateroute";
 // import FarmDashboard from "../dashboard/farm";
 import FarmDashboard from "../../container/dashboard";
 import ManageCrop from "../../container/managecrops";
+import Monitor from "../monitor";
 import Login from "../../container/login";
 import Register from "../../container/register";
 import WaterManagement from "../../container/waterManagement";
@@ -112,12 +113,12 @@ const Layout = ({ loadAuthToken }) => {
             <Route path="users" element={<AddUsers />} />
             <Route path="crops/manage" element={<ManageCrop />} />
             <Route path="crops/lifecycle" element={<CropLifeCycle />} />
-          
-            
             <Route path="inventory/items" element={<ManageItem />} />
             <Route path="crops/lifecycle/details/:lifecycleId" element={<CropLifeCycleDetails />} />  
             <Route path="task" element={<ManageTasks />} />
             <Route path="water-management" element={<WaterManagement />} />
+            <Route path="monitor" element={<Monitor />} />
+            
           </Route>
           <Route path="task" element={<PrivateOutlet token={token}><ManageTasks /></PrivateOutlet>} />
           <Route path="login" element={<Login />} />

@@ -9,7 +9,8 @@ import CropsLifecycle from "../../../../public/assets/Irrigation.png";
 import Inventory from "../../../../public/assets/Inventory.png";
 import InventoryItem from "../../../../public/assets/InventoryItem.png";
 import WaterManagement from "../../../../public/assets/WaterManagement.png";
-import WaterHistory from "../../../../public/assets/WaterHistory.png";
+import Monitors from "../../../../public/assets/Monitor.png";
+import Tasks from "../../../../public/assets/Tasks.png";
 
 const menuItems = [
   {
@@ -45,6 +46,7 @@ const menuItems = [
     id: "Task",
     navigation: "task",
     link: "task",
+    icon: Tasks,
     isAuthRequired: true,
     from: "task",
     action: "view",
@@ -95,9 +97,10 @@ const farmMenuItems = [
     ],
   },
   {
-    title: "Task",
-    id: "Task",
+    title: "Tasks",
+    id: "Tasks",
     navigation: "/task",
+    icon: Tasks,
     link: "/task",
     css: { borderBottom: "1px solid white" },
   },
@@ -123,12 +126,13 @@ const farmMenuItems = [
   {
     title: "Monitors",
     id: "Monitors",
-    icon: null,
+    icon: Monitors,
     navigation: "monitors",
     isAuthRequired: true,
     from: "monitors",
     action: "view",
-
+    link: "/monitor",
+    navigation: "monitor",
     css: { borderBottom: "1px solid white" },
     // subMenu: [
     //   { id: "1", name: "Data Inputs", navigation: "monitors/datainputs" },

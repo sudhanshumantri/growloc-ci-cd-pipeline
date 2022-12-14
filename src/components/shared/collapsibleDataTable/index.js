@@ -72,28 +72,25 @@ function Row({ row, handleCommentModalToggle }) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                History
-              </Typography>
-              <Table size="small" aria-label="purchases">
+              <p className="label-light label-bold">History</p>
+              <Table aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Comment</TableCell>
-                    <TableCell>Created On</TableCell>
-                    <TableCell>User</TableCell>
+                    <TableCell className="table-header">Date</TableCell>
+                    <TableCell className="table-header">User</TableCell>
+                    <TableCell className="table-header">Comment</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {(row.TasksHistory || []).map((historyRow) => (
                     <TableRow key={historyRow.createdOn}>
+                      <TableCell>
+                        {moment(historyRow.createdOn).format("YYYY-MM-DD: hh:mm:ss ")}
+                      </TableCell>
+                      <TableCell>{historyRow.user?.name}</TableCell>
                       <TableCell component="th" scope="row">
                         {historyRow.comment}
                       </TableCell>
-                      {/* <TableCell>{historyRow.createdOn}</TableCell> */}
-                      <TableCell>
-                        {moment(historyRow.createdOn).format("YYYY-MM-DD")}
-                      </TableCell>
-                      <TableCell>{historyRow.user?.name}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -108,8 +105,6 @@ function Row({ row, handleCommentModalToggle }) {
 
 export default function CollapsibleTable({ data, handleCommentModalToggle }) {
   const { headers, rows } = data;
-  console.log(rows, "og");
-
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">

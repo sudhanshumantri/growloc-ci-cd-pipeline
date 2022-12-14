@@ -17,6 +17,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  TableHead,
   Alert,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
@@ -58,7 +59,7 @@ export default function CropLifeCycleDetails({
   const [modalHeaderText, setModalHeaderText] = React.useState("");
   const [harvestingSchedules, setHarvestingSchedules] = React.useState([]);
   const [openTaskModal, setTaskModal] = useState(false)
-  const [openTaskCommentModal,setTaskCommentModal] = useState(false)
+  const [openTaskCommentModal, setTaskCommentModal] = useState(false)
   React.useEffect(() => {
     fetchCropsLifecycleDetails(parseInt(lifecycleId));
     fetchFarmInventory(farmId);
@@ -173,7 +174,7 @@ export default function CropLifeCycleDetails({
   const handleActionButton = () => {
     let buttonArray = [];
 
-    let buttonTaskLabel ="Add New Task"
+    let buttonTaskLabel = "Add New Task"
     buttonArray.push({
       label: buttonTaskLabel,
       ICON: <AddIcon />,
@@ -327,20 +328,21 @@ export default function CropLifeCycleDetails({
     });
     filteredHistory = _.orderBy(filteredHistory, ["start_date"], ["desc"]);
     return (
-      <Grid item xs={12} sm={6} md={6}>
+      <Grid item xs={12} sm={12} md={12}>
         <p className="section-title">
           {selectedStageInformation.stage + " History Information"}
         </p>
         <Paper
-          // style={{
-          //   height: 250,
-          //   width: "100%",
-          //   overflowY: "scroll",
-          //   boxShadow: "none",
-          // }}
           className="life-cycle-details-card life-cycle-spacing "
         >
           <Table size="small" aria-label="a dense table">
+            <TableHead className="table-header-row">
+              <TableRow>
+                <TableCell>Date</TableCell>
+                <TableCell>Units</TableCell>
+                <TableCell>Description</TableCell>
+              </TableRow>
+            </TableHead>
             <TableBody>
               {filteredHistory.map((data, index) => {
                 return (
@@ -349,22 +351,38 @@ export default function CropLifeCycleDetails({
                     key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
-                      <p className="label-light">
-                        <span className="label-bold"> {data.qty}</span> units
-                        <span className="label-bold">
-                          {" "}
-                          {data.kgs ? "(" + data.kgs + " Kg) " : ""}
-                        </span>
-                        were moved {data.movement == 1 ? " in to" : "out from"}{" "}
-                        the {selectedStageInformation.stage} stage on{" "}
-                        <span className="label-bold">
-                          {moment(data.start_date).format(
-                            "MMMM Do YYYY hh:mm:ss A"
-                          )}
-                        </span>
-                      </p>
+                    <TableCell className="table-header" align="left">
+                      {moment(data.start_date).format(
+                        "MMMM Do YYYY hh:mm:ss A"
+                      )}
                     </TableCell>
+                    <TableCell className="table-header" align="left">
+                      {data.qty} units  {data.kgs ? "(" + data.kgs + " Kg) " : ""}
+                    </TableCell>
+                    <TableCell className="table-header" align="left">
+                      {data.qty} {data.kgs ? "(" + data.kgs + " Kg) " : ""}
+                      were moved {data.movement == 1 ? " in to" : "out from"}
+                      {moment(data.start_date).format(
+                        "MMMM Do YYYY hh:mm:ss A"
+                      )}
+                    </TableCell>
+
+                    {/* <TableCell component="th" scope="row">
+                    <p className="label-light">
+                      <span className="label-bold"> {data.qty}</span> units
+                      <span className="label-bold">
+                        {" "}
+                        {data.kgs ? "(" + data.kgs + " Kg) " : ""}
+                      </span>
+                      were moved {data.movement == 1 ? " in to" : "out from"}{" "}
+                      the {selectedStageInformation.stage} stage on{" "}
+                      <span className="label-bold">
+                        {moment(data.start_date).format(
+                          "MMMM Do YYYY hh:mm:ss A"
+                        )}
+                      </span>
+                    </p>
+                  </TableCell> */}
                   </TableRow>
                 );
               })}
@@ -372,7 +390,7 @@ export default function CropLifeCycleDetails({
           </Table>
           <Divider />
         </Paper>
-      </Grid>
+      </Grid >
     );
   };
   const renderSelectedStageInformation = () => {
@@ -415,8 +433,8 @@ export default function CropLifeCycleDetails({
               <span className="label-light-bold">Actual Start Date : </span>
               {selectedStageInformation.start_date
                 ? moment(selectedStageInformation.start_date).format(
-                    "MMMM Do YYYY hh:mm:ss A"
-                  )
+                  "MMMM Do YYYY hh:mm:ss A"
+                )
                 : "Not Yet Started"}
             </p>
             <Divider />
@@ -429,14 +447,13 @@ export default function CropLifeCycleDetails({
         </Grid>
         <Grid item xs={12} sm={6} md={6}>
           <p className="section-title">
-            {selectedStageInformation.stage + " Parameters Information"}{" "}
+            {selectedStageInformation.stage + " Parameters Information"}
             <EditOutlinedIcon
               className="icon"
-              sx={{ color: "#517223" }}
+              sx={{ color: "#517223", fontSize: '20px' }}
               onClick={handleEditToggle}
             />
           </p>
-
           <div className="life-cycle-details-card life-cycle-spacing">
             {selectedStageInformation.parameters.map((param, index) => {
               return (
@@ -452,25 +469,43 @@ export default function CropLifeCycleDetails({
           </div>
         </Grid>
         {renderHistoryInformation()}
-        <Grid item xs={12} sm={6} md={6}>
+        <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Sensors Information </p>
-          <div className="life-cycle-details-card life-cycle-spacing">
-            <p className="label-light">
-              {" "}
-              <span className="label-light-bold">Crop Name: </span> Crop Name
-            </p>
-            <Divider />
-            <p className="label-light">
-              {" "}
-              <span className="label-light-bold">Variety: </span> Variety
-            </p>
-            <Divider />
-            <p className="label-light">
-              {" "}
-              <span className="label-light-bold">Quantity: </span> Quantity
-            </p>
-            <Divider />
-          </div>
+          <Paper
+            className="life-cycle-details-card life-cycle-spacing "
+          >
+            <Table size="small" aria-label="a dense table">
+              <TableHead className="table-header-row">
+                <TableRow>
+                  <TableCell>Parameter</TableCell>
+                  <TableCell>Current Value</TableCell>
+                  <TableCell>Ideal Value</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {selectedStageInformation.parameters.map((param, index) => {
+                  return (
+                    <TableRow
+                      // key={index}
+                      key={index}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell className="table-header" align="left">
+                        {param.name}
+                      </TableCell>
+                      <TableCell className="table-header" align="left">
+                        {param.value} <b>{param.unit}</b>
+                      </TableCell>
+                      <TableCell className="table-header" align="left">
+                        {param.value} <b>{param.unit}</b>
+                      </TableCell>
+
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </Paper>
         </Grid>
       </Grid>
     );
@@ -486,14 +521,14 @@ export default function CropLifeCycleDetails({
             {renderStepper()}
             {renderNotification()}
             {renderSelectedStageInformation()}
-            {openTaskModal && ( 
-            <AddTaskModal
-            open={openTaskModal}
-            handleSave={handleTaskLifeCycleSave}
-            handleClose={handleTaskModalToggle}
-            usersList={usersList}
-            farmInventoryList={farmInventoryList}
-            />)}
+            {openTaskModal && (
+              <AddTaskModal
+                open={openTaskModal}
+                handleSave={handleTaskLifeCycleSave}
+                handleClose={handleTaskModalToggle}
+                usersList={usersList}
+                farmInventoryList={farmInventoryList}
+              />)}
             {open && (
               <MoveCropLifeCycleModal
                 open={open}
@@ -504,7 +539,7 @@ export default function CropLifeCycleDetails({
                 isHarvestStage={isHarvestStage}
                 isContiniousHarvet={
                   lifecycleDetails.cropDetails.crop.crop.variety == "Vine" ||
-                  lifecycleDetails.cropDetails.crop.crop.variety == "Herb"
+                    lifecycleDetails.cropDetails.crop.crop.variety == "Herb"
                     ? true
                     : false
                 }
@@ -512,8 +547,8 @@ export default function CropLifeCycleDetails({
                   maxQty
                     ? maxQty
                     : lifecycleDetails.cropDetails.FarmCropLifecycleStages[
-                        activeStep
-                      ].qty
+                      activeStep
+                    ].qty
                 }
               />
             )}
