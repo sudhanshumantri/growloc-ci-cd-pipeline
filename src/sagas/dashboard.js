@@ -35,7 +35,6 @@ export function* fetchFarmDashboardHarvestList({ data }) {
 }
 
 export function* addTaskScheduleTask({ data }) {
-  console.log(data,"hello sagar");
   let responseData = yield call(callAddTaskScheduleTask, data);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(addTaskSheduleTaskSuccess(responseData.data.data));

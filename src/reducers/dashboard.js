@@ -13,6 +13,7 @@ import {
   ADD_FARM_TASKS_COMMENTS_SUCCESS,
   ADD_FARM_TASKS_COMMENTS_FAILURE,
 } from "../actions/actionTypes";
+import login from "../sagas/login";
 const INITIAL_STATE = fromJS({
   isDashboardFarmListLoading: false,
   dashboardFarmList: {},
@@ -27,6 +28,9 @@ const INITIAL_STATE = fromJS({
 });
 export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
   let dashboardFarmList = state.toJS()["dashboardFarmList"];
+  const { farmdDetails } = dashboardFarmList;
+  const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
+
   switch (action.type) {
     case FETCH_ALL_DASHBOARD_FARM_REQUEST:
       return state
@@ -65,6 +69,8 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
         .set("isTaskScheduleTaskLoading", true)
         .set("TaskScheduleTaskListError", null);
     case ADD_TASK_SUCCESS:
+      const createdByProfile = AUTH_OBJECT.profile
+      farmdDetails.Tasks.push({ ...action.data, createdByProfile });
       return state
         .set("isTaskScheduleTaskLoading", false)
         .set("dashboardFarmList", dashboardFarmList)
@@ -79,12 +85,10 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
         .set("isFarmTaskCommentLoading", true)
         .set("farmTaskCommentError", null);
     case ADD_FARM_TASKS_COMMENTS_SUCCESS:
-      const { farmdDetails } = dashboardFarmList;
-      console.log(farmdDetails, "hello farm details");
+   console.log("dashboardlist", dashboardFarmList);
       const taskRow = farmdDetails.Tasks.findIndex(
         (l) => l.id == action.data.taskId
       );
-      const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
       const user = AUTH_OBJECT.profile;
       farmdDetails.Tasks[taskRow].TasksHistory.push({ ...action.data, user });
       return state

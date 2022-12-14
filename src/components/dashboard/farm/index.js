@@ -76,6 +76,8 @@ export default function FarmDashboard({
   loginObject,
   addFarmTaskComment,
   isFarmTaskCommentLoading,
+  isTaskScheduleTaskLoading,
+
 
 }) {
   const { farmId } = useParams();
@@ -197,7 +199,6 @@ export default function FarmDashboard({
   };
   const renderTaskSchedules = () => {
     const { farmdDetails } = dashboardFarmList;
-    console.log(farmdDetails, "here is farm details");
     return (
       <>
         <Grid item xs={6} sm={6} md={9} lg={9}>
@@ -296,7 +297,7 @@ export default function FarmDashboard({
       <PageHeader title="Farm Dashboard" buttonArray={[]} />
       {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
       {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
-
+      {isTaskScheduleTaskLoading && <Loader title="Adding Tasks" />}
       <div className="page-container">
         <Grid container spacing={2}>
           {renderCropSchedules()}

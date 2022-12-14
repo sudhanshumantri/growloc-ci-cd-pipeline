@@ -51,7 +51,7 @@ function Row({ row, handleCommentModalToggle }) {
           {moment(row.createdOn).format("YYYY-MM-DD")}
         </TableCell>
         <TableCell className="table-header" align="left">
-          {row.createdForProfile.name}
+          {row.createdByProfile.name}
         </TableCell>
         <TableCell className="table-header" align="left">
           Inventory Name

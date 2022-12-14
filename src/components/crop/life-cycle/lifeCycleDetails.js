@@ -46,7 +46,6 @@ export default function CropLifeCycleDetails({
   addTaskScheduleTask,
   loginObject,
 }) {
-
   let { farmId } = useParams();
   let { lifecycleId } = useParams();
   const [open, setOpen] = useState(false);
@@ -58,15 +57,31 @@ export default function CropLifeCycleDetails({
   const [maxQty, setMaxQty] = React.useState(null);
   const [modalHeaderText, setModalHeaderText] = React.useState("");
   const [harvestingSchedules, setHarvestingSchedules] = React.useState([]);
-  const [openTaskModal, setTaskModal] = useState(false)
-  const [openTaskCommentModal, setTaskCommentModal] = useState(false)
-  React.useEffect(() => {
+  const [openTaskModal, setTaskModal] = useState(false);
+
+  useEffect(() => {
     fetchCropsLifecycleDetails(parseInt(lifecycleId));
     fetchFarmInventory(farmId);
     if (usersList.length <= 0) {
       fetchUsers({ farmId });
     }
   }, []);
+
+  useEffect(() => {
+    if (!isLifecycleDetailsLoading) {
+      const { cropDetails } = lifecycleDetails;
+      const { FarmCropLifecycleStages =[]} = cropDetails;
+      let activeStep = 0;
+      for (let step of FarmCropLifecycleStages) {
+        if (step.qty === 0) {
+          activeStep = step.order;
+        }
+      }
+      activeStep =
+        activeStep >= FarmCropLifecycleStages.length ? 0 : activeStep;
+      setActiveStep(activeStep);
+    }
+  }, [isLifecycleDetailsLoading]);
 
   const handleTaskLifeCycleSave = (data) => {
     if (data) {
@@ -75,7 +90,7 @@ export default function CropLifeCycleDetails({
       data.farmId = parseInt(farmId);
       addTaskScheduleTask(data);
     }
-    handleTaskModalToggle()
+    handleTaskModalToggle();
   };
   const handleModalToggle = () => {
     setOpen(!open);
@@ -174,7 +189,7 @@ export default function CropLifeCycleDetails({
   const handleActionButton = () => {
     let buttonArray = [];
 
-    let buttonTaskLabel = "Add New Task"
+    let buttonTaskLabel = "Add New Task";
     buttonArray.push({
       label: buttonTaskLabel,
       ICON: <AddIcon />,
@@ -193,7 +208,6 @@ export default function CropLifeCycleDetails({
           label: buttonLable,
           handler: handleModalToggle,
         });
-
       } else {
         //this is the last step and it is harvesting
 
@@ -220,7 +234,6 @@ export default function CropLifeCycleDetails({
             handler: handleModalToggle,
           });
         }
-
       }
     }
     return buttonArray;
@@ -332,9 +345,7 @@ export default function CropLifeCycleDetails({
         <p className="section-title">
           {selectedStageInformation.stage + " History Information"}
         </p>
-        <Paper
-          className="life-cycle-details-card life-cycle-spacing "
-        >
+        <Paper className="life-cycle-details-card life-cycle-spacing ">
           <Table size="small" aria-label="a dense table">
             <TableHead className="table-header-row">
               <TableRow>
@@ -357,7 +368,8 @@ export default function CropLifeCycleDetails({
                       )}
                     </TableCell>
                     <TableCell className="table-header" align="left">
-                      {data.qty} units  {data.kgs ? "(" + data.kgs + " Kg) " : ""}
+                      {data.qty} units{" "}
+                      {data.kgs ? "(" + data.kgs + " Kg) " : ""}
                     </TableCell>
                     <TableCell className="table-header" align="left">
                       {data.qty} {data.kgs ? "(" + data.kgs + " Kg) " : ""}
@@ -390,7 +402,7 @@ export default function CropLifeCycleDetails({
           </Table>
           <Divider />
         </Paper>
-      </Grid >
+      </Grid>
     );
   };
   const renderSelectedStageInformation = () => {
@@ -433,8 +445,8 @@ export default function CropLifeCycleDetails({
               <span className="label-light-bold">Actual Start Date : </span>
               {selectedStageInformation.start_date
                 ? moment(selectedStageInformation.start_date).format(
-                  "MMMM Do YYYY hh:mm:ss A"
-                )
+                    "MMMM Do YYYY hh:mm:ss A"
+                  )
                 : "Not Yet Started"}
             </p>
             <Divider />
@@ -450,7 +462,7 @@ export default function CropLifeCycleDetails({
             {selectedStageInformation.stage + " Parameters Information"}
             <EditOutlinedIcon
               className="icon"
-              sx={{ color: "#517223", fontSize: '20px' }}
+              sx={{ color: "#517223", fontSize: "20px" }}
               onClick={handleEditToggle}
             />
           </p>
@@ -471,9 +483,7 @@ export default function CropLifeCycleDetails({
         {renderHistoryInformation()}
         <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Sensors Information </p>
-          <Paper
-            className="life-cycle-details-card life-cycle-spacing "
-          >
+          <Paper className="life-cycle-details-card life-cycle-spacing ">
             <Table size="small" aria-label="a dense table">
               <TableHead className="table-header-row">
                 <TableRow>
@@ -499,7 +509,6 @@ export default function CropLifeCycleDetails({
                       <TableCell className="table-header" align="left">
                         {param.value} <b>{param.unit}</b>
                       </TableCell>
-
                     </TableRow>
                   );
                 })}
@@ -528,7 +537,8 @@ export default function CropLifeCycleDetails({
                 handleClose={handleTaskModalToggle}
                 usersList={usersList}
                 farmInventoryList={farmInventoryList}
-              />)}
+              />
+            )}
             {open && (
               <MoveCropLifeCycleModal
                 open={open}
@@ -539,7 +549,7 @@ export default function CropLifeCycleDetails({
                 isHarvestStage={isHarvestStage}
                 isContiniousHarvet={
                   lifecycleDetails.cropDetails.crop.crop.variety == "Vine" ||
-                    lifecycleDetails.cropDetails.crop.crop.variety == "Herb"
+                  lifecycleDetails.cropDetails.crop.crop.variety == "Herb"
                     ? true
                     : false
                 }
@@ -547,8 +557,8 @@ export default function CropLifeCycleDetails({
                   maxQty
                     ? maxQty
                     : lifecycleDetails.cropDetails.FarmCropLifecycleStages[
-                      activeStep
-                    ].qty
+                        activeStep
+                      ].qty
                 }
               />
             )}
@@ -577,9 +587,6 @@ export default function CropLifeCycleDetails({
                 handleSave={handleParametersSave}
               />
             )}
-
-
-
           </div>
         </>
       )}

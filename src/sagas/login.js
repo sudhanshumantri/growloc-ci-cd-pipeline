@@ -4,7 +4,6 @@ import store, { browserHistory } from "../store";
 import { loginSuccess, loginFailure, loadAuthToken } from "../actions/login";
 export function* loginHandler({ data }) {
   let responseData = yield call(callLoginHandler, data);
-  console.log(responseData, "here is responce data");
   if (responseData?.status == 200 && responseData.data.status) {
     if (responseData.data?.data?.profile?.role === "supervisor") {
       yield call(browserHistory.push, "/task");
