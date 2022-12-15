@@ -11,7 +11,8 @@ import AddIcon from "@mui/icons-material/Add";
 import ButtonCustom from "../../shared/button";
 import AddTaskModal from "../../shared/addtask/addtask";
 import AddFarmTaskComment from "../addfarmtaskcomment";
-
+import {HARVEST_MONTH_OPTIONS} from "../../../config"
+import SingleCustomSelect from "../../shared/select";
 let cropSchedulesHeader = [
   {
     label: "Batch Number",
@@ -107,6 +108,7 @@ export default function FarmDashboard({
     },
   ];
 
+  console.log(dashboardFarmList, "here is dashborad");
   const handleModalToggle = () => {
     setOpen(!open);
   };
@@ -274,9 +276,22 @@ export default function FarmDashboard({
   const renderMonthlyHarvestBreakup = () => {
     return (
       <>
-        <Grid item xs={12} sm={12} md={12} lg={12}>
+        <Grid item xs={8} sm={10} md={10} >
           <p className="section-title">Monthly Harvest Breakup</p>
         </Grid>
+        <Grid item xs={4} sm={2} md={2} >
+            <FormControl fullWidth>
+            <span className="input-label">Select Month</span>
+             <SingleCustomSelect
+                value={month}
+                valueKey="value"
+                labelKey="name"
+                lable="Select Month"
+                options={HARVEST_MONTH_OPTIONS}
+                handleChange={handleChange}
+              />
+            </FormControl>
+            </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} className='card-outline-container graph-container'>
           <BarChart chartData={dashboardHarvestList || []} />
         </Grid>

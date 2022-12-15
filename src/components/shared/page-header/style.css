@@ -35,3 +35,8 @@
 .button-container>* {
   margin-left: 5px !important;
 }
+.back-button {
+  margin-block-start: 5px;
+  margin-block-end: 5px;
+  display: block;
+}

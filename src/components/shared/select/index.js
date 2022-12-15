@@ -3,8 +3,6 @@ import { Select, MenuItem, FormHelperText } from "@mui/material/";
 import "./style.css";
 
 const SingleCustomSelect = ({
-  inputLable,
-  lable,
   value,
   valueKey,
   labelKey,

@@ -9,15 +9,15 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
-
 import "./style.css";
+
 function Row({ row, handleCommentModalToggle }) {
   const [open, setOpen] = React.useState(false);
+
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -69,23 +69,25 @@ function Row({ row, handleCommentModalToggle }) {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={10}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <p className="label-light label-bold">History</p>
-              <Table aria-label="purchases">
+              <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell className="table-header">Date</TableCell>
-                    <TableCell className="table-header">User</TableCell>
-                    <TableCell className="table-header">Comment</TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell>User</TableCell>
+                    <TableCell>Comment</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {(row.TasksHistory || []).map((historyRow) => (
                     <TableRow key={historyRow.createdOn}>
                       <TableCell>
-                        {moment(historyRow.createdOn).format("YYYY-MM-DD: hh:mm:ss ")}
+                        {moment(historyRow.createdOn).format(
+                          "YYYY-MM-DD: hh:mm:ss "
+                        )}
                       </TableCell>
                       <TableCell>{historyRow.user?.name}</TableCell>
                       <TableCell component="th" scope="row">
@@ -105,6 +107,7 @@ function Row({ row, handleCommentModalToggle }) {
 
 export default function CollapsibleTable({ data, handleCommentModalToggle }) {
   const { headers, rows } = data;
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -112,7 +115,7 @@ export default function CollapsibleTable({ data, handleCommentModalToggle }) {
           <TableRow>
             <TableCell>#</TableCell>
             {headers.map((header, index) => (
-              <TableCell key={index} className="table-header" align="left">
+              <TableCell key={index} align="left">
                 {header.label}
               </TableCell>
             ))}

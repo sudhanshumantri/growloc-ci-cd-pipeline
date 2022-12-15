@@ -1,6 +1,10 @@
 import React from "react";
 import Button from "../button";
-import { Grid, Divider } from "@mui/material";
+import { Grid, Divider, Icon } from "@mui/material";
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+
+
 import "./style.css";
 import AuthOutlet from "../authoutlet";
 function renderButtonArray(buttonArray) {
@@ -21,16 +25,14 @@ function renderButtonArray(buttonArray) {
 export default function PageHeader({
   title,
   subtitle,
-  buttonTitle,
   buttonArray,
   info,
-  customButton,
-  key,
 
 }) {
   //export default class PageHeader extends React.Component {
   return (
     <>
+
       <Grid container spacing={2} className="page-header-container ">
         <Grid item xs={6} sm={6} md={6}>
           <p className="page-section-title">
@@ -38,6 +40,7 @@ export default function PageHeader({
             {subtitle && <span className="label-light">{subtitle}</span>}
           </p>
         </Grid>
+       
         <Grid item xs={6} sm={6} md={6} className="button-container">
           {buttonArray &&
             buttonArray.length > 0 &&
@@ -66,3 +69,5 @@ export default function PageHeader({
     </>
   );
 }
+
+

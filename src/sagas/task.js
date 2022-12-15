@@ -7,7 +7,8 @@ import {
     addTaskCommentFailure,
 } from "../actions/task";
 export function* fetchFarmTaskList({ data }) {
-  let responseData = yield call(callfetchFarmTaskDetails, data);
+  const {farmId, queryParams} = data;
+  let responseData = yield call(callfetchFarmTaskDetails, farmId, queryParams);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(fetchFarmTaskSuccess(responseData.data.data));
   } else {

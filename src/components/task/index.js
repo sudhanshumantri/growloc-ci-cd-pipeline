@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Grid } from "@mui/material";
 import PageHeader from "../shared/page-header";
@@ -6,20 +6,23 @@ import DataTable from "../shared/dataTable";
 import Loader from "../shared/loader";
 import CollapsibleTable from "../shared/collapsibleDataTable";
 import AddFarmTaskComment from "../dashboard/addfarmtaskcomment";
+import TableDynamicPagination from "../shared/tablepagination";
 export default function ManageTasks({
   FarmTaskList,
   fetchFarmTask,
   isFarmTaskListLoading,
   addTaskComment,
   isTaskCommentLoading,
-
 }) {
   let { farmId } = useParams();
-  const [openCommetTask,setCommetTask] = useState(false)
-  const [rowdata,setRowData] = useState({});
+  const [openCommetTask, setCommetTask] = useState(false);
+  const [rowdata, setRowData] = useState({});
 
   React.useEffect(() => {
-    fetchFarmTask(farmId || "universal");
+    fetchFarmTask({
+      farmId: farmId || "universal",
+      queryParams: { skip: 0, take: 10 },
+    });
   }, []);
 
   const headers = [
@@ -39,7 +42,7 @@ export default function ManageTasks({
       label: "Created By",
       key: "createdByProfile.name",
     },
-    {
+    { 
       label: "Created On",
       key: "dueDate",
       redirection: false,
@@ -58,21 +61,29 @@ export default function ManageTasks({
       key: "dueDate",
       redirection: false,
       isDate: true,
-  
-    }
-
+    },
   ];
+
   const handleTaskCommentSave = (data) => {
     if (data) {
-      addTaskComment({...data, taskId:parseInt(rowdata.id), userId:parseInt(rowdata.createdByProfile.id)});
+      addTaskComment({
+        ...data,
+        taskId: parseInt(rowdata.id),
+        userId: parseInt(rowdata.createdByProfile.id),
+      });
     }
     handleCommentModalToggle();
   };
 
   const handleCommentModalToggle = (rowData) => {
-    setRowData(rowData)
+    setRowData(rowData);
     setCommetTask(!openCommetTask);
   };
+
+  const handleChangePagination = (queryParams) => {
+    fetchFarmTask({ farmId: farmId || "universal", queryParams });
+  };
+
   return (
     <div>
       <PageHeader title="Task" />
@@ -82,22 +93,25 @@ export default function ManageTasks({
       <div className="page-container">
         <Grid container spacing={2}>
           <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
-            {/* <DataTable
-              data={{ headers: headers, rows: FarmTaskList || [] }}
-            /> */}
-            <CollapsibleTable data={{ headers: headers, rows: FarmTaskList || [] }} handleCommentModalToggle={handleCommentModalToggle}/>
-            
+            <CollapsibleTable
+              data={{ headers: headers, rows: FarmTaskList.tasks || [] }}
+              handleCommentModalToggle={handleCommentModalToggle}
+            />
+            <TableDynamicPagination
+              component ="div"
+              count={FarmTaskList.total}
+              handleChangePagination={handleChangePagination}
+            />
           </Grid>
         </Grid>
       </div>
       {openCommetTask && (
-          <AddFarmTaskComment
-            open={openCommetTask}
-            handleSave={handleTaskCommentSave}
-            handleClose={handleCommentModalToggle}
-          />
-        )}
-
+        <AddFarmTaskComment
+          open={openCommetTask}
+          handleSave={handleTaskCommentSave}
+          handleClose={handleCommentModalToggle}
+        />
+      )}
     </div>
   );
 }

@@ -9,6 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Grid } from "@mui/material";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+
 export default function ManageCrop({
   fetchCrop,
   cropList,
@@ -28,6 +29,7 @@ export default function ManageCrop({
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [cropInfo, setCropInfo] = useState({});
   let { farmId } = useParams();
+
   const handleCropSave = (addCropData) => {
     if (cropInfo.id) {
       const { qty } = addCropData;
@@ -42,6 +44,7 @@ export default function ManageCrop({
     setOpen(!open);
     setCropInfo({});
   };
+
   let buttonArray = [
     {
       label: "Add New",
@@ -52,6 +55,8 @@ export default function ManageCrop({
       action: "create",
     },
   ];
+  
+
   React.useEffect(() => {
     fetchCrop();
     fecthCropFarm({ farmId: parseInt(farmId) });
@@ -160,7 +165,7 @@ export default function ManageCrop({
   }, []);
   return (
     <div>
-      <PageHeader title="Manage Crops" buttonArray={buttonArray} />
+      <PageHeader title="Manage Crops" buttonTitle="back" buttonArray={buttonArray} hasButton={true}  />
       <div className="page-container">
         <Grid container spacing={2}>
           <Grid className="card-outline-container" item xs={12} sm={12} md={12}>

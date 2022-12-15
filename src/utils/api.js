@@ -269,11 +269,12 @@ export function callDeleteFarmInventory(routeParams) {
   });
 }
 //
-export function callfetchFarmTaskDetails(routeParams) {
+export function callfetchFarmTaskDetails(routeParams, queryParams) {
   return callApi(getEndpoint("fetch-farm-all-task"), {
     method: "get",
     removeAuthorizationHeader: false,
-    routeParams
+    routeParams,
+    queryParams
   });
 }
 //
