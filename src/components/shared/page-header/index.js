@@ -1,8 +1,9 @@
 import React from "react";
 import Button from "../button";
-import { Grid, Divider, Icon } from "@mui/material";
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
+import { Grid, Divider, Icon,IconButton } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
+
 
 
 import "./style.css";
@@ -27,14 +28,27 @@ export default function PageHeader({
   subtitle,
   buttonArray,
   info,
+  showBackButton,
 
 }) {
-  //export default class PageHeader extends React.Component {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(-1)
+  }
   return (
     <>
 
       <Grid container spacing={2} className="page-header-container ">
-        <Grid item xs={6} sm={6} md={6}>
+      <div className='page-header-top-row'>
+                        {showBackButton && (
+                            <IconButton aria-label="go back" size="small" onClick={handleClick}>
+                                <ArrowBackIcon sx={{ color: 'rgba(0, 0, 0, 0.54)', marginRight: '5px' }} />
+                            </IconButton>
+                        )}
+                        </div>       
+                        
+           <Grid item xs={6} sm={6} md={6}>
           <p className="page-section-title">
             {title}
             {subtitle && <span className="label-light">{subtitle}</span>}

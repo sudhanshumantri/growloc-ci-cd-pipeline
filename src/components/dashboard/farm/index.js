@@ -279,7 +279,7 @@ export default function FarmDashboard({
         <Grid item xs={8} sm={10} md={10} >
           <p className="section-title">Monthly Harvest Breakup</p>
         </Grid>
-        <Grid item xs={4} sm={2} md={2} >
+        <Grid item xs={4} sm={2} md={2}>
             <FormControl fullWidth>
             <span className="input-label">Select Month</span>
              <SingleCustomSelect
@@ -309,7 +309,7 @@ export default function FarmDashboard({
 
   return (
     <div>
-      <PageHeader title="Farm Dashboard" buttonArray={[]} />
+      <PageHeader title="Farm Dashboard" buttonArray={[]} showBackButton={true} />
       {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
       {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
       {isTaskScheduleTaskLoading && <Loader title="Adding Tasks" />}
