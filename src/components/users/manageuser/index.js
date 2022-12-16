@@ -153,7 +153,7 @@ export default function ManageUsers({
   // { userId: parseInt(userId) }
   return (
     <div>
-      <PageHeader title="Users" buttonArray={buttonArray} />
+      <PageHeader title="Users" buttonArray={buttonArray}  showBackButton={true}/>
       <div className="page-container">
         <Grid container spacing={2}>
           <Grid className="card-outline-container" item xs={12} sm={12} md={12}>

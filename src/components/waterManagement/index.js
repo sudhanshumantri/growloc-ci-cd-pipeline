@@ -7,7 +7,7 @@ import SingleCustomSelect from "../shared/select";
 import ButtonCustom from "../shared/button";
 import { Grid, FormControl } from "@mui/material";
 import {
-    wateringType, nutrientsType
+    WATERING_TYPE, NUTRIENTS_TYPE
 } from "../../config";
 export default function ManageUsers({
     updateFarm,
@@ -84,7 +84,7 @@ export default function ManageUsers({
     let buttonArray = []
     return (
         <div>
-            <PageHeader title="Water Management" buttonArray={buttonArray} />
+            <PageHeader title="Water Management" buttonArray={buttonArray} showBackButton={true}/>
             {isUpdateFarmLoading && <Loader title="Updating Details" />}
             {isFarmDetailsListLoading && <Loader title="Fetching  Details" />}
             <div className="page-container">
@@ -172,7 +172,7 @@ export default function ManageUsers({
                                         isWhite={true}
                                         name="nutrientsType"
                                         value={farmData.nutrientsType}
-                                        options={nutrientsType}
+                                        options={NUTRIENTS_TYPE}
                                         handleChange={handleChange}
                                         isError={validation.nutrientsType}
                                         errorMessage="Please select nutrientstype"

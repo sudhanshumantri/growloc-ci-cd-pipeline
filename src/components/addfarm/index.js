@@ -5,12 +5,12 @@ import ButtonCustom from "../shared/button";
 import SingleCustomSelect from "../shared/select";
 import { Grid } from "@mui/material";
 import {
-  germination,
-  wateringType,
-  nursaryType,
-  growingZone,
-  plantSpacing,
-  nutrientsType,
+  GERMINATION_TYPE,
+  WATERING_TYPE,
+  NURSARY_TYPE,
+  GROWING_ZONE,
+  PLANT_SPACING,
+  NUTRIENTS_TYPE,
 } from "../../config";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
@@ -360,7 +360,7 @@ export default function AddFarm({
                 isWhite={true}
                 name="germinationType"
                 value={farmData.germinationType}
-                options={germination}
+                options={GERMINATION_TYPE}
                 isError={validation.germinationType}
                 errorMessage="Please select a germination zone"
                 handleChange={handleChange}
@@ -401,7 +401,7 @@ export default function AddFarm({
                 isWhite={true}
                 name="germinationWateringType"
                 value={farmData.germinationWateringType}
-                options={wateringType}
+                options={WATERING_TYPE}
                 isError={validation.germinationWateringType}
                 errorMessage="Please select a germination watering type"
                 handleChange={handleChange}
@@ -440,7 +440,7 @@ export default function AddFarm({
                 isWhite={true}
                 name="nurseryType"
                 value={farmData.nurseryType}
-                options={nursaryType}
+                options={NURSARY_TYPE}
                 isError={validation.nurseryType}
                 errorMessage="Please select a nursery zone"
                 handleChange={handleChange}
@@ -480,7 +480,7 @@ export default function AddFarm({
                 isWhite={true}
                 name="nurseryWateringType"
                 value={farmData.nurseryWateringType}
-                options={wateringType}
+                options={WATERING_TYPE}
                 isError={validation.nurseryWateringType}
                 errorMessage="Please select a nursery watering type"
                 handleChange={handleChange}
@@ -521,7 +521,7 @@ export default function AddFarm({
                 isWhite={true}
                 name="growingType"
                 value={farmData.growingType}
-                options={growingZone}
+                options={GROWING_ZONE}
                 isError={validation.growingType}
                 errorMessage="Please select a growing type"
                 handleChange={handleChange}
@@ -595,7 +595,7 @@ export default function AddFarm({
                 isWhite={true}
                 name="growingPlantSpacing"
                 value={farmData.growingPlantSpacing}
-                options={plantSpacing}
+                options={PLANT_SPACING}
                 handleChange={handleChange}
                 isError={validation.growingPlantSpacing}
                 errorMessage="Please select Plant spacing"
@@ -696,7 +696,7 @@ export default function AddFarm({
                 isWhite={true}
                 name="nutrientsType"
                 value={farmData.nutrientsType}
-                options={nutrientsType}
+                options={NUTRIENTS_TYPE}
                 handleChange={handleChange}
                 isError={validation.nutrientsType}
                 errorMessage="Please select nutrientstype"

@@ -144,7 +144,7 @@ export default function ManageItem({
 
   return (
     <div>
-      <PageHeader title="Inventory" buttonArray={buttonArray} />
+      <PageHeader title="Inventory" buttonArray={buttonArray} showBackButton={true}/>
       <div className="page-container">
         <Grid container spacing={2}>
           <Grid className="card-outline-container" item xs={12} sm={12} md={12}>

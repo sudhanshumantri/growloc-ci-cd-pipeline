@@ -5,7 +5,7 @@ import PageHeader from "../shared/page-header";
 import DataTable from "../shared/dataTable";
 import Loader from "../shared/loader";
 import CollapsibleTable from "../shared/collapsibleDataTable";
-import AddFarmTaskComment from "../dashboard/addfarmtaskcomment";
+import AddFarmTaskComment from "../shared/addfarmtaskcomment";
 import TableDynamicPagination from "../shared/tablepagination";
 export default function ManageTasks({
   FarmTaskList,
@@ -86,7 +86,7 @@ export default function ManageTasks({
 
   return (
     <div>
-      <PageHeader title="Task" />
+      <PageHeader title="Task" showBackButton={true} />
       {isFarmTaskListLoading && <Loader title="Fetching Tasks" />}
       {isTaskCommentLoading && <Loader title="Adding comments" />}
 

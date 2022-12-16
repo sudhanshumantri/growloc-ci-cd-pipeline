@@ -249,8 +249,8 @@ export default function CropLifeCycleDetails({
         <PageHeader
           title={title}
           subtitle={subtitle}
-          // info={info}
           buttonArray={buttonArray}
+          showBackButton={true}
         />
       </div>
     );

@@ -8,8 +8,8 @@ import {
   DialogContent,
   Grid,
 } from "@mui/material/";
-import TextBox from "../../shared/text-box";
-import CustomButton from "../../shared/button";
+import TextBox from "../text-box";
+import CustomButton from "../button";
 
 export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
   const [taskComment, setTaskComments] = useState("");

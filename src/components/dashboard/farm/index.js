@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,memo} from "react";
 import { Grid, FormControl } from "@mui/material";
 import { useParams } from "react-router-dom";
 import PageHeader from "../../shared/page-header";
@@ -10,57 +10,10 @@ import Loader from "../../shared/loader";
 import AddIcon from "@mui/icons-material/Add";
 import ButtonCustom from "../../shared/button";
 import AddTaskModal from "../../shared/addtask/addtask";
-import AddFarmTaskComment from "../addfarmtaskcomment";
-import {HARVEST_MONTH_OPTIONS} from "../../../config"
+// import AddFarmTaskComment from "../addfarmtaskcomment";
+import AddFarmTaskComment from "../../shared/addfarmtaskcomment";
+import { HARVEST_MONTH_OPTIONS } from "../../../config";
 import SingleCustomSelect from "../../shared/select";
-let cropSchedulesHeader = [
-  {
-    label: "Batch Number",
-    key: "batchNo",
-    redirection: false,
-    redirectionKey: "link",
-  },
-  {
-    label: "Crop Name",
-    key: "name",
-    redirection: false,
-  },
-  {
-    label: "Description",
-    key: "description",
-    redirection: false,
-  },
-];
-let rows = [
-  {
-    zoneId: "Zone 1",
-    batchNo: "batchNo",
-    name: "crop Name",
-    description:
-      "The harvesting for this crop is expected to start in next two days",
-  },
-  {
-    zoneId: "Zone 2",
-    batchNo: "batchNo",
-    name: "Crop Name",
-    description:
-      "The harvesting for this crop is expected to start in next two days",
-  },
-  {
-    zoneId: "Zone 3",
-    batchNo: "batchNo",
-    name: "Crop Name",
-    description:
-      "The harvesting for this crop is expected to start in next two days",
-  },
-  {
-    zoneId: "Zone 4",
-    batchNo: "batchNo",
-    name: "Crop Name",
-    description:
-      "The harvesting for this crop is expected to start in next two days",
-  },
-];
 
 
 export default function FarmDashboard({
@@ -68,7 +21,7 @@ export default function FarmDashboard({
   fetchFarmDashboard,
   fetchFarmDashboardHarvest,
   dashboardHarvestList,
-  isDashboardHarvestListLoading,
+  isDashboardFarmListLoading,
   usersList,
   fetchUsers,
   addTaskScheduleTask,
@@ -78,14 +31,22 @@ export default function FarmDashboard({
   addFarmTaskComment,
   isFarmTaskCommentLoading,
   isTaskScheduleTaskLoading,
-
-
 }) {
   const { farmId } = useParams();
   const [month, setMonth] = useState(3);
   const [open, setOpen] = useState(false);
-  const [openCommetTask,setCommetTask] = useState(false)
-  const [rowdata,setRowData] = useState({})
+  const [openCommetTask, setCommetTask] = useState(false);
+  const [rowdata, setRowData] = useState({});
+
+  React.useEffect(() => {
+      fetchFarmDashboard(farmId);
+    fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
+    fetchFarmInventory(farmId);
+    if (usersList.length <= 0) {
+      fetchUsers({ farmId });
+    }
+  }, []);
+
   const headers = [
     {
       label: "Batch Number",
@@ -125,17 +86,21 @@ export default function FarmDashboard({
       data.farmId = parseInt(farmId);
       addTaskScheduleTask(data);
     }
-     handleModalToggle();
+    handleModalToggle();
   };
 
   const handleCommentModalToggle = (rowData) => {
-    setRowData(rowData)
+    setRowData(rowData);
     setCommetTask(!openCommetTask);
   };
 
   const handleTaskCommentSave = (data) => {
     if (data) {
-      addFarmTaskComment({...data, taskId:parseInt(rowdata.id), userId:parseInt(rowdata.createdByProfile.id)});
+      addFarmTaskComment({
+        ...data,
+        taskId: parseInt(rowdata.id),
+        userId: parseInt(rowdata.createdByProfile.id),
+      });
     }
     handleCommentModalToggle();
   };
@@ -185,7 +150,7 @@ export default function FarmDashboard({
       redirection: false,
       isDate: true,
     },
-  ]
+  ];
   const renderCropSchedules = () => {
     const { cropSchedules } = dashboardFarmList;
     return (
@@ -206,14 +171,7 @@ export default function FarmDashboard({
         <Grid item xs={6} sm={6} md={9} lg={9}>
           <p className="section-title">Tasks</p>
         </Grid>
-        <Grid
-          item
-          xs={6}
-          sm={6}
-          md={3}
-          lg={3}
-          sx={{ alignItems: "center" }}
-        >
+        <Grid item xs={6} sm={6} md={3} lg={3} sx={{ alignItems: "center" }}>
           <ButtonCustom
             title="Add New Task"
             ICON={<AddIcon />}
@@ -222,7 +180,10 @@ export default function FarmDashboard({
         </Grid>
         <Grid className="card-outline-container " item xs={12} sm={12} md={12}>
           {/* <DataTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }} /> */}
-          <CollapsibleTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }} handleCommentModalToggle={handleCommentModalToggle}/>
+          <CollapsibleTable
+            data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }}
+            handleCommentModalToggle={handleCommentModalToggle}
+          />
         </Grid>
       </>
     );
@@ -236,7 +197,14 @@ export default function FarmDashboard({
             <Grid item xs={12} sm={12} md={12} lg={12}>
               <p className="section-title">Farm Utilization Based On Stages</p>
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={12} className='card-outline-container graph-container'>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={12}
+              lg={12}
+              className="card-outline-container graph-container"
+            >
               <PieChart chartData={stagedBasedQtyData || []} />
             </Grid>
           </Grid>
@@ -252,7 +220,14 @@ export default function FarmDashboard({
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <p className="section-title">Farm Utilization Based On Crops</p>
           </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12} className='card-outline-container graph-container'>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            className="card-outline-container graph-container"
+          >
             <PieChart chartData={cropBasedQtyData || []} />
           </Grid>
         </Grid>
@@ -276,41 +251,44 @@ export default function FarmDashboard({
   const renderMonthlyHarvestBreakup = () => {
     return (
       <>
-        <Grid item xs={8} sm={10} md={10} >
+        <Grid item xs={8} sm={10} md={10}>
           <p className="section-title">Monthly Harvest Breakup</p>
         </Grid>
         <Grid item xs={4} sm={2} md={2}>
-            <FormControl fullWidth>
+          <FormControl fullWidth>
             <span className="input-label">Select Month</span>
-             <SingleCustomSelect
-                value={month}
-                valueKey="value"
-                labelKey="name"
-                lable="Select Month"
-                options={HARVEST_MONTH_OPTIONS}
-                handleChange={handleChange}
-              />
-            </FormControl>
-            </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12} className='card-outline-container graph-container'>
+            <SingleCustomSelect
+              value={month}
+              valueKey="value"
+              labelKey="name"
+              lable="Select Month"
+              options={HARVEST_MONTH_OPTIONS}
+              handleChange={handleChange}
+            />
+          </FormControl>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          className="card-outline-container graph-container"
+        >
           <BarChart chartData={dashboardHarvestList || []} />
         </Grid>
       </>
     );
   };
-  React.useEffect(() => {
-    fetchFarmDashboard(farmId);
-    fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
-    fetchFarmInventory(farmId);
-    if (usersList.length <= 0) {
-      fetchUsers({ farmId });
-    }
-  }, []);
-
+ 
   return (
     <div>
-      <PageHeader title="Farm Dashboard" buttonArray={[]} showBackButton={true} />
-      {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
+      <PageHeader
+        title="Farm Dashboard"
+        buttonArray={[]}
+        showBackButton={true}
+      />
+      {isDashboardFarmListLoading && <Loader title="Fetching Details" />}
       {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
       {isTaskScheduleTaskLoading && <Loader title="Adding Tasks" />}
       <div className="page-container">
@@ -330,7 +308,7 @@ export default function FarmDashboard({
             farmInventoryList={farmInventoryList}
           />
         )}
-       {openCommetTask && (
+        {openCommetTask && (
           <AddFarmTaskComment
             open={openCommetTask}
             handleSave={handleTaskCommentSave}
@@ -338,8 +316,8 @@ export default function FarmDashboard({
 
           />
         )}
-
       </div>
     </div>
   );
 }
+
