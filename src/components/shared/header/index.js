@@ -42,7 +42,7 @@ export default function TopHeader({ open, toggleDrawer, drawerWidth, loginObject
                                 {avatarName}
                             </Avatar>
                         </IconButton>
-                        <Typography variant="p" className='label-white' bold noWrap component="div" sx={{ cursor: 'pointer' }} >
+                        <Typography variant="p" className='label-white' bold="true"  noWrap component="div" sx={{ cursor: 'pointer' }} >
                             Hi, {userName}
                         </Typography>
                     </Box>

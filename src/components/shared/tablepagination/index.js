@@ -1,6 +1,8 @@
 import * as React from "react";
 import TablePagination from "@mui/material/TablePagination";
 
+
+
 const TableDynamicPagination = ({ count, handleChangePagination, component,isWhite
 }) => {
   const [page, setPage] = React.useState(0);

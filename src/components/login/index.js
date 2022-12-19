@@ -84,7 +84,8 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
           {isLoginError && renderErrorMessage()}
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12} lg={12} >
-              <span className='input-label'>Phone number*</span>
+              <span className='input-label'>Phone number</span>
+              <span className="label-light">*</span>
               <TextField
                 required
                 fullWidth
@@ -110,7 +111,8 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12} >
-              <span className='input-label'>Password*</span>
+              <span className='input-label'>Password</span>
+              <span className="label-light">*</span>
               <TextField
                 required
                 fullWidth

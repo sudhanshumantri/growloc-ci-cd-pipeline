@@ -137,7 +137,8 @@ export default function AddTaskModal({
           <br />
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12} lg={12}>
-              <span className="input-label">Category*</span>
+              <span className="input-label">Category</span>
+              <span className="label-light">*</span>
               <FormControl fullWidth>
                 <SingleCustomSelect
                   name="category"
@@ -151,7 +152,8 @@ export default function AddTaskModal({
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12}>
-              <span className="input-label">Task Name*</span>
+              <span className="input-label">Task Name</span>
+              <span className="label-light">*</span>
               <FormControl fullWidth>
                 <TextBox
                   isWhite={true}
@@ -164,7 +166,8 @@ export default function AddTaskModal({
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
-              <span className="input-label">When is it due ?*</span>
+              <span className="input-label">When is it due ?</span>
+              <span className="label-light">*</span>
               <LocalizationProvider dateAdapter={AdapterMoment}>
                 <FormControl fullWidth>
                   <DatePicker
@@ -197,8 +200,9 @@ export default function AddTaskModal({
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">
-                Who would you want the task to be assigned to? *
+                Who would you want the task to be assigned to? 
               </span>
+              <span className="label-light">*</span>
               <FormControl fullWidth>
                 <SingleCustomSelect
                   isError={validation.createdFor}

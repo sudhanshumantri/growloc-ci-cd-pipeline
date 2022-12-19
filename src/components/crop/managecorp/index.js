@@ -9,7 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Grid } from "@mui/material";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-
+import { useNavigate } from 'react-router-dom';
 export default function ManageCrop({
   fetchCrop,
   cropList,
@@ -29,6 +29,8 @@ export default function ManageCrop({
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [cropInfo, setCropInfo] = useState({});
   let { farmId } = useParams();
+  const navigate = useNavigate();
+
 
   const handleCropSave = (addCropData) => {
     if (cropInfo.id) {
@@ -44,6 +46,11 @@ export default function ManageCrop({
     setOpen(!open);
     setCropInfo({});
   };
+
+  const handleClick = () => {
+    navigate('/')
+  }
+
 
   let buttonArray = [
     {
@@ -158,6 +165,11 @@ export default function ManageCrop({
       handler: handleConfirmRemove,
     },
   ];
+  let showBackButton = [
+    {
+      handler: handleClick,
+    },
+  ];
 
   React.useEffect(() => {
     fetchCrop();
@@ -165,7 +177,7 @@ export default function ManageCrop({
   }, []);
   return (
     <div>
-      <PageHeader title="Manage Crops" buttonTitle="back" buttonArray={buttonArray} showBackButton={true} />
+      <PageHeader title="Manage Crops" buttonTitle="back" buttonArray={buttonArray} showBackButton={showBackButton}/>
       <div className="page-container">
         <Grid container spacing={2}>
           <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
@@ -173,6 +185,7 @@ export default function ManageCrop({
           </Grid>
         </Grid>
         {isFarmCropListLoading && <Loader title="Fetching Crops" />}
+
         {isAddCropLoading && <Loader title="Adding Crops" />}
         {isupdateFarmCropsLoading && <Loader title="Updating Crop  " />}
         {isdeleteFarmCropsLoading && <Loader title="Deleting  Crop" />}

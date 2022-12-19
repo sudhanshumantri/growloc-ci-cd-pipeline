@@ -33,16 +33,13 @@ export default function AddInventoryItems({
     units: false,
   });
 
-
-
   const handleChange = (e) => {
     const { value, name } = e.target;
     setItemData({ ...itemData, [name]: value });
     validation[name] && setValidation({ ...validation, [name]: false });
-
   };
   const handleFarmItem = () => {
-    let errors = {...validation};
+    let errors = { ...validation };
     let isValid = true;
     if (!itemData.name) {
       errors.name = true;
@@ -62,7 +59,7 @@ export default function AddInventoryItems({
       qty: itemData.qty,
       units: itemData.units,
     };
-    if(handleFarmItem()){
+    if (handleFarmItem()) {
       handleSave(payload);
     }
   };
@@ -97,6 +94,7 @@ export default function AddInventoryItems({
           <Grid container sx={{ margin: "1px", width: 500 }} spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">Name</span>
+              <span className="label-light">*</span>
               <FormControl fullWidth>
                 <TextBox
                   isWhite={true}
@@ -120,7 +118,8 @@ export default function AddInventoryItems({
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-              <span className="input-label"> Units</span>
+              <span className="input-label">Units</span>
+              <span className="label-light">*</span>
               <FormControl fullWidth>
                 <SingleCustomSelect
                   isWhite={true}
@@ -130,7 +129,6 @@ export default function AddInventoryItems({
                   options={INVENTORY_UNITS}
                   isError={validation.units}
                   errorMessage="Please select units"
-  
                 />
               </FormControl>
             </Grid>

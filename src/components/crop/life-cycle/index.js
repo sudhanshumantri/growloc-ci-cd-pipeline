@@ -6,6 +6,7 @@ import AddNewCropToLifeCycleModal from "./addCropToLifeCycleModal";
 import AddIcon from "@mui/icons-material/Add";
 import { Grid } from "@mui/material";
 import Loader from "../../shared/loader";
+import { useNavigate } from 'react-router-dom';
 
 export default function CropLifeCycle({
   fecthCropFarm,
@@ -20,6 +21,8 @@ export default function CropLifeCycle({
   isCropLifeCycleListLoading,
 }) {
   let { farmId } = useParams();
+  const navigate = useNavigate();
+
   let headers = [
     {
       label: "Batch No",
@@ -76,6 +79,10 @@ export default function CropLifeCycle({
     addCropToLifecycle(lifecycleData);
     handleModalToggle();
   };
+  const handleClick = () => {
+    navigate('/')
+  }
+
   let buttonArray = [
     {
       label: "Add New",
@@ -86,9 +93,15 @@ export default function CropLifeCycle({
       action: "create",
     },
   ];
+  let showBackButton = [
+    {
+      handler: handleClick,
+    },
+  ];
+
   return (
     <>
-      <PageHeader  title="Crop Lifecycle" buttonArray={buttonArray} showBackButton={true}/>
+      <PageHeader  title="Crop Lifecycle" buttonArray={buttonArray} showBackButton={showBackButton}/>
       <div className="page-container">
         {isAddLifecycleLoading && <Loader title="Adding Crop To Lifecycle" />}
         {isCropLifeCycleListLoading && <Loader title="Fetching Crops" />}

@@ -6,6 +6,8 @@ import TextBox from "../shared/text-box";
 import SingleCustomSelect from "../shared/select";
 import ButtonCustom from "../shared/button";
 import { Grid, FormControl } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
+
 import {
     WATERING_TYPE, NUTRIENTS_TYPE
 } from "../../config";
@@ -28,6 +30,8 @@ export default function ManageUsers({
         nutrientWaterReservoirCapacity: false,
         nutrientsType: false
     });
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (farmId) {
             fecthFarmDetails(farmId);
@@ -81,10 +85,20 @@ export default function ManageUsers({
         setFarmData({ ...farmData, [name]: value });
         validation[name] && setValidation({ ...validation, [name]: false });
     };
+    const handleClick = () => {
+        navigate('/')
+      }
+      let showBackButton = [
+        {
+          handler: handleClick,
+        },
+      ];
+    
+    
     let buttonArray = []
     return (
         <div>
-            <PageHeader title="Water Management" buttonArray={buttonArray} showBackButton={true}/>
+            <PageHeader title="Water Management" buttonArray={buttonArray} showBackButton={showBackButton} />
             {isUpdateFarmLoading && <Loader title="Updating Details" />}
             {isFarmDetailsListLoading && <Loader title="Fetching  Details" />}
             <div className="page-container">
@@ -93,6 +107,8 @@ export default function ManageUsers({
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={12} md={6} lg={6}>
                                 <span className="input-label">Main reservoir capacity</span>
+                                <span className="label-light">*</span>
+
                                 <FormControl fullWidth>
                                     <TextBox
                                         isWhite={true}
@@ -113,6 +129,8 @@ export default function ManageUsers({
                                 <span className="input-label">
                                     Nutrient water reservoir capacity
                                 </span>
+                                <span className="label-light">*</span>
+
                                 <FormControl fullWidth>
                                     <TextBox
                                         isWhite={true}
@@ -167,6 +185,7 @@ export default function ManageUsers({
                             </Grid>
                             <Grid item xs={12} sm={6} md={6}>
                                 <span className="input-label">Type of nutrients</span>
+                                <span className="label-light">*</span>
                                 <FormControl fullWidth>
                                     <SingleCustomSelect
                                         isWhite={true}
@@ -183,7 +202,6 @@ export default function ManageUsers({
                     </Grid>
                 </Grid>
                 <div className="flex-row-justify-center-container">
-                   
                     <ButtonCustom
                         handleButtonClick={handleFarmSave}
                         title={"Update"}

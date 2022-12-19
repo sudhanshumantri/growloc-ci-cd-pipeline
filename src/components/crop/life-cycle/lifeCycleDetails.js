@@ -6,6 +6,7 @@ import Loader from "../../shared/loader";
 import Divider from "@mui/material/Divider";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from 'react-router-dom';
 import {
   Stack,
   Stepper,
@@ -29,6 +30,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import EditParameters from "./editParameter";
 import { WEEKDAYS } from "../../../config";
 import AddTaskModal from "../../shared/addtask/addtask";
+
 export default function CropLifeCycleDetails({
   fetchCropsLifecycleDetails,
   lifecycleDetails,
@@ -58,6 +60,8 @@ export default function CropLifeCycleDetails({
   const [modalHeaderText, setModalHeaderText] = React.useState("");
   const [harvestingSchedules, setHarvestingSchedules] = React.useState([]);
   const [openTaskModal, setTaskModal] = useState(false);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     fetchCropsLifecycleDetails(parseInt(lifecycleId));
@@ -66,6 +70,18 @@ export default function CropLifeCycleDetails({
       fetchUsers({ farmId });
     }
   }, []);
+  
+
+  const handleClick = () => {
+    navigate(-1)
+  }
+ 
+
+  let showBackButton = [
+    {
+      handler: handleClick,
+    },
+  ];
 
   useEffect(() => {
     if (!isLifecycleDetailsLoading) {
@@ -250,7 +266,7 @@ export default function CropLifeCycleDetails({
           title={title}
           subtitle={subtitle}
           buttonArray={buttonArray}
-          showBackButton={true}
+          showBackButton={showBackButton}
         />
       </div>
     );

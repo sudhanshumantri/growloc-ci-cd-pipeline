@@ -9,6 +9,8 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ConfirmDialogBox from "../../shared/dailog/ConfirmDialogBox";
 import Loader from "../../shared/loader";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function ManageItem({
   fetchFarmInventory,
@@ -26,6 +28,7 @@ export default function ManageItem({
   const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [itemInfo, setItemInfo] = useState({});
+  const navigate = useNavigate();
 
   const handleModalToggle = () => {
     setOpen(!open);
@@ -60,6 +63,11 @@ export default function ManageItem({
     deleteFarmInventory(id);
     handleDeleteDialogueToggle();
   };
+
+  const handleClick = () => {
+    navigate(-1)
+  }
+
 
   const headers = [
     {
@@ -124,6 +132,13 @@ export default function ManageItem({
 
     },
   ];
+
+  let showBackButton = [
+    {
+      handler: handleClick,
+    },
+  ];
+
   useEffect(() => {
     fetchFarmInventory(farmId);
   }, []);
@@ -144,7 +159,7 @@ export default function ManageItem({
 
   return (
     <div>
-      <PageHeader title="Inventory" buttonArray={buttonArray} showBackButton={true}/>
+      <PageHeader title="Inventory" buttonArray={buttonArray} showBackButton={showBackButton}/>
       <div className="page-container">
         <Grid container spacing={2}>
           <Grid className="card-outline-container" item xs={12} sm={12} md={12}>

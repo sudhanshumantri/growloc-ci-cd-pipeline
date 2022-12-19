@@ -8,7 +8,6 @@ import {
 } from '../actions/register'
 export function* registerHandler({ data }) {
     let responseData = yield call(callRegisterHandler, data);
-    console.log(responseData.data.status)
     if (responseData?.status == 200 && responseData.data.status ) {
         addNotification("Account sucessfully created. Kindly Login", 5000,true, "success");
         // yield call(browserHistory.push, "/login");

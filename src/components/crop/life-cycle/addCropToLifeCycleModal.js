@@ -91,6 +91,7 @@ export default function AddCropModal({
           <Grid container spacing={2} >
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">Crop</span>
+              <span className="label-light">*</span>
               <FormControl fullWidth>
                 <Select
                   sx={{ background: "white" }}

@@ -7,6 +7,8 @@ import Loader from "../shared/loader";
 import CollapsibleTable from "../shared/collapsibleDataTable";
 import AddFarmTaskComment from "../shared/addfarmtaskcomment";
 import TableDynamicPagination from "../shared/tablepagination";
+import { useNavigate } from 'react-router-dom';
+
 export default function ManageTasks({
   FarmTaskList,
   fetchFarmTask,
@@ -17,6 +19,8 @@ export default function ManageTasks({
   let { farmId } = useParams();
   const [openCommetTask, setCommetTask] = useState(false);
   const [rowdata, setRowData] = useState({});
+  const navigate = useNavigate();
+
 
   React.useEffect(() => {
     fetchFarmTask({
@@ -53,8 +57,8 @@ export default function ManageTasks({
       key: "createdForProfile.name",
     },
     {
-      label: "Item Name",
-      key: "itemName",
+      label: "Inventory Name",
+      key: "",
     },
     {
       label: "Due Date",
@@ -63,6 +67,19 @@ export default function ManageTasks({
       isDate: true,
     },
   ];
+
+  const handleClick = () => {
+    navigate(-1)
+  }
+
+
+  let showBackButton = [
+    {
+      handler: handleClick,
+    },
+  ];
+
+
 
   const handleTaskCommentSave = (data) => {
     if (data) {
@@ -86,7 +103,8 @@ export default function ManageTasks({
 
   return (
     <div>
-      <PageHeader title="Task" showBackButton={true} />
+      <PageHeader title="Task" showBackButton={showBackButton}
+/>
       {isFarmTaskListLoading && <Loader title="Fetching Tasks" />}
       {isTaskCommentLoading && <Loader title="Adding comments" />}
 

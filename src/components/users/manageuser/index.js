@@ -9,6 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Grid } from "@mui/material";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { useNavigate } from 'react-router-dom';
 
 export default function ManageUsers({
   usersList,
@@ -27,6 +28,8 @@ export default function ManageUsers({
   const [userInfo, setUserInfo] = useState({});
   const [userLat, setUserLat] = useState();
   const [userLong, setUserLong] = useState();
+  const navigate = useNavigate();
+
 
   const handleEdit = (userData) => {
     const { user, userId } = userData;
@@ -57,6 +60,11 @@ export default function ManageUsers({
     setIsDeleteModelOpen(!isDeleteModelOpen);
     setUserInfo({});
   };
+
+  const handleClick = () => {
+    navigate(-1)
+  }
+
   const headers = [
     {
       label: "Name",
@@ -138,6 +146,13 @@ export default function ManageUsers({
       action: "create",
     },
   ];
+  let showBackButton = [
+    {
+      handler: handleClick,
+    },
+  ];
+
+
   React.useEffect(() => {
     fetchUsers({ farmId });
   }, []);
@@ -153,7 +168,7 @@ export default function ManageUsers({
   // { userId: parseInt(userId) }
   return (
     <div>
-      <PageHeader title="Users" buttonArray={buttonArray}  showBackButton={true}/>
+      <PageHeader title="Users" buttonArray={buttonArray}  showBackButton={showBackButton}/>
       <div className="page-container">
         <Grid container spacing={2}>
           <Grid className="card-outline-container" item xs={12} sm={12} md={12}>

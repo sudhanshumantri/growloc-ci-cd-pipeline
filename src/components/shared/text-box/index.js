@@ -12,13 +12,18 @@ const TextBox = ({
   isWhite,
   inputRef,
   defaultValue,
+  required,
   ...params
 }) => {
+
+  const formRef = React.useRef();
+
   return (
     <>
         <TextField
           size="small"
           {...params}
+          ref ={formRef}
           className={
             isWhite ? "input-custom-white input-custom" : "input-custom"
           }
@@ -29,7 +34,9 @@ const TextBox = ({
           error ={error}
           helperText={helperText}
           inputRef ={inputRef}
+          required={required}
         />
+
     </>
   );
 };

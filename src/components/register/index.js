@@ -47,7 +47,6 @@ export default class Resgister extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     let { registrationData } = this.state;
-    console.log(registrationData);
     // let client_id = registrationData.storeurl.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "").split('/')[0];
     // client_id = client_id.replace(/\./g, "_");
     // registrationData.clientid = client_id;
@@ -126,7 +125,9 @@ export default class Resgister extends React.Component {
               <Box component="form" onSubmit={this.handleSubmit} sx={{ mt: 1 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={12} lg={12} >
-                    <span className='custom-input-label'>Name*</span>
+                    <span className='custom-input-label'>Name</span>
+                    <span className="label-light">*</span>
+
                     <TextField
                       required
                       className='custom-input-box'
@@ -139,7 +140,8 @@ export default class Resgister extends React.Component {
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12} >
-                    <span className='custom-input-label'>Phone*</span>
+                    <span className='custom-input-label'>Phone</span>
+                    <span className="label-light">*</span>
                     <TextField
                       required
                       className='custom-input-box'
@@ -156,7 +158,8 @@ export default class Resgister extends React.Component {
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12} >
-                    <span className='custom-input-label'>Email*</span>
+                    <span className='custom-input-label'>Email</span>
+                    <span className="label-light">*</span>
                     <TextField
                       required
                       className='custom-input-box'
@@ -183,7 +186,8 @@ export default class Resgister extends React.Component {
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12} >
-                    <span className='custom-input-label'>Location*</span>
+                    <span className='custom-input-label'>Location</span>
+                    <span className="label-light">*</span>
                     <TextField
                       required
                       className='custom-input-box'
@@ -196,7 +200,8 @@ export default class Resgister extends React.Component {
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12} >
-                    <span className='custom-input-label'>Password*</span>
+                    <span className='custom-input-label'>Password</span>
+                    <span className="label-light">*</span>
                     <TextField
                       required
                       size="small"

@@ -54,7 +54,7 @@ function Row({ row, handleCommentModalToggle }) {
           {row.createdByProfile.name}
         </TableCell>
         <TableCell className="table-header" align="left">
-          Inventory Name
+          -
         </TableCell>
         <TableCell className="table-header" align="left">
           {moment(row.dueDate).format("YYYY-MM-DD")}

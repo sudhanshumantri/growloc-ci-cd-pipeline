@@ -72,6 +72,7 @@ export default function MoveCropLifeCycleModal({
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">No of plants</span>
+              <span className="label-light">*</span>
               <br />
               <FormControl fullWidth>
                 <TextBox
@@ -91,7 +92,6 @@ export default function MoveCropLifeCycleModal({
               {isHarvestStage && (
                 <>
                   <span className="input-label">Plants harvested in KGS?</span>
-
                   <FormControl fullWidth>
                     <TextField
                       // style={{ width: 300 }}

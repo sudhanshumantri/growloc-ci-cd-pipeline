@@ -1,32 +1,39 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import TextField from "@mui/material/TextField";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
 import ButtonCustom from "../../shared/button";
-import { Grid } from "@mui/material";
 import SingleCustomSelect from "../../shared/select";
-import { germination } from "../../../config";
-import { wateringType } from "../../../config";
-import { nursaryType } from "../../../config";
-import { growingZone } from "../../../config";
-import { plantSpacing } from "../../../config";
-import { nutrientsType } from "../../../config";
-import InputLabel from "@mui/material/InputLabel";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import RadioGroup from "@mui/material/RadioGroup";
-import Radio from "@mui/material/Radio";
+import { Grid } from "@mui/material";
+import {
+  GERMINATION_TYPE,
+  WATERING_TYPE,
+  NURSARY_TYPE,
+  GROWING_ZONE,
+  PLANT_SPACING,
+  NUTRIENTS_TYPE,
+} from "../../../config";
+import PageHeader from "../../shared/page-header";
+import Loader from "../../shared/loader";
+import "./style.css";
+import Autocomplete, { usePlacesWidget } from "react-google-autocomplete";
+import Geocode from "react-geocode";
+Geocode.setApiKey("AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY");
+import { FormControlLabel, RadioGroup, Radio } from "@mui/material";
+import TextBox from "../../shared/text-box";
 
-import Autocomplete from "react-google-autocomplete";
-
-export default function AddFarmModal({
-  open,
-  handleSave,
-  handleClose,
-  farmDetails = {
+export default function AddFarm({
+  addFarm,
+  updateFarm,
+  isAddFarmLoading,
+  isUpdateFarmLoading,
+  fecthFarmDetails,
+  farmDetailsList,
+  isFarmDetailsListLoading,
+}) {
+  const [isCurrentLocation, setIsCurrentLocation] = useState(false);
+  const navigate = useNavigate();
+  const [location, setLocation] = useState({});
+  const [farmData, setFarmData] = useState({
     name: "",
     farmArea: "",
     germinationType: "",
@@ -52,42 +59,98 @@ export default function AddFarmModal({
     stockNutrientSolutionCapacity: "",
     cultivableArea: "",
     nutrientdilutionRatio: "",
-    nutrientsType: "",
     location: "",
-    polyhouseStructureExpectedLife: "",
-    polyhousePlasticExpectedLife: "",
-  },
-}) {
-  // const [farm, setFarm] = useState({});
-  const geolocation = ["Climate zone"];
-  const [farmData, setFarmData] = useState(farmDetails);
-  const [markers, setMarkers] = React.useState([]);
-  const [selected, setSelected] = React.useState(null);
-  
-  // const [nameError, setNameError] = useState(false);
-  const [validation, setValidation] = useState({
-    name: "",
-    germinationType: "",
-    germinationWateringType: "",
-    nurseryType: "",
-    nurseryWateringType: "",
-    growingType: "",
-    growingArea: "",
-    growingPlantCountPerRow: "",
-    growingPlantSpacing: "",
-    reservoirCapacity: "",
-    nutrientWaterReservoirCapacity: "",
-    nutrientsType: "",
-    location: "",
+    lat: "",
+    lng: "",
     polyhouseStructureExpectedLife: "",
     polyhousePlasticExpectedLife: "",
   });
+  const [validation, setValidation] = useState({
+    name: false,
+    germinationType: false,
+    germinationWateringType: false,
+    nurseryType: false,
+    nurseryWateringType: false,
+    growingType: false,
+    growingArea: false,
+    growingPlantCountPerRow: false,
+    growingPlantSpacing: false,
+    reservoirCapacity: false,
+    nutrientWaterReservoirCapacity: false,
+    nutrientsType: false,
+    location: false,
+    polyhouseStructureExpectedLife: false,
+    polyhousePlasticExpectedLife: false,
+  });
+
+  const { farmId } = useParams();
+  const { ref: materialRef } = usePlacesWidget({
+    apiKey: "AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY",
+    onPlaceSelected: (place) => handleLocationUpdate(place),
+    // {
+    //   let lat = null;
+    //   let lng = null;
+    //   if (place?.geometry?.location) {
+    //     lat = place?.geometry?.location.lat();
+    //     lng = place?.geometry?.location.lng();
+    //   }
+    //   farmData.location = place.formatted_address;
+    //   setFarmData({ ...farmData, location: place.formatted_address })
+    // }
+    // inputAutocompleteValue: "country",
+    options: {
+      types: ["geocode", "establishment"],
+    },
+  });
+
+  const handleLocationUpdate = (place) => {
+    const { formatted_address, geometry } = place;
+    let lat = null;
+    let lng = null;
+    if (geometry?.location) {
+      lat = geometry?.location.lat();
+      lng = geometry?.location.lng();
+    }
+    setLocation({ formatted_address, lat, lng });
+  };
 
   const handleChange = (e) => {
     const { value, name } = e.target;
     setFarmData({ ...farmData, [name]: value });
+    setIsCurrentLocation(false);
     validation[name] && setValidation({ ...validation, [name]: false });
   };
+  const handleClose = () => {
+    navigate("/");
+  };
+
+  const handleClick = () => {
+    navigate("/");
+  };
+  let showBackButton = [
+    {
+      handler: handleClick,
+    },
+  ];
+
+  useEffect(() => {
+    if (farmId) {
+      fecthFarmDetails(farmId);
+    }
+  }, [farmId]);
+
+  useEffect(() => {
+    if (isFarmDetailsListLoading === false && farmId) {
+      setFarmData(farmDetailsList);
+    }
+  }, [isFarmDetailsListLoading]);
+
+  useEffect(() => {
+    if (location?.formatted_address) {
+      const { formatted_address, lat, lng } = location;
+      setFarmData({ ...farmData, lat, lng, location: formatted_address });
+    }
+  }, [location.formatted_address]);
 
   const validateFarm = () => {
     let errors = { ...validation };
@@ -184,6 +247,8 @@ export default function AddFarmModal({
       nutrientdilutionRatio: farmData.nutrientdilutionRatio,
       nutrientsType: farmData.nutrientsType,
       location: farmData.location,
+      lat: farmData.lat,
+      lng: farmData.lng,
       polyhouseStructureExpectedLife: farmData.polyhouseStructureExpectedLife,
       polyhousePlasticExpectedLife: farmData.polyhousePlasticExpectedLife,
     };
@@ -191,531 +256,576 @@ export default function AddFarmModal({
       handleSave(requestFarmData);
     }
   };
+  const handleGetCurrentLocation = () => {
+    setIsCurrentLocation(!isCurrentLocation);
+    if (!isCurrentLocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let lat = position.coords.latitude;
+        let lng = position.coords.longitude;
+        Geocode.fromLatLng(lat, lng).then(
+          (response) => {
+            const address = response.results[0].formatted_address;
+            setFarmData({ ...farmData, location: address, lat: lat, lng: lng });
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+      });
+    }
+  };
+  const handleSave = (payload) => {
+    if (farmId) {
+      updateFarm({ payload, farmId });
+    } else {
+      addFarm(payload);
+    }
+  };
 
-  const farmBasicInfo = () => {
+  const rendeFarmBasicInfo = () => {
     return (
       <>
-        <Grid item xs={12} sm={12} md={6}>
+        <Grid container spacing={2} className="card-outline-container">
+          <Grid item xs={12} sm={12} md={6}>
+            <span className="input-label">Name</span>
+            <span className="label-light">*</span>
+            <FormControl fullWidth>
+              <TextBox
+                defaultValue=""
+                name="name"
+                isWhite={true}
+                value={farmData.name}
+                onChange={handleChange}
+                error={validation.name}
+                helperText={validation.name ? "Please provide name" : ""}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">Farm Area</span>
+            <FormControl fullWidth>
+              <TextBox
+                defaultValue=""
+                isWhite={true}
+                name="farmArea"
+                value={farmData.farmArea}
+                onChange={handleChange}
+              />
+            </FormControl>
+          </Grid>
+          {farmLocation()}
+        </Grid>
+      </>
+    );
+  };
+
+  const farmLocation = () => {
+    return (
+      <>
+        <Grid item xs={12} sm={12} md={12}>
+          <span className="input-label">Farm Location</span>
+          <span className="label-light">*</span>
           <FormControl fullWidth>
-            <TextField
-              label={"Name"}
-              name="name"
-              value={farmData.name || ""}
-              InputLabelProps={{ shrink: true }}
+            <TextBox
+              defaultValue=""
+              fullWidth
+              isWhite={true}
+              inputRef={materialRef}
+              name="location"
+              value={farmData.location}
               onChange={handleChange}
-              variant="outlined"
-              error={validation.name}
-              helperText={validation.name ? "Please provide name" : ""}
+              error={validation.location}
+              helperText={validation.location ? "Please provide name" : ""}
             />
           </FormControl>
         </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"FarmArea"}
-              name="farmArea"
-              value={farmData.farmArea || ""}
-              onChange={handleChange}
-              variant="outlined"
+        <Grid item xs={12} sm={12} md={12}>
+          <FormControl>
+            <FormControlLabel
+              className="farm-location"
+              control={
+                <Radio
+                  onClick={handleGetCurrentLocation}
+                  checked={isCurrentLocation}
+                />
+              }
+              label="Use My Current Location"
             />
           </FormControl>
         </Grid>
       </>
     );
   };
-  const germinationZone = () => {
+  const renderGerminationZone = () => {
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Germination Zone</p>
         </Grid>
-        <Grid item xs={12} sm={12} md={12}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-multiple-name-label" variant="outlined">
-              Germination Type
-            </InputLabel>
-            <SingleCustomSelect
-              name="germinationType"
-              lable="Germination Type"
-              value={farmData.germinationType || ""}
-              options={germination}
-              isError={validation.germinationType}
-              errorMessage="Please select a germination zone"
-              handleChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <TextField
-            InputLabelProps={{ shrink: true }}
-            label={"Germination Area"}
-            name="germinationArea"
-            value={farmData.germinationArea || ""}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"No. of seeds per plantation"}
-              name="germinationSeedsCount"
-              value={farmData.germinationSeedsCount || ""}
-              onChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-multiple-name-label" variant="outlined">
-              Watering Type
-            </InputLabel>
-            <SingleCustomSelect
-              name="germinationWateringType"
-              lable="Watering Type"
-              value={farmData.germinationWateringType || ""}
-              options={wateringType}
-              isError={validation.germinationWateringType}
-              errorMessage="Please select a germination watering type"
-              handleChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"Watering Schedule"}
-              type="number"
-              name="germinationWateringSchedule"
-              onChange={handleChange}
-              value={farmData.germinationWateringSchedule || ""}
-              InputProps={{ inputProps: { min: 1, max: 10 } }}
-            />
-          </FormControl>
+        <br />
+        <Grid container spacing={2} className="card-outline-container">
+          <Grid item xs={12} sm={12} md={12}>
+            <span className="input-label">Germination Type</span>
+            <span className="label-light">*</span>
+            <FormControl fullWidth>
+              <SingleCustomSelect
+                isWhite={true}
+                name="germinationType"
+                value={farmData.germinationType}
+                options={GERMINATION_TYPE}
+                isError={validation.germinationType}
+                errorMessage="Please select a germination zone"
+                handleChange={handleChange}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">Germination Area</span>
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                name="germinationArea"
+                value={farmData.germinationArea}
+                onChange={handleChange}
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">No. of seeds per plantation</span>
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                InputLabelProps={{ shrink: true }}
+                name="germinationSeedsCount"
+                value={farmData.germinationSeedsCount}
+                onChange={handleChange}
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+          <span className="input-label">Watering Type</span>
+              <span className="label-light">*</span>
+            <FormControl fullWidth>
+              <SingleCustomSelect
+                isWhite={true}
+                name="germinationWateringType"
+                value={farmData.germinationWateringType}
+                options={WATERING_TYPE}
+                isError={validation.germinationWateringType}
+                errorMessage="Please select a germination watering type"
+                handleChange={handleChange}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">Watering Schedule</span>
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                type="number"
+                name="germinationWateringSchedule"
+                onChange={handleChange}
+                value={farmData.germinationWateringSchedule}
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
         </Grid>
       </>
     );
   };
-
-  const nurseryZone = () => {
+  const renderNurseryZone = () => {
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Nursery Zone</p>
         </Grid>
-        <Grid item xs={12} sm={12} md={12}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-multiple-name-label" variant="outlined">
-              Nursery Zone
-            </InputLabel>
-            <SingleCustomSelect
-              name="nurseryType"
-              lable="Nursery Type"
-              value={farmData.nurseryType || ""}
-              options={nursaryType}
-              isError={validation.nurseryType}
-              errorMessage="Please select a nursery zone"
-              handleChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"Nursery Area"}
-              name="nurseryArea"
-              value={farmData.nurseryArea || ""}
-              onChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"No of seeds for Nursery"}
-              name="nurserySeedsCount"
-              onChange={handleChange}
-              value={farmData.nurserySeedsCount || ""}
-              InputProps={{ inputProps: { min: 1, max: 10 } }}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-multiple-name-label" variant="outlined">
-              Watering Type
-            </InputLabel>
-            <SingleCustomSelect
-              name="nurseryWateringType"
-              lable="Watering Type"
-              value={farmData.nurseryWateringType || ""}
-              options={wateringType}
-              isError={validation.nurseryWateringType}
-              errorMessage="Please select a nursery watering type"
-              handleChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"Watering Schedule"}
-              type="number"
-              name="nurseryWateringSchedule"
-              value={farmData.nurseryWateringSchedule || ""}
-              onChange={handleChange}
-              InputProps={{ inputProps: { min: 1, max: 10 } }}
-            />
-          </FormControl>
+        <br />
+        <Grid container spacing={2} className="card-outline-container">
+          <Grid item xs={12} sm={12} md={12}>
+            <span className="input-label">Nursery Type</span>
+            <span className="label-light">*</span>
+            <FormControl fullWidth>
+              <SingleCustomSelect
+                isWhite={true}
+                name="nurseryType"
+                value={farmData.nurseryType}
+                options={NURSARY_TYPE}
+                isError={validation.nurseryType}
+                errorMessage="Please select a nursery zone"
+                handleChange={handleChange}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">Nursery Area</span>
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                InputLabelProps={{ shrink: true }}
+                name="nurseryArea"
+                value={farmData.nurseryArea}
+                onChange={handleChange}
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">No of seeds for Nursery</span>
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                InputLabelProps={{ shrink: true }}
+                name="nurserySeedsCount"
+                onChange={handleChange}
+                value={farmData.nurserySeedsCount}
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+          <span className="input-label">Watering Type</span>
+              <span className="label-light">*</span>
+            <FormControl fullWidth>
+              <SingleCustomSelect
+                isWhite={true}
+                name="nurseryWateringType"
+                value={farmData.nurseryWateringType}
+                options={WATERING_TYPE}
+                isError={validation.nurseryWateringType}
+                errorMessage="Please select a nursery watering type"
+                handleChange={handleChange}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">Watering Schedule</span>
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                InputLabelProps={{ shrink: true }}
+                type="number"
+                name="nurseryWateringSchedule"
+                value={farmData.nurseryWateringSchedule}
+                onChange={handleChange}
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
         </Grid>
       </>
     );
   };
 
-  const growZoneArea = () => {
+  const renderGrowZoneArea = () => {
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Growring Zone</p>
         </Grid>
-        <Grid item xs={12} sm={12} md={12}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-multiple-name-label" variant="outlined">
-              Growing Zone
-            </InputLabel>
-            <SingleCustomSelect
-              name="growingType"
-              lable="Growing Zone"
-              value={farmData.growingType || ""}
-              options={growingZone}
-              isError={validation.growingType}
-              errorMessage="Please select a growing type"
-              handleChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"Growing Area"}
-              name="growingArea"
-              value={farmData.growingArea || ""}
-              error={validation.growingArea}
-              helperText={validation.growingArea ? "Please provide name" : ""}
-              onChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
+        <br />
+        <Grid container spacing={2} className="card-outline-container">
+          <Grid item xs={12} sm={12} md={12}>
+            <span className="input-label">Growing Zone</span>
+            <span className="label-light">*</span>
+            <FormControl fullWidth>
+              <SingleCustomSelect
+                isWhite={true}
+                name="growingType"
+                value={farmData.growingType}
+                options={GROWING_ZONE}
+                isError={validation.growingType}
+                errorMessage="Please select a growing type"
+                handleChange={handleChange}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">Growing Area</span>
+            <span className="label-light">*</span>
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                InputLabelProps={{ shrink: true }}
+                name="growingArea"
+                value={farmData.growingArea}
+                error={validation.growingArea}
+                helperText={validation.growingArea ? "Please provide name" : ""}
+                onChange={handleChange}
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
 
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"No of plants in a row"}
-              name="growingRowCount"
-              value={farmData.growingRowCount || ""}
-              onChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"No of rows"}
-              name="growingPlantCountPerRow"
-              value={farmData.growingPlantCountPerRow || ""}
-              error={validation.growingPlantCountPerRow}
-              helperText={
-                validation.growingPlantCountPerRow ? "Please provide name" : ""
-              }
-              onChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label={"Watering Schedule"}
-              name="growingWateringSchedule"
-              type="number"
-              onChange={handleChange}
-              value={farmData.growingWateringSchedule || ""}
-              InputProps={{ inputProps: { min: 1, max: 10 } }}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-multiple-name-label" variant="outlined">
-              Plant spacing
-            </InputLabel>
-            <SingleCustomSelect
-              name="growingPlantSpacing"
-              lable="Plant spacing"
-              value={farmData.growingPlantSpacing || ""}
-              options={plantSpacing}
-              handleChange={handleChange}
-              isError={validation.growingPlantSpacing}
-              errorMessage="Please select Plant spacing"
-            />
-          </FormControl>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">No of plants in a row</span>
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                name="growingRowCount"
+                value={farmData.growingRowCount}
+                onChange={handleChange}
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">No of rows</span>
+            <span className="label-light">*</span>
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                InputLabelProps={{ shrink: true }}
+                name="growingPlantCountPerRow"
+                value={farmData.growingPlantCountPerRow}
+                error={validation.growingPlantCountPerRow}
+                helperText={
+                  validation.growingPlantCountPerRow
+                    ? "Please provide name"
+                    : ""
+                }
+                onChange={handleChange}
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">Watering Schedule</span>
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                InputLabelProps={{ shrink: true }}
+                name="growingWateringSchedule"
+                onChange={handleChange}
+                value={farmData.growingWateringSchedule}
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">Plant spacing</span>
+            <span className="label-light">*</span>
+            <FormControl fullWidth>
+              <SingleCustomSelect
+                isWhite={true}
+                name="growingPlantSpacing"
+                value={farmData.growingPlantSpacing}
+                options={PLANT_SPACING}
+                handleChange={handleChange}
+                isError={validation.growingPlantSpacing}
+                errorMessage="Please select Plant spacing"
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
         </Grid>
       </>
     );
   };
-  const wateringZone = () => {
+  const renderWateringZone = () => {
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Watering Zone</p>
         </Grid>
-        <Grid item xs={12} sm={12} md={12}>
-          <FormControl fullWidth>
-            <TextField
-              label={"Main reservoir capacity"}
-              InputLabelProps={{ shrink: true }}
-              name="reservoirCapacity"
-              value={farmData.reservoirCapacity || ""}
-              onChange={handleChange}
-              error={validation.growingPlantCountPerRow}
-              helperText={
-                validation.growingPlantCountPerRow
-                  ? "Please provide reservoircapacity"
-                  : ""
-              }
-              variant="outlined"
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              label={"Nutrient water reservoir capacity"}
-              InputLabelProps={{ shrink: true }}
-              name="nutrientWaterReservoirCapacity"
-              value={farmData.nutrientWaterReservoirCapacity || ""}
-              onChange={handleChange}
-              error={validation.nutrientWaterReservoirCapacity}
-              helperText={
-                validation.nutrientWaterReservoirCapacity
-                  ? "Please provide Nutrient water reservoir capacity"
-                  : ""
-              }
-              variant="outlined"
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              label={"Ph up/down reservoir capacity"}
-              InputLabelProps={{ shrink: true }}
-              name="phReservoirCapacity"
-              onChange={handleChange}
-              value={farmData.phReservoirCapacity || ""}
-              variant="outlined"
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              label={"Stock nutrient solution capacity"}
-              InputLabelProps={{ shrink: true }}
-              name="stockNutrientSolutionCapacity"
-              onChange={handleChange}
-              value={farmData.stockNutrientSolutionCapacity || ""}
-              variant="outlined"
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              label={"Nutrient dilution ratio"}
-              InputLabelProps={{ shrink: true }}
-              name="nutrientdilutionRatio"
-              onChange={handleChange}
-              value={farmData.nutrientdilutionRatio || ""}
-              variant="outlined"
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-multiple-name-label" variant="outlined">
-              Type of nutrients{" "}
-            </InputLabel>
-            <SingleCustomSelect
-              name="nutrientsType"
-              lable="Type of nutrients"
-              value={farmData.nutrientsType || ""}
-              options={nutrientsType}
-              handleChange={handleChange}
-              isError={validation.nutrientsType}
-              errorMessage="Please select nutrientstype"
-            />
-          </FormControl>
-        </Grid>
-      </>
-    );
-  };
-  const geolocationZone = () => {
-    return (
-      <>
-        <Grid item xs={12} sm={12} md={12}>
-          <p className="section-title">Geolocation</p>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-multiple-name-label" variant="outlined">
-              Zone
-            </InputLabel>
-            <SingleCustomSelect
-              name="location"
-              lable="Zone"
-              value={farmData.location || ""}
-              options={geolocation}
-              handleChange={handleChange}
-              isError={validation.location}
-              errorMessage="Please select a location"
-            />
-          </FormControl>
+        <br />
+        <Grid container spacing={2} className="card-outline-container">
+          <Grid item xs={12} sm={12} md={12}>
+            <span className="input-label">Main reservoir capacity</span>
+            <span className="label-light">*</span>
+
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                name="reservoirCapacity"
+                value={farmData.reservoirCapacity}
+                onChange={handleChange}
+                error={validation.reservoirCapacity}
+                helperText={
+                  validation.reservoirCapacity
+                    ? "Please provide reservoircapacity"
+                    : ""
+                }
+                variant="outlined"
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">
+              Nutrient water reservoir capacity
+            </span>
+            <span className="label-light">*</span>
+
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                name="nutrientWaterReservoirCapacity"
+                value={farmData.nutrientWaterReservoirCapacity}
+                onChange={handleChange}
+                error={validation.nutrientWaterReservoirCapacity}
+                helperText={
+                  validation.nutrientWaterReservoirCapacity
+                    ? "Please provide Nutrient water reservoir capacity"
+                    : ""
+                }
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">Ph up/down reservoir capacity</span>
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                name="phReservoirCapacity"
+                onChange={handleChange}
+                value={farmData.phReservoirCapacity}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">
+              Stock nutrient solution capacity
+            </span>
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                name="stockNutrientSolutionCapacity"
+                onChange={handleChange}
+                value={farmData.stockNutrientSolutionCapacity}
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">Nutrient dilution ratio</span>
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                name="nutrientdilutionRatio"
+                onChange={handleChange}
+                value={farmData.nutrientdilutionRatio}
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">Type of nutrients</span>
+            <span className="label-light">*</span>
+
+            <FormControl fullWidth>
+              <SingleCustomSelect
+                isWhite={true}
+                name="nutrientsType"
+                value={farmData.nutrientsType}
+                options={NUTRIENTS_TYPE}
+                handleChange={handleChange}
+                isError={validation.nutrientsType}
+                errorMessage="Please select nutrientstype"
+              />
+            </FormControl>
+          </Grid>
         </Grid>
       </>
     );
   };
-  const PolyhouseZone = () => {
+
+  const renderPolyhouseZone = () => {
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Polyhouse</p>
         </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              name="polyhouseStructureExpectedLife"
-              label=" Polyhouse structure expected life"
-              value={farmData.polyhouseStructureExpectedLife || ""}
-              onChange={handleChange}
-              variant="outlined"
-              error={validation.polyhouseStructureExpectedLife}
-              helperText={
-                validation.polyhouseStructureExpectedLife
-                  ? "Please provide polyhouse structure expected life"
-                  : ""
-              }
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={6}>
-          <FormControl fullWidth>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              label="Polyhouse plastic expected life"
-              name="polyhousePlasticExpectedLife"
-              value={farmData.polyhousePlasticExpectedLife || ""}
-              onChange={handleChange}
-              error={validation.polyhousePlasticExpectedLife}
-              helperText={
-                validation.polyhousePlasticExpectedLife
-                  ? "Please provide Polyhouse plastic expected life"
-                  : ""
-              }
-              variant="outlined"
-            />
-          </FormControl>
+        <br />
+        <Grid container spacing={2} className="card-outline-container">
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">
+              Polyhouse structure expected life
+            </span>
+            <span className="label-light">*</span>
+
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                name="polyhouseStructureExpectedLife"
+                value={farmData.polyhouseStructureExpectedLife}
+                onChange={handleChange}
+                error={validation.polyhouseStructureExpectedLife}
+                helperText={
+                  validation.polyhouseStructureExpectedLife
+                    ? "Please provide polyhouse structure expected life"
+                    : ""
+                }
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <span className="input-label">Polyhouse plastic expected life</span>
+            <span className="label-light">*</span>
+
+            <FormControl fullWidth>
+              <TextBox
+                isWhite={true}
+                name="polyhousePlasticExpectedLife"
+                value={farmData.polyhousePlasticExpectedLife}
+                onChange={handleChange}
+                error={validation.polyhousePlasticExpectedLife}
+                helperText={
+                  validation.polyhousePlasticExpectedLife
+                    ? "Please provide Polyhouse plastic expected life"
+                    : ""
+                }
+                defaultValue=""
+              />
+            </FormControl>
+          </Grid>
         </Grid>
       </>
     );
   };
 
-  const googleMaps = () => {
-    const {isLoaded}= useJsApiLoader({
-      googleMapsApiKey: "AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY",
-    })
-    let userLat;
-    let userLong;
-    let test = {lat: parseFloat(userLat), lng: parseFloat(userLong)}
-    useEffect(()=> {
-      navigator.geolocation.getCurrentPosition(position =>{
-        userLat =             
-          position.coords.latitude 
-        ;
-        userLong =             
-           position.coords.longitude 
-        ;
-      })
-    },[]);
-
-
+  const renderActionButton = () => {
     return (
       <>
-        <Grid item xs={12} sm={12} md={12}>
-          <FormControl fullWidth>
-            <Autocomplete
-              apiKey={"AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY"}
-              onPlaceSelected={(place) => {
-              }}
-              types={["address"]}
-            />
-          </FormControl>
-          <FormControl>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="female"
-              name="radio-buttons-group"
-            >
-              <FormControlLabel
-                value="other"
-                control={<Radio />}
-                label=" Add Live Location"
-              />
-            </RadioGroup>
-          </FormControl>
-        </Grid>
+        <div className="flex-row-justify-center-container">
+          <ButtonCustom
+            isLight={true}
+            handleButtonClick={handleClose}
+            title="Cancel"
+          />
+          <ButtonCustom
+            handleButtonClick={handleFarmSave}
+            title={farmId ? "Update" : "Save"}
+          />
+        </div>
       </>
     );
   };
 
   return (
     <div>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle className="dialog-title-container">
-          Add a new Farm
-        </DialogTitle>
-        <br />
-        <DialogContent sx={{ paddingTop: "10px" }}>
-          <Grid container spacing={3}>
-            {farmBasicInfo()}
-            {googleMaps()}
-            {germinationZone()}
-            {nurseryZone()}
-            {growZoneArea()}
-            {wateringZone()}
-            {geolocationZone()}
-            {PolyhouseZone()}
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <ButtonCustom
-            isLight={true}
-            handleButtonClick={handleClose}
-            title="Cancel"
-          />
-          <ButtonCustom handleButtonClick={handleFarmSave} title="Save" />
-          {/* handleButtonClick={() => validateFarm()} */}
-        </DialogActions>
-      </Dialog>
+      <PageHeader
+        title={farmId ? `Edit ${farmData.name || ""}` : "Add a new farm"}
+        buttonArray={[]}
+        showBackButton={showBackButton}
+      />
+      {isAddFarmLoading && <Loader title="Adding Farm" />}
+      {isUpdateFarmLoading && <Loader title="Updating Farms" />}
+      {isFarmDetailsListLoading && <Loader title="Fetching Farm Details" />}
+      <div className="page-container">
+        <Grid container spacing={1}>
+          {rendeFarmBasicInfo()}
+          {renderGerminationZone()}
+          {renderNurseryZone()}
+          {renderGrowZoneArea()}
+          {renderWateringZone()}
+          {renderPolyhouseZone()}
+          {renderActionButton()}
+        </Grid>
+      </div>
     </div>
   );
 }

@@ -113,6 +113,7 @@ export default function AddCropModal({
           <Grid container spacing={2} >
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label"> Crop</span>
+              <span className="label-light">*</span>
               <FormControl fullWidth>
                 <SingleCustomSelect
                   isWhite={true}
@@ -151,6 +152,7 @@ export default function AddCropModal({
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
               <span className="input-label"> Germination Method</span>
+              <span className="label-light">*</span>
               <FormControl fullWidth>
                 <SingleCustomSelect
                   isWhite={true}

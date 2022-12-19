@@ -85,7 +85,6 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
         .set("isFarmTaskCommentLoading", true)
         .set("farmTaskCommentError", null);
     case ADD_FARM_TASKS_COMMENTS_SUCCESS:
-   console.log("dashboardlist", dashboardFarmList);
       const taskRow = farmdDetails.Tasks.findIndex(
         (l) => l.id == action.data.taskId
       );

@@ -10,10 +10,11 @@ import Loader from "../../shared/loader";
 import AddIcon from "@mui/icons-material/Add";
 import ButtonCustom from "../../shared/button";
 import AddTaskModal from "../../shared/addtask/addtask";
-// import AddFarmTaskComment from "../addfarmtaskcomment";
 import AddFarmTaskComment from "../../shared/addfarmtaskcomment";
 import { HARVEST_MONTH_OPTIONS } from "../../../config";
 import SingleCustomSelect from "../../shared/select";
+import { useNavigate } from 'react-router-dom';
+import AddZoneModal from "../addzone";
 
 
 export default function FarmDashboard({
@@ -32,13 +33,16 @@ export default function FarmDashboard({
   isFarmTaskCommentLoading,
   isTaskScheduleTaskLoading,
   isDashboardHarvestListLoading,
+
 }) {
+  const navigate = useNavigate();
+
   const { farmId } = useParams();
   const [month, setMonth] = useState(3);
   const [open, setOpen] = useState(false);
   const [openCommetTask, setCommetTask] = useState(false);
   const [rowdata, setRowData] = useState({});
-
+  const [openZone, setOpenZone] = useState(false)
   React.useEffect(() => {
       fetchFarmDashboard(farmId);
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
@@ -70,16 +74,22 @@ export default function FarmDashboard({
     },
   ];
 
-  console.log(dashboardFarmList, "here is dashborad");
   const handleModalToggle = () => {
     setOpen(!open);
   };
+
+  const handleClick = () => {
+    navigate('/')
+  }
+
+
 
   const handleChange = (event) => {
     const { value } = event.target;
     setMonth(value);
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month: value });
   };
+  
 
   const handleTaskSave = (data) => {
     if (data) {
@@ -105,6 +115,12 @@ export default function FarmDashboard({
     }
     handleCommentModalToggle();
   };
+
+  const handleZoneModalToggle = () => {
+    setOpenZone(!openZone);
+  };
+
+
   const TASK_HEADER = [
     {
       label: "Category",
@@ -140,8 +156,8 @@ export default function FarmDashboard({
       isDate: true,
     },
     {
-      label: "Item Name",
-      key: "itemName",
+      label: "Inventory Name",
+      key: "",
       redirection: false,
       isDate: true,
     },
@@ -152,6 +168,23 @@ export default function FarmDashboard({
       isDate: true,
     },
   ];
+
+  let buttonArray = [
+    {
+      label: "Create a new Zone",
+      ICON: <AddIcon />,
+      handler: handleZoneModalToggle,
+    },
+  ];
+
+
+  let showBackButton = [
+    {
+      handler: handleClick,
+    },
+  ];
+
+
   const renderCropSchedules = () => {
     const { cropSchedules } = dashboardFarmList;
     return (
@@ -281,13 +314,13 @@ export default function FarmDashboard({
       </>
     );
   };
- 
+   
   return (
     <div>
       <PageHeader
         title="Farm Dashboard"
-        buttonArray={[]}
-        showBackButton={true}
+        buttonArray={buttonArray}
+        showBackButton={showBackButton}
       />
       {isDashboardFarmListLoading && <Loader title="Fetching Details" />}
       {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
@@ -319,6 +352,15 @@ export default function FarmDashboard({
 
           />
         )}
+
+{openZone && (
+          <AddZoneModal
+            open={openZone}
+            // handleSave={handleTaskSave}
+            handleClose={handleZoneModalToggle}
+          />
+        )}
+
       </div>
     </div>
   );

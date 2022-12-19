@@ -89,6 +89,7 @@ export default function AddUsersModal({
             <Grid item xs={12} sm={6} md={12}>
               <br />
               <span className="input-label">Name</span>
+              <span className="label-light">*</span>
               <FormControl fullWidth>
                 <TextBox
                   isWhite={true}
@@ -105,6 +106,7 @@ export default function AddUsersModal({
             </Grid>
             <Grid item xs={12} sm={6} md={12}>
               <span className="input-label">Phone Number</span>
+              <span className="label-light">*</span>
               <FormControl fullWidth>
                 <TextBox
                   isWhite={true}
@@ -136,7 +138,6 @@ export default function AddUsersModal({
             </Grid>
             <Grid item xs={12} sm={6} md={12} hidden={userData.isEditMode}>
               <span className="input-label">Confirm Password</span>
-
               <FormControl fullWidth>
                 <TextBox
                   isWhite={true}

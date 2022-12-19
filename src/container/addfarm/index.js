@@ -10,7 +10,8 @@ import {
     selectFarmDetailsListError,
     selectFarmDetailsList,
 } from "../../selectors/farm";
-import AddFarm from "../../components/addfarm";
+// import AddFarm from "../../components/addfarm";
+import AddFarm from "../../components/farm/addfarm";
 
 const mapStateToProps = createStructuredSelector({
     isAddFarmLoading: selectIsAddFarmLoading(),
