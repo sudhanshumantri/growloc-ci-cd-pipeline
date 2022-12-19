@@ -98,7 +98,6 @@ export default function ManageTasks({
               handleCommentModalToggle={handleCommentModalToggle}
             />
             <TableDynamicPagination
-              component ="div"
               count={FarmTaskList.total}
               handleChangePagination={handleChangePagination}
             />

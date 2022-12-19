@@ -31,7 +31,7 @@ const TableDynamicPagination = ({ count, handleChangePagination, component,isWhi
         count={count || 0}
         rowsPerPage={rowsPerPage}
         page={page}
-        component ={component}
+        component ="div"
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />

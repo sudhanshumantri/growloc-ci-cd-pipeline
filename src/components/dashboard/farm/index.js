@@ -31,6 +31,7 @@ export default function FarmDashboard({
   addFarmTaskComment,
   isFarmTaskCommentLoading,
   isTaskScheduleTaskLoading,
+  isDashboardHarvestListLoading,
 }) {
   const { farmId } = useParams();
   const [month, setMonth] = useState(3);
@@ -291,6 +292,8 @@ export default function FarmDashboard({
       {isDashboardFarmListLoading && <Loader title="Fetching Details" />}
       {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
       {isTaskScheduleTaskLoading && <Loader title="Adding Tasks" />}
+      {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
+
       <div className="page-container">
         <Grid container spacing={2}>
           {renderCropSchedules()}
