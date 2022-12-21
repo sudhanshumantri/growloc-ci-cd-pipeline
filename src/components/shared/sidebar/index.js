@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { styled, useTheme, Box, List, ListItemText, CssBaseline, Collapse, ListItem, ListItemIcon } from "@mui/material/";
+import {
+  styled,
+  useTheme,
+  Box,
+  List,
+  ListItemText,
+  CssBaseline,
+  Collapse,
+  ListItem,
+  ListItemIcon,
+} from "@mui/material/";
 import MuiDrawer from "@mui/material/Drawer";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Link } from "react-router-dom";
 import TopHeader from "../header/";
-import { farmMenuItems, menuItems } from "./config";
+import { farmMenuItems, menuItems, zoneMenuItems } from "./config";
 import "../../../../public/assets/Irrigation.png";
 import LogoutIcon from "@mui/icons-material/Logout";
 const ASSETS_URL = "../../../../public/assets/";
-import logo from '../../../../public/assets/logo.png'
+import logo from "../../../../public/assets/logo.png";
 import "./style.css";
 import AuthOutlet from "../authoutlet";
 const drawerWidth = 300;
@@ -67,7 +77,7 @@ const Drawer = styled(MuiDrawer, {
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
 }));
-export default function SideBar({ router, logout,loginObject }) {
+export default function SideBar({ router, logout, loginObject }) {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
   const [openSubmenu, toggleSubmenu] = useState(false);
@@ -80,7 +90,9 @@ export default function SideBar({ router, logout,loginObject }) {
   useEffect(() => {
     if (location?.pathname) {
       const route = location.pathname.split("/");
-      if (route.includes("farm") || route.includes("lifecycle")) {
+      if (route.includes("farm") && route.includes("zone")) {
+        setItems(zoneMenuItems);
+      } else if (route.includes("farm")) {
         setItems(farmMenuItems);
       } else {
         setItems(menuItems);
@@ -103,10 +115,10 @@ export default function SideBar({ router, logout,loginObject }) {
         drawerWidth={drawerWidth}
         loginObject={loginObject}
       />
-      <Drawer variant="permanent" open={open}   sx={{ zIndex: 1 }}>
+      <Drawer variant="permanent" open={open} sx={{ zIndex: 1 }}>
         <DrawerHeader sx={{ background: "#517223" }}>
-          <div className='drawer-header-logo'>
-            <img src={logo} onClick={() => this.props.router.navigate('/')} />
+          <div className="drawer-header-logo">
+            <img src={logo} onClick={() => this.props.router.navigate("/")} />
           </div>
         </DrawerHeader>
         <List

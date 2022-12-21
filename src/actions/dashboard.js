@@ -11,6 +11,18 @@ import {
   ADD_FARM_TASKS_COMMENTS_REQUEST,
   ADD_FARM_TASKS_COMMENTS_SUCCESS,
   ADD_FARM_TASKS_COMMENTS_FAILURE,
+  ADD_FARM_DASHBOARD_ZONE_REQUEST,
+  ADD_FARM_DASHBOARD_ZONE_SUCCESS,
+  ADD_FARM_DASHBOARD_ZONE_FAILURE,
+  FETCH_ALL_FARM_DASHBOARD_ZONE_REQUEST,
+  FETCH_ALL_FARM_DASHBOARD_ZONE_SUCCESS,
+  FETCH_ALL_FARM_DASHBOARD_ZONE_FAILURE,
+  UPDATE_FARM_DASHBOARD_ZONE_REQUEST,
+  UPDATE_FARM_DASHBOARD_ZONE_SUCCESS,
+  UPDATE_FARM_DASHBOARD_ZONE_FAILURE,
+  DELETE_FARM_DASHBOARD_ZONE_REQUEST,
+  DELETE_FARM_DASHBOARD_ZONE_SUCCESS,
+  DELETE_FARM_DASHBOARD_ZONE_FAILURE
 } from "./actionTypes";
 export function fetchDashboardFarmRequest(data) {
   return {
@@ -49,6 +61,30 @@ export function fetchDashboardHarvestFailure(data) {
     data,
   };
 }
+
+//
+
+export function fetchFarmDashboardZoneRequest(data) {
+  return {
+    type: FETCH_ALL_FARM_DASHBOARD_ZONE_REQUEST,
+    data,
+  };
+}
+export function fetchFarmDashboardZoneSuccess(data) {
+  return {
+    type: FETCH_ALL_FARM_DASHBOARD_ZONE_SUCCESS,
+    data,
+  };
+}
+export function fetchFarmDashboardZoneFailure(data) {
+  return {
+    type: FETCH_ALL_FARM_DASHBOARD_ZONE_FAILURE,
+    data,
+  };
+}
+
+
+
 
 export function addTaskSheduleTaskRequest(data) {
   return {
@@ -89,4 +125,64 @@ export function addFarmTaskCommentFailure(error) {
     error,
   };
 }
+//
+export function addFarmDashboardZoneRequest(data) {
+  return {
+    type: ADD_FARM_DASHBOARD_ZONE_REQUEST,
+    data,
+  };
+}
+export function addFarmDashboardZoneSuccess(data) {
+  return {
+    type: ADD_FARM_DASHBOARD_ZONE_SUCCESS,
+    data,
+  };
+}
+export function addFarmDashboardZoneFailure(error) {
+  return {
+    type: ADD_FARM_DASHBOARD_ZONE_FAILURE,
+    error,
+  };
+}
+//
+
+export function updateFarmDashboardZoneRequest(data) {
+  return {
+      type: UPDATE_FARM_DASHBOARD_ZONE_REQUEST,
+      data
+  };
+}
+export function updateFarmDashboardZoneSuccess(data) {
+  return {
+      type: UPDATE_FARM_DASHBOARD_ZONE_SUCCESS,
+      data
+  };
+}
+export function updateFarmDashboardZoneFailure(error) {
+  return {
+      type: UPDATE_FARM_DASHBOARD_ZONE_FAILURE,
+      error
+  };
+}
+//
+
+export function deleteFarmDashboardZoneRequest(data) {
+  return {
+      type: DELETE_FARM_DASHBOARD_ZONE_REQUEST,
+      data
+  };
+}
+export function deleteFarmDashboardZoneSuccess(data) {
+  return {
+      type: DELETE_FARM_DASHBOARD_ZONE_SUCCESS,
+      data
+  };
+}
+export function deleteFarmDashboardZoneFailure(error) {
+  return {
+      type: DELETE_FARM_DASHBOARD_ZONE_FAILURE,
+      error
+  };
+}
+
 

@@ -68,14 +68,14 @@ export default function ManageTasks({
     },
   ];
 
-  const handleClick = () => {
+  const handleBackButton = () => {
     navigate(-1)
   }
 
 
   let showBackButton = [
     {
-      handler: handleClick,
+      handler: handleBackButton,
     },
   ];
 

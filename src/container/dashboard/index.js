@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
-import { fetchDashboardFarmRequest, fetchDashboardHarvestRequest, addTaskSheduleTaskRequest,addFarmTaskCommentRequest } from "../../actions/dashboard";
+import { fetchDashboardFarmRequest, fetchDashboardHarvestRequest, addTaskSheduleTaskRequest,addFarmTaskCommentRequest,addFarmDashboardZoneRequest,fetchFarmDashboardZoneRequest,updateFarmDashboardZoneRequest,deleteFarmDashboardZoneRequest } from "../../actions/dashboard";
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
 
@@ -18,6 +18,15 @@ import {
   selectTaskScheduleTaskListError,
   selectIsisFarmTaskCommentLoading,
   selectfarmTaskCommentError,
+  selectIsFarmDashboardZoneLoading,
+  selectFarmDashboardZoneError,
+  selectFarmDashboardZoneList,
+  selectIsFarmDashboardZoneListLoading,
+  selectFarmDashboardZoneListError,
+  selectIsUpdataFarmDashboardZoneLoading,
+  selectUpdateFarmDashboardZoneError,
+  selectIsDeleteFarmDashboardZoneLoading,
+
 } from "../../selectors/dashboard";
 import {
   selectUsersList
@@ -43,6 +52,14 @@ const mapStateToProps = createStructuredSelector({
   loginObject: selectLoginObject(),
   isFarmTaskCommentLoading:selectIsisFarmTaskCommentLoading(),
   farmTaskCommentError:selectfarmTaskCommentError(),
+  isFarmDashboardZoneLoading:selectIsFarmDashboardZoneLoading(),
+  farmDashboardZoneError:selectFarmDashboardZoneError(),
+  farmDashboardZoneList:selectFarmDashboardZoneList(),
+  isFarmDashboardZoneListLoading:selectIsFarmDashboardZoneListLoading(),
+  farmDashboardZoneListError:selectFarmDashboardZoneListError(),
+  isUpdateFarmDashboardZoneLoading:selectIsUpdataFarmDashboardZoneLoading(),
+  updateFarmDashboardZoneError:selectUpdateFarmDashboardZoneError(),
+  isDeleteFarmDashboardZoneLoading:selectIsDeleteFarmDashboardZoneLoading(),
 });
 const mapDispatchToProps = {
   fetchFarmDashboard: fetchDashboardFarmRequest,
@@ -51,6 +68,10 @@ const mapDispatchToProps = {
   addTaskScheduleTask: addTaskSheduleTaskRequest,
   fetchFarmInventory: fetchFarmInventoryRequest,
   addFarmTaskComment: addFarmTaskCommentRequest,
+  addFarmDashboardZone:addFarmDashboardZoneRequest,
+  fecthFarmDashboardZone:fetchFarmDashboardZoneRequest,
+  updateFarmDashboardZone:updateFarmDashboardZoneRequest,
+  deleteFarmDashboardZone:deleteFarmDashboardZoneRequest,
 };
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {

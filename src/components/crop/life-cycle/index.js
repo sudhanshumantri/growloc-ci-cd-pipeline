@@ -79,7 +79,7 @@ export default function CropLifeCycle({
     addCropToLifecycle(lifecycleData);
     handleModalToggle();
   };
-  const handleClick = () => {
+  const handleBackButton = () => {
     navigate('/')
   }
 
@@ -95,7 +95,7 @@ export default function CropLifeCycle({
   ];
   let showBackButton = [
     {
-      handler: handleClick,
+      handler: handleBackButton,
     },
   ];
 

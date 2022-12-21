@@ -44,4 +44,44 @@ export const selectfarmTaskCommentError = () =>
   createSelector(selectFarmDashboard, (services) => services.toJS()["farmTaskCommentError"]);
 
 
+  export const selectIsFarmDashboardZoneLoading = () =>
+  createSelector(
+    selectFarmDashboard,
+    (services) => services.toJS()["isFarmDashboardZoneLoading"]
+  );
+
+export const selectFarmDashboardZoneError = () =>
+  createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardZoneError"]);
+
+  //
+
+  export const selectFarmDashboardZoneList = () =>
+  createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardZoneList"]);
+export const selectIsFarmDashboardZoneListLoading = () =>
+  createSelector(
+    selectFarmDashboard,
+    (services) => services.toJS()["isFarmDashboardZoneListLoading"]
+  );
+export const selectFarmDashboardZoneListError = () =>
+  createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardZoneListError"]);
+
+
+  //
+
+  export const selectIsUpdataFarmDashboardZoneLoading = () =>
+  createSelector(
+    selectFarmDashboard,
+    (services) => services.toJS()["isUpdateFarmDashboardZoneLoading"]
+  );
+export const selectUpdateFarmDashboardZoneError = () =>
+  createSelector(selectFarmDashboard, (services) => services.toJS()["updateFarmDashboardZoneError"]);
+
+
+  export const selectIsDeleteFarmDashboardZoneLoading = () =>
+  createSelector(
+    selectFarmDashboard,
+    (services) => services.toJS()["isDeleteFarmDashboardZoneLoading"]
+  );
+
+
 

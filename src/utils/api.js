@@ -35,6 +35,11 @@ const urls = {
     "fetch-farm-all-task":"farm/task/",
     "add-farm-task-comment":"farm/task/add-comments/",
     "add-task-comment":"farm/task/add-comments/",
+    "add-farm-dashboard-zone":"farm/add-new-zone",
+    "fetch-all-farm-zone":"farm/get-all-zones/",
+    "update-farm-dashboard-zone" : "",
+    "delete-farm-dashboard-zone" : "farm/delete-zone/",
+    "fetch-farm-zone":"farm/get-zone-details/",
   },
 };
 function getEndpoint(endpoint) {
@@ -295,6 +300,54 @@ export function callAddTaskComment(data) {
     data,
   });
 }
+
+export function callAddFarmDashboardZone(data) {
+  return callApi(getEndpoint("add-farm-dashboard-zone"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data,
+  });
+}
+//
+
+export function callFetchFarmDashboardZoneList(routeParams) {
+  return callApi(getEndpoint("fetch-all-farm-zone"), {
+    method: "get",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
+
+export function callUpdateFarmDashboardZoneList(data,routeParams) {
+  return callApi(getEndpoint("update-farm-dashboard-zone"), {
+    method: "PUT",
+    removeAuthorizationHeader: false,
+    data: data,
+    routeParams
+
+  });
+}
+//
+export function callDeleteFarmDashboardZoneList(routeParams) {
+  return callApi(getEndpoint("delete-farm-dashboard-zone"), {
+    method: "delete",
+    removeAuthorizationHeader: false,
+    routeParams
+  });
+}
+//
+export function callfetchFarmZoneDetails(routeParams) {
+  return callApi(getEndpoint("fetch-farm-zone"), {
+    method: "get",
+    removeAuthorizationHeader: false,
+    routeParams
+  });
+}
+
+
+
+
+
 
 
 

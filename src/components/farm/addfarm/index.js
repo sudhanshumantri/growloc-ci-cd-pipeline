@@ -124,12 +124,12 @@ export default function AddFarm({
     navigate("/");
   };
 
-  const handleClick = () => {
+  const handleBackButton = () => {
     navigate("/");
   };
   let showBackButton = [
     {
-      handler: handleClick,
+      handler: handleBackButton,
     },
   ];
 

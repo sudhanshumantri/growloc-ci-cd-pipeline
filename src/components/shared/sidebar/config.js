@@ -216,14 +216,124 @@ const farmMenuItems = [
   // },
 ];
 
-const supervisorMenuItems = [
+const zoneMenuItems = [
   {
-    title: "Task",
-    id: "Task",
-    navigation: "task",
+    title: "Dashboard",
+    id: "dashboard",
+    icon: Dashboard,
+    navigation: "/dashboard",
+    link: "/dashboard",
+    css: { borderBottom: "1px solid white" },
+    isAuthRequired: true,
+    from: "crops",
+    action: "view",
+  },
+
+  {
+    title: "Crop",
+    id: "crop",
+    icon: Crops,
+    isChildToFarmId: true,
+    navigation: "corp",
+    css: { borderBottom: "1px solid white" },
+    isAuthRequired: true,
+    from: "crops",
+    action: "view",
+    subMenu: [
+      {
+        id: "1",
+        name: "Manage Crops",
+        navigation: "/crops/manage",
+        icon: ManageCrops,
+        link: "/crops/manage",
+      },
+      {
+        id: "3",
+        name: "Crops Lifecycle",
+        navigation: "/crops/lifecycle",
+        link: "/crops/lifecycle",
+        icon: CropsLifecycle,
+        isAuthRequired: true,
+        from: "lifeCycle",
+        action: "view",
+      },
+    ],
+  },
+
+  {
+    title: "Tasks",
+    id: "Tasks",
+    navigation: "/task",
+    icon: Tasks,
     link: "/task",
+    css: { borderBottom: "1px solid white" },
+  },
+  {
+    title: "Water Management",
+    id: "Water",
+    icon: WaterManagement,
+    isAuthRequired: true,
+    from: "waterManagement",
+    action: "view",
+    link: "/water-management",
+    navigation: "water-management",
+    css: { borderBottom: "1px solid white" },
+  },
+  {
+    title: "Monitors",
+    id: "Monitors",
+    icon: Monitors,
+    navigation: "monitors",
+    isAuthRequired: true,
+    from: "monitors",
+    action: "view",
+    link: "/monitor",
+    navigation: "monitor",
+    css: { borderBottom: "1px solid white" },
+  },
+  {
+    title: "Inventory",
+    id: "Inventory",
+    icon: Inventory,
+    link: "/inventory/items",
+    navigation: "inventory/items",
+    isAuthRequired: true,
+    from: "inventory",
+    action: "view",
+
+    css: { borderBottom: "1px solid white" },
+  },
+  {
+    title: "Reports",
+    id: "Reports",
+    icon: Report,
+    navigation: "reports",
+    isAuthRequired: true,
+    from: "reports",
+    action: "view",
+    css: { borderBottom: "1px solid white" },
+    subMenu: [
+      {
+        id: "1",
+        name: "Avg Weight Per Plant",
+        navigation: "reports/avgweight",
+      },
+      { id: "2", name: "Farm Efficiency", navigation: "reports/efficiency" },
+    ],
+  },
+
+  {
+    title: "Users",
+    id: "Users",
+    isChildToFarmId: true,
+    navigation: "users",
+    link: "/users",
+    icon: Account,
+    isAuthRequired: true,
+    from: "users",
+    action: "view",
     css: { borderBottom: "1px solid white" },
   },
 ];
 
-export { farmMenuItems, menuItems, supervisorMenuItems };
+export { farmMenuItems, menuItems, zoneMenuItems };

@@ -61,7 +61,7 @@ export default function ManageUsers({
     setUserInfo({});
   };
 
-  const handleClick = () => {
+  const handleBackButton = () => {
     navigate(-1)
   }
 
@@ -148,7 +148,7 @@ export default function ManageUsers({
   ];
   let showBackButton = [
     {
-      handler: handleClick,
+      handler: handleBackButton,
     },
   ];
 

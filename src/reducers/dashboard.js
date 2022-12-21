@@ -12,6 +12,18 @@ import {
   ADD_FARM_TASKS_COMMENTS_REQUEST,
   ADD_FARM_TASKS_COMMENTS_SUCCESS,
   ADD_FARM_TASKS_COMMENTS_FAILURE,
+  ADD_FARM_DASHBOARD_ZONE_REQUEST,
+  ADD_FARM_DASHBOARD_ZONE_SUCCESS,
+  ADD_FARM_DASHBOARD_ZONE_FAILURE,
+  FETCH_ALL_FARM_DASHBOARD_ZONE_REQUEST,
+  FETCH_ALL_FARM_DASHBOARD_ZONE_SUCCESS,
+  FETCH_ALL_FARM_DASHBOARD_ZONE_FAILURE,
+  UPDATE_FARM_DASHBOARD_ZONE_REQUEST,
+  UPDATE_FARM_DASHBOARD_ZONE_SUCCESS,
+  UPDATE_FARM_DASHBOARD_ZONE_FAILURE,
+  DELETE_FARM_DASHBOARD_ZONE_REQUEST,
+  DELETE_FARM_DASHBOARD_ZONE_SUCCESS,
+  DELETE_FARM_DASHBOARD_ZONE_FAILURE
 } from "../actions/actionTypes";
 import login from "../sagas/login";
 const INITIAL_STATE = fromJS({
@@ -25,9 +37,19 @@ const INITIAL_STATE = fromJS({
   TaskScheduleTaskListError: null,
   isFarmTaskCommentLoading: false,
   farmTaskCommentError: null,
+  isFarmDashboardZoneLoading:false,
+  farmDashboardZoneError:null,
+  farmDashboardZoneList:[],
+  isFarmDashboardZoneListLoading:false,
+  farmDashboardZoneListError:null,
+  isUpdateFarmDashboardZoneLoading:false,
+  updateFarmDashboardZoneError:null,
+  isDeleteFarmDashboardZoneLoading:false,
+  deleteFarmDashboardZoneError:false,
 });
 export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
   let dashboardFarmList = state.toJS()["dashboardFarmList"];
+  let farmDashboardZoneList = state.toJS()["farmDashboardZoneList"]
   const { farmdDetails } = dashboardFarmList;
   const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
 
@@ -64,6 +86,22 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
         .set("dashboardHarvestList", [])
         .set("DashboardHarvestListError", action.error);
     //
+    case FETCH_ALL_FARM_DASHBOARD_ZONE_REQUEST:
+      return state
+        .set("isFarmDashboardZoneListLoading", true)
+        .set("farmDashboardZoneList",[])
+        .set("farmDashboardZoneListError", null);
+    case FETCH_ALL_FARM_DASHBOARD_ZONE_SUCCESS:
+      return state
+        .set("isFarmDashboardZoneListLoading", false)
+        .set("farmDashboardZoneList", action.data)
+        .set("farmDashboardZoneListError", null);
+    case FETCH_ALL_FARM_DASHBOARD_ZONE_FAILURE:
+      return state
+        .set("isFarmDashboardZoneListLoading", false)
+        .set("farmDashboardZoneList", {})
+        .set("farmDashboardZoneListError", action.error);
+    //
     case ADD_TASK_REQUEST:
       return state
         .set("isTaskScheduleTaskLoading", true)
@@ -94,10 +132,54 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
         .set("isFarmTaskCommentLoading", false)
         .set("dashboardFarmList", dashboardFarmList)
         .set("farmTaskCommentError", null);
-    case ADD_FARM_TASKS_COMMENTS_FAILURE:
+      case ADD_FARM_TASKS_COMMENTS_FAILURE:
       return state
         .set("isFarmTaskCommentLoading", false)
         .set("farmTaskCommentError", action.error);
+        //
+        case ADD_FARM_DASHBOARD_ZONE_REQUEST:
+          return state
+            .set("isFarmDashboardZoneLoading", true)
+            .set("farmDashboardZoneError", null);
+        case ADD_FARM_DASHBOARD_ZONE_SUCCESS:
+          const newZone = {...action.data}
+          farmDashboardZoneList.push(newZone)
+          return state
+            .set("isFarmDashboardZoneLoading", false)
+            .set("farmDashboardZoneList", farmDashboardZoneList)
+            .set("farmDashboardZoneError", null);
+        case ADD_FARM_DASHBOARD_ZONE_FAILURE:
+          return state
+            .set("isFarmDashboardZoneLoading", false)
+            .set("farmDashboardZoneError", action.error);
+          case UPDATE_FARM_DASHBOARD_ZONE_REQUEST:
+            return state
+              .set("isUpdateFarmDashboardZoneLoading", true)
+              .set("updataFarmDashboardZoneError", null);
+          case UPDATE_FARM_DASHBOARD_ZONE_SUCCESS:
+           
+            return state
+            .set("isUpdateFarmDashboardZoneLoading", false)
+            .set("updataFarmDashboardZoneError", null);
+
+          case UPDATE_FARM_DASHBOARD_ZONE_FAILURE:
+            return state
+              .set("isUpdataFarmDashboardZoneLoading", false)
+              .set("updataFarmDashboardZoneError", true);
+          case DELETE_FARM_DASHBOARD_ZONE_REQUEST:
+            return state
+              .set("isDeleteFarmDashboardZoneLoading", true)
+              .set("deleteFarmDashboardZoneError", null);
+          case DELETE_FARM_DASHBOARD_ZONE_SUCCESS:
+            const  id = action.data;
+            const filteredList = farmDashboardZoneList.filter((zone) => zone.id !== id);
+            return state
+              .set("isDeleteFarmDashboardZoneLoading", false)
+              .set("farmDashboardZoneList",filteredList)
+              .set("deleteFarmDashboardZoneError", null);
+          case DELETE_FARM_DASHBOARD_ZONE_FAILURE:
+            return state.set("farmList","");
+
     default:
       return state;
   }

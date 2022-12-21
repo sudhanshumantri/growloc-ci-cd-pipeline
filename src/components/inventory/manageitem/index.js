@@ -64,7 +64,7 @@ export default function ManageItem({
     handleDeleteDialogueToggle();
   };
 
-  const handleClick = () => {
+  const handleBackButton = () => {
     navigate(-1)
   }
 
@@ -135,7 +135,7 @@ export default function ManageItem({
 
   let showBackButton = [
     {
-      handler: handleClick,
+      handler: handleBackButton,
     },
   ];
 

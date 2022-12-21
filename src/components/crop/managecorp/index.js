@@ -47,7 +47,7 @@ export default function ManageCrop({
     setCropInfo({});
   };
 
-  const handleClick = () => {
+  const handleBackButton = () => {
     navigate('/')
   }
 
@@ -167,7 +167,7 @@ export default function ManageCrop({
   ];
   let showBackButton = [
     {
-      handler: handleClick,
+      handler: handleBackButton,
     },
   ];
 

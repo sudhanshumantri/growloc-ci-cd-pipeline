@@ -85,12 +85,12 @@ export default function ManageUsers({
         setFarmData({ ...farmData, [name]: value });
         validation[name] && setValidation({ ...validation, [name]: false });
     };
-    const handleClick = () => {
+    const handleBackButton = () => {
         navigate('/')
       }
       let showBackButton = [
         {
-          handler: handleClick,
+          handler: handleBackButton,
         },
       ];
     

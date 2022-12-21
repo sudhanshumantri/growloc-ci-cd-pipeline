@@ -31,6 +31,9 @@
 }
 
 .page-header-top-row {
+  display: grid !important;
   align-items: center;
   margin-top: 20px;
+  padding-left: 10px;
+
 }

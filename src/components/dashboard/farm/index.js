@@ -15,7 +15,9 @@ import { HARVEST_MONTH_OPTIONS } from "../../../config";
 import SingleCustomSelect from "../../shared/select";
 import { useNavigate } from 'react-router-dom';
 import AddZoneModal from "../addzone";
-
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import ConfirmDialogBox from "../../shared/dailog/ConfirmDialogBox";
 
 export default function FarmDashboard({
   dashboardFarmList,
@@ -33,17 +35,25 @@ export default function FarmDashboard({
   isFarmTaskCommentLoading,
   isTaskScheduleTaskLoading,
   isDashboardHarvestListLoading,
-
+  addFarmDashboardZone,
+  fecthFarmDashboardZone,
+  farmDashboardZoneList,
+  isFarmDashboardZoneLoading,
+  deleteFarmDashboardZone,
+  isDeleteFarmDashboardZoneLoading,
 }) {
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const { farmId } = useParams();
   const [month, setMonth] = useState(3);
   const [open, setOpen] = useState(false);
   const [openCommetTask, setCommetTask] = useState(false);
   const [rowdata, setRowData] = useState({});
   const [openZone, setOpenZone] = useState(false)
+  const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
+  const [zoneData, setZoneData] = useState({});
   React.useEffect(() => {
+    fecthFarmDashboardZone(farmId)
       fetchFarmDashboard(farmId);
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
     fetchFarmInventory(farmId);
@@ -51,7 +61,6 @@ export default function FarmDashboard({
       fetchUsers({ farmId });
     }
   }, []);
-
   const headers = [
     {
       label: "Batch Number",
@@ -78,7 +87,7 @@ export default function FarmDashboard({
     setOpen(!open);
   };
 
-  const handleClick = () => {
+  const handleBackButton = () => {
     navigate('/')
   }
 
@@ -100,6 +109,17 @@ export default function FarmDashboard({
     handleModalToggle();
   };
 
+  const handleFarmDashboardZone = (data) => {
+    if (data) {
+      addFarmDashboardZone({
+        ...data,
+        farmId:parseInt(farmId)
+      });
+    }
+    handleZoneModalToggle();
+  };
+
+
   const handleCommentModalToggle = (rowData) => {
     setRowData(rowData);
     setCommetTask(!openCommetTask);
@@ -118,6 +138,38 @@ export default function FarmDashboard({
 
   const handleZoneModalToggle = () => {
     setOpenZone(!openZone);
+  };
+
+
+  const handleEdit = (zoneEdit) => {
+    const { id, name,farmArea  } = zoneEdit;
+    const zoneDetails = {
+      name: name,
+      farmArea:farmArea,
+      id,
+    };
+    setZoneData(zoneDetails);
+    setOpenZone(true);
+  };
+
+
+  const handleDelete = (zoneInfo) => {
+    const { id, name } = zoneInfo;
+    const zoneDetails = { id, name };
+    setZoneData(zoneDetails);
+    setIsDeleteModelOpen(true);
+  };
+
+  const handleDeleteDialogueToggle = () => {
+    setIsDeleteModelOpen(!isDeleteModelOpen);
+    setZoneData({});
+  };
+
+  const handleConfirmRemove = () => {
+    const { id } = zoneData;
+    // deleteFarmInventory(id);
+    deleteFarmDashboardZone(id)
+    handleDeleteDialogueToggle();
   };
 
 
@@ -169,6 +221,63 @@ export default function FarmDashboard({
     },
   ];
 
+
+  const ZONE_HEADER = [
+
+    {
+      label: "Zone No",
+      key: "id",
+      redirection: true,
+      redirectionKey: "id",
+      baseEndPoint: `#/farm/${farmId}/zone/`,
+    },
+    {
+      label: "Name",
+      key: "name",
+    },
+    {
+      label: "Farm Area",
+      key: "farmArea",
+    },
+    {
+      label: "Actons",
+      isButton: true,
+      buttonArray: [
+        {
+          label: "Edit",
+          type: "icon",
+          handler: handleEdit,
+          icon: <EditOutlinedIcon sx={{ color: "#517223" }} />,
+          isAuthRequired: true,
+          from: "farmItems",
+          action: "edit",
+        },
+        {
+          label: "Delete",
+          type: "icon",
+          icon: <DeleteOutlineOutlinedIcon sx={{ color: "#517223" }} />,
+          handler: handleDelete,
+          isAuthRequired: true,
+          from: "farmItems",
+          action: "delete",
+        },
+      ],
+    },
+  ];
+
+  let conFirmbuttons = [
+    {
+      label: "Cancel",
+      handler: handleDeleteDialogueToggle,
+      isLight: true,
+    },
+    {
+      label: "Delete",
+      handler: handleConfirmRemove,
+    },
+  ];
+
+
   let buttonArray = [
     {
       label: "Create a new Zone",
@@ -180,7 +289,7 @@ export default function FarmDashboard({
 
   let showBackButton = [
     {
-      handler: handleClick,
+      handler: handleBackButton,
     },
   ];
 
@@ -314,6 +423,22 @@ export default function FarmDashboard({
       </>
     );
   };
+
+
+  const renderFarmZone = () => {
+    return (
+      <>
+        <Grid item xs={12} sm={12} md={12}>
+          <p className="section-title">Zone</p>
+        </Grid>
+        <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
+          <DataTable data={{ headers: ZONE_HEADER, rows: farmDashboardZoneList || [] }} />
+        </Grid>
+      </>
+    );
+  };
+
+
    
   return (
     <div>
@@ -326,9 +451,12 @@ export default function FarmDashboard({
       {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
       {isTaskScheduleTaskLoading && <Loader title="Adding Tasks" />}
       {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
+      {isFarmDashboardZoneLoading && <Loader title="Adding Zone" />}
+      {isDeleteFarmDashboardZoneLoading && <Loader title="Deleting Zone" />}
 
       <div className="page-container">
         <Grid container spacing={2}>
+          {renderFarmZone()}
           {renderCropSchedules()}
           {renderTaskSchedules()}
           {renderMonthlyHarvestBreakup()}
@@ -350,14 +478,25 @@ export default function FarmDashboard({
             handleSave={handleTaskCommentSave}
             handleClose={handleCommentModalToggle}
 
+
+          />
+        )}
+    {openZone && (
+          <AddZoneModal
+            open={openZone}
+            handleClose={handleZoneModalToggle}
+            handleSave={handleFarmDashboardZone}
+            zoneDetails={zoneData}
+            data={farmDashboardZoneList}
+
           />
         )}
 
-{openZone && (
-          <AddZoneModal
-            open={openZone}
-            // handleSave={handleTaskSave}
-            handleClose={handleZoneModalToggle}
+    {isDeleteModelOpen && (
+          <ConfirmDialogBox
+            dialogState={isDeleteModelOpen}
+            buttonArray={conFirmbuttons}
+            subHeading={`Are you sure to delete "${zoneData.name}" ?`}
           />
         )}
 
