@@ -157,11 +157,13 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
               .set("isUpdateFarmDashboardZoneLoading", true)
               .set("updataFarmDashboardZoneError", null);
           case UPDATE_FARM_DASHBOARD_ZONE_SUCCESS:
-           
+            const { data} = action.data;
+         const index = farmDashboardZoneList.findIndex((zone) => zone.id === data.id);
+         farmDashboardZoneList[index] = data;
             return state
             .set("isUpdateFarmDashboardZoneLoading", false)
+            .set("farmDashboardZoneList", farmDashboardZoneList)
             .set("updataFarmDashboardZoneError", null);
-
           case UPDATE_FARM_DASHBOARD_ZONE_FAILURE:
             return state
               .set("isUpdataFarmDashboardZoneLoading", false)
@@ -178,8 +180,7 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
               .set("farmDashboardZoneList",filteredList)
               .set("deleteFarmDashboardZoneError", null);
           case DELETE_FARM_DASHBOARD_ZONE_FAILURE:
-            return state.set("farmList","");
-
+            return state.set("farmDashboardZoneList","");
     default:
       return state;
   }

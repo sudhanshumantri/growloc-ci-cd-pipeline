@@ -32,6 +32,7 @@ export default function AddCropModal({
   handleClose,
 }) {
   let { farmId } = useParams();
+  let {zoneId} = useParams();
   const [selectedCrop, setselectedCrop] = useState("");
   const [batchNo, setBatchNo] = useState("");
   const [isUnitsError, setIsUnitsError] = useState(false);
@@ -71,6 +72,7 @@ export default function AddCropModal({
   const handleSaveCrop = () => {
     let requestData = {
       farmId: parseInt(farmId),
+      zoneId:parseInt(zoneId),
       qty: parseInt(units),
       batchNo: batchNo,
       crop: selectedCrop,

@@ -41,6 +41,8 @@ export default function FarmDashboard({
   isFarmDashboardZoneLoading,
   deleteFarmDashboardZone,
   isDeleteFarmDashboardZoneLoading,
+  updateFarmDashboardZone,
+  isUpdateFarmDashboardZoneLoading,
 }) {
 
   const navigate = useNavigate();
@@ -52,6 +54,7 @@ export default function FarmDashboard({
   const [openZone, setOpenZone] = useState(false)
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [zoneData, setZoneData] = useState({});
+
   React.useEffect(() => {
     fecthFarmDashboardZone(farmId)
       fetchFarmDashboard(farmId);
@@ -110,12 +113,24 @@ export default function FarmDashboard({
   };
 
   const handleFarmDashboardZone = (data) => {
-    if (data) {
+    if(zoneData.id) {
+      const payload = {
+        name : data.name,
+        farmArea: data.farmArea,
+      }
+      updateFarmDashboardZone({ payload, id: zoneData.id});
+    } else {
       addFarmDashboardZone({
-        ...data,
-        farmId:parseInt(farmId)
-      });
+           ...data,
+            farmId:parseInt(farmId)
+          });
     }
+    // if (data) {
+    //   addFarmDashboardZone({
+    //     ...data,
+    //     farmId:parseInt(farmId)
+    //   });
+    // }
     handleZoneModalToggle();
   };
 
@@ -167,7 +182,6 @@ export default function FarmDashboard({
 
   const handleConfirmRemove = () => {
     const { id } = zoneData;
-    // deleteFarmInventory(id);
     deleteFarmDashboardZone(id)
     handleDeleteDialogueToggle();
   };
@@ -224,16 +238,20 @@ export default function FarmDashboard({
 
   const ZONE_HEADER = [
 
-    {
-      label: "Zone No",
-      key: "id",
-      redirection: true,
-      redirectionKey: "id",
-      baseEndPoint: `#/farm/${farmId}/zone/`,
-    },
+    // {
+    //   label: "Zone No",
+    //   key: "id",
+    //   redirection: true,
+    //   redirectionKey: "id",
+    //   baseEndPoint: `#/farm/${farmId}/zone/`,
+    // },
     {
       label: "Name",
       key: "name",
+      redirection: true,
+      redirectionKey: "id",
+      baseEndPoint: `#/farm/${farmId}/zone/`,
+
     },
     {
       label: "Farm Area",
@@ -453,6 +471,8 @@ export default function FarmDashboard({
       {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
       {isFarmDashboardZoneLoading && <Loader title="Adding Zone" />}
       {isDeleteFarmDashboardZoneLoading && <Loader title="Deleting Zone" />}
+      {isUpdateFarmDashboardZoneLoading && <Loader title="Updating Zone  " />}
+
 
       <div className="page-container">
         <Grid container spacing={2}>

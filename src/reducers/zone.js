@@ -3,12 +3,37 @@ import {
     FETCH_ALL_FARM_ZONE_REQUEST,
     FETCH_ALL_FARM_ZONE_SUCCESS,
     FETCH_ALL_FARM_ZONE_FAILURE,
+    FETCH_ALL_FARM_ZONE_DASHBOARD_REQUEST,
+    FETCH_ALL_FARM_ZONE_DASHBOARD_SUCCESS,
+    FETCH_ALL_FARM_ZONE_DASHBOARD_FAILURE,
+    FETCH_ALL_FARM_ZONE_DASHBOARD_HARVEST_REQUEST,
+    FETCH_ALL_FARM_ZONE_DASHBOARD_HARVEST_SUCCESS,
+    FETCH_ALL_FARM_ZONE_DASHBOARD_HARVEST_FAILURE,
+    ADD_FARM_DASHBOARD_ZONE_TASK_REQUEST,
+    ADD_FARM_DASHBOARD_ZONE_TASK_SUCCESS,
+    ADD_FARM_DASHBOARD_ZONE_TASK_FAILURE,
+    ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_REQUEST,
+    ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_SUCCESS,
+    ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_FAILURE
 } from "../actions/actionTypes";
 
 const INITIAL_STATE = fromJS({
   isFarmZoneLoading: false,
   farmZoneList: [],
   farmZoneError: null,
+  isFarmZoneDashboardListLoading:false,
+  farmZoneDashboardListError:null,
+  farmZoneDashboardList:[],
+  farmZoneDashboardHarvestList:[],
+  isFarmZoneDashboardHarvestListLoading:false,
+  farmZoneDashboardHarvestListError:false,
+  isFarmDashboardZoneTaskLoading:false,
+  farmDashboardZoneTaskError:null,
+  isFarmDashboardZoneCommetLoading:false,
+  farmDashboardZoneCommetError:null,
+
+
+  
 });
 
 export default function zoneReducer(state = INITIAL_STATE, action = {}) {
@@ -28,6 +53,65 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
         .set("isFarmZoneLoading", false)
         .set("farmZoneList", [])
         .set("farmZoneError", action.error);
+        //
+        case FETCH_ALL_FARM_ZONE_DASHBOARD_REQUEST:
+      return state
+        .set("isFarmZoneDashboardListLoading", true)
+        .set("farmZoneDashboardList", [])
+        .set("farmZoneDashboardListError", null);
+    case FETCH_ALL_FARM_ZONE_DASHBOARD_SUCCESS:
+      return state
+        .set("isFarmZoneDashboardListLoading", false)
+        .set("farmZoneDashboardList", action.data)
+        .set("farmZoneDashboardListError", null);
+    case FETCH_ALL_FARM_ZONE_DASHBOARD_FAILURE:
+      return state
+        .set("isFarmZoneDashboardListLoading", false)
+        .set("farmZoneDashboardList", [])
+        .set("farmZoneDashboardListError", action.error);
+    //
+    case FETCH_ALL_FARM_ZONE_DASHBOARD_HARVEST_REQUEST:
+      return state
+        .set("isFarmZoneDashboardHarvestListLoading", true)
+        .set("farmZoneDashboardHarvestList", [])
+        .set("farmZoneDashboardHarvestListError", null);
+    case FETCH_ALL_FARM_ZONE_DASHBOARD_HARVEST_SUCCESS:
+      return state
+        .set("isFarmZoneDashboardHarvestListLoading", false)
+        .set("farmZoneDashboardHarvestList", action.data)
+        .set("farmZoneDashboardHarvestListError", null);
+    case FETCH_ALL_FARM_ZONE_DASHBOARD_HARVEST_FAILURE:
+      return state
+        .set("isFarmZoneDashboardHarvestListLoading", false)
+        .set("farmZoneDashboardHarvestList", [])
+        .set("farmZoneDashboardHarvestListError", action.error);
+        //
+        case ADD_FARM_DASHBOARD_ZONE_TASK_REQUEST:
+      return state
+        .set("isFarmDashboardZoneTaskLoading", true)
+        .set("farmDashboardZoneTaskError", null);
+    case ADD_FARM_DASHBOARD_ZONE_TASK_SUCCESS:
+      return state
+        .set("isFarmDashboardZoneTaskLoading", false)
+        .set("farmDashboardZoneTaskError", null);
+    case ADD_FARM_DASHBOARD_ZONE_TASK_FAILURE:
+      return state
+        .set("isFarmDashboardZoneTaskLoading", false)
+        .set("farmDashboardZoneTaskError", action.error);
+    //
+    case ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_REQUEST:
+      return state
+        .set("isFarmDashboardZoneCommetLoading", true)
+        .set("farmDashboardZoneCommetError", null);
+    case ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_SUCCESS:
+      return state
+        .set("isFarmDashboardZoneCommetLoading", false)
+        .set("farmDashboardZoneCommetError", null);
+      case ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_FAILURE:
+      return state
+        .set("isFarmDashboardZoneCommetLoading", false)
+        .set("farmDashboardZoneCommetError", action.error);
+        //
     default:
       return state;
   }

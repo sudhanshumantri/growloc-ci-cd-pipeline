@@ -17,8 +17,6 @@ export default function AddZoneModal({ open, handleSave, handleClose,
     name: "",
     farmArea: "",
   },
-
-
 }) {
   const [zoneData, setZoneData] = useState(zoneDetails);
   const [validation, setValidation] = useState({
@@ -104,11 +102,11 @@ export default function AddZoneModal({ open, handleSave, handleClose,
               <FormControl fullWidth>
                 <TextBox
                   isWhite={true}
-                  name="size"
+                  name="farmArea"
                   value={zoneData.farmArea}
                   onChange={handleChange}
-                  error={validation.size}
-                  helperText={validation.size ? "Please provide area" : ""}
+                  error={validation.farmArea}
+                  helperText={validation.farmArea ? "Please provide area" : ""}
 
                 />
               </FormControl>
