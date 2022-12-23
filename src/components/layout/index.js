@@ -20,6 +20,7 @@ import AddUsers from "../../container/users";
 import CropLifeCycle from "../../container/life-cycle";
 import CropLifeCycleDetails from "../../container/life-cycle/lifeCycleDetails";
 import ZoneDashboard from "../../container/zone";
+import ManageZoneTasks from "../../container/zonetask"
 import FarmOutlet from "../farmoutlet";
 import { getAsyncInjectors } from "../../utils/asyncInjectors";
 import loginReducer from "../../reducers/login";
@@ -32,6 +33,7 @@ import dashboardFarmReducer from "../../reducers/dashboard";
 import inventoryReducer from "../../reducers/inventory";
 import taskReducer from "../../reducers/task";
 import zoneReducer from "../../reducers/zone";
+import zoneTaskReducer from "../../reducers/zone/task";
 import loginSagas from "../../sagas/login";
 import registerSagas from "../../sagas/register";
 import cropsSagas from "../../sagas/crops";
@@ -42,6 +44,7 @@ import lifeCycleSagas from "../../sagas/life-cycle";
 import inventorySagas from "../../sagas/inventory";
 import taskSagas from "../../sagas/task";
 import zoneSagas from "../../sagas/zone";
+import  zoneTaskSagas  from "../../sagas/zone/task";
 import { selectToken } from "../../selectors/login";
 import { loadAuthToken } from "../../actions/login";
 import AddFarm from "../../container/addfarm";
@@ -62,6 +65,7 @@ injectReducer("users", usersReducer);
 injectReducer("inventory", inventoryReducer);
 injectReducer("task", taskReducer);
 injectReducer("zone", zoneReducer);
+injectReducer("zoneTask",zoneTaskReducer)
 injectSagas(farmSagas);
 injectSagas(userSagas);
 injectSagas(loginSagas);
@@ -71,6 +75,7 @@ injectSagas(farmDashboardSagas);
 injectSagas(inventorySagas);
 injectSagas(taskSagas);
 injectSagas(zoneSagas);
+injectSagas(zoneTaskSagas)
 const drawerWidth = 240;
 const Layout = ({ loadAuthToken }) => {
   const token = localStorage.getItem("AUTH_TOKEN");
@@ -147,7 +152,7 @@ const Layout = ({ loadAuthToken }) => {
               path="crops/lifecycle/details/:lifecycleId"
               element={<CropLifeCycleDetails />}
             />
-            <Route path="task" element={<ManageTasks />} />
+            <Route path="task" element={<ManageZoneTasks />} />
             <Route path="water-management" element={<WaterManagement />} />
             <Route path="monitor" element={<Monitor />} />
           </Route>

@@ -31,12 +31,13 @@ const INITIAL_STATE = fromJS({
   farmDashboardZoneTaskError:null,
   isFarmDashboardZoneCommetLoading:false,
   farmDashboardZoneCommetError:null,
-
-
-  
 });
 
 export default function zoneReducer(state = INITIAL_STATE, action = {}) {
+  let farmZoneDashboardList = state.toJS()["farmZoneDashboardList"];
+  const { farmdDetails } = farmZoneDashboardList;
+  const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
+
   switch (action.type) {
     case FETCH_ALL_FARM_ZONE_REQUEST:
       return state
@@ -91,8 +92,11 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
         .set("isFarmDashboardZoneTaskLoading", true)
         .set("farmDashboardZoneTaskError", null);
     case ADD_FARM_DASHBOARD_ZONE_TASK_SUCCESS:
+      const createdByProfile = AUTH_OBJECT.profile
+      farmdDetails.Tasks.push({ ...action.data, createdByProfile });
       return state
         .set("isFarmDashboardZoneTaskLoading", false)
+        .set("farmZoneDashboardList", farmZoneDashboardList)
         .set("farmDashboardZoneTaskError", null);
     case ADD_FARM_DASHBOARD_ZONE_TASK_FAILURE:
       return state
@@ -104,8 +108,14 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
         .set("isFarmDashboardZoneCommetLoading", true)
         .set("farmDashboardZoneCommetError", null);
     case ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_SUCCESS:
+      const zoneTaskRow = farmdDetails.Tasks.findIndex(
+        (zone) => zone.id == action.data.taskId
+      );
+      const user = AUTH_OBJECT.profile;
+      farmdDetails.Tasks[zoneTaskRow].TasksHistory.push({ ...action.data, user });
       return state
         .set("isFarmDashboardZoneCommetLoading", false)
+        .set("farmZoneDashboardList", farmZoneDashboardList)
         .set("farmDashboardZoneCommetError", null);
       case ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_FAILURE:
       return state

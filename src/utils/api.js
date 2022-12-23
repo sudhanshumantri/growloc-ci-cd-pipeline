@@ -40,12 +40,11 @@ const urls = {
     "update-farm-dashboard-zone" :"farm/update-zone/",
     "delete-farm-dashboard-zone" : "farm/delete-zone/",
     "fetch-farm-zone":"farm/get-zone-details/",
-    "fetch-farm-all-dashobard-zone": "",
-    "fetch-farm-dashboard-zone-harvest":"",
-    "add-farm-dashboard-zone-task":"",
-    "add-task-dashboard-zone-comment":"",
-
-
+    "fetch-farm-all-dashobard-zone": "farm/get-zone-dashboard-data/",
+    "fetch-farm-dashboard-zone-harvest":"farm/get-zone-harvesteed-breakup",
+    "add-farm-dashboard-zone-task":"farm/task/",
+    "add-task-dashboard-zone-comment":"farm/task/add-comments/",
+    "fetch-zone-all-task":"farm/zone-task/",
   },
 };
 function getEndpoint(endpoint) {
@@ -380,6 +379,15 @@ export function callAddFarmDashboardZoneTaskComment(data) {
     method: "POST",
     removeAuthorizationHeader: false,
     data,
+  });
+}
+
+export function callfetchZoneTaskDetails(routeParams,queryParams) {
+  return callApi(getEndpoint("fetch-zone-all-task"), {
+    method: "get",
+    removeAuthorizationHeader: false,
+    routeParams,
+    queryParams,
   });
 }
 

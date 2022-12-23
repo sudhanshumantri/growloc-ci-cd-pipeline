@@ -19,7 +19,7 @@ ChartJS.register(ArcElement, CategoryScale,
     Filler,
     Legend);
 export default function PieChart({chartData}) {
-
+ 
     const data = useMemo(() => {
         const labels = [];
         const values = [];

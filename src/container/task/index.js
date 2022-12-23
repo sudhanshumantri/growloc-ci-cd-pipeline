@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import {fetchFarmTaskRequest,addTaskCommentRequest} from "../../actions/task";
-// import ManageItem from "../../components/inventory/manageitem"
 import ManageTasks from "../../components/task";
 import {
     selectFarmTaskList,
