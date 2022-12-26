@@ -8,21 +8,32 @@ import {
   DialogContent,
   DialogActions,
   Grid,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
 } from "@mui/material/";
 import CustomButton from "../../shared/button";
 import TextBox from "../../shared/text-box";
+import { GROWING_ZONE } from "../../../config";
+import SingleCustomSelect from "../../shared/select";
 
-export default function AddZoneModal({ open, handleSave, handleClose,
+export default function AddZoneModal({
+  open,
+  handleSave,
+  handleClose,
   zoneDetails = {
     name: "",
     farmArea: "",
+    zone: false,
+    systemType:"",
   },
 }) {
   const [zoneData, setZoneData] = useState(zoneDetails);
   const [validation, setValidation] = useState({
-    name:false,
-    farmArea:false,
-  })
+    name: false,
+    farmArea: false,
+    systemType:false,
+  });
   const handleChange = (e) => {
     const { value, name } = e.target;
     setZoneData({ ...zoneData, [name]: value });
@@ -77,7 +88,7 @@ export default function AddZoneModal({ open, handleSave, handleClose,
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">
-          Create a new Zone
+        {zoneDetails.id ? "Update Zone" : "Add a new zone"}
         </DialogTitle>
         <br />
         <DialogContent sx={{ paddingTop: "10px" }}>
@@ -107,10 +118,48 @@ export default function AddZoneModal({ open, handleSave, handleClose,
                   onChange={handleChange}
                   error={validation.farmArea}
                   helperText={validation.farmArea ? "Please provide area" : ""}
-
                 />
               </FormControl>
             </Grid>
+            <Grid item xs={12} sm={12} md={12}>
+              <FormControl>
+                <span className="input-label">Selet Zone</span>
+                <RadioGroup
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="zone"
+                  value={zoneData.zone}
+                  onChange={handleChange}
+                  row
+                >
+                  <FormControlLabel
+                    value="Growing Zone"
+                    control={<Radio />}
+                    label="Growing Zone"
+                  />
+                  <FormControlLabel
+                    value="Nursery Zone"
+                    control={<Radio />}
+                    label="Nursery Zone"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12}>
+              <span className="input-label">System Type</span>
+              <span className="label-light">*</span>
+              <FormControl fullWidth>
+                <SingleCustomSelect
+                  isWhite={true}
+                  name="systemType"
+                  value={zoneData.systemType}
+                  options={GROWING_ZONE}
+                  handleChange={handleChange}
+                  isError={validation.systemType}
+                  errorMessage="Please select a  System Type"
+                />
+              </FormControl>
+            </Grid>
+
           </Grid>
         </DialogContent>
         {renderActionButton()}

@@ -14,7 +14,7 @@ import SingleCustomSelect from "../../shared/select";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { TASK_CATEGORY } from "../../../config";
+import { TASK_CATEGORY ,SEVERITY_LEVEL} from "../../../config";
 import moment from "moment";
 
 export default function AddTaskModal({
@@ -34,6 +34,7 @@ export default function AddTaskModal({
     endTime: null,
     itemName: null,
     qty: null,
+    severity:null,
   });
   const [dueDate, setDueDate] = React.useState(moment());
   const [unitErrorMessage, setUnitErrorMessage] = useState("");
@@ -46,6 +47,7 @@ export default function AddTaskModal({
     createdFor: false,
     qty: false,
     unitErrorMessage: false,
+    severity:false,
   });
   const cleanObject = (obj) => {
     Object.keys(obj).forEach(
@@ -89,6 +91,11 @@ export default function AddTaskModal({
         }
       }
     }
+    if (!taskData.severity) {
+      errors.severity = true;
+      isValid = false;
+    }
+
     setValidation(errors);
     return isValid;
   };
@@ -148,6 +155,20 @@ export default function AddTaskModal({
                   handleChange={handleChange}
                   isError={validation.category}
                   errorMessage="Please select a category"
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12}>
+              <span className="input-label">Severity Level</span>
+              <FormControl fullWidth>
+                <SingleCustomSelect
+                  name="severity"
+                  value={taskData.severity}
+                  isWhite={true}
+                  options={SEVERITY_LEVEL}
+                  handleChange={handleChange}
+                  isError={validation.severity}
+                  errorMessage="Please select a Severity Level"
                 />
               </FormControl>
             </Grid>
@@ -244,6 +265,7 @@ export default function AddTaskModal({
                 />
               </FormControl>
             </Grid>
+            
           </Grid>
         </DialogContent>
         {renderActionButton()}

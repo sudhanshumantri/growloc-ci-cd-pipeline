@@ -17,3 +17,14 @@ export const selectIsZoneTaskListLoading = () =>
     selectZoneTask,
     (services) => services.toJS()["FarmTaskListError"]
   );
+
+
+  export const selectIsZoneTaskCommentLoading= () =>
+  createSelector(
+    selectZoneTask,
+    (services) => services.toJS()["isZoneTaskCommentLoading"]
+  );
+
+export const selectZoneTaskCommentError = () =>
+  createSelector(selectZoneTask, (services) => services.toJS()["zoneTaskCommentError"]);
+

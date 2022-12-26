@@ -38,12 +38,12 @@ export default function taskReducer(state = INITIAL_STATE, action = {}) {
             .set("isTaskCommentLoading", true)
             .set("taskCommentError", null);
         case ADD_TASKS_COMMENTS_SUCCESS:
-      const taskRowIndex = FarmTaskList.findIndex(
+      const taskRowIndex = FarmTaskList.tasks.findIndex(
         (l) => l.id == action.data.taskId
       );
       const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
       const user = AUTH_OBJECT.profile;
-      FarmTaskList[taskRowIndex].TasksHistory.push({ ...action.data, user });
+      FarmTaskList.tasks[taskRowIndex].TasksHistory.push({ ...action.data, user });
           return state
             .set("isTaskCommentLoading", false)
             .set("FarmTaskList", FarmTaskList)

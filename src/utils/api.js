@@ -45,6 +45,9 @@ const urls = {
     "add-farm-dashboard-zone-task":"farm/task/",
     "add-task-dashboard-zone-comment":"farm/task/add-comments/",
     "fetch-zone-all-task":"farm/zone-task/",
+    "add-zone-task-comment":"farm/task/add-comments/",
+
+
   },
 };
 function getEndpoint(endpoint) {
@@ -390,6 +393,15 @@ export function callfetchZoneTaskDetails(routeParams,queryParams) {
     queryParams,
   });
 }
+
+export function callAddZoneTaskComment(data) {
+  return callApi(getEndpoint("add-zone-task-comment"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data,
+  });
+}
+
 
 
 

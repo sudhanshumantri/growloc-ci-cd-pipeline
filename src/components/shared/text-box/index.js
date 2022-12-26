@@ -12,7 +12,6 @@ const TextBox = ({
   isWhite,
   inputRef,
   defaultValue,
-  required,
   ...params
 }) => {
 
@@ -34,7 +33,6 @@ const TextBox = ({
           error ={error}
           helperText={helperText}
           inputRef ={inputRef}
-          required={required}
         />
 
     </>

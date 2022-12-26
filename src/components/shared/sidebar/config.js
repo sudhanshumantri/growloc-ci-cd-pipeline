@@ -205,15 +205,7 @@ const farmMenuItems = [
     action: "view",
     css: { borderBottom: "1px solid white" },
   },
-  // {
-  //   title: "Logout",
-  //   id: "Logout",
-  //   isChildToFarmId: true,
-  //   navigation: null,
-  //   css: { borderBottom: "1px solid white" },
-  //   action: 'logout'
-
-  // },
+  
 ];
 
 const zoneMenuItems = [

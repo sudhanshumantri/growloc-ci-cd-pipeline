@@ -122,13 +122,13 @@ const Layout = ({ loadAuthToken }) => {
           >
             <Route path="dashboard" element={<FarmDashboard />} />
             <Route path="users" element={<AddUsers />} />
-            <Route path="crops/manage" element={<ManageCrop />} />
-            <Route path="crops/lifecycle" element={<CropLifeCycle />} />
+            {/* <Route path="crops/manage" element={<ManageCrop />} /> */}
+            {/* <Route path="crops/lifecycle" element={<CropLifeCycle />} /> */}
             <Route path="inventory/items" element={<ManageItem />} />
-            <Route
+            {/* <Route
               path="crops/lifecycle/details/:lifecycleId"
               element={<CropLifeCycleDetails />}
-            />
+            /> */}
             <Route path="task" element={<ManageTasks />} />
             <Route path="water-management" element={<WaterManagement />} />
             <Route path="monitor" element={<Monitor />} />

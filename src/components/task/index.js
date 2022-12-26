@@ -20,7 +20,7 @@ export default function ManageTasks({
   const [openCommetTask, setCommetTask] = useState(false);
   const [rowdata, setRowData] = useState({});
   const navigate = useNavigate();
-  
+  console.log(FarmTaskList,"FarmTaskList");
   React.useEffect(() => {
     fetchFarmTask({
       farmId: farmId || "universal",

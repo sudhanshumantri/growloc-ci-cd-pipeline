@@ -192,3 +192,6 @@ export const TASK_HEADER = [
   },
 
 ]
+
+export const  SEVERITY_LEVEL = ["Urgent", "Normal"];
+
