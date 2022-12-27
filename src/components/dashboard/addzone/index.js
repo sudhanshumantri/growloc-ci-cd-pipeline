@@ -24,7 +24,7 @@ export default function AddZoneModal({
   zoneDetails = {
     name: "",
     farmArea: "",
-    zone: false,
+    zoneType: "",
     systemType:"",
   },
 }) {
@@ -59,8 +59,10 @@ export default function AddZoneModal({
     let requestFarmDashBoardZoneData = {
       name: zoneData.name,
       farmArea: zoneData.farmArea,
+
     };
     if (validateFarmDashboardZone()) {
+      console.log(requestFarmDashBoardZoneData);
       handleSave(requestFarmDashBoardZoneData);
     }
   };
@@ -126,8 +128,8 @@ export default function AddZoneModal({
                 <span className="input-label">Selet Zone</span>
                 <RadioGroup
                   aria-labelledby="demo-controlled-radio-buttons-group"
-                  name="zone"
-                  value={zoneData.zone}
+                  name="zoneType"
+                  value={zoneData.zoneType || ""}
                   onChange={handleChange}
                   row
                 >

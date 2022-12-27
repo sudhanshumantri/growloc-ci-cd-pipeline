@@ -68,6 +68,10 @@ export default function AddTaskModal({
       errors.category = true;
       isValid = false;
     }
+    if(taskData.severity < 0) {
+      errors.severity = true;
+      isValid = false;
+    }
     if (!taskData.createdFor) {
       errors.createdFor = true;
       isValid = false;
@@ -91,10 +95,7 @@ export default function AddTaskModal({
         }
       }
     }
-    if (!taskData.severity) {
-      errors.severity = true;
-      isValid = false;
-    }
+    
 
     setValidation(errors);
     return isValid;
@@ -163,9 +164,12 @@ export default function AddTaskModal({
               <FormControl fullWidth>
                 <SingleCustomSelect
                   name="severity"
+                  //value={taskData.severity}
                   value={taskData.severity}
+                  valueKey="value"
+                  labelKey="name"
                   isWhite={true}
-                  options={SEVERITY_LEVEL}
+                  options={SEVERITY_LEVEL} 
                   handleChange={handleChange}
                   isError={validation.severity}
                   errorMessage="Please select a Severity Level"

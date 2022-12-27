@@ -11,7 +11,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ButtonCustom from "../../shared/button";
 import AddTaskModal from "../../shared/addtask/addtask";
 import AddFarmTaskComment from "../../shared/addfarmtaskcomment";
-import { HARVEST_MONTH_OPTIONS } from "../../../config";
+import { HARVEST_MONTH_OPTIONS, SEVERITY_LEVEL } from "../../../config";
 import SingleCustomSelect from "../../shared/select";
 import { useNavigate } from "react-router-dom";
 import AddZoneModal from "../addzone";
@@ -115,6 +115,8 @@ export default function FarmDashboard({
       const payload = {
         name: data.name,
         farmArea: data.farmArea,
+        zoneType: data.zoneType,
+        systemType: data.systemType,
       };
       updateFarmDashboardZone({ payload, id: zoneData.id });
     } else {
@@ -144,6 +146,7 @@ export default function FarmDashboard({
 
   const handleZoneModalToggle = () => {
     setOpenZone(!openZone);
+    setZoneData({})
   };
 
   const handleEdit = (zoneEdit) => {
@@ -213,12 +216,21 @@ export default function FarmDashboard({
       redirection: false,
       isDate: true,
     },
+    
     {
       label: "Due Date",
       key: "dueDate",
       redirection: false,
       isDate: true,
     },
+
+    {
+      label: "Severity",
+      key: "severity",
+      redirection: false,
+      isDate: true,
+    },
+    
   ];
 
   const ZONE_HEADER = [
@@ -240,6 +252,17 @@ export default function FarmDashboard({
       label: "Farm Area",
       key: "farmArea",
     },
+    {
+      label: "Zone Type",
+      key: "zoneType",
+    },
+    {
+      label: "System Type",
+      key: "systemType",
+    },
+
+
+
     {
       label: "Actons",
       isButton: true,
@@ -453,6 +476,7 @@ export default function FarmDashboard({
       {isUpdateFarmDashboardZoneLoading && <Loader title="Updating Zone  " />}
 
       <div className="page-container">
+
         <Grid container spacing={2}>
           {renderFarmZone()}
           {renderCropSchedules()}

@@ -82,6 +82,12 @@ export default function ManageZoneTasks({
       redirection: false,
       isDate: true,
     },
+    {
+      label: "Severity",
+      key: "severity",
+      redirection: false,
+      isDate: true,
+    },
   ];
 
   const handleBackButton = () => {

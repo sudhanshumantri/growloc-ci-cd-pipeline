@@ -193,5 +193,21 @@ export const TASK_HEADER = [
 
 ]
 
-export const  SEVERITY_LEVEL = ["Urgent", "Normal"];
+// export const  SEVERITY_LEVEL = ["Urgent", "Normal", "Normal"];
+
+export const SEVERITY_LEVEL = [
+  {
+    name: "Urgent",
+    value: 0,
+  },
+  {
+    name: "Medium",
+    value: 1,
+  },  
+  {
+    name: "Normal",
+    value: 2,
+  },
+];
+
 

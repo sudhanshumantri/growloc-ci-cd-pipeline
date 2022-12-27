@@ -9,4 +9,13 @@
   .custom-table-row{
     background-color: red;
   }
+  .table-servity{
+    font-weight: bold;
+    font-size: 0.75rem;
+    border: 5px solid;
+    color: white;
+    background-color: green;
+    border-radius: 2px;
+    padding: '5px, 10px';
+  }
   

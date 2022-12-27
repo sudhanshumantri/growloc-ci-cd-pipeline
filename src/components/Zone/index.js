@@ -136,6 +136,12 @@ export default function ZoneDashboard({
       redirection: false,
       isDate: true,
     },
+    {
+      label: "Severity",
+      key: "severity",
+      redirection: false,
+      isDate: true,
+    },
   ];
 
 

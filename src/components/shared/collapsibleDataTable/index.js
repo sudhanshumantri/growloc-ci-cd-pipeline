@@ -13,10 +13,17 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
+import { SEVERITY_LEVEL } from "../../../config";
 import "./style.css";
+import { Typography } from "@mui/material";
 
 function Row({ row, handleCommentModalToggle }) {
   const [open, setOpen] = React.useState(false);
+
+  const formatSerityLevel = (value) => {
+    const sLevel = SEVERITY_LEVEL.find((level) => level.value === value) || {};
+    return sLevel.name || "-";
+  };
 
   return (
     <React.Fragment>
@@ -58,6 +65,9 @@ function Row({ row, handleCommentModalToggle }) {
         </TableCell>
         <TableCell className="table-header" align="left">
           {moment(row.dueDate).format("YYYY-MM-DD")}
+        </TableCell>
+        <TableCell className="table-header" align="left">
+         <Typography className="table-servity" style={{backgroundColor:((row.severity === 0 && "red" ) || (row.severity === 1 && "#EB955D")  )}}>{formatSerityLevel(row.severity)}</Typography> 
         </TableCell>
         <TableCell>
           <IconButton
