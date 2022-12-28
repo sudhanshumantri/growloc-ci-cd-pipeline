@@ -95,8 +95,6 @@ export default function AddTaskModal({
         }
       }
     }
-    
-
     setValidation(errors);
     return isValid;
   };
@@ -116,6 +114,7 @@ export default function AddTaskModal({
   const handleTaskSave = () => {
     if (validateTask()) {
       let requestObject = cleanObject(taskData);
+      console.log(requestObject,"requestObject");
       handleSave(requestObject);
     }
   };
@@ -204,6 +203,7 @@ export default function AddTaskModal({
                     value={dueDate}
                     onChange={(newValue) => {
                       setDueDate(newValue);
+                      setTaskData({ ...taskData, dueDate: newValue });
                     }}
                     renderInput={(params) => (
                       <TextBox {...params} isWhite={true} />

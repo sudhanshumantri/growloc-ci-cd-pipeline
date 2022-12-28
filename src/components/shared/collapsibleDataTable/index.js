@@ -1,30 +1,47 @@
 import * as React from "react";
 import moment from "moment";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+// import Paper from "@mui/material/Paper";
+import {
+  Box,
+  Collapse,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Chip,
+} from "@mui/material/";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
 import { SEVERITY_LEVEL } from "../../../config";
+// import Chip from '@mui/material/Chip';
+
 import "./style.css";
-import { Typography } from "@mui/material";
 
 function Row({ row, handleCommentModalToggle }) {
   const [open, setOpen] = React.useState(false);
-
   const formatSerityLevel = (value) => {
     const sLevel = SEVERITY_LEVEL.find((level) => level.value === value) || {};
     return sLevel.name || "-";
   };
-
+  const formatDueDate = (dueDate) => {
+    const a = moment(dueDate);
+    const b = moment(new Date()).format("YYYY-MM-DD");
+    const diff = a.diff(b, "days");
+    console.log(diff, "diff");
+    if (diff === 1) {
+      return "Tommorow";
+    } else if (diff === 0) {
+      return "Today";
+    } else {
+      return moment(dueDate).format("DD-MM-YYYY");
+    }
+  };
+  // format("YYYY-MM-DD");
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -55,19 +72,31 @@ function Row({ row, handleCommentModalToggle }) {
           {row.createdByProfile.name}
         </TableCell>
         <TableCell className="table-header" align="left">
-          {moment(row.createdOn).format("YYYY-MM-DD")}
-        </TableCell>
-        <TableCell className="table-header" align="left">
           {row.createdByProfile.name}
         </TableCell>
+
+        {/* <TableCell className="table-header" align="left">
+          {moment(row.createdOn).format("YYYY-MM-DD")}
+        </TableCell> */}
         <TableCell className="table-header" align="left">
           -
         </TableCell>
         <TableCell className="table-header" align="left">
-          {moment(row.dueDate).format("YYYY-MM-DD")}
+          <Chip
+            label={formatDueDate(row.dueDate)}
+            style={{ backgroundColor: "#EB955D" }}
+          />
         </TableCell>
         <TableCell className="table-header" align="left">
-         <Typography className="table-servity" style={{backgroundColor:((row.severity === 0 && "red" ) || (row.severity === 1 && "#EB955D")  )}}>{formatSerityLevel(row.severity)}</Typography> 
+          {/* <Typography className="table-servity" style={{backgroundColor:((row.severity === 0 && "red" ) || (row.severity === 1 && "#EB955D")  )}}></Typography>  */}
+          <Chip
+            label={formatSerityLevel(row.severity)}
+            style={{
+              backgroundColor:
+                (row.severity === 0 && "red") ||
+                (row.severity === 1 && "#EB955D"),
+            }}
+          />
         </TableCell>
         <TableCell>
           <IconButton

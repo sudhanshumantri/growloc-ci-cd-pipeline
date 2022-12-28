@@ -1,5 +1,11 @@
 import React, { useState, memo } from "react";
-import { Grid, FormControl } from "@mui/material";
+import {
+  Grid,
+  FormControl,
+  Card,
+  CardContent,
+  CardMedia,
+} from "@mui/material";
 import { useParams } from "react-router-dom";
 import PageHeader from "../../shared/page-header";
 import DataTable from "../../shared/dataTable";
@@ -18,6 +24,8 @@ import AddZoneModal from "../addzone";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ConfirmDialogBox from "../../shared/dailog/ConfirmDialogBox";
+import Crops from "../../../../public/assets/Crops.png"
+import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 
 export default function FarmDashboard({
   dashboardFarmList,
@@ -54,7 +62,7 @@ export default function FarmDashboard({
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [zoneData, setZoneData] = useState({});
 
-  console.log(dashboardFarmList,"dashboardFarmList");
+  console.log(dashboardFarmList, "dashboardFarmList");
 
   React.useEffect(() => {
     fecthFarmDashboardZone(farmId);
@@ -146,14 +154,16 @@ export default function FarmDashboard({
 
   const handleZoneModalToggle = () => {
     setOpenZone(!openZone);
-    setZoneData({})
+    setZoneData({});
   };
 
   const handleEdit = (zoneEdit) => {
-    const { id, name, farmArea } = zoneEdit;
+    const { id, name, farmArea, zoneType,systemType} = zoneEdit;
     const zoneDetails = {
       name: name,
       farmArea: farmArea,
+      zoneType: zoneType,
+      systemType: systemType,
       id,
     };
     setZoneData(zoneDetails);
@@ -205,18 +215,12 @@ export default function FarmDashboard({
       redirection: false,
     },
     {
-      label: "Created On",
-      key: "dueDate",
-      redirection: false,
-      isDate: true,
-    },
-    {
       label: "Inventory Name",
       key: "",
       redirection: false,
       isDate: true,
     },
-    
+
     {
       label: "Due Date",
       key: "dueDate",
@@ -230,7 +234,6 @@ export default function FarmDashboard({
       redirection: false,
       isDate: true,
     },
-    
   ];
 
   const ZONE_HEADER = [
@@ -260,8 +263,6 @@ export default function FarmDashboard({
       label: "System Type",
       key: "systemType",
     },
-
-
 
     {
       label: "Actons",
@@ -460,6 +461,50 @@ export default function FarmDashboard({
     );
   };
 
+  const renderCard = () => {
+    return (
+      <>
+        <Grid item xs={3} sm={3} md={3}>
+          <Card>
+           <Card>
+             <CardContent> 
+             <Grid container spacing={2}>
+              <Grid item xs={6} sm={9} md={9}>
+              <p className="section-title">No of Zones</p>
+              </Grid>
+              <Grid item xs={6} sm={3} md={3}>
+              <p className="section-title"><CloudUploadOutlinedIcon/></p>
+              </Grid>
+            </Grid>
+            </CardContent> 
+          </Card>
+          </Card>
+          </Grid>
+        <Grid item xs={3} sm={3} md={3}>
+          <Card>
+           <CardContent>
+              <p className="section-title">No of Batch</p>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={3} sm={3} md={3}>
+          <Card>
+            <CardContent>
+              <p className="section-title"> Total Tasks</p>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={3} sm={3} md={3}>
+          <Card>
+            <CardContent>
+            <p className="section-title"> Total Harvest</p>
+            </CardContent>
+          </Card>
+        </Grid>
+      </>
+    );
+  };
+
   return (
     <div>
       <PageHeader
@@ -476,8 +521,8 @@ export default function FarmDashboard({
       {isUpdateFarmDashboardZoneLoading && <Loader title="Updating Zone  " />}
 
       <div className="page-container">
-
         <Grid container spacing={2}>
+          {renderCard()}
           {renderFarmZone()}
           {renderCropSchedules()}
           {renderTaskSchedules()}

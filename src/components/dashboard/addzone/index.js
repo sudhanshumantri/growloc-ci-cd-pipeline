@@ -59,10 +59,10 @@ export default function AddZoneModal({
     let requestFarmDashBoardZoneData = {
       name: zoneData.name,
       farmArea: zoneData.farmArea,
-
+      zoneType:zoneData.zoneType,
+      systemType:zoneData.systemType,
     };
     if (validateFarmDashboardZone()) {
-      console.log(requestFarmDashBoardZoneData);
       handleSave(requestFarmDashBoardZoneData);
     }
   };
@@ -95,7 +95,7 @@ export default function AddZoneModal({
         <br />
         <DialogContent sx={{ paddingTop: "10px" }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={12} md={12}>
               <span className="input-label"> Name</span>
               <span className="label-light">*</span>
               <FormControl fullWidth>
@@ -109,8 +109,8 @@ export default function AddZoneModal({
                 />
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <span className="input-label">Size</span>
+            <Grid item xs={12} sm={12} md={12}>
+              <span className="input-label">Zone Size(Sqft)</span>
               <span className="label-light">*</span>
               <FormControl fullWidth>
                 <TextBox
