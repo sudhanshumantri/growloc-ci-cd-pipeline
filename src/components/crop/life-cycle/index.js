@@ -20,7 +20,7 @@ export default function CropLifeCycle({
 
   isCropLifeCycleListLoading,
 }) {
-  let { farmId } = useParams();
+  let { farmId, zoneId} = useParams();
   const navigate = useNavigate();
 
   let headers = [
@@ -30,7 +30,7 @@ export default function CropLifeCycle({
       key: "id",
       redirection: true,
       redirectionKey: "id",
-      baseEndPoint: `#/farm/${farmId}/crops/lifecycle/details/`,
+      baseEndPoint: `#/farm/${farmId}/zone/${zoneId}/crops/lifecycle/details/`,
     },
     {
       label: "Crop",
