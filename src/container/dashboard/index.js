@@ -5,8 +5,11 @@ import { createStructuredSelector } from "reselect";
 import { fetchDashboardFarmRequest, fetchDashboardHarvestRequest, addTaskSheduleTaskRequest,addFarmTaskCommentRequest,addFarmDashboardZoneRequest,fetchFarmDashboardZoneRequest,updateFarmDashboardZoneRequest,deleteFarmDashboardZoneRequest } from "../../actions/dashboard";
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
+import { fetchFarmCropsRequest } from "../../actions/crops";
+import { addCropToLifecycleRequest, fetchAllCropsLifecycleRequest } from "../../actions/life-cycle";
 
 import FarmDashboard from "../../components/dashboard/farm";
+
 import {
   selectFarmDashboardList,
   selectIsFarmDashboardListLoading,
@@ -37,6 +40,10 @@ import {
 import {
   selectLoginObject
 } from "../../selectors/login";
+import {
+  selectLifecycleCropsList,
+} from "../../selectors/life-cycle";
+import { selectCropFarmList } from "../../selectors/crops";
 
 const mapStateToProps = createStructuredSelector({
   dashboardFarmList: selectFarmDashboardList(),
@@ -60,6 +67,8 @@ const mapStateToProps = createStructuredSelector({
   isUpdateFarmDashboardZoneLoading:selectIsUpdataFarmDashboardZoneLoading(),
   updateFarmDashboardZoneError:selectUpdateFarmDashboardZoneError(),
   isDeleteFarmDashboardZoneLoading:selectIsDeleteFarmDashboardZoneLoading(),
+  farmCropList: selectCropFarmList(),
+  lifecycleCropsList: selectLifecycleCropsList(),
 });
 const mapDispatchToProps = {
   fetchFarmDashboard: fetchDashboardFarmRequest,
@@ -72,6 +81,12 @@ const mapDispatchToProps = {
   fecthFarmDashboardZone:fetchFarmDashboardZoneRequest,
   updateFarmDashboardZone:updateFarmDashboardZoneRequest,
   deleteFarmDashboardZone:deleteFarmDashboardZoneRequest,
+  fecthCropFarm: fetchFarmCropsRequest,
+  addCropToLifecycle: addCropToLifecycleRequest,
+  fetchAllCropsLifecycle: fetchAllCropsLifecycleRequest
+
+
+
 };
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {

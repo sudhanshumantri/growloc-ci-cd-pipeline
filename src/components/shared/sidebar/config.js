@@ -167,6 +167,9 @@ const farmMenuItems = [
     //   },
     // ],
   },
+
+
+ 
   {
     title: "Reports",
     id: "Reports",
@@ -221,35 +224,66 @@ const zoneMenuItems = [
     action: "view",
   },
 
+  // {
+  //   title: "Crop",
+  //   id: "crop",
+  //   icon: Crops,
+  //   isChildToFarmId: true,
+  //   navigation: "corp",
+  //   css: { borderBottom: "1px solid white" },
+  //   isAuthRequired: true,
+  //   from: "crops",
+  //   action: "view",
+  //   subMenu: [
+  //     {
+  //       id: "1",
+  //       name: "Manage Crops",
+  //       navigation: "/crops/manage",
+  //       icon: ManageCrops,
+  //       link: "/crops/manage",
+  //     },
+  //     {
+  //       id: "3",
+  //       name: "Crops Lifecycle",
+  //       navigation: "/crops/lifecycle",
+  //       link: "/crops/lifecycle",
+  //       icon: CropsLifecycle,
+  //       isAuthRequired: true,
+  //       from: "lifeCycle",
+  //       action: "view",
+  //     },
+  //   ],
+  // },
   {
-    title: "Crop",
-    id: "crop",
-    icon: Crops,
+    title: "Lifecycle",
+    id: "lifecycle",
+    icon: CropsLifecycle,
     isChildToFarmId: true,
-    navigation: "corp",
+    navigation: "/lifecycle",
+      link: "/lifecycle",
     css: { borderBottom: "1px solid white" },
     isAuthRequired: true,
     from: "crops",
     action: "view",
-    subMenu: [
-      {
-        id: "1",
-        name: "Manage Crops",
-        navigation: "/crops/manage",
-        icon: ManageCrops,
-        link: "/crops/manage",
-      },
-      {
-        id: "3",
-        name: "Crops Lifecycle",
-        navigation: "/crops/lifecycle",
-        link: "/crops/lifecycle",
-        icon: CropsLifecycle,
-        isAuthRequired: true,
-        from: "lifeCycle",
-        action: "view",
-      },
-    ],
+    // subMenu: [
+    //   {
+    //     id: "1",
+    //     name: "Manage Crops",
+    //     navigation: "/crops/manage",
+    //     icon: ManageCrops,
+    //     link: "/crops/manage",
+    //   },
+    //   {
+    //     id: "3",
+    //     name: "Crops Lifecycle",
+    //     navigation: "/crops/lifecycle",
+    //     link: "/crops/lifecycle",
+    //     icon: CropsLifecycle,
+    //     isAuthRequired: true,
+    //     from: "lifeCycle",
+    //     action: "view",
+    //   },
+    // ],
   },
 
   {
@@ -283,17 +317,45 @@ const zoneMenuItems = [
     navigation: "monitor",
     css: { borderBottom: "1px solid white" },
   },
+  // {
+  //   title: "Inventory",
+  //   id: "Inventory",
+  //   icon: Inventory,
+  //   link: "/inventory/items",
+  //   navigation: "inventory/items",
+  //   isAuthRequired: true,
+  //   from: "inventory",
+  //   action: "view",
+
+  //   css: { borderBottom: "1px solid white" },
+  // },
   {
     title: "Inventory",
-    id: "Inventory",
+    id: "inventory",
     icon: Inventory,
-    link: "/inventory/items",
-    navigation: "inventory/items",
-    isAuthRequired: true,
-    from: "inventory",
-    action: "view",
-
+    isChildToFarmId: true,
+    navigation: "inventory",
     css: { borderBottom: "1px solid white" },
+    isAuthRequired: true,
+    from: "crops",
+    action: "view",
+    subMenu: [
+      {
+        id: "1",
+        name: "Items",
+        icon: Inventory,
+        link: "/inventory/items",
+        navigation: "inventory/items",       
+      },
+      {
+       id: "2",
+       name: "Manage Crops",
+        navigation: "/inventory/manage",
+        icon: ManageCrops,
+       link: "/inventory/manage",
+
+      },
+    ],
   },
   {
     title: "Reports",

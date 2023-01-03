@@ -115,7 +115,7 @@ const Layout = ({ loadAuthToken }) => {
             path="farm/:farmId"
             element={
               <PrivateOutlet token={token}>
-                <FarmOutlet />
+                <FarmOutlet/>
               </PrivateOutlet>
             }
             children={[SideBar]}
@@ -146,8 +146,9 @@ const Layout = ({ loadAuthToken }) => {
             <Route path="dashboard" element={<ZoneDashboard />} />
             <Route path="users" element={<AddUsers />} />
             <Route path="crops/manage" element={<ManageCrop />} />
-            <Route path="crops/lifecycle" element={<CropLifeCycle />} />
+            <Route path="lifecycle" element={<CropLifeCycle />} />
             <Route path="inventory/items" element={<ManageItem />} />
+            <Route path="inventory/manage" element={<ManageCrop />} />
             <Route
               path="crops/lifecycle/details/:lifecycleId"
               element={<CropLifeCycleDetails />}

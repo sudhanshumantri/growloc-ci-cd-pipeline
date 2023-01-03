@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import {fetchFarmZoneRequest,fetchFarmZoneDashboardRequest,fetchFarmZoneDashboardHarvestRequest,addFarmDashboardZoneTaskRequest,addFarmDashboardZoneTaskCommentRequest } from "../../actions/zone";
-
+import {fetchFarmDashboardZoneRequest } from "../../actions/dashboard";
 import { fetchUsersRequest } from "../../actions/users";
 import {
   selectUsersList
@@ -11,6 +11,9 @@ import {
 import {
   selectLoginObject
 } from "../../selectors/login";
+import {
+  selectFarmDashboardZoneList,
+} from "../../selectors/dashboard";
 
 import ZoneDashboard from "../../components/Zone";
 import {
@@ -44,8 +47,7 @@ const mapStateToProps = createStructuredSelector({
     farmDashboardZoneCommetError:selectFarmDashboardZoneCommetError(),
     usersList: selectUsersList(),
     loginObject: selectLoginObject(),
-
-
+    farmDashboardZoneList:selectFarmDashboardZoneList()
 });
 const mapDispatchToProps = {
    fetchFarmZone:fetchFarmZoneRequest,
@@ -54,6 +56,8 @@ const mapDispatchToProps = {
    addFarmDashboardZoneTaskComment: addFarmDashboardZoneTaskCommentRequest,
    addFarmDashboardZoneTask: addFarmDashboardZoneTaskRequest,
    fetchUsers: fetchUsersRequest,
+   fecthFarmDashboardZone:fetchFarmDashboardZoneRequest,
+
 
 
 };

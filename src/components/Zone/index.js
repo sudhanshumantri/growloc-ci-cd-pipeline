@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import PageHeader from "../shared/page-header";
 import { useNavigate } from "react-router-dom";
@@ -31,6 +31,8 @@ export default function ZoneDashboard({
   isFarmDashboardZoneTaskLoading,
   addFarmDashboardZoneTaskComment,
   isFarmDashboardZoneCommetLoading,
+  fecthFarmDashboardZone,
+  farmDashboardZoneList,
 }) {
   const { farmId, zoneId } = useParams();
   const [month, setMonth] = useState(3);
@@ -38,14 +40,20 @@ export default function ZoneDashboard({
   const [openCommetTask, setCommetTask] = useState(false);
   const [rowdata, setRowData] = useState({});
   const [openZoneSensors, setZoneSensors] = useState(false);
+  const [zoneClick, SetZoneClick] = useState("");
   const navigate = useNavigate();
 
+  console.log(farmDashboardZoneList, "farmDashboardZoneList");
+
   React.useEffect(() => {
-    fetchFarmZone(zoneId);
-    fetchFarmDashboardZone(zoneId);
-    fetchFarmDashboardHarvest({ zoneId: parseInt(zoneId), month });
-    fetchUsers(farmId);
-  }, []);
+    if (zoneId) {
+      fetchFarmZone(zoneId);
+      fetchFarmDashboardZone(zoneId);
+      fetchFarmDashboardHarvest({ zoneId: parseInt(zoneId), month });
+      fetchUsers(farmId);
+      fecthFarmDashboardZone(farmId);
+    }
+  }, [zoneId]);
   const handleBackButton = () => {
     navigate(-1);
   };
@@ -54,13 +62,19 @@ export default function ZoneDashboard({
       handler: handleBackButton,
     },
   ];
+
+  const handleDropDowmChange = ({ target }) => {
+    navigate(`/farm/${farmId}/zone/${target.value}/`);
+  };
   const handleModalToggle = () => {
     setOpen(!open);
   };
 
+  let headerDropwdown = true;
+
   const handleZoneSensorsModalToggle = () => {
-    setZoneSensors(!openZoneSensors)
-  }
+    setZoneSensors(!openZoneSensors);
+  };
   const handleZoneTaskSave = (data) => {
     if (data) {
       data.createdBy = loginObject?.profile.id;
@@ -70,8 +84,6 @@ export default function ZoneDashboard({
     }
     handleModalToggle();
   };
-
-  console.log(farmZoneDashboardList, "farmZoneDashboardList");
 
   const headers = [
     {
@@ -148,7 +160,6 @@ export default function ZoneDashboard({
       isDate: true,
     },
   ];
-
   const ZONE_HEADERS = [
     {
       label: "Type",
@@ -168,13 +179,11 @@ export default function ZoneDashboard({
       redirection: false,
     },
   ];
-
   const handleChange = (event) => {
     const { value } = event.target;
     setMonth(value);
     fetchFarmDashboardHarvest({ zoneId: parseInt(zoneId), month: value });
   };
-
   const handleCommentModalToggle = (rowData) => {
     setRowData(rowData);
     setCommetTask(!openCommetTask);
@@ -190,8 +199,18 @@ export default function ZoneDashboard({
     handleCommentModalToggle();
   };
 
-
-
+  const getZonerListOptions = useCallback(() => {
+    const options = [];
+    if (farmDashboardZoneList.length) {
+      farmDashboardZoneList.forEach((list) => {
+        if (list?.name) {
+          const { name, id } = list;
+          options.push({ label: name, value: id });
+        }
+      });
+    }
+    return options;
+  }, [farmDashboardZoneList]);
 
   const renderZoneSencers = () => {
     const { cropSchedules } = farmZoneDashboardList;
@@ -200,7 +219,7 @@ export default function ZoneDashboard({
         {/* <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Zone Sensors</p>
         </Grid> */}
-         <Grid item xs={6} sm={6} md={9} lg={9}>
+        <Grid item xs={6} sm={6} md={9} lg={9}>
           <p className="section-title">Zone Sensors</p>
         </Grid>
         <Grid item xs={6} sm={6} md={3} lg={3} sx={{ alignItems: "center" }}>
@@ -348,6 +367,13 @@ export default function ZoneDashboard({
       <PageHeader
         title={farmZoneList?.name || ""}
         showBackButton={showBackButton}
+        headerDropwdown={headerDropwdown}
+        options={getZonerListOptions()}
+        // value={zoneClick}
+        value={zoneId}
+        labelkey="label"
+        valuekey="value"
+        handleChange={handleDropDowmChange}
       />
       {isFarmZoneLoading && <Loader title=" Feching zone" />}
       {isFarmDashboardZoneTaskLoading && <Loader title=" adding Task" />}
@@ -379,15 +405,10 @@ export default function ZoneDashboard({
       )}
       {openZoneSensors && (
         <AddZoneSensorsModal
-        open={openZoneSensors}
-        handleClose={handleZoneSensorsModalToggle}
-
-
-        
+          open={openZoneSensors}
+          handleClose={handleZoneSensorsModalToggle}
         />
       )}
-
-
     </div>
   );
 }

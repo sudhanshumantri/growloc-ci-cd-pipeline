@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import { fetchFarmRequest,saveFarmRequest,updateFarmRequest,deleteFarmRequest  } from "../../actions/farm";
+import { fetchCropRequest,fetchFarmCropsRequest} from "../../actions/crops";
 import Farm from "../../components/farm";
 import {
     selectFarmList,
@@ -14,6 +15,10 @@ import {
     selectIsUpdateFarmLoading,
     selectIsDeleteFarmLoading,
 } from "../../selectors/farm";
+import {
+  selectCropList,
+} from "../../selectors/crops";
+
 const mapStateToProps = createStructuredSelector({
     farmList: selectFarmList(),
     isFarmListLoading: selectIsFarmListLoading(),
@@ -22,12 +27,19 @@ const mapStateToProps = createStructuredSelector({
     // isAddFarmLoading: selectIsAddFarmLoading(),
     isdeleteFarmLoading:selectIsDeleteFarmLoading(),
     // isUpdateFarmLoading:selectIsUpdateFarmLoading()
+    cropList: selectCropList(),
+
+
 });
 const mapDispatchToProps = {
   fetchFarm: fetchFarmRequest,
   // addFarm: saveFarmRequest,
   // updateFarm: updateFarmRequest,
   deleteFarm:deleteFarmRequest,
+  // fetchCrop: fetchCropRequest,
+  fecthCropFarm:fetchFarmCropsRequest,
+
+
 
 
 };

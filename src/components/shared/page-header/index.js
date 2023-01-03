@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "../button";
-import { Grid, Divider, Icon, IconButton } from "@mui/material";
+import { Grid, Divider, Icon, IconButton, Select,MenuItem } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./style.css";
 import AuthOutlet from "../authoutlet";
@@ -22,6 +22,12 @@ function renderButtonArray(buttonArray) {
       </AuthOutlet>
     );
   });
+}
+function renderSelectBox(){
+  return(
+    <Select />
+  )
+ 
 }
 function renderBackButtonArray(showBackButton) {
   return showBackButton.map((back, index) => {
@@ -46,6 +52,13 @@ export default function PageHeader({
   buttonArray,
   info,
   showBackButton,
+  headerDropwdown,
+  options,
+  labelkey,
+  valuekey,
+  value,
+  // onChange,
+  handleChange,
 }) {
   return (
     <>
@@ -55,13 +68,35 @@ export default function PageHeader({
             showBackButton.length > 0 &&
             renderBackButtonArray(showBackButton)}
         </div>
-        <Grid item xs={6} sm={6} md={6}>
+        <Grid item xs={5} sm={5} md={5}>
           <p className="page-section-title">
             {title}
             {subtitle && <span className="label-light">{subtitle}</span>}
           </p>
         </Grid>
-        <Grid item xs={6} sm={6} md={6} className="button-container">
+        <Grid item xs={1} sm={2} md={2} >
+          {headerDropwdown && (
+            <Select
+            value={value}
+            onChange={handleChange}
+             >
+               {(options || []).map((option, index) => {
+          return (
+            <MenuItem
+              value={valuekey ? option[valuekey] || index : option}
+              key={index}
+              className="menu-item-dropdown-item"
+            >
+              {labelkey ? option[labelkey] : option}
+            </MenuItem>
+          );
+        })}
+             </Select>
+          )
+}
+        </Grid>
+
+        <Grid item xs={6} sm={5} md={5} className="button-container">
           {buttonArray &&
             buttonArray.length > 0 &&
             renderButtonArray(buttonArray)}
@@ -75,7 +110,6 @@ export default function PageHeader({
                     <b>{data.title}</b>:
                   </>
                 )}
-
                 {data.value}
                 {info.length - 1 != index && <>, </>}
               </span>

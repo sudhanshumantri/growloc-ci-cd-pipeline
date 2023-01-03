@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import FormControl from "@mui/material/FormControl";
+import {FormControl,DialogActions} from "@mui/material/";
 import ButtonCustom from "../../shared/button";
 import SingleCustomSelect from "../../shared/select";
+import CustomButton from "../../shared/button";
+
 import { Grid } from "@mui/material";
 import {
   GERMINATION_TYPE,
@@ -792,7 +794,7 @@ export default function AddFarm({
   const renderActionButton = () => {
     return (
       <>
-        <div className="flex-row-justify-center-container">
+        {/* <div className="flex-row-justify-center-container">
           <ButtonCustom
             isLight={true}
             handleButtonClick={handleClose}
@@ -802,6 +804,19 @@ export default function AddFarm({
             handleButtonClick={handleFarmSave}
             title={farmId ? "Update" : "Save"}
           />
+        </div> */}
+         <div className="flex-row-justify-center-container">
+          <DialogActions>
+            <CustomButton
+              isLight={true}
+              handleButtonClick={handleClose}
+              title="Cancel"
+            />
+            <CustomButton
+            handleButtonClick={handleFarmSave}
+            title="Save"
+            />
+          </DialogActions>
         </div>
       </>
     );

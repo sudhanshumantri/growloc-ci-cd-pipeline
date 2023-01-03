@@ -7,6 +7,9 @@ import {
   DialogTitle,
   DialogContent,
   Grid,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
 } from "@mui/material/";
 import TextBox from "../../shared/text-box";
 import CustomButton from "../../shared/button";
@@ -114,7 +117,6 @@ export default function AddTaskModal({
   const handleTaskSave = () => {
     if (validateTask()) {
       let requestObject = cleanObject(taskData);
-      console.log(requestObject,"requestObject");
       handleSave(requestObject);
     }
   };
@@ -158,7 +160,7 @@ export default function AddTaskModal({
                 />
               </FormControl>
             </Grid>
-            <Grid item xs={12} sm={12} md={12}>
+            {/* <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">Severity Level</span>
               <FormControl fullWidth>
                 <SingleCustomSelect
@@ -174,7 +176,36 @@ export default function AddTaskModal({
                   errorMessage="Please select a Severity Level"
                 />
               </FormControl>
-            </Grid>
+            </Gri d> */}
+   
+        <Grid item xs={12} sm={12} md={12}>
+              <FormControl>
+                <span className="input-label">Severity Level</span>
+                <RadioGroup
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="severity"
+                  value={taskData.severity|| ""}
+                  onChange={handleChange}
+                  row
+                >
+                  <FormControlLabel
+                    value="Urgent"
+                    control={<Radio />}
+                    label="Urgent"
+                  />
+                  <FormControlLabel
+                    value="Medium"
+                    control={<Radio />}
+                    label="Medium"
+                  />
+                    <FormControlLabel
+                    value="Normal"
+                    control={<Radio />}
+                    label="Normal"
+                  />
+                </RadioGroup>
+              </FormControl>
+              </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12}>
               <span className="input-label">Task Name</span>
               <span className="label-light">*</span>

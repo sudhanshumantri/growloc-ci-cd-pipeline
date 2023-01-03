@@ -151,13 +151,13 @@ export default function CollapsibleTable({ data, handleCommentModalToggle }) {
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead className="table-header-row">
-          <TableRow>
+           <TableRow> 
             <TableCell>#</TableCell>
             {headers.map((header, index) => (
               <TableCell key={index} align="left">
                 {header.label}
               </TableCell>
-            ))}
+            ))} 
             <TableCell>Comment</TableCell>
           </TableRow>
         </TableHead>

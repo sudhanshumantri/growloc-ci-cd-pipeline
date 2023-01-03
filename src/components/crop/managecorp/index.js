@@ -30,8 +30,6 @@ export default function ManageCrop({
   const [cropInfo, setCropInfo] = useState({});
   let { farmId } = useParams();
   const navigate = useNavigate();
-
-
   const handleCropSave = (addCropData) => {
     if (cropInfo.id) {
       const { qty } = addCropData;

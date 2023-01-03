@@ -24,9 +24,8 @@ import AddZoneModal from "../addzone";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ConfirmDialogBox from "../../shared/dailog/ConfirmDialogBox";
-import Crops from "../../../../public/assets/Crops.png"
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
-
+import AddCropModal from "../../crop/life-cycle/addCropToLifeCycleModal";
 export default function FarmDashboard({
   dashboardFarmList,
   fetchFarmDashboard,
@@ -51,9 +50,15 @@ export default function FarmDashboard({
   isDeleteFarmDashboardZoneLoading,
   updateFarmDashboardZone,
   isUpdateFarmDashboardZoneLoading,
+  cropList,
+  farmCropList,
+  fecthCropFarm,
+  fetchAllCropsLifecycle,
+  addCropToLifecycle,
 }) {
   const navigate = useNavigate();
-  const { farmId } = useParams();
+  const { farmId ,zoneId} = useParams();
+  console.log(zoneId,"zoneId");
   const [month, setMonth] = useState(3);
   const [open, setOpen] = useState(false);
   const [openCommetTask, setCommetTask] = useState(false);
@@ -61,13 +66,18 @@ export default function FarmDashboard({
   const [openZone, setOpenZone] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [zoneData, setZoneData] = useState({});
+  const [openCrop,setOpenCrop] = useState(false);
 
-  console.log(dashboardFarmList, "dashboardFarmList");
+  console.log(cropList, "cropList");
 
   React.useEffect(() => {
     fecthFarmDashboardZone(farmId);
     fetchFarmDashboard(farmId);
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
+    // fecthCropFarm({ farmId: parseInt(farmId) });
+
+    fecthCropFarm({ farmId: parseInt(farmId) });
+    fetchAllCropsLifecycle({ farmId: parseInt(farmId) });
     // fetchFarmInventory(farmId);
     if (usersList.length <= 0) {
       fetchUsers(farmId);
@@ -98,6 +108,10 @@ export default function FarmDashboard({
   const handleModalToggle = () => {
     setOpen(!open);
   };
+
+ const  handleCropModalToggle = () => {
+  setOpenCrop(!openCrop)
+ }
 
   const handleBackButton = () => {
     navigate("/");
@@ -169,7 +183,6 @@ export default function FarmDashboard({
     setZoneData(zoneDetails);
     setOpenZone(true);
   };
-
   const handleDelete = (zoneInfo) => {
     const { id, name } = zoneInfo;
     const zoneDetails = { id, name };
@@ -186,7 +199,19 @@ export default function FarmDashboard({
     handleDeleteDialogueToggle();
   };
 
+  const handleZoneCropLifeCycleSave = (lifecycleData) => {
+    addCropToLifecycle(lifecycleData);
+    handleCropModalToggle();
+  };
+
   const TASK_HEADER = [
+
+    {
+      label: "Severity",
+      key: "severity",
+      redirection: false,
+      isDate: true,
+    },
     {
       label: "Category",
       key: "category",
@@ -227,15 +252,7 @@ export default function FarmDashboard({
       redirection: false,
       isDate: true,
     },
-
-    {
-      label: "Severity",
-      key: "severity",
-      redirection: false,
-      isDate: true,
-    },
   ];
-
   const ZONE_HEADER = [
     // {
     //   label: "Zone No",
@@ -268,6 +285,13 @@ export default function FarmDashboard({
       label: "Actons",
       isButton: true,
       buttonArray: [
+
+        {
+          label: "Edit",
+          type: "icon",
+          handler: handleCropModalToggle,
+          icon: <AddIcon sx={{ color: "#517223" }} />,
+        },
         {
           label: "Edit",
           type: "icon",
@@ -286,6 +310,7 @@ export default function FarmDashboard({
           from: "farmItems",
           action: "delete",
         },
+        
       ],
     },
   ];
@@ -344,7 +369,9 @@ export default function FarmDashboard({
           />
         </Grid>
         <Grid className="card-outline-container " item xs={12} sm={12} md={12}>
-          {/* <DataTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }} /> */}
+           {/* <DataTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }}
+             handleCommentModalToggle={handleCommentModalToggle}
+             />  */}
           <CollapsibleTable
             data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }}
             handleCommentModalToggle={handleCommentModalToggle}
@@ -468,12 +495,12 @@ export default function FarmDashboard({
           <Card>
            <Card>
              <CardContent> 
-             <Grid container spacing={2}>
+             <Grid container spacing={3}>
               <Grid item xs={6} sm={9} md={9}>
               <p className="section-title">No of Zones</p>
               </Grid>
               <Grid item xs={6} sm={3} md={3}>
-              <p className="section-title"><CloudUploadOutlinedIcon/></p>
+                <p><CloudUploadOutlinedIcon/></p>
               </Grid>
             </Grid>
             </CardContent> 
@@ -555,12 +582,19 @@ export default function FarmDashboard({
             data={farmDashboardZoneList}
           />
         )}
-
         {isDeleteModelOpen && (
           <ConfirmDialogBox
             dialogState={isDeleteModelOpen}
             buttonArray={conFirmbuttons}
             subHeading={`Are you sure to delete "${zoneData.name}" ?`}
+          />
+        )}
+        {openCrop && (
+          <AddCropModal 
+          modalData={farmCropList}
+          open={openCrop}
+          handleClose={handleCropModalToggle}
+          handleSave={handleZoneCropLifeCycleSave}
           />
         )}
       </div>

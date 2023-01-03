@@ -12,7 +12,7 @@ const FarmOutlet = ({ isFromZone }) => {
         items.subMenu.forEach((item) => {
           item.navigation = isFromZone
             ? "farm/" + farmId + "/zone/" + zoneId + item.link
-            : "farm/" + farmId + item.link;
+            : "farm/" + farmId +  item.link;
         });
       } else {
         items.navigation = isFromZone
