@@ -30,6 +30,12 @@ export default function ManageTasks({
 
   const headers = [
     {
+      label: "Severity",
+      key: "severity",
+      redirection: false,
+      isDate: true,
+    },
+    {
       label: "Category",
       key: "category",
     },
@@ -45,12 +51,7 @@ export default function ManageTasks({
       label: "Created By",
       key: "createdByProfile.name",
     },
-    { 
-      label: "Created On",
-      key: "dueDate",
-      redirection: false,
-      isDate: true,
-    },
+   
     {
       label: "Created For",
       key: "createdForProfile.name",
@@ -65,12 +66,7 @@ export default function ManageTasks({
       redirection: false,
       isDate: true,
     },
-    {
-      label: "Severity",
-      key: "severity",
-      redirection: false,
-      isDate: true,
-    },
+   
   ];
 
   const handleBackButton = () => {

@@ -46,6 +46,13 @@ export default function ManageZoneTasks({
     handleCommentModalToggle();
   };
   const headers = [
+
+    {
+      label: "Severity",
+      key: "severity",
+      redirection: false,
+      isDate: true,
+    },
     {
       label: "Category",
       key: "task.category",
@@ -62,12 +69,6 @@ export default function ManageZoneTasks({
       label: "Created By",
       key: "task.createdByProfile.name",
     },
-    { 
-      label: "Created On",
-      key: "task.dueDate",
-      redirection: false,
-      isDate: true,
-    },
     {
       label: "Created For",
       key: "task.createdForProfile.name",
@@ -82,12 +83,7 @@ export default function ManageZoneTasks({
       redirection: false,
       isDate: true,
     },
-    {
-      label: "Severity",
-      key: "severity",
-      redirection: false,
-      isDate: true,
-    },
+    
   ];
 
   const handleBackButton = () => {

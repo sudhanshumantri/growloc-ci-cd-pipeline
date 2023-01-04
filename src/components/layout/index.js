@@ -129,6 +129,8 @@ const Layout = ({ loadAuthToken }) => {
               path="crops/lifecycle/details/:lifecycleId"
               element={<CropLifeCycleDetails />}
             /> */}
+            <Route path="inventory/items" element={<ManageItem />} />
+            <Route path="inventory/manage" element={<ManageCrop />} />
             <Route path="task" element={<ManageTasks />} />
             <Route path="water-management" element={<WaterManagement />} />
             <Route path="monitor" element={<Monitor />} />

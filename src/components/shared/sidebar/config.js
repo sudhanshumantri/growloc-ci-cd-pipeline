@@ -146,26 +146,54 @@ const farmMenuItems = [
     //   { id: "5", name: "My Reports", navigation: "monitors/myreports" },
     // ],
   },
+  // {
+  //   title: "Inventory",
+  //   id: "Inventory",
+  //   icon: Inventory,
+  //   link: "/inventory/items",
+  //   navigation: "inventory/items",
+  //   isAuthRequired: true,
+  //   from: "inventory",
+  //   action: "view",
+
+  //   css: { borderBottom: "1px solid white" },
+  //   // subMenu: [
+  //   //   {
+  //   //     id: "1",
+  //   //     name: "Items",
+  //   //     icon: InventoryItem,
+  //   //     link: "/inventory/items",
+  //   //     navigation: "inventory/items",
+  //   //   },
+  //   // ],
+  // },
   {
     title: "Inventory",
-    id: "Inventory",
+    id: "inventory",
     icon: Inventory,
-    link: "/inventory/items",
-    navigation: "inventory/items",
-    isAuthRequired: true,
-    from: "inventory",
-    action: "view",
-
+    isChildToFarmId: true,
+    navigation: "inventory",
     css: { borderBottom: "1px solid white" },
-    // subMenu: [
-    //   {
-    //     id: "1",
-    //     name: "Items",
-    //     icon: InventoryItem,
-    //     link: "/inventory/items",
-    //     navigation: "inventory/items",
-    //   },
-    // ],
+    isAuthRequired: true,
+    from: "crops",
+    action: "view",
+    subMenu: [
+      {
+        id: "1",
+        name: "Items",
+        icon: Inventory,
+        link: "/inventory/items",
+        navigation: "inventory/items",       
+      },
+      {
+       id: "2",
+       name: "Manage Crops",
+        navigation: "/inventory/manage",
+        icon: ManageCrops,
+       link: "/inventory/manage",
+
+      },
+    ],
   },
 
 

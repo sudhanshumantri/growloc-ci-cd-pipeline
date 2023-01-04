@@ -17,7 +17,7 @@ import SingleCustomSelect from "../../shared/select";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { TASK_CATEGORY ,SEVERITY_LEVEL} from "../../../config";
+import { TASK_CATEGORY, SEVERITY_LEVEL } from "../../../config";
 import moment from "moment";
 
 export default function AddTaskModal({
@@ -37,7 +37,7 @@ export default function AddTaskModal({
     endTime: null,
     itemName: null,
     qty: null,
-    severity:null,
+    severity: null,
   });
   const [dueDate, setDueDate] = React.useState(moment());
   const [unitErrorMessage, setUnitErrorMessage] = useState("");
@@ -50,7 +50,7 @@ export default function AddTaskModal({
     createdFor: false,
     qty: false,
     unitErrorMessage: false,
-    severity:false,
+    severity: false,
   });
   const cleanObject = (obj) => {
     Object.keys(obj).forEach(
@@ -71,7 +71,7 @@ export default function AddTaskModal({
       errors.category = true;
       isValid = false;
     }
-    if(taskData.severity < 0) {
+    if (taskData.severity < 0) {
       errors.severity = true;
       isValid = false;
     }
@@ -114,12 +114,27 @@ export default function AddTaskModal({
     return options;
   }, [usersList]);
 
+  // const getInventoryOptions = useCallback(() => {
+  //   const options = [];
+  //   if (farmInventoryList.length) {
+  //     farmInventoryList.forEach((inventory) => {
+  //       if (inventory?.name) {
+  //         const { id, name } = inventory;
+  //         options.push({ label: name, value: id});
+  //       }
+  //     });
+  //   }
+  //   return options;
+  // }, [farmInventoryList]);
+
   const handleTaskSave = () => {
     if (validateTask()) {
       let requestObject = cleanObject(taskData);
+      console.log(requestObject, "requestObject");
       handleSave(requestObject);
     }
   };
+
   const renderActionButton = () => {
     return (
       <>
@@ -176,36 +191,36 @@ export default function AddTaskModal({
                   errorMessage="Please select a Severity Level"
                 />
               </FormControl>
-            </Gri d> */}
-   
-        <Grid item xs={12} sm={12} md={12}>
+            </Grid> */}
+
+            <Grid item xs={12} sm={12} md={12}>
               <FormControl>
                 <span className="input-label">Severity Level</span>
                 <RadioGroup
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="severity"
-                  value={taskData.severity|| ""}
-                  onChange={handleChange}
+                  value={taskData.severity ?? ""}
+                  onChange={({ target }) =>
+                    handleChange({
+                      target: {
+                        value: parseInt(target.value),
+                        name: "severity",
+                      },
+                    })
+                  }
                   row
                 >
-                  <FormControlLabel
-                    value="Urgent"
-                    control={<Radio />}
-                    label="Urgent"
-                  />
-                  <FormControlLabel
-                    value="Medium"
-                    control={<Radio />}
-                    label="Medium"
-                  />
+                  {SEVERITY_LEVEL.map((o) => (
                     <FormControlLabel
-                    value="Normal"
-                    control={<Radio />}
-                    label="Normal"
-                  />
+                      key={o.name}
+                      value={o.value}
+                      control={<Radio />}
+                      label={o.name}
+                    />
+                  ))}
                 </RadioGroup>
               </FormControl>
-              </Grid>
+            </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12}>
               <span className="input-label">Task Name</span>
               <span className="label-light">*</span>
@@ -256,7 +271,7 @@ export default function AddTaskModal({
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">
-                Who would you want the task to be assigned to? 
+                Who would you want the task to be assigned to?
               </span>
               <span className="label-light">*</span>
               <FormControl fullWidth>
@@ -278,11 +293,10 @@ export default function AddTaskModal({
               <FormControl fullWidth>
                 <SingleCustomSelect
                   name="itemName"
-                  labelKey="name"
-                  valueKey="id"
+                  labelKey="label"
+                  valueKey="value"
                   value={taskData.itemName}
                   isWhite={true}
-                  options={farmInventoryList}
                   handleChange={handleChange}
                 />
               </FormControl>
@@ -300,7 +314,6 @@ export default function AddTaskModal({
                 />
               </FormControl>
             </Grid>
-            
           </Grid>
         </DialogContent>
         {renderActionButton()}

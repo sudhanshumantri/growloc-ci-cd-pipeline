@@ -108,6 +108,13 @@ export default function ZoneDashboard({
   ];
 
   const TASK_HEADER = [
+
+    {
+      label: "Severity",
+      key: "severity",
+      redirection: false,
+      isDate: true,
+    },
     {
       label: "Category",
       key: "category",
@@ -136,12 +143,6 @@ export default function ZoneDashboard({
       redirection: false,
     },
     {
-      label: "Created On",
-      key: "dueDate",
-      redirection: false,
-      isDate: true,
-    },
-    {
       label: "Inventory Name",
       key: "",
       redirection: false,
@@ -150,12 +151,6 @@ export default function ZoneDashboard({
     {
       label: "Due Date",
       key: "dueDate",
-      redirection: false,
-      isDate: true,
-    },
-    {
-      label: "Severity",
-      key: "severity",
       redirection: false,
       isDate: true,
     },

@@ -166,3 +166,28 @@ a {
   cursor: pointer;
   text-decoration: none!important;
 }
+.farm-dashboard-images{
+  border-radius: 1rem;
+  display: inline-block;
+  margin-top: 14px;
+  transform: scale(2, 2);
+}
+.section-details{
+  overflow: hidden;
+  font-size: 1.2em;
+  color: #606a72;
+  font-weight: 400;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+h4, h5, h6 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  line-height: 1.4em;
+}
+.farm-card{
+  color: #000000;
+  font-size: 18px;
+  margin-top: -14px;
+  font-weight: 600;
+}

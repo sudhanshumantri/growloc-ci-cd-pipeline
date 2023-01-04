@@ -3,6 +3,9 @@ import {
     callAddCropToLifecycle, callCropLifecycleTransition, callfetchAllCropsLifecycle, callfetchCropsLifecycleDetails, callUpdateCropCycleParameters, callUpdateCropToLifecycleSchedule
 } from "../utils/api";
 
+import { addNotification } from "../components/shared/notification";
+
+
 import {
     addCropToLifecycleSuccess,
     addCropToLifecycleFailure,
@@ -31,6 +34,7 @@ export function* addCropToLifecycle({ data }) {
     let responseData = yield call(callAddCropToLifecycle, data);
     if (responseData?.status == 200 && responseData.data.status) {
         yield put(addCropToLifecycleSuccess(responseData.data.data));
+        addNotification("Add Crop Lifecyle Added Successfully", 5000,true, "success");
 
     } else {
         yield put(addCropToLifecycleFailure("Something went wrong"));
