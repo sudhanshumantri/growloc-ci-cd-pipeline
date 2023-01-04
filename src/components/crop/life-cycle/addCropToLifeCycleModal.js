@@ -32,7 +32,7 @@ export default function AddCropModal({
   handleClose,
 }) {
   let { farmId } = useParams();
-  let {zoneId} = useParams();
+  let { zoneId } = useParams();
   const [selectedCrop, setselectedCrop] = useState("");
   const [batchNo, setBatchNo] = useState("");
   const [isUnitsError, setIsUnitsError] = useState(false);
@@ -72,7 +72,7 @@ export default function AddCropModal({
   const handleSaveCrop = () => {
     let requestData = {
       farmId: parseInt(farmId),
-      zoneId:parseInt(zoneId),
+      zoneId: parseInt(zoneId),
       qty: parseInt(units),
       batchNo: batchNo,
       crop: selectedCrop,
@@ -86,7 +86,7 @@ export default function AddCropModal({
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">
-          Add a new crop to Lifecycle
+          Add a new crop to lifecycle
         </DialogTitle>
         <DialogContent sx={{ paddingTop: "10px" }}>
           <br />
@@ -99,6 +99,7 @@ export default function AddCropModal({
                   sx={{ background: "white" }}
                   labelId="demo-multiple-name-label"
                   id="demo-multiple-name"
+                  size="small"
                   value={selectedCrop}
                   onChange={(e) => {
                     isCropError && setIsCropError(false);

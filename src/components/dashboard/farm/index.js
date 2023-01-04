@@ -57,8 +57,8 @@ export default function FarmDashboard({
   addCropToLifecycle,
 }) {
   const navigate = useNavigate();
-  const { farmId ,zoneId} = useParams();
-  console.log(zoneId,"zoneId");
+  const { farmId, zoneId } = useParams();
+  console.log(zoneId, "zoneId");
   const [month, setMonth] = useState(3);
   const [open, setOpen] = useState(false);
   const [openCommetTask, setCommetTask] = useState(false);
@@ -66,10 +66,7 @@ export default function FarmDashboard({
   const [openZone, setOpenZone] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [zoneData, setZoneData] = useState({});
-  const [openCrop,setOpenCrop] = useState(false);
-
-  console.log(cropList, "cropList");
-
+  const [openCrop, setOpenCrop] = useState(false);
   React.useEffect(() => {
     fecthFarmDashboardZone(farmId);
     fetchFarmDashboard(farmId);
@@ -109,9 +106,9 @@ export default function FarmDashboard({
     setOpen(!open);
   };
 
- const  handleCropModalToggle = () => {
-  setOpenCrop(!openCrop)
- }
+  const handleCropModalToggle = () => {
+    setOpenCrop(!openCrop)
+  }
 
   const handleBackButton = () => {
     navigate("/");
@@ -172,7 +169,7 @@ export default function FarmDashboard({
   };
 
   const handleEdit = (zoneEdit) => {
-    const { id, name, farmArea, zoneType,systemType} = zoneEdit;
+    const { id, name, farmArea, zoneType, systemType } = zoneEdit;
     const zoneDetails = {
       name: name,
       farmArea: farmArea,
@@ -287,7 +284,7 @@ export default function FarmDashboard({
       buttonArray: [
 
         {
-          label: "Edit",
+          label: "Add a new Crop ",
           type: "icon",
           handler: handleCropModalToggle,
           icon: <AddIcon sx={{ color: "#517223" }} />,
@@ -310,7 +307,7 @@ export default function FarmDashboard({
           from: "farmItems",
           action: "delete",
         },
-        
+
       ],
     },
   ];
@@ -369,7 +366,7 @@ export default function FarmDashboard({
           />
         </Grid>
         <Grid className="card-outline-container " item xs={12} sm={12} md={12}>
-           {/* <DataTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }}
+          {/* <DataTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }}
              handleCommentModalToggle={handleCommentModalToggle}
              />  */}
           <CollapsibleTable
@@ -493,23 +490,23 @@ export default function FarmDashboard({
       <>
         <Grid item xs={3} sm={3} md={3}>
           <Card>
-           <Card>
-             <CardContent> 
-             <Grid container spacing={3}>
-              <Grid item xs={6} sm={9} md={9}>
-              <p className="section-title">No of Zones</p>
-              </Grid>
-              <Grid item xs={6} sm={3} md={3}>
-                <p><CloudUploadOutlinedIcon/></p>
-              </Grid>
-            </Grid>
-            </CardContent> 
+            <Card>
+              <CardContent>
+                <Grid container spacing={3}>
+                  <Grid item xs={6} sm={9} md={9}>
+                    <p className="section-title">No of Zones</p>
+                  </Grid>
+                  <Grid item xs={6} sm={3} md={3}>
+                    <p><CloudUploadOutlinedIcon /></p>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
           </Card>
-          </Card>
-          </Grid>
+        </Grid>
         <Grid item xs={3} sm={3} md={3}>
           <Card>
-           <CardContent>
+            <CardContent>
               <p className="section-title">No of Batch</p>
             </CardContent>
           </Card>
@@ -524,7 +521,7 @@ export default function FarmDashboard({
         <Grid item xs={3} sm={3} md={3}>
           <Card>
             <CardContent>
-            <p className="section-title"> Total Harvest</p>
+              <p className="section-title"> Total Harvest</p>
             </CardContent>
           </Card>
         </Grid>
@@ -563,7 +560,7 @@ export default function FarmDashboard({
             handleSave={handleTaskSave}
             handleClose={handleModalToggle}
             usersList={usersList}
-            // farmInventoryList={farmInventoryList}
+          // farmInventoryList={farmInventoryList}
           />
         )}
         {openCommetTask && (
@@ -590,11 +587,11 @@ export default function FarmDashboard({
           />
         )}
         {openCrop && (
-          <AddCropModal 
-          modalData={farmCropList}
-          open={openCrop}
-          handleClose={handleCropModalToggle}
-          handleSave={handleZoneCropLifeCycleSave}
+          <AddCropModal
+            modalData={farmCropList}
+            open={openCrop}
+            handleClose={handleCropModalToggle}
+            handleSave={handleZoneCropLifeCycleSave}
           />
         )}
       </div>
