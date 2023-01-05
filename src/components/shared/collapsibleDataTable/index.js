@@ -54,39 +54,6 @@ function Row({ row, handleCommentModalToggle }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell
-          component="th"
-          scope="row"
-          className="table-header"
-          align="left"
-        >
-          {row.category}
-        </TableCell>
-        <TableCell className="table-header" align="left">
-          {row.taskName}
-        </TableCell>
-        <TableCell className="table-header" align="left">
-          {row.description}
-        </TableCell>
-        <TableCell className="table-header" align="left">
-          {row.createdByProfile.name}
-        </TableCell>
-        <TableCell className="table-header" align="left">
-          {row.createdByProfile.name}
-        </TableCell>
-
-        {/* <TableCell className="table-header" align="left">
-          {moment(row.createdOn).format("YYYY-MM-DD")}
-        </TableCell> */}
-        <TableCell className="table-header" align="left">
-          -
-        </TableCell>
-        <TableCell className="table-header" align="left">
-          <Chip
-            label={formatDueDate(row.dueDate)}
-            style={{ backgroundColor: "#EB955D" }}
-          />
-        </TableCell>
         <TableCell className="table-header" align="left">
           {/* <Typography className="table-servity" style={{backgroundColor:((row.severity === 0 && "red" ) || (row.severity === 1 && "#EB955D")  )}}></Typography>  */}
           <Chip
@@ -98,6 +65,38 @@ function Row({ row, handleCommentModalToggle }) {
             }}
           />
         </TableCell>
+        <TableCell className="table-header" align="left">
+          {row.category}
+        </TableCell>
+        <TableCell className="table-header" align="left">
+          {row.taskName}
+        </TableCell>
+        <TableCell className="table-header" align="left">
+          {/* {row.createdByProfile.name} */}
+          {row.description}
+        </TableCell>
+        <TableCell className="table-header" align="left">
+          {row.createdByProfile.name}
+        </TableCell>
+        <TableCell className="table-header" align="left">
+          {row.createdByProfile.name}
+        </TableCell>
+        <TableCell className="table-header" align="left">
+          --
+        </TableCell>
+        {/* <TableCell className="table-header" align="left">
+          {moment(row.createdOn).format("YYYY-MM-DD")}
+        </TableCell> */}
+        {/* <TableCell className="table-header" align="left">
+        {row.createdByProfile.name}
+        </TableCell> */}
+        <TableCell className="table-header" align="left">
+          <Chip
+            label={formatDueDate(row.dueDate)}
+            style={{ backgroundColor: "#EB955D" }}
+          />
+        </TableCell>
+        
         <TableCell>
           <IconButton
             title="Add New"

@@ -237,6 +237,7 @@ export default function ZoneDashboard({
         {/* <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Zone Sensors</p>
         </Grid> */}
+              <Grid container spacing={2}>
         <Grid item xs={6} sm={6} md={9} lg={9}>
           <p className="section-title">Zone Sensors</p>
         </Grid>
@@ -253,6 +254,7 @@ export default function ZoneDashboard({
             data={{ headers: ZONE_HEADERS, rows: cropSchedules || [] }}
           />
         </Grid>
+        </Grid>
       </>
     );
   };
@@ -261,11 +263,13 @@ export default function ZoneDashboard({
     const { cropSchedules } = farmZoneDashboardList;
     return (
       <>
+            <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Zone Crop Schedules</p>
         </Grid>
         <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
           <DataTable data={{ headers: headers, rows: cropSchedules || [] }} />
+        </Grid>
         </Grid>
       </>
     );
@@ -274,6 +278,8 @@ export default function ZoneDashboard({
   const renderZoneMonthlyHarvestBreakup = () => {
     return (
       <>
+            <Grid container spacing={2}>
+
         <Grid item xs={8} sm={10} md={10}>
           <p className="section-title">Zone Monthly Harvest Breakup</p>
         </Grid>
@@ -299,6 +305,7 @@ export default function ZoneDashboard({
           className="card-outline-container graph-container"
         >
           <BarChart chartData={farmZoneDashboardHarvestList || []} />
+        </Grid>
         </Grid>
       </>
     );
@@ -359,6 +366,7 @@ export default function ZoneDashboard({
     const { farmdDetails } = farmZoneDashboardList;
     return (
       <>
+            <Grid container spacing={2}>
         <Grid item xs={6} sm={6} md={9} lg={9}>
           <p className="section-title">Zone Tasks</p>
         </Grid>
@@ -376,12 +384,12 @@ export default function ZoneDashboard({
             handleCommentModalToggle={handleCommentModalToggle}
           />
         </Grid>
+        </Grid>
       </>
     );
   };
   const renderZoneCard = () => {
-    // const { batchCount, totalHarvested, farmdDetails } = dashboardFarmList;
-    // console.log(totalHarvested?.kgs, "totalHarvested");
+    const { batchCount, totalHarvested, farmdDetails } = farmZoneDashboardList;
 
     return (
       <>
@@ -391,7 +399,7 @@ export default function ZoneDashboard({
               <CardContent>
                 <Grid container spacing={2}>
                   <Grid item xs={6} sm={9} md={9}>
-                    <h4 className="section-details"></h4>
+                    <h4 className="section-details">{batchCount}</h4>
                     <p className="farm-card">No of Batches</p>
                   </Grid>
                   <Grid item xs={6} sm={3} md={3}>
@@ -412,7 +420,7 @@ export default function ZoneDashboard({
             <CardContent>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
-                  <h4 className="section-details"></h4>
+                  <h4 className="section-details">{farmdDetails?.Tasks.length}</h4>
                   <p className="farm-card">Total Tasks</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
@@ -433,6 +441,7 @@ export default function ZoneDashboard({
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
                   <h4 className="section-details">
+                    {totalHarvested?.kgs}(kgs)/{totalHarvested?.qty}(qty)
                   </h4>
                   <p className="farm-card">Total Harvested</p>
                 </Grid>
@@ -486,10 +495,10 @@ export default function ZoneDashboard({
                   onChange={handleZoneTabChange}
                   aria-label="lab API tabs example"
                 >
-                  <Tab label="Zone Sencers" value="1" />
-                  <Tab label="Zone Crop Schedules" value="2" />
-                  <Tab label="Zone Task Schedules" value="3" />
-                  <Tab label="Zone Graph" value="4" />
+                  <Tab label=" Sensors" value="1" />
+                  <Tab label=" Crop Schedules" value="2" />
+                  <Tab label="Task Schedules" value="3" />
+                  <Tab label=" Graph" value="4" />
                 </TabList>
               </Box>
               <TabPanel value="1"> 
@@ -499,8 +508,10 @@ export default function ZoneDashboard({
               <TabPanel value="3">{renderZoneTaskSchedules()}</TabPanel>
               <TabPanel value="4">
               {renderZoneMonthlyHarvestBreakup()}
+              <Grid container spacing={2}>
           {renderFarmZoneUtilization()}
           {renderZoneCropsUtilization()}
+          </Grid>
               </TabPanel>
             </TabContext>
           </Box>  

@@ -8,6 +8,8 @@ import {
   Typography,
   ButtonGroup,
   Button,
+  ToggleButtonGroup,
+  ToggleButton,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import PageHeader from "../../shared/page-header";
@@ -40,8 +42,8 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
-import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
+import GridViewIcon from '@mui/icons-material/GridView';
+import ListIcon from '@mui/icons-material/List';
 
 export default function FarmDashboard({
   dashboardFarmList,
@@ -84,12 +86,17 @@ export default function FarmDashboard({
   const [zoneData, setZoneData] = useState({});
   const [openCrop, setOpenCrop] = useState(false);
   const [cropData, setCropData] = useState({});
+  const [seletedView,setSelectView] = useState(false)
 
   const [value, setValue] = React.useState("1");
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
+  const handleGridView = (tag) => {
+    setSelectView(!seletedView)
+}
+
   React.useEffect(() => {
     fecthFarmDashboardZone(farmId);
     fetchFarmDashboard(farmId);
@@ -526,7 +533,7 @@ export default function FarmDashboard({
               <CardContent>
                 <Grid container spacing={2}>
                   <Grid item xs={6} sm={9} md={9}>
-                    <h4 className="section-details">1</h4>
+                    <h4 className="section-details">{farmDashboardZoneList?.length}</h4>
                     <p className="farm-card">No of Zones </p>
                   </Grid>
                   <Grid item xs={6} sm={3} md={3}>
@@ -684,6 +691,32 @@ export default function FarmDashboard({
       </>
     );
   };
+
+  const renderViewOptionsRow = () => {
+    return (
+      <>
+                     <Grid item xs={12}>
+                    <ToggleButtonGroup exclusive onChange={handleGridView}
+                        value={seletedView}
+                        sx={{
+                            height: 35,
+                            ".Mui-selected,.Mui-selected:hover": {
+                                color: "white !important",
+                                backgroundColor: '#0E2C4B !important'
+                            }
+                        }}>
+                        <ToggleButton value="list" size="small" aria-label="right">
+                            <ListIcon />
+                        </ToggleButton>
+                        <ToggleButton className="selected-toggle" value="grid" size="small" aria-label="centered">
+                            <GridViewIcon />
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                </Grid>
+
+      </>
+    )
+  }
   return (
     <div>
       <PageHeader
@@ -721,7 +754,11 @@ export default function FarmDashboard({
                   <Tab label="Graph" value="4" />
                 </TabList>
               </Box>
-              <TabPanel value="1">{renderFarmZone()}</TabPanel>
+              <TabPanel value="1">{renderViewOptionsRow()}
+              <br/>
+              {/* {seletedView ? renderFarmZone() : renderZoneCard()} */}
+              {seletedView ?  renderZoneCard() : renderFarmZone()}
+                </TabPanel>
               <TabPanel value="2">{renderCropSchedules()}</TabPanel>
               <TabPanel value="3">{renderTaskSchedules()}</TabPanel>
               <TabPanel value="4">
