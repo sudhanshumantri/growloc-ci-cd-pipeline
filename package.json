@@ -14,10 +14,11 @@
     "build:library:prod": "webpack --config webpack.prod.js && tsc-alias"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.6",
-    "@mui/material": "^5.10.7",
+    "@mui/lab": "^5.0.0-alpha.114",
+    "@mui/material": "^5.11.3",
     "@mui/styles": "^5.10.7",
     "@mui/x-date-pickers": "^5.0.3",
     "@reach/combobox": "^0.18.0",

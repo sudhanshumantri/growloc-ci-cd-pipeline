@@ -191,3 +191,20 @@ h4, h5, h6 {
   margin-top: -14px;
   font-weight: 600;
 }
+.zone-section{
+margin: 0px 0px 15px;
+height: 135px;
+}
+.zone-name{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  height: 13vh;}
+.zone-second{
+height: 436px;
+
+}
+.zone-height{
+height: 50vh;
+}

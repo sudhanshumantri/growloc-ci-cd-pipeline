@@ -15,6 +15,22 @@ import AddIcon from "@mui/icons-material/Add";
 import CollapsibleTable from "../shared/collapsibleDataTable";
 import AddTaskModal from "../shared/addtask/addtask";
 import AddZoneSensorsModal from "./addsensors";
+import {Card,CardContent} from "@mui/material";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
+import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
+import imageSrc from "../../../public/assets/total-devices.svg";
+import harvestImage from "../../../public/assets/batch-progress.svg";
+import taskImage from "../../../public/assets/task-for-today.svg";
+
+
+
+
+
 
 export default function ZoneDashboard({
   fetchFarmZone,
@@ -41,6 +57,13 @@ export default function ZoneDashboard({
   const [rowdata, setRowData] = useState({});
   const [openZoneSensors, setZoneSensors] = useState(false);
   const [zoneClick, SetZoneClick] = useState("");
+
+  const [value, setValue] = React.useState("1");
+
+  const handleZoneTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const navigate = useNavigate();
 
   console.log(farmDashboardZoneList, "farmDashboardZoneList");
@@ -356,6 +379,80 @@ export default function ZoneDashboard({
       </>
     );
   };
+  const renderZoneCard = () => {
+    // const { batchCount, totalHarvested, farmdDetails } = dashboardFarmList;
+    // console.log(totalHarvested?.kgs, "totalHarvested");
+
+    return (
+      <>
+        <Grid item xs={4} sm={4} md={4}>
+          <Card>
+            <Card>
+              <CardContent>
+                <Grid container spacing={2}>
+                  <Grid item xs={6} sm={9} md={9}>
+                    <h4 className="section-details"></h4>
+                    <p className="farm-card">No of Batches</p>
+                  </Grid>
+                  <Grid item xs={6} sm={3} md={3}>
+                    <img
+                      height="42px"
+                      width="42px"
+                      className="farm-dashboard-images"
+                      src={imageSrc}
+                    />
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Card>
+        </Grid>
+        <Grid item xs={4} sm={4} md={4}>
+          <Card>
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={6} sm={9} md={9}>
+                  <h4 className="section-details"></h4>
+                  <p className="farm-card">Total Tasks</p>
+                </Grid>
+                <Grid item xs={6} sm={3} md={3}>
+                  <img
+                    height="42px"
+                    width="42px"
+                    className="farm-dashboard-images"
+                    src={taskImage}
+                  />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={4} sm={4} md={4}>
+          <Card>
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={6} sm={9} md={9}>
+                  <h4 className="section-details">
+                  </h4>
+                  <p className="farm-card">Total Harvested</p>
+                </Grid>
+                <Grid item xs={6} sm={3} md={3}>
+                  <img
+                    height="42px"
+                    width="42px"
+                    className="farm-dashboard-images"
+                    src={harvestImage}
+                  />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
+        
+      </>
+    );
+  };
+
 
   return (
     <div>
@@ -375,12 +472,39 @@ export default function ZoneDashboard({
       {isFarmDashboardZoneCommetLoading && <Loader title="Adding Comment" />}
       <div className="page-container">
         <Grid container spacing={2}>
-          {renderZoneSencers()}
+          {renderZoneCard()}
+          {/* {renderZoneSencers()}
           {renderZoneCropSchedules()}
           {renderZoneTaskSchedules()}
           {renderZoneMonthlyHarvestBreakup()}
           {renderFarmZoneUtilization()}
+          {renderZoneCropsUtilization()} */}
+                    <Box sx={{ width: "100%" }}>
+            <TabContext value={value}>
+              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <TabList
+                  onChange={handleZoneTabChange}
+                  aria-label="lab API tabs example"
+                >
+                  <Tab label="Zone Sencers" value="1" />
+                  <Tab label="Zone Crop Schedules" value="2" />
+                  <Tab label="Zone Task Schedules" value="3" />
+                  <Tab label="Zone Graph" value="4" />
+                </TabList>
+              </Box>
+              <TabPanel value="1"> 
+              {renderZoneSencers()}
+              </TabPanel>
+              <TabPanel value="2">{renderZoneCropSchedules()}</TabPanel>
+              <TabPanel value="3">{renderZoneTaskSchedules()}</TabPanel>
+              <TabPanel value="4">
+              {renderZoneMonthlyHarvestBreakup()}
+          {renderFarmZoneUtilization()}
           {renderZoneCropsUtilization()}
+              </TabPanel>
+            </TabContext>
+          </Box>  
+
         </Grid>
       </div>
       {open && (
