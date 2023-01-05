@@ -371,24 +371,23 @@ export default function FarmDashboard({
 
   const renderCropSchedules = () => {
     const { cropSchedules } = dashboardFarmList;
-    console.log(cropSchedules, "cropSchedules");
     return (
-      <>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={12}>
-          <p className="section-title">Crop Schedules</p>
+          <span className="section-title">Crop Schedules</span>
         </Grid>
         <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
           <DataTable data={{ headers: headers, rows: cropSchedules || [] }} />
         </Grid>
-      </>
+      </Grid>
     );
   };
   const renderTaskSchedules = () => {
     const { farmdDetails } = dashboardFarmList;
     return (
-      <>
+      <Grid container spacing={2}>
         <Grid item xs={6} sm={6} md={9} lg={9}>
-          <p className="section-title">Tasks</p>
+          <span className="section-title">Tasks</span>
         </Grid>
         <Grid item xs={6} sm={6} md={3} lg={3} sx={{ alignItems: "center" }}>
           <ButtonCustom
@@ -406,17 +405,17 @@ export default function FarmDashboard({
             handleCommentModalToggle={handleCommentModalToggle}
           />
         </Grid>
-      </>
+      </Grid>
     );
   };
   const renderFarmUtilization = () => {
     const { stagedBasedQtyData } = dashboardFarmList;
     return (
       <>
-        <Grid item xs={6} sm={6} md={6} lg={6}>
+        <Grid item xs={12} sm={12} md={6} lg={6}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12} lg={12}>
-              <p className="section-title">Farm Utilization Based On Stages</p>
+              <span className="section-title">Farm Utilization Based On Stages</span>
             </Grid>
             <Grid
               item
@@ -436,10 +435,10 @@ export default function FarmDashboard({
   const renderCropsUtilization = () => {
     const { cropBasedQtyData } = dashboardFarmList;
     return (
-      <Grid item xs={6} sm={6} md={6} lg={6}>
+      <Grid item xs={12} sm={12} md={6} lg={6}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={12} lg={12}>
-            <p className="section-title">Farm Utilization Based On Crops</p>
+            <span className="section-title">Farm Utilization Based On Crops</span>
           </Grid>
           <Grid
             item
@@ -471,9 +470,9 @@ export default function FarmDashboard({
   };
   const renderMonthlyHarvestBreakup = () => {
     return (
-      <>
+      <Grid container spacing={2}>
         <Grid item xs={8} sm={10} md={10}>
-          <p className="section-title">Monthly Harvest Breakup</p>
+          <span className="section-title">Monthly Harvest Breakup</span>
         </Grid>
         <Grid item xs={4} sm={2} md={2}>
           <FormControl fullWidth>
@@ -498,32 +497,30 @@ export default function FarmDashboard({
         >
           <BarChart chartData={dashboardHarvestList || []} />
         </Grid>
-      </>
+      </Grid>
     );
   };
 
   const renderFarmZone = () => {
     return (
-      <>
-        <Grid item xs={12} sm={12} md={12}>
-          <p className="section-title">Zone</p>
-        </Grid>
-        <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
-          <DataTable
-            data={{ headers: ZONE_HEADER, rows: farmDashboardZoneList || [] }}
-          />
-        </Grid>
-      </>
+      <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={12}>
+            <span className="section-title">Zone</span>
+          </Grid>
+          <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
+            <DataTable
+              data={{ headers: ZONE_HEADER, rows: farmDashboardZoneList || [] }}
+            />
+          </Grid>
+      </Grid>
     );
   };
 
   const renderCard = () => {
     const { batchCount, totalHarvested, farmdDetails } = dashboardFarmList;
-    console.log(totalHarvested?.kgs, "totalHarvested");
-
     return (
       <>
-        <Grid item xs={3} sm={3} md={3}>
+        <Grid item xs={12} sm={12} md={3} lg={3}>
           <Card>
             <Card>
               <CardContent>
@@ -545,7 +542,7 @@ export default function FarmDashboard({
             </Card>
           </Card>
         </Grid>
-        <Grid item xs={3} sm={3} md={3}>
+        <Grid item xs={12} sm={12} md={3} lg={3}>
           <Card>
             <CardContent>
               <Grid container spacing={2}>
@@ -565,7 +562,7 @@ export default function FarmDashboard({
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={3} sm={3} md={3}>
+        <Grid item xs={12} sm={12} md={3} lg={3}>
           <Card>
             <CardContent>
               <Grid container spacing={2}>
@@ -587,7 +584,7 @@ export default function FarmDashboard({
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={3} sm={3} md={3}>
+        <Grid item xs={12} sm={12} md={3} lg={3}>
           <Card>
             <CardContent>
               <Grid container spacing={2}>
@@ -710,8 +707,9 @@ export default function FarmDashboard({
           {renderMonthlyHarvestBreakup()}
           {renderFarmUtilization()}
           {renderCropsUtilization()}   */}
-          <Box sx={{ width: "100%" }}>
-            <TabContext value={value}>
+          {/* <Box sx={{ width: "100%" }}> */}
+          <TabContext value={value}>
+            <Grid item xs={12} sm={12} md={12}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <TabList
                   onChange={handleTabChange}
@@ -728,13 +726,14 @@ export default function FarmDashboard({
               <TabPanel value="3">{renderTaskSchedules()}</TabPanel>
               <TabPanel value="4">
                 {renderMonthlyHarvestBreakup()}
-                {renderFarmUtilization()}
-                {renderCropsUtilization()}
+                <Grid container spacing={2}>
+                  {renderFarmUtilization()}
+                  {renderCropsUtilization()}
+                </Grid>
               </TabPanel>
-            </TabContext>
-          </Box>
+            </Grid>
+          </TabContext>
         </Grid>
-
         {open && (
           <AddTaskModal
             open={open}
@@ -776,6 +775,6 @@ export default function FarmDashboard({
           />
         )}
       </div>
-    </div>
+    </div >
   );
 }
