@@ -1,4 +1,5 @@
 import React from 'react';
+import './style.css'
 import { Backdrop, CircularProgress, Typography } from "@mui/material/";
 export default function Loader({ title, }) {
     return (
@@ -6,9 +7,12 @@ export default function Loader({ title, }) {
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={true}
         >
-            <CircularProgress color="inherit" />
+            <CircularProgress sx={{ color: '#517223' }} />
             {title && (
-                <Typography className="section-title" position='absolute'>{title}</Typography>
+                <>
+                    <br />
+                    <Typography variant='p' className="loader-text">{title}</Typography>
+                </>
             )}
         </Backdrop>
     );

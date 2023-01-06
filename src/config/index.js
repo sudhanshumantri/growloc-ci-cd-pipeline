@@ -2,12 +2,8 @@ import * as React from "react";
 
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 export const api = {
-  //host: "http://localhost:8000/api/",
-  // host: 'http://44.202.123.160:8000/api/'
   host: 'https://growlock-backend.onrender.com/api/'
- //   host: "http://localhost:4000/api/",
-  // host: 'http://44.202.123.160:8000/api/'
-  // host:'https://growlock-backend.onrender.com/api/'
+  //host: "http://localhost:4000/api/",
 };
 export const WEEKDAYS = [
   { label: "S", value: "7" },
@@ -18,20 +14,20 @@ export const WEEKDAYS = [
   { label: "F", value: "5" },
   { label: "Sa", value: "6" },
 ];
-export const  GERMINATION_TYPE = ["Tray with coco peat", "Oasis cubes", "Coco plugs"];
+export const GERMINATION_TYPE = ["Tray with coco peat", "Oasis cubes", "Coco plugs"];
 export const WATERING_TYPE = ["Manual", "Automated"];
-export const  NURSARY_TYPE = [
+export const NURSARY_TYPE = [
   "Open(No humidity control)",
   "Closed dome (Humidity control)",
 ];
-export const  GROWING_ZONE= [
+export const GROWING_ZONE = [
   "NFT system",
   "Trough system ",
   "Raft system",
   "Dutch bucket system",
 ];
-export const  PLANT_SPACING = ["Plant to Plant", "Row to Row"];
-export const  NUTRIENTS_TYPE = [
+export const PLANT_SPACING = ["Plant to Plant", "Row to Row"];
+export const NUTRIENTS_TYPE = [
   "2 Part mix",
   "3 Part mix",
   "Custom nutrient mix",
@@ -203,7 +199,7 @@ export const SEVERITY_LEVEL = [
   {
     name: "Medium",
     value: 1,
-  },  
+  },
   {
     name: "Normal",
     value: 2,

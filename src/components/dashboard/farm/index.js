@@ -1,4 +1,5 @@
 import React, { useState, memo } from "react";
+import './style.css'
 import {
   Grid,
   FormControl,
@@ -86,7 +87,7 @@ export default function FarmDashboard({
   const [zoneData, setZoneData] = useState({});
   const [openCrop, setOpenCrop] = useState(false);
   const [cropData, setCropData] = useState({});
-  const [seletedView,setSelectView] = useState(false)
+  const [seletedView, setSelectView] = useState(false)
 
   const [value, setValue] = React.useState("1");
 
@@ -95,7 +96,7 @@ export default function FarmDashboard({
   };
   const handleGridView = (tag) => {
     setSelectView(!seletedView)
-}
+  }
 
   React.useEffect(() => {
     fecthFarmDashboardZone(farmId);
@@ -508,45 +509,41 @@ export default function FarmDashboard({
     );
   };
 
-  const renderFarmZone = () => {
+  const renderFarmZoneListView = () => {
     return (
       <Grid container spacing={2}>
-          <Grid item xs={12} sm={12} md={12}>
-            <span className="section-title">Zone</span>
-          </Grid>
-          <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
-            <DataTable
-              data={{ headers: ZONE_HEADER, rows: farmDashboardZoneList || [] }}
-            />
-          </Grid>
+
+        <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
+          <DataTable
+            data={{ headers: ZONE_HEADER, rows: farmDashboardZoneList || [] }}
+          />
+        </Grid>
       </Grid>
     );
   };
 
-  const renderCard = () => {
+  const renderFarmSummaryInfo = () => {
     const { batchCount, totalHarvested, farmdDetails } = dashboardFarmList;
     return (
       <>
         <Grid item xs={12} sm={12} md={3} lg={3}>
           <Card>
-            <Card>
-              <CardContent>
-                <Grid container spacing={2}>
-                  <Grid item xs={6} sm={9} md={9}>
-                    <h4 className="section-details">{farmDashboardZoneList?.length}</h4>
-                    <p className="farm-card">No of Zones </p>
-                  </Grid>
-                  <Grid item xs={6} sm={3} md={3}>
-                    <img
-                      height="42px"
-                      width="42px"
-                      className="farm-dashboard-images"
-                      src={imageSrc}
-                    />
-                  </Grid>
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={6} sm={9} md={9}>
+                  <h4 className="section-details">{!isFarmDashboardZoneLoading ? farmDashboardZoneList?.length : ''}</h4>
+                  <p className="farm-card">No of Zones </p>
                 </Grid>
-              </CardContent>
-            </Card>
+                <Grid item xs={6} sm={3} md={3}>
+                  <img
+                    height="42px"
+                    width="42px"
+                    className="farm-dashboard-images"
+                    src={imageSrc}
+                  />
+                </Grid>
+              </Grid>
+            </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} sm={12} md={3} lg={3}>
@@ -617,104 +614,99 @@ export default function FarmDashboard({
     );
   };
 
-  const renderZoneCard = () => {
+  const renderFarmZoneGridView = () => {
     return (
-      <>
-        <div>
-          <Grid container spacing={2}>
-            <Grid item xs={3} sm={3} md={3}>
-              <Grid item xs={12} sm={12} md={12}>
-                <Card
-                  className="zone-section"
-                  style={{ backgroundColor: "#9ef898" }}
-                >
-                  <CardContent>
-                    <p className="zone-name">
-                      {farmDashboardZoneList[0]?.name}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item xs={12} sm={12} md={12}>
-                <Card
-                  className="zone-section"
-                  style={{ backgroundColor: "#ace2b0" }}
-                >
-                  <CardContent>
-                    <p className="zone-name">
-                      {farmDashboardZoneList[1]?.name}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={12}
-                style={{ alignItems: "center" }}
-              >
-                <Card
-                  className="zone-section"
-                  style={{ backgroundColor: "#8ec16e" }}
-                >
-                  <CardContent>
-                    <p className="zone-name">1 </p>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-            <Grid item xs={5} sm={5} md={5}>
+        <Grid container spacing={2}>
+          <Grid item xs={3} sm={3} md={3}>
+            <Grid item xs={12} sm={12} md={12}>
               <Card
-                className="zone-second"
-                style={{ backgroundColor: "#07c03d" }}
+                className="zone-section"
+                style={{ backgroundColor: "#9ef898" }}
               >
-                <CardContent
-                  style={{ textAnchor: "middle", dominantBaseline: "central" }}
-                >
-                  <p className="zone-name zone-height">4</p>
+                <CardContent>
+                  <p className="zone-name">
+                    {farmDashboardZoneList[0]?.name}
+                  </p>
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={4} sm={4} md={4}>
+            <Grid item xs={12} sm={12} md={12}>
               <Card
-                className="zone-second"
-                style={{ backgroundColor: "#d3d3d3" }}
+                className="zone-section"
+                style={{ backgroundColor: "#ace2b0" }}
               >
                 <CardContent>
-                  <p className="zone-name zone-height">5</p>
+                  <p className="zone-name">
+                    {farmDashboardZoneList[1]?.name}
+                  </p>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={12}
+              style={{ alignItems: "center" }}
+            >
+              <Card
+                className="zone-section"
+                style={{ backgroundColor: "#8ec16e" }}
+              >
+                <CardContent>
+                  <p className="zone-name">1 </p>
                 </CardContent>
               </Card>
             </Grid>
           </Grid>
-        </div>
-      </>
+          <Grid item xs={5} sm={5} md={5}>
+            <Card
+              className="zone-second"
+              style={{ backgroundColor: "#07c03d" }}
+            >
+              <CardContent
+                style={{ textAnchor: "middle", dominantBaseline: "central" }}
+              >
+                <p className="zone-name zone-height">4</p>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={4} sm={4} md={4}>
+            <Card
+              className="zone-second"
+              style={{ backgroundColor: "#d3d3d3" }}
+            >
+              <CardContent>
+                <p className="zone-name zone-height">5</p>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
     );
   };
 
   const renderViewOptionsRow = () => {
     return (
-      <>
-                     <Grid item xs={12}>
-                    <ToggleButtonGroup exclusive onChange={handleGridView}
-                        value={seletedView}
-                        sx={{
-                            height: 35,
-                            ".Mui-selected,.Mui-selected:hover": {
-                                color: "white !important",
-                                backgroundColor: '#0E2C4B !important'
-                            }
-                        }}>
-                        <ToggleButton value="list" size="small" aria-label="right">
-                            <ListIcon />
-                        </ToggleButton>
-                        <ToggleButton className="selected-toggle" value="grid" size="small" aria-label="centered">
-                            <GridViewIcon />
-                        </ToggleButton>
-                    </ToggleButtonGroup>
-                </Grid>
-
-      </>
+      // <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <ToggleButtonGroup exclusive onChange={handleGridView}
+            value={seletedView}
+            sx={{
+              height: 35,
+              ".Mui-selected,.Mui-selected:hover": {
+                color: "white !important",
+                backgroundColor: '#0E2C4B !important'
+              }
+            }}>
+            <ToggleButton value="list" size="small" aria-label="right">
+              <ListIcon />
+            </ToggleButton>
+            <ToggleButton className="selected-toggle" value="grid" size="small" aria-label="centered">
+              <GridViewIcon />
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Grid>
+      // </Grid>
     )
   }
   return (
@@ -733,14 +725,7 @@ export default function FarmDashboard({
       {isUpdateFarmDashboardZoneLoading && <Loader title="Updating Zone  " />}
       <div className="page-container">
         <Grid container spacing={2}>
-          {renderCard()}
-          {/* {renderFarmZone()}
-          {renderCropSchedules()}
-          {renderTaskSchedules()}
-          {renderMonthlyHarvestBreakup()}
-          {renderFarmUtilization()}
-          {renderCropsUtilization()}   */}
-          {/* <Box sx={{ width: "100%" }}> */}
+          {renderFarmSummaryInfo()}
           <TabContext value={value}>
             <Grid item xs={12} sm={12} md={12}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -748,17 +733,19 @@ export default function FarmDashboard({
                   onChange={handleTabChange}
                   aria-label="lab API tabs example"
                 >
-                  <Tab label="Zone" value="1" />
-                  <Tab label="Crop Schedules" value="2" />
-                  <Tab label="Task Schedules" value="3" />
-                  <Tab label="Graph" value="4" />
+                  <Tab label={<p className="farm-tab-text">Zone</p>} value="1" />
+                  <Tab label={<p className="farm-tab-text">Crop Schedules</p>} value="2" />
+                  <Tab label={<p className="farm-tab-text">Task Schedules</p>} value="3" />
+                  <Tab label={<p className="farm-tab-text">Graph</p>} value="4" />
                 </TabList>
               </Box>
-              <TabPanel value="1">{renderViewOptionsRow()}
-              <br/>
-              {/* {seletedView ? renderFarmZone() : renderZoneCard()} */}
-              {seletedView ?  renderZoneCard() : renderFarmZone()}
-                </TabPanel>
+              <TabPanel value="1">
+                <Grid item xs={12} sm={12} md={12}>
+                  <span className="section-title">Zone</span>
+                </Grid>
+                {renderViewOptionsRow()}
+                {seletedView ? renderFarmZoneGridView() : renderFarmZoneListView()}
+              </TabPanel>
               <TabPanel value="2">{renderCropSchedules()}</TabPanel>
               <TabPanel value="3">{renderTaskSchedules()}</TabPanel>
               <TabPanel value="4">
