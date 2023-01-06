@@ -803,7 +803,6 @@ export default function FarmDashboard({
       </>
     );
   };
-
   const renderWateringTypeInfo = () => {
     return (
       <>
@@ -830,7 +829,6 @@ export default function FarmDashboard({
       </>
     );
   };
-
   const renderPolyhouseInfo = () => {
     return (
       <>

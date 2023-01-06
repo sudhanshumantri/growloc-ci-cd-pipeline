@@ -485,6 +485,8 @@ export default function ZoneDashboard({
           {renderFarmZoneUtilization()}
           {renderZoneCropsUtilization()} */}
             <TabContext value={value}>
+            <Grid item xs={12} sm={12} md={12}>
+
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <TabList
                   onChange={handleZoneTabChange}
@@ -509,6 +511,8 @@ export default function ZoneDashboard({
           </Grid>
               </TabPanel>
               <TabPanel value="5">Info</TabPanel>
+              </Grid>
+
             </TabContext>
         </Grid>
       </div>
