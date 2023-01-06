@@ -13,12 +13,12 @@ const theme = createTheme({
 });
 function App() {
     return (
-        // <ThemeProvider theme={theme}>
-        <div className="App">
-            <Layout />
-        </div>
+        <ThemeProvider theme={theme}>
+            <div className="App">
+                <Layout />
+            </div>
 
-        // </ThemeProvider>
+        </ThemeProvider>
     );
 }
 export default App;

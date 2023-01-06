@@ -24,16 +24,6 @@ body {
   display: block;
 */
 
-.label-custom {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-  color: #0e2c4b;
-  margin: auto;
-  letter-spacing: 0.01em;
-}
-
 .label-light {
   font-style: normal;
   font-weight: 500;
@@ -133,6 +123,7 @@ a {
   border-radius: 10px;
   width: 298px;
 }
+
 .table-section {
   font-weight: 500;
   font-size: 20px;
@@ -141,6 +132,7 @@ a {
   /* identical to box height */
   color: #000000;
 }
+
 .card-outline-container {
   margin: 12px !important;
   padding: 10px 10px 20px 10px;
@@ -148,31 +140,38 @@ a {
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
 }
+
 .delete-box {
   background: #ffffff;
   border-radius: 10px;
 }
+
 .horizontalline {
   border: 0.5px solid rgba(0, 0, 0, 0.2);
 }
+
 .MuiFormHelperText-root {
   margin-left: 0px !important;
 }
-.graph-container{
+
+.graph-container {
   height: 400px !important;
 }
+
 .custom-anchor-tag {
-  color: #000000!important;
+  color: #000000 !important;
   cursor: pointer;
-  text-decoration: none!important;
+  text-decoration: none !important;
 }
-.farm-dashboard-images{
+
+.farm-dashboard-images {
   border-radius: 1rem;
   display: inline-block;
   margin-top: 14px;
   transform: scale(2, 2);
 }
-.section-details{
+
+.section-details {
   overflow: hidden;
   font-size: 1.2em;
   color: #606a72;
@@ -180,33 +179,40 @@ a {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-h4, h5, h6 {
+
+h4,
+h5,
+h6 {
   margin-top: 10px;
   margin-bottom: 10px;
   line-height: 1.4em;
 }
-.farm-card{
+
+.farm-card {
   color: #000000;
   font-size: 18px;
   margin-top: -14px;
   font-weight: 600;
 }
-.zone-section{
-margin: 0px 0px 15px;
-height: 135px;
+
+.zone-section {
+  margin: 0px 0px 15px;
+  height: 135px;
 }
-.zone-name{ 
+
+.zone-name {
   align-items: center;
   display: flex;
   justify-content: center;
   vertical-align: middle;
-  height: 13vh;}
-.zone-second{
-height: 436px;
+  height: 13vh;
+}
+.zone-second {
+  height: 436px;
 
 }
-.zone-height{
-height: 50vh;
+.zone-height {
+  height: 50vh;
 }
 .selected-toggle.active {
   background-color: blue !important;
