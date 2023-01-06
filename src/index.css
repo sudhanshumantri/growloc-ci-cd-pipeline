@@ -214,6 +214,3 @@ h6 {
 .zone-height {
   height: 50vh;
 }
-.selected-toggle.active {
-  background-color: blue !important;
-}

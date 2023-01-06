@@ -60,7 +60,7 @@ export default function ZoneDashboard({
 
   const navigate = useNavigate();
 
-  console.log(farmDashboardZoneList, "farmDashboardZoneList");
+  console.log(farmDashboardZoneList[0]?.name, "farmDashboardZoneList");
 
   React.useEffect(() => {
     if (zoneId) {
@@ -457,7 +457,26 @@ export default function ZoneDashboard({
     );
   };
 
-
+  const renderZoneInfo = () => {
+    return (
+      <>
+           <p className="section-title">
+            Zone Name : <span>{farmDashboardZoneList[0]?.name || ""}</span>
+          </p>
+          <p className="section-title">
+            Farm Area:
+            <span>{farmDashboardZoneList[0]?.farmArea || ""}</span>
+          </p>
+          <p className="section-title"> System Type :
+            <span>{farmDashboardZoneList[0]?.systemType || ""}</span>
+          </p>
+          <p className="section-title">
+          Zone Type :
+            <span>{farmDashboardZoneList[0]?.zoneType || ""}</span>
+          </p>
+      </>
+    );
+  };
 
   return (
     <div>
@@ -486,7 +505,6 @@ export default function ZoneDashboard({
           {renderZoneCropsUtilization()} */}
             <TabContext value={value}>
             <Grid item xs={12} sm={12} md={12}>
-
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <TabList
                   onChange={handleZoneTabChange}
@@ -496,6 +514,7 @@ export default function ZoneDashboard({
                   <Tab label="Crop Schedules" value="2" />
                   <Tab label="Task Schedules" value="3" />
                   <Tab label="Graph" value="4" />
+                  <Tab label="Info" value="5"></Tab>
                 </TabList>
               </Box>
               <TabPanel value="1"> 
@@ -510,9 +529,8 @@ export default function ZoneDashboard({
           {renderZoneCropsUtilization()}
           </Grid>
               </TabPanel>
-              <TabPanel value="5">Info</TabPanel>
+              <TabPanel value="5">{renderZoneInfo()}</TabPanel>
               </Grid>
-
             </TabContext>
         </Grid>
       </div>

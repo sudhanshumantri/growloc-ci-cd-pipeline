@@ -90,7 +90,7 @@ export default function FarmDashboard({
   const [zoneData, setZoneData] = useState({});
   const [openCrop, setOpenCrop] = useState(false);
   const [cropData, setCropData] = useState({});
-  const [seletedView, setSelectView] = useState(false);
+  const [seletedView, setSelectView] = useState("grid");
   const [tabInfo, setTabInfo] = useState("1");
   const [value, setValue] = useState("1");
 
@@ -102,8 +102,8 @@ export default function FarmDashboard({
     setTabInfo(newValue);
   };
 
-  const handleGridView = (tag) => {
-    setSelectView(!seletedView);
+  const handleGridView = () => {
+    setSelectView(seletedView == 'grid' ? 'list' : 'grid');
   };
 
   console.log("dashboardFarmList", dashboardFarmList);
@@ -699,7 +699,7 @@ export default function FarmDashboard({
               height: 35,
               ".Mui-selected,.Mui-selected:hover": {
                 color: "white !important",
-                backgroundColor: "#0E2C4B !important",
+                backgroundColor: "#517222 !important",
               },
             }}
           >
@@ -845,7 +845,6 @@ export default function FarmDashboard({
   };
 
   const renderFarmInfo = () => {
-    console.log("hello",tabInfo);
     return (
       <>
         <TabContext value={tabInfo}>
@@ -923,7 +922,7 @@ export default function FarmDashboard({
                 {renderViewOptionsRow()}
                 <br />
                 {/* {seletedView ? renderFarmZone() : renderZoneCard()} */}
-                {seletedView
+                {seletedView === "grid"
                   ? renderFarmZoneGridView()
                   : renderFarmZoneListView()}
               </TabPanel>
