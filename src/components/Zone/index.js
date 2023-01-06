@@ -27,11 +27,6 @@ import imageSrc from "../../../public/assets/total-devices.svg";
 import harvestImage from "../../../public/assets/batch-progress.svg";
 import taskImage from "../../../public/assets/task-for-today.svg";
 
-
-
-
-
-
 export default function ZoneDashboard({
   fetchFarmZone,
   farmZoneList,
@@ -56,7 +51,6 @@ export default function ZoneDashboard({
   const [openCommetTask, setCommetTask] = useState(false);
   const [rowdata, setRowData] = useState({});
   const [openZoneSensors, setZoneSensors] = useState(false);
-  const [zoneClick, SetZoneClick] = useState("");
 
   const [value, setValue] = React.useState("1");
 
@@ -399,7 +393,7 @@ export default function ZoneDashboard({
               <CardContent>
                 <Grid container spacing={2}>
                   <Grid item xs={6} sm={9} md={9}>
-                    <h4 className="section-details">{batchCount}</h4>
+                    <h4 className="section-details">{batchCount || " "}</h4>
                     <p className="farm-card">No of Batches</p>
                   </Grid>
                   <Grid item xs={6} sm={3} md={3}>
@@ -420,7 +414,7 @@ export default function ZoneDashboard({
             <CardContent>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
-                  <h4 className="section-details">{farmdDetails?.Tasks.length}</h4>
+                  <h4 className="section-details">{farmdDetails?.Tasks.length || " "}</h4>
                   <p className="farm-card">Total Tasks</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
@@ -441,7 +435,8 @@ export default function ZoneDashboard({
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
                   <h4 className="section-details">
-                    {totalHarvested?.kgs}(kgs)/{totalHarvested?.qty}(qty)
+                    {totalHarvested?.kgs || " "}(kgs)
+                    /{totalHarvested?.qty || " "}(qty)
                   </h4>
                   <p className="farm-card">Total Harvested</p>
                 </Grid>
@@ -488,17 +483,16 @@ export default function ZoneDashboard({
           {renderZoneMonthlyHarvestBreakup()}
           {renderFarmZoneUtilization()}
           {renderZoneCropsUtilization()} */}
-                    <Box sx={{ width: "100%" }}>
             <TabContext value={value}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <TabList
                   onChange={handleZoneTabChange}
                   aria-label="lab API tabs example"
                 >
-                  <Tab label=" Sensors" value="1" />
-                  <Tab label=" Crop Schedules" value="2" />
+                  <Tab label="Sensors" value="1" />
+                  <Tab label="Crop Schedules" value="2" />
                   <Tab label="Task Schedules" value="3" />
-                  <Tab label=" Graph" value="4" />
+                  <Tab label="Graph" value="4" />
                 </TabList>
               </Box>
               <TabPanel value="1"> 
@@ -513,9 +507,8 @@ export default function ZoneDashboard({
           {renderZoneCropsUtilization()}
           </Grid>
               </TabPanel>
+              <TabPanel value="5">Info</TabPanel>
             </TabContext>
-          </Box>  
-
         </Grid>
       </div>
       {open && (

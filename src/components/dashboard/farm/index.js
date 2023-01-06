@@ -112,7 +112,8 @@ console.log("dashboardFarmList",dashboardFarmList)
     }
   }, []);
 
-  let { cropSchedules } = dashboardFarmList;
+  let { cropSchedules, farmdDetails
+  } = dashboardFarmList;
 
   const zoneId = (cropSchedules || [])[0]?.zoneId;
 
@@ -536,7 +537,7 @@ console.log("dashboardFarmList",dashboardFarmList)
               <CardContent>
                 <Grid container spacing={2}>
                   <Grid item xs={6} sm={9} md={9}>
-                    <h4 className="section-details">{farmDashboardZoneList?.length}</h4>
+                    <h4 className="section-details">{farmDashboardZoneList?.length || " "}</h4>
                     <p className="farm-card">No of Zones </p>
                   </Grid>
                   <Grid item xs={6} sm={3} md={3}>
@@ -557,7 +558,7 @@ console.log("dashboardFarmList",dashboardFarmList)
             <CardContent>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
-                  <h4 className="section-details">{batchCount}</h4>
+                  <h4 className="section-details">{batchCount || " "}</h4>
                   <p className="farm-card">No of Batch</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
@@ -578,7 +579,7 @@ console.log("dashboardFarmList",dashboardFarmList)
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
                   <h4 className="section-details">
-                    {farmdDetails?.Tasks.length}
+                    {farmdDetails?.Tasks.length || " "}
                   </h4>
                   <p className="farm-card">No of Tasks</p>
                 </Grid>
@@ -600,7 +601,8 @@ console.log("dashboardFarmList",dashboardFarmList)
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
                   <h4 className="section-details">
-                    {totalHarvested?.kgs}(kgs)/{totalHarvested?.qty}(qty)
+                    {totalHarvested?.kgs || " "}(kgs)
+                    /{totalHarvested?.qty || " "  }(qty)
                   </h4>
                   <p className="farm-card">Total Harves</p>
                 </Grid>
@@ -719,12 +721,19 @@ console.log("dashboardFarmList",dashboardFarmList)
 
       </>
     )
+  };
+  const renderFarmDetails = () => {
+    return ( 
+      <>
+      <Grid conatainer >hello : hello</Grid>
+      </>
+    )
   }
   return (
     <div>
       <PageHeader
         // title="Farm Dashboard"
-
+        title={farmdDetails?.name || ""}
         buttonArray={buttonArray}
         showBackButton={showBackButton}
       />
@@ -758,6 +767,7 @@ console.log("dashboardFarmList",dashboardFarmList)
                   <Tab label="Crop Schedules" value="2" />
                   <Tab label="Task Schedules" value="3" />
                   <Tab label="Graph" value="4" />
+                  <Tab label="Info" value="5" />
                 </TabList>
               </Box>
               <TabPanel value="1">{renderViewOptionsRow()}
@@ -774,6 +784,7 @@ console.log("dashboardFarmList",dashboardFarmList)
                   {renderCropsUtilization()}
                 </Grid>
               </TabPanel>
+              <TabPanel value="5">{renderFarmDetails()}</TabPanel>
             </Grid>
           </TabContext>
         </Grid>
