@@ -41,7 +41,7 @@ import {
   selectLoginObject
 } from "../../selectors/login";
 import {
-  selectLifecycleCropsList,
+  selectLifecycleCropsList,selectIsAddLifecycleLoading,
 } from "../../selectors/life-cycle";
 import { selectCropFarmList } from "../../selectors/crops";
 
@@ -69,6 +69,8 @@ const mapStateToProps = createStructuredSelector({
   isDeleteFarmDashboardZoneLoading:selectIsDeleteFarmDashboardZoneLoading(),
   farmCropList: selectCropFarmList(),
   lifecycleCropsList: selectLifecycleCropsList(),
+  isAddLifecycleLoading: selectIsAddLifecycleLoading(),
+
 });
 const mapDispatchToProps = {
   fetchFarmDashboard: fetchDashboardFarmRequest,

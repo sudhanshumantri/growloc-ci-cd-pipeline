@@ -74,6 +74,7 @@ export default function FarmDashboard({
   fecthCropFarm,
   fetchAllCropsLifecycle,
   addCropToLifecycle,
+  isAddLifecycleLoading,
 }) {
   const navigate = useNavigate();
   const { farmId } = useParams();
@@ -86,7 +87,7 @@ export default function FarmDashboard({
   const [zoneData, setZoneData] = useState({});
   const [openCrop, setOpenCrop] = useState(false);
   const [cropData, setCropData] = useState({});
-  const [seletedView,setSelectView] = useState(false)
+  const [seletedView,setSelectView] = useState("list")
 
   const [value, setValue] = React.useState("1");
 
@@ -94,8 +95,10 @@ export default function FarmDashboard({
     setValue(newValue);
   };
   const handleGridView = (tag) => {
-    setSelectView(!seletedView)
+    setSelectView(!seletedView )
 }
+
+console.log("dashboardFarmList",dashboardFarmList)
 
   React.useEffect(() => {
     fecthFarmDashboardZone(farmId);
@@ -720,7 +723,8 @@ export default function FarmDashboard({
   return (
     <div>
       <PageHeader
-        title="Farm Dashboard"
+        // title="Farm Dashboard"
+
         buttonArray={buttonArray}
         showBackButton={showBackButton}
       />
@@ -731,6 +735,8 @@ export default function FarmDashboard({
       {isFarmDashboardZoneLoading && <Loader title="Adding Zone" />}
       {isDeleteFarmDashboardZoneLoading && <Loader title="Deleting Zone" />}
       {isUpdateFarmDashboardZoneLoading && <Loader title="Updating Zone  " />}
+      {isAddLifecycleLoading && <Loader title="Adding Crops to Lifecycle " />}
+
       <div className="page-container">
         <Grid container spacing={2}>
           {renderCard()}
@@ -757,7 +763,7 @@ export default function FarmDashboard({
               <TabPanel value="1">{renderViewOptionsRow()}
               <br/>
               {/* {seletedView ? renderFarmZone() : renderZoneCard()} */}
-              {seletedView ?  renderZoneCard() : renderFarmZone()}
+              {seletedView ?  renderFarmZone() : renderZoneCard()}
                 </TabPanel>
               <TabPanel value="2">{renderCropSchedules()}</TabPanel>
               <TabPanel value="3">{renderTaskSchedules()}</TabPanel>
