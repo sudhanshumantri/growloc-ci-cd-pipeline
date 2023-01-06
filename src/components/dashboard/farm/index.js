@@ -1,5 +1,5 @@
 import React, { useState, memo } from "react";
-import './style.css'
+import "./style.css";
 import {
   Grid,
   FormControl,
@@ -43,8 +43,10 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import GridViewIcon from '@mui/icons-material/GridView';
-import ListIcon from '@mui/icons-material/List';
+import GridViewIcon from "@mui/icons-material/GridView";
+import ListIcon from "@mui/icons-material/List";
+import Tabs from "@mui/material/Tabs";
+import { color, textAlign } from "@mui/system";
 
 export default function FarmDashboard({
   dashboardFarmList,
@@ -88,18 +90,23 @@ export default function FarmDashboard({
   const [zoneData, setZoneData] = useState({});
   const [openCrop, setOpenCrop] = useState(false);
   const [cropData, setCropData] = useState({});
-  const [seletedView,setSelectView] = useState(false)
-
-  const [value, setValue] = React.useState("1");
+  const [seletedView, setSelectView] = useState(false);
+  const [tabInfo, setTabInfo] = useState("1");
+  const [value, setValue] = useState("1");
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
-  const handleGridView = (tag) => {
-    setSelectView(!seletedView)
-}
+  const handleTabInfoChange = (event, newValue) => {
+    console.log(newValue,"newValue");
+    setTabInfo(newValue);
+  };
 
-console.log("dashboardFarmList",dashboardFarmList)
+  const handleGridView = (tag) => {
+    setSelectView(!seletedView);
+  };
+
+  console.log("dashboardFarmList", dashboardFarmList);
 
   React.useEffect(() => {
     fecthFarmDashboardZone(farmId);
@@ -113,8 +120,7 @@ console.log("dashboardFarmList",dashboardFarmList)
     }
   }, []);
 
-  let { cropSchedules, farmdDetails
-  } = dashboardFarmList;
+  let { cropSchedules, farmdDetails } = dashboardFarmList;
 
   const zoneId = (cropSchedules || [])[0]?.zoneId;
 
@@ -427,7 +433,9 @@ console.log("dashboardFarmList",dashboardFarmList)
         <Grid item xs={12} sm={12} md={6} lg={6}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12} lg={12}>
-              <span className="section-title">Farm Utilization Based On Stages</span>
+              <span className="section-title">
+                Farm Utilization Based On Stages
+              </span>
             </Grid>
             <Grid
               item
@@ -450,7 +458,9 @@ console.log("dashboardFarmList",dashboardFarmList)
       <Grid item xs={12} sm={12} md={6} lg={6}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={12} lg={12}>
-            <span className="section-title">Farm Utilization Based On Crops</span>
+            <span className="section-title">
+              Farm Utilization Based On Crops
+            </span>
           </Grid>
           <Grid
             item
@@ -516,7 +526,6 @@ console.log("dashboardFarmList",dashboardFarmList)
   const renderFarmZoneListView = () => {
     return (
       <Grid container spacing={2}>
-
         <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
           <DataTable
             data={{ headers: ZONE_HEADER, rows: farmDashboardZoneList || [] }}
@@ -536,7 +545,9 @@ console.log("dashboardFarmList",dashboardFarmList)
               <CardContent>
                 <Grid container spacing={2}>
                   <Grid item xs={6} sm={9} md={9}>
-                    <h4 className="section-details">{farmDashboardZoneList?.length}</h4>
+                    <h4 className="section-details">
+                      {farmDashboardZoneList?.length || ""}
+                    </h4>
                     <p className="farm-card">No of Zones </p>
                   </Grid>
                   <Grid item xs={6} sm={3} md={3}>
@@ -600,8 +611,8 @@ console.log("dashboardFarmList",dashboardFarmList)
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
                   <h4 className="section-details">
-                    {totalHarvested?.kgs || " "}(kgs)
-                    /{totalHarvested?.qty || " "  }(qty)
+                    {totalHarvested?.kgs || " "}(kgs) /
+                    {totalHarvested?.qty || " "}(qty)
                   </h4>
                   <p className="farm-card">Total Harves</p>
                 </Grid>
@@ -623,100 +634,259 @@ console.log("dashboardFarmList",dashboardFarmList)
 
   const renderFarmZoneGridView = () => {
     return (
-        <Grid container spacing={2}>
-          <Grid item xs={3} sm={3} md={3}>
-            <Grid item xs={12} sm={12} md={12}>
-              <Card
-                className="zone-section"
-                style={{ backgroundColor: "#9ef898" }}
-              >
-                <CardContent>
-                  <p className="zone-name">
-                    {farmDashboardZoneList[0]?.name}
-                  </p>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={12} md={12}>
-              <Card
-                className="zone-section"
-                style={{ backgroundColor: "#ace2b0" }}
-              >
-                <CardContent>
-                  <p className="zone-name">
-                    {farmDashboardZoneList[1]?.name}
-                  </p>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={12}
-              style={{ alignItems: "center" }}
-            >
-              <Card
-                className="zone-section"
-                style={{ backgroundColor: "#8ec16e" }}
-              >
-                <CardContent>
-                  <p className="zone-name">1 </p>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-          <Grid item xs={5} sm={5} md={5}>
+      <Grid container spacing={2}>
+        <Grid item xs={3} sm={3} md={3}>
+          <Grid item xs={12} sm={12} md={12}>
             <Card
-              className="zone-second"
-              style={{ backgroundColor: "#07c03d" }}
+              className="zone-section"
+              style={{ backgroundColor: "#9ef898" }}
             >
-              <CardContent
-                style={{ textAnchor: "middle", dominantBaseline: "central" }}
-              >
-                <p className="zone-name zone-height">4</p>
+              <CardContent>
+                <p className="zone-name">{farmDashboardZoneList[0]?.name}</p>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={4} sm={4} md={4}>
+          <Grid item xs={12} sm={12} md={12}>
             <Card
-              className="zone-second"
-              style={{ backgroundColor: "#d3d3d3" }}
+              className="zone-section"
+              style={{ backgroundColor: "#ace2b0" }}
             >
               <CardContent>
-                <p className="zone-name zone-height">5</p>
+                <p className="zone-name">{farmDashboardZoneList[1]?.name}</p>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} style={{ alignItems: "center" }}>
+            <Card
+              className="zone-section"
+              style={{ backgroundColor: "#8ec16e" }}
+            >
+              <CardContent>
+                <p className="zone-name">1 </p>
               </CardContent>
             </Card>
           </Grid>
         </Grid>
+        <Grid item xs={5} sm={5} md={5}>
+          <Card className="zone-second" style={{ backgroundColor: "#07c03d" }}>
+            <CardContent
+              style={{ textAnchor: "middle", dominantBaseline: "central" }}
+            >
+              <p className="zone-name zone-height">4</p>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={4} sm={4} md={4}>
+          <Card className="zone-second" style={{ backgroundColor: "#d3d3d3" }}>
+            <CardContent>
+              <p className="zone-name zone-height">5</p>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     );
   };
 
   const renderViewOptionsRow = () => {
     return (
       <>
-                     <Grid item xs={12}>
-                    <ToggleButtonGroup exclusive onChange={handleGridView}
-                        value={seletedView}
-                        sx={{
-                            height: 35,
-                            ".Mui-selected,.Mui-selected:hover": {
-                                color: "white !important",
-                                backgroundColor: '#0E2C4B !important'
-                            }
-                        }}>
-                        <ToggleButton value="list" size="small" aria-label="right">
-                            <ListIcon />
-                        </ToggleButton>
-                        <ToggleButton className="selected-toggle" value="grid" size="small" aria-label="centered">
-                            <GridViewIcon />
-                        </ToggleButton>
-                    </ToggleButtonGroup>
-                </Grid>
-
+        <Grid item xs={12}>
+          <ToggleButtonGroup
+            exclusive
+            onChange={handleGridView}
+            value={seletedView}
+            sx={{
+              height: 35,
+              ".Mui-selected,.Mui-selected:hover": {
+                color: "white !important",
+                backgroundColor: "#0E2C4B !important",
+              },
+            }}
+          >
+            <ToggleButton value="list" size="small" aria-label="right">
+              <ListIcon />
+            </ToggleButton>
+            <ToggleButton
+              className="selected-toggle"
+              value="grid"
+              size="small"
+              aria-label="centered"
+            >
+              <GridViewIcon />
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Grid>
       </>
-    )
-  }
+    );
+  };
+
+  const renderFarmArea = () => {
+    const { farmdDetails } = dashboardFarmList;
+    return (
+      <>
+        {/* <Grid item xs={12} sm={12} md={12}> */}
+          <p className="section-title">Farm Name : <span>{farmdDetails?.name}</span></p>
+          <p className="section-title">Farm Area: <span>{farmdDetails?.farmArea}</span></p>
+        {/* </Grid> */}
+        
+      </>
+    );
+  };
+
+  const renderGerminationInfo = () => {
+    const { farmdDetails } = dashboardFarmList;
+    return (
+      <>
+          <p className="section-title">
+            Germination Type : <span>{farmdDetails?.germinationType}</span>
+          </p>
+          <p className="section-title">
+            Germination Area : <span>{farmdDetails?.germinationArea}</span>
+          </p>
+          <p className="section-title">
+            No of Seeds Per Plantation :<span>{farmdDetails?.germinationSeedsCount}</span>
+          </p>
+          <p className="section-title">
+            Watering Type : <span>{farmdDetails?.germinationWateringType} </span>
+          </p>
+          <p className="section-title">
+            Watering Schedule: <span>{farmdDetails?.germinationWateringSchedule}</span>
+          </p>
+      </>
+    );
+  };
+  const renderNurseryInfo = () => {
+    return (
+      <>
+          <p className="section-title">
+            Nursery Type : <span>{farmdDetails?.nurseryType}</span>
+          </p>
+          <p className="section-title">
+            Nursery Area : <span>{farmdDetails?.nurseryArea}</span>
+          </p>
+          <p className="section-title">
+            
+            No of Seeds Per Nursery : <span>{farmdDetails?.nurserySeedsCount}</span>
+          </p>
+          <p className="section-title">
+            Watering Type : <span>{farmdDetails?.nurseryWateringType}</span>
+          </p>
+          <p className="section-title">
+            Watering Schedule: <span>{farmdDetails?.nurseryWateringSchedule}</span>
+          </p>
+      </>
+    );
+  };
+
+  const renderGrowingInfo = () => {
+    return (
+      <>
+          <p className="section-title">
+            
+            Growring Type : <span>{farmdDetails?.growingType}</span>
+          </p>
+          <p className="section-title">
+            Growring Area : <span>{farmdDetails?.growingArea}</span>
+          </p>
+          <p className="section-title">
+            No Of Plants In Row : <span>{farmdDetails?.growingPlantCountPerRow}</span>
+          </p>
+          <p className="section-title">
+            No Of Rows: <span>{farmdDetails?.growingRowCount}</span>
+          </p>
+          <p className="section-title">
+            Watering Schedule: <span>{farmdDetails?.growingPlantSpacing}</span>
+          </p>
+          <p className="section-title">
+            Plant Spacing: <span>{farmdDetails?.nurseryWateringSchedule}</span>
+          </p>
+      </>
+    );
+  };
+
+  const renderWateringTypeInfo = () => {
+    return (
+      <>
+          <p className="section-title">
+            Main Reservoir Capacity : <span>{farmdDetails?.reservoirCapacity}</span>
+          </p>
+          <p>
+            Nutrient Water Reservoir Capacity :
+            <span>{farmdDetails?.nutrientWaterReservoirCapacity}</span>
+          </p>
+          <p className="section-title">
+            Ph Up/Down Reservoir Capacity : <span>{farmdDetails?.phReservoirCapacity}</span>
+          </p>
+          <p className="section-title">
+            Stock Nutrient Solution Capacity :
+            <span>{farmdDetails?.stockNutrientSolutionCapacity}</span>
+          </p>
+          <p className="section-title">
+            Nutrient Dilution Ratio : <span>{farmdDetails?.nutrientdilutionRatio}</span>
+          </p>
+          <p className="section-title">
+            Type Of Nutrients : <span>{farmdDetails?.nutrientsType}</span> 
+          </p>
+      </>
+    );
+  };
+
+  const renderPolyhouseInfo = () => {
+    return (
+      <>
+          <p className="section-title">
+            Polyhouse Structure Expected Life :
+            <span>{farmdDetails?.polyhouseStructureExpectedLife}</span>
+          </p>
+          <p className="section-title">
+            Polyhouse Plastic Expected Life :
+            <span>{farmdDetails?.polyhousePlasticExpectedLife}</span>
+          </p>
+      </>
+    );
+  };
+
+  const renderFarmInfo = () => {
+    console.log("hello",tabInfo);
+    return (
+      <>
+        <TabContext value={tabInfo}>
+          <Grid item xs={12} sm={12} md={12}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                bgcolor: "background.paper",
+                display: "flex",
+                height: 300,
+              }}
+            >
+              <TabList
+                orientation="vertical"
+                onChange={handleTabInfoChange}
+                sx={{ borderRight: 1, borderColor: "divider"}}
+                className={"tab-vertical"}
+                aria-label="lab API tabs examplesssssss"
+              >
+                <Tab label="Farm Area" value="1"  />
+                <Tab label="Germination Zone" value="2" />
+                <Tab label="Nursery Zone" value="3" />
+                <Tab label="Growing Zone" value="4" />
+                <Tab label="Watering Zone" value="5" />
+                <Tab label="Polyhouse" value="6" />
+              </TabList>
+              <TabPanel value="1">{renderFarmArea()}</TabPanel>
+              <TabPanel value="2">{renderGerminationInfo()}</TabPanel>
+              <TabPanel value="3">{renderNurseryInfo()}</TabPanel>
+              <TabPanel value="4">{renderGrowingInfo()}</TabPanel>
+              <TabPanel value="5">{renderWateringTypeInfo()}</TabPanel>
+              <TabPanel value="6">{renderPolyhouseInfo()}</TabPanel>
+            </Box>
+          </Grid>
+        </TabContext>
+      </>
+    );
+  };
+
   return (
     <div>
       <PageHeader
@@ -748,13 +918,17 @@ console.log("dashboardFarmList",dashboardFarmList)
                   <Tab label="Crop Schedules" value="2" />
                   <Tab label="Task Schedules" value="3" />
                   <Tab label="Graph" value="4" />
+                  <Tab label="Info" value="5" />
                 </TabList>
               </Box>
-              <TabPanel value="1">{renderViewOptionsRow()}
-              <br/>
-              {/* {seletedView ? renderFarmZone() : renderZoneCard()} */}
-              {seletedView ?  renderZoneCard() : renderFarmZone()}
-                </TabPanel>
+              <TabPanel value="1">
+                {renderViewOptionsRow()}
+                <br />
+                {/* {seletedView ? renderFarmZone() : renderZoneCard()} */}
+                {seletedView
+                  ? renderFarmZoneGridView()
+                  : renderFarmZoneListView()}
+              </TabPanel>
               <TabPanel value="2">{renderCropSchedules()}</TabPanel>
               <TabPanel value="3">{renderTaskSchedules()}</TabPanel>
               <TabPanel value="4">
@@ -764,7 +938,7 @@ console.log("dashboardFarmList",dashboardFarmList)
                   {renderCropsUtilization()}
                 </Grid>
               </TabPanel>
-              <TabPanel value="5">{renderFarmDetails()}</TabPanel>
+              <TabPanel value="5">{renderFarmInfo()}</TabPanel>
             </Grid>
           </TabContext>
         </Grid>
@@ -809,6 +983,6 @@ console.log("dashboardFarmList",dashboardFarmList)
           />
         )}
       </div>
-    </div >
+    </div>
   );
 }

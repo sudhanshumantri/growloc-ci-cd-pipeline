@@ -2,3 +2,9 @@
     font-weight: bold;
     color: black;
 }
+.tab-vertical .css-lfwcke-MuiTabs-flexContainer {
+    align-items: baseline !important;
+}
+.section-title span {
+    color: grey !important;
+}
