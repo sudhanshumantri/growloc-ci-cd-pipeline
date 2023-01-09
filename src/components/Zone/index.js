@@ -384,7 +384,6 @@ export default function ZoneDashboard({
   };
   const renderZoneCard = () => {
     const { batchCount, totalHarvested, farmdDetails } = farmZoneDashboardList;
-
     return (
       <>
         <Grid item xs={4} sm={4} md={4}>
@@ -434,10 +433,11 @@ export default function ZoneDashboard({
             <CardContent>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
+                  { totalHarvested ?
                   <h4 className="section-details">
-                    {totalHarvested?.kgs || " "}(kgs)
-                    /{totalHarvested?.qty || " "}(qty)
-                  </h4>
+                    {totalHarvested?.kgs || "" }(kgs)
+                    /{totalHarvested?.qty || " " }(qty)
+                  </h4>:""}
                   <p className="farm-card">Total Harvested</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>

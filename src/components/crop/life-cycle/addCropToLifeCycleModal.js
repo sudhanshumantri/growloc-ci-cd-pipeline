@@ -41,13 +41,14 @@ export default function AddCropModal({
   const [units, setUnits] = useState(1);
   const handleDataValidation = (data) => {
     let isError = false;
+    
     if (!selectedCrop) {
       setIsCropError(true);
       isError = true;
     }
 
     if (!units) {
-      setIsUnitsError(true);
+      setIsUnitsError(true);s
       setUnitErrorMessage("Unit is required");
       isError = true;
     } else {
@@ -79,6 +80,7 @@ export default function AddCropModal({
     };
     let isError = handleDataValidation(requestData);
     if (!isError) {
+      console.log(requestData,"requestData");
       handleSave(requestData);
     }
   };

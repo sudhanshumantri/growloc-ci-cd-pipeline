@@ -12,6 +12,7 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from "@mui/material";
+
 import { useParams } from "react-router-dom";
 import PageHeader from "../../shared/page-header";
 import DataTable from "../../shared/dataTable";
@@ -45,8 +46,9 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import GridViewIcon from "@mui/icons-material/GridView";
 import ListIcon from "@mui/icons-material/List";
-import Tabs from "@mui/material/Tabs";
-import { color, textAlign } from "@mui/system";
+// import {GridList,GridListTile} from '@material-ui/core/';
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 
 export default function FarmDashboard({
   dashboardFarmList,
@@ -98,12 +100,12 @@ export default function FarmDashboard({
     setValue(newValue);
   };
   const handleTabInfoChange = (event, newValue) => {
-    console.log(newValue,"newValue");
+    console.log(newValue, "newValue");
     setTabInfo(newValue);
   };
 
   const handleGridView = () => {
-    setSelectView(seletedView == 'grid' ? 'list' : 'grid');
+    setSelectView(seletedView == "grid" ? "list" : "grid");
   };
 
   console.log("dashboardFarmList", dashboardFarmList);
@@ -113,8 +115,11 @@ export default function FarmDashboard({
     fetchFarmDashboard(farmId);
     fetchFarmInventory(farmId);
     fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
-    fecthCropFarm({ farmId: parseInt(farmId) });
-    fetchAllCropsLifecycle({ farmId: parseInt(farmId) });
+    // fecthCropFarm({ farmId: parseInt(farmId) });
+    // fetchAllCropsLifecycle({ farmId: parseInt(farmId) });
+    fecthCropFarm(farmId);
+    fetchAllCropsLifecycle(farmId);
+
     if (usersList.length <= 0) {
       fetchUsers(farmId);
     }
@@ -610,10 +615,14 @@ export default function FarmDashboard({
             <CardContent>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
-                  <h4 className="section-details">
-                    {totalHarvested?.kgs || " "}(kgs) /
-                    {totalHarvested?.qty || " "}(qty)
-                  </h4>
+                  {totalHarvested ? (
+                    <h4 className="section-details">
+                      {totalHarvested?.kgs || ""}(kgs)/
+                      {totalHarvested?.qty || ""}(qty)
+                    </h4>
+                  ) : (
+                    " "
+                  )}
                   <p className="farm-card">Total Harves</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
@@ -632,10 +641,58 @@ export default function FarmDashboard({
     );
   };
 
+  // const itemData = [
+  //   {
+  //     name:"pitta1",
+  //     farmArea: "300"
+  //   },
+  //   {
+  //     name:"pitta2",
+  //     farmArea: "100"
+  //   },
+  //   {
+  //     name:"pitta3",
+  //     farmArea: "50"
+  //   },
+  //   {
+  //     name:"pitta4",
+  //     farmArea: "50"
+  //   },
+  //   {
+  //     name: "pitta5",
+  //     farmArea:"100"
+  //   },
+  //   {
+  //     name: "chettu6",
+  //     farmArea:"200"
+  //   },
+  //   {
+  //     name: "chettu8",
+  //     farmArea:"250"
+  //   },
+  //   {
+  //     name: "",
+  //     farmArea:""
+  //   },
+    
+  // ];
   const renderFarmZoneGridView = () => {
     return (
-      <Grid container spacing={2}>
-        <Grid item xs={3} sm={3} md={3}>
+      <>
+        {/* <ImageList
+          sx={{ width: 500, height: 500}}
+          variant="quilted"
+          cols={3}
+          rowHeight={121}
+        >
+      {(itemData || []).map((item) => (
+        <ImageListItem key={item.name} >
+          <Typography sx={{backgroundColor:"red"}}>{item.name}</Typography>
+        </ImageListItem>
+      ))}
+    </ImageList> */}
+
+<Grid item xs={3} sm={3} md={3}>
           <Grid item xs={12} sm={12} md={12}>
             <Card
               className="zone-section"
@@ -667,7 +724,7 @@ export default function FarmDashboard({
             </Card>
           </Grid>
         </Grid>
-        <Grid item xs={5} sm={5} md={5}>
+        {/* <Grid item xs={5} sm={5} md={5}>
           <Card className="zone-second" style={{ backgroundColor: "#07c03d" }}>
             <CardContent
               style={{ textAnchor: "middle", dominantBaseline: "central" }}
@@ -682,8 +739,9 @@ export default function FarmDashboard({
               <p className="zone-name zone-height">5</p>
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
+        </Grid> */}
+
+      </>
     );
   };
 
@@ -725,10 +783,13 @@ export default function FarmDashboard({
     return (
       <>
         {/* <Grid item xs={12} sm={12} md={12}> */}
-          <p className="section-title">Farm Name : <span>{farmdDetails?.name}</span></p>
-          <p className="section-title">Farm Area: <span>{farmdDetails?.farmArea}</span></p>
+        <p className="section-title">
+          Farm Name : <span>{farmdDetails?.name}</span>
+        </p>
+        <p className="section-title">
+          Farm Area: <span>{farmdDetails?.farmArea}</span>
+        </p>
         {/* </Grid> */}
-        
       </>
     );
   };
@@ -737,43 +798,46 @@ export default function FarmDashboard({
     const { farmdDetails } = dashboardFarmList;
     return (
       <>
-          <p className="section-title">
-            Germination Type : <span>{farmdDetails?.germinationType}</span>
-          </p>
-          <p className="section-title">
-            Germination Area : <span>{farmdDetails?.germinationArea}</span>
-          </p>
-          <p className="section-title">
-            No of Seeds Per Plantation :<span>{farmdDetails?.germinationSeedsCount}</span>
-          </p>
-          <p className="section-title">
-            Watering Type : <span>{farmdDetails?.germinationWateringType} </span>
-          </p>
-          <p className="section-title">
-            Watering Schedule: <span>{farmdDetails?.germinationWateringSchedule}</span>
-          </p>
+        <p className="section-title">
+          Germination Type : <span>{farmdDetails?.germinationType}</span>
+        </p>
+        <p className="section-title">
+          Germination Area : <span>{farmdDetails?.germinationArea}</span>
+        </p>
+        <p className="section-title">
+          No of Seeds Per Plantation :
+          <span>{farmdDetails?.germinationSeedsCount}</span>
+        </p>
+        <p className="section-title">
+          Watering Type : <span>{farmdDetails?.germinationWateringType} </span>
+        </p>
+        <p className="section-title">
+          Watering Schedule:{" "}
+          <span>{farmdDetails?.germinationWateringSchedule}</span>
+        </p>
       </>
     );
   };
   const renderNurseryInfo = () => {
     return (
       <>
-          <p className="section-title">
-            Nursery Type : <span>{farmdDetails?.nurseryType}</span>
-          </p>
-          <p className="section-title">
-            Nursery Area : <span>{farmdDetails?.nurseryArea}</span>
-          </p>
-          <p className="section-title">
-            
-            No of Seeds Per Nursery : <span>{farmdDetails?.nurserySeedsCount}</span>
-          </p>
-          <p className="section-title">
-            Watering Type : <span>{farmdDetails?.nurseryWateringType}</span>
-          </p>
-          <p className="section-title">
-            Watering Schedule: <span>{farmdDetails?.nurseryWateringSchedule}</span>
-          </p>
+        <p className="section-title">
+          Nursery Type : <span>{farmdDetails?.nurseryType}</span>
+        </p>
+        <p className="section-title">
+          Nursery Area : <span>{farmdDetails?.nurseryArea}</span>
+        </p>
+        <p className="section-title">
+          No of Seeds Per Nursery :{" "}
+          <span>{farmdDetails?.nurserySeedsCount}</span>
+        </p>
+        <p className="section-title">
+          Watering Type : <span>{farmdDetails?.nurseryWateringType}</span>
+        </p>
+        <p className="section-title">
+          Watering Schedule:{" "}
+          <span>{farmdDetails?.nurseryWateringSchedule}</span>
+        </p>
       </>
     );
   };
@@ -781,65 +845,68 @@ export default function FarmDashboard({
   const renderGrowingInfo = () => {
     return (
       <>
-          <p className="section-title">
-            
-            Growring Type : <span>{farmdDetails?.growingType}</span>
-          </p>
-          <p className="section-title">
-            Growring Area : <span>{farmdDetails?.growingArea}</span>
-          </p>
-          <p className="section-title">
-            No Of Plants In Row : <span>{farmdDetails?.growingPlantCountPerRow}</span>
-          </p>
-          <p className="section-title">
-            No Of Rows: <span>{farmdDetails?.growingRowCount}</span>
-          </p>
-          <p className="section-title">
-            Watering Schedule: <span>{farmdDetails?.growingPlantSpacing}</span>
-          </p>
-          <p className="section-title">
-            Plant Spacing: <span>{farmdDetails?.nurseryWateringSchedule}</span>
-          </p>
+        <p className="section-title">
+          Growring Type : <span>{farmdDetails?.growingType}</span>
+        </p>
+        <p className="section-title">
+          Growring Area : <span>{farmdDetails?.growingArea}</span>
+        </p>
+        <p className="section-title">
+          No Of Plants In Row :{" "}
+          <span>{farmdDetails?.growingPlantCountPerRow}</span>
+        </p>
+        <p className="section-title">
+          No Of Rows: <span>{farmdDetails?.growingRowCount}</span>
+        </p>
+        <p className="section-title">
+          Watering Schedule: <span>{farmdDetails?.growingPlantSpacing}</span>
+        </p>
+        <p className="section-title">
+          Plant Spacing: <span>{farmdDetails?.nurseryWateringSchedule}</span>
+        </p>
       </>
     );
   };
   const renderWateringTypeInfo = () => {
     return (
       <>
-          <p className="section-title">
-            Main Reservoir Capacity : <span>{farmdDetails?.reservoirCapacity}</span>
-          </p>
-          <p>
-            Nutrient Water Reservoir Capacity :
-            <span>{farmdDetails?.nutrientWaterReservoirCapacity}</span>
-          </p>
-          <p className="section-title">
-            Ph Up/Down Reservoir Capacity : <span>{farmdDetails?.phReservoirCapacity}</span>
-          </p>
-          <p className="section-title">
-            Stock Nutrient Solution Capacity :
-            <span>{farmdDetails?.stockNutrientSolutionCapacity}</span>
-          </p>
-          <p className="section-title">
-            Nutrient Dilution Ratio : <span>{farmdDetails?.nutrientdilutionRatio}</span>
-          </p>
-          <p className="section-title">
-            Type Of Nutrients : <span>{farmdDetails?.nutrientsType}</span> 
-          </p>
+        <p className="section-title">
+          Main Reservoir Capacity :{" "}
+          <span>{farmdDetails?.reservoirCapacity}</span>
+        </p>
+        <p>
+          Nutrient Water Reservoir Capacity :
+          <span>{farmdDetails?.nutrientWaterReservoirCapacity}</span>
+        </p>
+        <p className="section-title">
+          Ph Up/Down Reservoir Capacity :{" "}
+          <span>{farmdDetails?.phReservoirCapacity}</span>
+        </p>
+        <p className="section-title">
+          Stock Nutrient Solution Capacity :
+          <span>{farmdDetails?.stockNutrientSolutionCapacity}</span>
+        </p>
+        <p className="section-title">
+          Nutrient Dilution Ratio :{" "}
+          <span>{farmdDetails?.nutrientdilutionRatio}</span>
+        </p>
+        <p className="section-title">
+          Type Of Nutrients : <span>{farmdDetails?.nutrientsType}</span>
+        </p>
       </>
     );
   };
   const renderPolyhouseInfo = () => {
     return (
       <>
-          <p className="section-title">
-            Polyhouse Structure Expected Life :
-            <span>{farmdDetails?.polyhouseStructureExpectedLife}</span>
-          </p>
-          <p className="section-title">
-            Polyhouse Plastic Expected Life :
-            <span>{farmdDetails?.polyhousePlasticExpectedLife}</span>
-          </p>
+        <p className="section-title">
+          Polyhouse Structure Expected Life :
+          <span>{farmdDetails?.polyhouseStructureExpectedLife}</span>
+        </p>
+        <p className="section-title">
+          Polyhouse Plastic Expected Life :
+          <span>{farmdDetails?.polyhousePlasticExpectedLife}</span>
+        </p>
       </>
     );
   };
@@ -860,11 +927,11 @@ export default function FarmDashboard({
               <TabList
                 orientation="vertical"
                 onChange={handleTabInfoChange}
-                sx={{ borderRight: 1, borderColor: "divider"}}
+                sx={{ borderRight: 1, borderColor: "divider" }}
                 className={"tab-vertical"}
                 aria-label="lab API tabs examplesssssss"
               >
-                <Tab label="Farm Area" value="1"  />
+                <Tab label="Farm Area" value="1" />
                 <Tab label="Germination Zone" value="2" />
                 <Tab label="Nursery Zone" value="3" />
                 <Tab label="Growing Zone" value="4" />
@@ -922,9 +989,9 @@ export default function FarmDashboard({
                 {renderViewOptionsRow()}
                 <br />
                 {/* {seletedView ? renderFarmZone() : renderZoneCard()} */}
-                {seletedView === "grid"
-                  ? renderFarmZoneGridView()
-                  : renderFarmZoneListView()}
+                {seletedView === "list"
+                  ? renderFarmZoneListView()
+                  : renderFarmZoneGridView()}
               </TabPanel>
               <TabPanel value="2">{renderCropSchedules()}</TabPanel>
               <TabPanel value="3">{renderTaskSchedules()}</TabPanel>

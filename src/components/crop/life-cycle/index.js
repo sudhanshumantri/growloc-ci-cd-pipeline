@@ -80,7 +80,7 @@ export default function CropLifeCycle({
     handleModalToggle();
   };
   const handleBackButton = () => {
-    navigate('/')
+    navigate(-1)
   }
 
   let buttonArray = [
@@ -91,7 +91,7 @@ export default function CropLifeCycle({
       isAuthRequired: true,
       from: "lifeCycle",
       action: "create",
-    },
+    },  
   ];
   let showBackButton = [
     {

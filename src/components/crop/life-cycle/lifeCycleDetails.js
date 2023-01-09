@@ -6,7 +6,7 @@ import Loader from "../../shared/loader";
 import Divider from "@mui/material/Divider";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import AddIcon from "@mui/icons-material/Add";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import {
   Stack,
   Stepper,
@@ -62,7 +62,6 @@ export default function CropLifeCycleDetails({
   const [openTaskModal, setTaskModal] = useState(false);
   const navigate = useNavigate();
 
-
   useEffect(() => {
     fetchCropsLifecycleDetails(parseInt(lifecycleId));
     fetchFarmInventory(farmId);
@@ -70,12 +69,10 @@ export default function CropLifeCycleDetails({
       fetchUsers({ farmId });
     }
   }, []);
-  
 
   const handleBackButton = () => {
-    navigate(-1)
-  }
- 
+    navigate(-1);
+  };
 
   let showBackButton = [
     {
@@ -86,7 +83,7 @@ export default function CropLifeCycleDetails({
   useEffect(() => {
     if (!isLifecycleDetailsLoading) {
       const { cropDetails } = lifecycleDetails;
-      const { FarmCropLifecycleStages =[]} = cropDetails;
+      const { FarmCropLifecycleStages = [] } = cropDetails;
       let activeStep = 0;
       for (let step of FarmCropLifecycleStages) {
         if (step.qty === 0) {
@@ -188,9 +185,9 @@ export default function CropLifeCycleDetails({
         isDispose: isHarvestStage ? true : false,
         isCompleted: isHarvestStage ? isComplete : false,
       };
-      handleModalToggle();
       cropsLifecycleTransition(requestData);
-      setActiveStep((prevStep) => prevStep + 1);
+      handleModalToggle();
+      activeStep < 4 && setActiveStep((prevStep) => prevStep + 1);
     }
   };
   const handleParametersSave = (data) => {
@@ -215,6 +212,7 @@ export default function CropLifeCycleDetails({
     let { cropDetails } = lifecycleDetails;
     //  cropDetails.crop.crop.variety
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
+    console.log(FarmCropLifecycleStages, "FarmCropLifecycleStages");
     let selectedStageInformation = FarmCropLifecycleStages[activeStep];
     if (selectedStageInformation.qty > 0) {
       if (activeStep + 1 < FarmCropLifecycleStages.length) {
@@ -384,7 +382,7 @@ export default function CropLifeCycleDetails({
                       )}
                     </TableCell>
                     <TableCell className="table-header" align="left">
-                      {data.qty} units{" "}
+                      {data.qty} units
                       {data.kgs ? "(" + data.kgs + " Kg) " : ""}
                     </TableCell>
                     <TableCell className="table-header" align="left">
@@ -433,19 +431,19 @@ export default function CropLifeCycleDetails({
           </p>
           <div className="life-cycle-details-card life-cycle-spacing ">
             <p className="label-light ">
-              <span className="label-light-bold">Crop Name: </span>{" "}
+              <span className="label-light-bold">Crop Name: </span>
               {lifecycleDetails.cropDetails.crop.crop.name}
             </p>
             <Divider />
 
             <p className="label-light">
-              <span className="label-light-bold">Current Stage: </span>{" "}
+              <span className="label-light-bold">Current Stage: </span>
               {selectedStageInformation.stage}
             </p>
             <Divider />
 
             <p className="label-light">
-              <span className="label-light-bold">Units: </span>{" "}
+              <span className="label-light-bold">Units: </span>
               {selectedStageInformation.qty}
             </p>
             <Divider />
@@ -459,7 +457,7 @@ export default function CropLifeCycleDetails({
             <Divider />
             <p className="label-light">
               <span className="label-light-bold">Actual Start Date : </span>
-              {selectedStageInformation.start_date
+              {selectedStageInformation?.start_date
                 ? moment(selectedStageInformation.start_date).format(
                     "MMMM Do YYYY hh:mm:ss A"
                   )
@@ -467,7 +465,7 @@ export default function CropLifeCycleDetails({
             </p>
             <Divider />
             <p className="label-light">
-              <span className="label-light-bold">Duration: </span>{" "}
+              <span className="label-light-bold">Duration: </span>
               {selectedStageInformation.duration}
             </p>
             <Divider />
@@ -487,7 +485,7 @@ export default function CropLifeCycleDetails({
               return (
                 <div key={index}>
                   <p className="label-light" key={index}>
-                    <span className="label-light-bold">{param.name}: </span>{" "}
+                    <span className="label-light-bold">{param.name}: </span>
                     {param.value} <b>{param.unit}</b>
                   </p>
                   <Divider />
