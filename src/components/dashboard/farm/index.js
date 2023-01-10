@@ -11,6 +11,7 @@ import {
   Button,
   ToggleButtonGroup,
   ToggleButton,
+  Autocomplete,
 } from "@mui/material";
 
 import { useParams } from "react-router-dom";
@@ -641,106 +642,71 @@ export default function FarmDashboard({
     );
   };
 
-  // const itemData = [
-  //   {
-  //     name:"pitta1",
-  //     farmArea: "300"
-  //   },
-  //   {
-  //     name:"pitta2",
+  //  const itemData = [
+  //     {
+  //    name:"pitta1",
+  //      farmArea: "300"
+  //     },
+  //    {
+  //      name:"pitta2",
   //     farmArea: "100"
-  //   },
-  //   {
+  //      },
+  //    {
   //     name:"pitta3",
-  //     farmArea: "50"
-  //   },
-  //   {
-  //     name:"pitta4",
-  //     farmArea: "50"
-  //   },
-  //   {
-  //     name: "pitta5",
+  //      farmArea: "50"
+  //     },
+  //    {
+  //    name:"pitta4",
+  //     farmArea: "50",
+  //      },
+  //    {
+  //      name: "pitta5",
   //     farmArea:"100"
   //   },
-  //   {
-  //     name: "chettu6",
+  //    {
+  //   name: "chettu6",
   //     farmArea:"200"
   //   },
-  //   {
+  //    {
   //     name: "chettu8",
-  //     farmArea:"250"
-  //   },
-  //   {
+  //   farmArea:"250"
+  //    },
+  //    {
   //     name: "",
   //     farmArea:""
   //   },
-    
-  // ];
+
+  //   ];
+
+  const getHeight = (farmArea) => {
+    return (400 / farmdDetails?.farmArea) * parseInt(farmArea)   + "px";
+  };
+
+  const getWidth = (farmArea) => {
+    return (100/ farmdDetails?.farmArea) * parseInt(farmArea) + "%";
+   };
+
   const renderFarmZoneGridView = () => {
     return (
       <>
-        {/* <ImageList
-          sx={{ width: 500, height: 500}}
-          variant="quilted"
-          cols={3}
-          rowHeight={121}
-        >
-      {(itemData || []).map((item) => (
-        <ImageListItem key={item.name} >
-          <Typography sx={{backgroundColor:"red"}}>{item.name}</Typography>
-        </ImageListItem>
-      ))}
-    </ImageList> */}
-
-<Grid item xs={3} sm={3} md={3}>
-          <Grid item xs={12} sm={12} md={12}>
-            <Card
-              className="zone-section"
-              style={{ backgroundColor: "#9ef898" }}
-            >
-              <CardContent>
-                <p className="zone-name">{farmDashboardZoneList[0]?.name}</p>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <Card
-              className="zone-section"
-              style={{ backgroundColor: "#ace2b0" }}
-            >
-              <CardContent>
-                <p className="zone-name">{farmDashboardZoneList[1]?.name}</p>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} style={{ alignItems: "center" }}>
-            <Card
-              className="zone-section"
-              style={{ backgroundColor: "#8ec16e" }}
-            >
-              <CardContent>
-                <p className="zone-name">1 </p>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-        {/* <Grid item xs={5} sm={5} md={5}>
-          <Card className="zone-second" style={{ backgroundColor: "#07c03d" }}>
-            <CardContent
-              style={{ textAnchor: "middle", dominantBaseline: "central" }}
-            >
-              <p className="zone-name zone-height">4</p>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={4} sm={4} md={4}>
-          <Card className="zone-second" style={{ backgroundColor: "#d3d3d3" }}>
-            <CardContent>
-              <p className="zone-name zone-height">5</p>
-            </CardContent>
-          </Card>
-        </Grid> */}
-
+        <ImageList sx={{ height: 400 }} variant="quilted" rowHeight={400}>
+          {(farmDashboardZoneList || []).map((item) => (
+            <ImageListItem key={item.name} sx={{ backgroundColor: "#eee"}}>
+              <Box
+                sx={{
+                  width:getWidth(item.farmArea),
+                  height:getHeight(item.farmArea),
+                  backgroundColor: "#35c4dc",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  display: "flex",
+                }}
+              >
+                {item.name}
+              </Box>
+            </ImageListItem>
+          ))}
+        </ImageList>
       </>
     );
   };
