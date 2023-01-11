@@ -982,6 +982,7 @@ export default function FarmDashboard({
             handleSave={handleFarmDashboardZone}
             zoneDetails={zoneData}
             data={farmDashboardZoneList}
+            farmData = {dashboardFarmList}
           />
         )}
         {isDeleteModelOpen && (

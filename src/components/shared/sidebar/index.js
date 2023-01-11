@@ -114,6 +114,7 @@ export default function SideBar({ router, logout, loginObject }) {
         open={open}
         drawerWidth={drawerWidth}
         loginObject={loginObject}
+        logout ={logout}
       />
       <Drawer variant="permanent" open={open} sx={{ zIndex: 1 }}>
         <DrawerHeader sx={{ background: "#517223" }}>
@@ -198,12 +199,12 @@ export default function SideBar({ router, logout, loginObject }) {
               </React.Fragment>
             );
           })}
-          <ListItem component={Link} onClick={() => logoutHandler()}>
+          {/* <ListItem component={Link} onClick={() => logoutHandler()}>
             <ListItemIcon className="darwer-icon">
               <LogoutIcon />
             </ListItemIcon>
             <ListItemText primary="Logout" />
-          </ListItem>
+          </ListItem> */}
         </List>
       </Drawer>
     </Box>

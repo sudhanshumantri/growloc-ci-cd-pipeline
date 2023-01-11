@@ -20,7 +20,7 @@ import AddUsers from "../../container/users";
 import CropLifeCycle from "../../container/life-cycle";
 import CropLifeCycleDetails from "../../container/life-cycle/lifeCycleDetails";
 import ZoneDashboard from "../../container/zone";
-import ManageZoneTasks from "../../container/zonetask"
+import ManageZoneTasks from "../../container/zonetask";
 import FarmOutlet from "../farmoutlet";
 import { getAsyncInjectors } from "../../utils/asyncInjectors";
 import loginReducer from "../../reducers/login";
@@ -44,7 +44,7 @@ import lifeCycleSagas from "../../sagas/life-cycle";
 import inventorySagas from "../../sagas/inventory";
 import taskSagas from "../../sagas/task";
 import zoneSagas from "../../sagas/zone";
-import  zoneTaskSagas  from "../../sagas/zone/task";
+import zoneTaskSagas from "../../sagas/zone/task";
 import { selectToken } from "../../selectors/login";
 import { loadAuthToken } from "../../actions/login";
 import AddFarm from "../../container/addfarm";
@@ -65,7 +65,7 @@ injectReducer("users", usersReducer);
 injectReducer("inventory", inventoryReducer);
 injectReducer("task", taskReducer);
 injectReducer("zone", zoneReducer);
-injectReducer("zoneTask",zoneTaskReducer)
+injectReducer("zoneTask", zoneTaskReducer);
 injectSagas(farmSagas);
 injectSagas(userSagas);
 injectSagas(loginSagas);
@@ -75,7 +75,7 @@ injectSagas(farmDashboardSagas);
 injectSagas(inventorySagas);
 injectSagas(taskSagas);
 injectSagas(zoneSagas);
-injectSagas(zoneTaskSagas)
+injectSagas(zoneTaskSagas);
 const drawerWidth = 240;
 const Layout = ({ loadAuthToken }) => {
   const token = localStorage.getItem("AUTH_TOKEN");
@@ -115,7 +115,7 @@ const Layout = ({ loadAuthToken }) => {
             path="farm/:farmId"
             element={
               <PrivateOutlet token={token}>
-                <FarmOutlet/>
+                <FarmOutlet />
               </PrivateOutlet>
             }
             children={[SideBar]}
@@ -167,6 +167,7 @@ const Layout = ({ loadAuthToken }) => {
               </PrivateOutlet>
             }
           />
+          
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Routes>
