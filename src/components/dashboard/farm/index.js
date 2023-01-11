@@ -34,10 +34,10 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import ConfirmDialogBox from "../../shared/dailog/ConfirmDialogBox";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import AddCropModal from "../../crop/life-cycle/addCropToLifeCycleModal";
-import imageSrc from "../../../../public/assets/total-devices.svg";
-import farmsImage from "../../../../public/assets/svg.svg";
-import harvestImage from "../../../../public/assets/batch-progress.svg";
-import taskImage from "../../../../public/assets/task-for-today.svg";
+import Noofzone from "../../../../public/assets/Noofzone.png";
+import Noofbatch from "../../../../public/assets/Noofbatch.png";
+import Totalharvest from "../../../../public/assets/Totalharvest.png";
+import Nooftask from "../../../../public/assets/Nooftask.png";
 // import { Box, Tab, Tabs } from "@mui/material";
 // import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 import Box from "@mui/material/Box";
@@ -50,6 +50,9 @@ import ListIcon from "@mui/icons-material/List";
 // import {GridList,GridListTile} from '@material-ui/core/';
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 export default function FarmDashboard({
   dashboardFarmList,
@@ -93,7 +96,7 @@ export default function FarmDashboard({
   const [zoneData, setZoneData] = useState({});
   const [openCrop, setOpenCrop] = useState(false);
   const [cropData, setCropData] = useState({});
-  const [seletedView, setSelectView] = useState("grid");
+  const [seletedView, setSelectView] = useState("list");
   const [tabInfo, setTabInfo] = useState("1");
   const [value, setValue] = useState("1");
 
@@ -108,8 +111,6 @@ export default function FarmDashboard({
   const handleGridView = () => {
     setSelectView(seletedView == "grid" ? "list" : "grid");
   };
-
-  console.log("dashboardFarmList", dashboardFarmList);
 
   React.useEffect(() => {
     fecthFarmDashboardZone(farmId);
@@ -561,7 +562,7 @@ export default function FarmDashboard({
                       height="42px"
                       width="42px"
                       className="farm-dashboard-images"
-                      src={imageSrc}
+                      src={Noofzone}
                     />
                   </Grid>
                 </Grid>
@@ -582,7 +583,7 @@ export default function FarmDashboard({
                     height="42px"
                     width="42px"
                     className="farm-dashboard-images"
-                    src={farmsImage}
+                    src={Noofbatch}
                   />
                 </Grid>
               </Grid>
@@ -604,7 +605,7 @@ export default function FarmDashboard({
                     height="42px"
                     width="42px"
                     className="farm-dashboard-images"
-                    src={taskImage}
+                    src={Nooftask}
                   />
                 </Grid>
               </Grid>
@@ -631,7 +632,7 @@ export default function FarmDashboard({
                     height="42px"
                     width="42px"
                     className="farm-dashboard-images"
-                    src={harvestImage}
+                    src={Totalharvest}
                   />
                 </Grid>
               </Grid>
@@ -641,57 +642,43 @@ export default function FarmDashboard({
       </>
     );
   };
-
-  //  const itemData = [
-  //     {
-  //    name:"pitta1",
-  //      farmArea: "300"
-  //     },
-  //    {
-  //      name:"pitta2",
-  //     farmArea: "100"
-  //      },
-  //    {
-  //     name:"pitta3",
-  //      farmArea: "50"
-  //     },
-  //    {
-  //    name:"pitta4",
-  //     farmArea: "50",
-  //      },
-  //    {
-  //      name: "pitta5",
-  //     farmArea:"100"
-  //   },
-  //    {
-  //   name: "chettu6",
-  //     farmArea:"200"
-  //   },
-  //    {
-  //     name: "chettu8",
-  //   farmArea:"250"
-  //    },
-  //    {
-  //     name: "",
-  //     farmArea:""
-  //   },
-
-  //   ];
-
   const getHeight = (farmArea) => {
-    return (400 / farmdDetails?.farmArea) * parseInt(farmArea)   + "px";
+    return (400 / farmdDetails?.farmArea) * parseInt(farmArea) + "px";
   };
 
   const getWidth = (farmArea) => {
-    return (100/ farmdDetails?.farmArea) * parseInt(farmArea) + "%";
-   };
-
+    return (100 / farmdDetails?.farmArea) * parseInt(farmArea) + "%";
+  };
   const renderFarmZoneGridView = () => {
     return (
       <>
-        <ImageList sx={{ height: 400 }} variant="quilted" rowHeight={400}>
+        <GridList cellHeight={400}>
+          {(farmDashboardZoneList || []).map((tile) => {
+            return (
+              <GridListTile key={tile.name} cols={tile.cols || 1} style={{ background: "red" }} backgroundColor='red'>
+                {/* <img src={tile.img} alt={tile.title} /> */}
+                <GridListTileBar
+                  title={tile.name}
+
+                // actionIcon={
+                //   <IconButton className={classes.icon}>
+                //     <InfoIcon />
+                //   </IconButton>
+                // }
+                />
+              </GridListTile>
+
+            )
+          })}
+        </GridList>
+
+        {/* <ImageList sx={{ height: 400 }} variant="quilted" rowHeight={400}>
           {(farmDashboardZoneList || []).map((item) => (
-            <ImageListItem key={item.name} sx={{ backgroundColor: "#eee"}}>
+            <ImageListItem key={item.name} sx={{
+              width: getWidth(item.farmArea),
+              //  height:getHeight(item.farmArea),
+              backgroundColor: "#35c4dc",
+            }}>
               <Box
                 sx={{
                   width:getWidth(item.farmArea),
@@ -702,11 +689,11 @@ export default function FarmDashboard({
                   display: "flex",
                 }}
               >
-                {item.name}
+              {item.name}
               </Box>
             </ImageListItem>
           ))}
-        </ImageList>
+        </ImageList> */}
       </>
     );
   };

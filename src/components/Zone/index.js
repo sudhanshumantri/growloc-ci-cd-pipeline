@@ -15,7 +15,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CollapsibleTable from "../shared/collapsibleDataTable";
 import AddTaskModal from "../shared/addtask/addtask";
 import AddZoneSensorsModal from "./addsensors";
-import {Card,CardContent} from "@mui/material";
+import { Card, CardContent } from "@mui/material";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -23,9 +23,9 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
-import imageSrc from "../../../public/assets/total-devices.svg";
-import harvestImage from "../../../public/assets/batch-progress.svg";
-import taskImage from "../../../public/assets/task-for-today.svg";
+import Noofbatch from "../../../public/assets/Noofbatch.png";
+import Totalharvest from "../../../public/assets/Totalharvest.png";
+import Nooftask from "../../../public/assets/Nooftask.png";
 
 export default function ZoneDashboard({
   fetchFarmZone,
@@ -231,23 +231,23 @@ export default function ZoneDashboard({
         {/* <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">Zone Sensors</p>
         </Grid> */}
-              <Grid container spacing={2}>
-        <Grid item xs={6} sm={6} md={9} lg={9}>
-          <p className="section-title">Zone Sensors</p>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} sx={{ alignItems: "center" }}>
-          <ButtonCustom
-            title="Add New Sensors"
-            ICON={<AddIcon />}
-            handleButtonClick={handleZoneSensorsModalToggle}
-          />
-        </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={6} sm={6} md={9} lg={9}>
+            <p className="section-title">Zone Sensors</p>
+          </Grid>
+          <Grid item xs={6} sm={6} md={3} lg={3} sx={{ alignItems: "center" }}>
+            <ButtonCustom
+              title="Add New Sensors"
+              ICON={<AddIcon />}
+              handleButtonClick={handleZoneSensorsModalToggle}
+            />
+          </Grid>
 
-        <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
-          <DataTable
-            data={{ headers: ZONE_HEADERS, rows: cropSchedules || [] }}
-          />
-        </Grid>
+          <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
+            <DataTable
+              data={{ headers: ZONE_HEADERS, rows: cropSchedules || [] }}
+            />
+          </Grid>
         </Grid>
       </>
     );
@@ -257,13 +257,13 @@ export default function ZoneDashboard({
     const { cropSchedules } = farmZoneDashboardList;
     return (
       <>
-            <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={12}>
-          <p className="section-title">Zone Crop Schedules</p>
-        </Grid>
-        <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
-          <DataTable data={{ headers: headers, rows: cropSchedules || [] }} />
-        </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={12}>
+            <p className="section-title">Zone Crop Schedules</p>
+          </Grid>
+          <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
+            <DataTable data={{ headers: headers, rows: cropSchedules || [] }} />
+          </Grid>
         </Grid>
       </>
     );
@@ -272,34 +272,34 @@ export default function ZoneDashboard({
   const renderZoneMonthlyHarvestBreakup = () => {
     return (
       <>
-            <Grid container spacing={2}>
+        <Grid container spacing={2}>
 
-        <Grid item xs={8} sm={10} md={10}>
-          <p className="section-title">Zone Monthly Harvest Breakup</p>
-        </Grid>
-        <Grid item xs={4} sm={2} md={2}>
-          <FormControl fullWidth>
-            <span className="input-label">Select Month</span>
-            <SingleCustomSelect
-              value={month}
-              valueKey="value"
-              labelKey="name"
-              lable="Select Month"
-              options={HARVEST_MONTH_OPTIONS}
-              handleChange={handleChange}
-            />
-          </FormControl>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={12}
-          lg={12}
-          className="card-outline-container graph-container"
-        >
-          <BarChart chartData={farmZoneDashboardHarvestList || []} />
-        </Grid>
+          <Grid item xs={8} sm={10} md={10}>
+            <p className="section-title">Zone Monthly Harvest Breakup</p>
+          </Grid>
+          <Grid item xs={4} sm={2} md={2}>
+            <FormControl fullWidth>
+              <span className="input-label">Select Month</span>
+              <SingleCustomSelect
+                value={month}
+                valueKey="value"
+                labelKey="name"
+                lable="Select Month"
+                options={HARVEST_MONTH_OPTIONS}
+                handleChange={handleChange}
+              />
+            </FormControl>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            className="card-outline-container graph-container"
+          >
+            <BarChart chartData={farmZoneDashboardHarvestList || []} />
+          </Grid>
         </Grid>
       </>
     );
@@ -360,24 +360,24 @@ export default function ZoneDashboard({
     const { farmdDetails } = farmZoneDashboardList;
     return (
       <>
-            <Grid container spacing={2}>
-        <Grid item xs={6} sm={6} md={9} lg={9}>
-          <p className="section-title">Zone Tasks</p>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} sx={{ alignItems: "center" }}>
-          <ButtonCustom
-            title="Add New Task"
-            ICON={<AddIcon />}
-            handleButtonClick={handleModalToggle}
-          />
-        </Grid>
-        <Grid className="card-outline-container " item xs={12} sm={12} md={12}>
-          {/* <DataTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }} /> */}
-          <CollapsibleTable
-            data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }}
-            handleCommentModalToggle={handleCommentModalToggle}
-          />
-        </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={6} sm={6} md={9} lg={9}>
+            <p className="section-title">Zone Tasks</p>
+          </Grid>
+          <Grid item xs={6} sm={6} md={3} lg={3} sx={{ alignItems: "center" }}>
+            <ButtonCustom
+              title="Add New Task"
+              ICON={<AddIcon />}
+              handleButtonClick={handleModalToggle}
+            />
+          </Grid>
+          <Grid className="card-outline-container " item xs={12} sm={12} md={12}>
+            {/* <DataTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }} /> */}
+            <CollapsibleTable
+              data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }}
+              handleCommentModalToggle={handleCommentModalToggle}
+            />
+          </Grid>
         </Grid>
       </>
     );
@@ -400,7 +400,7 @@ export default function ZoneDashboard({
                       height="42px"
                       width="42px"
                       className="farm-dashboard-images"
-                      src={imageSrc}
+                      src={Noofbatch}
                     />
                   </Grid>
                 </Grid>
@@ -421,7 +421,7 @@ export default function ZoneDashboard({
                     height="42px"
                     width="42px"
                     className="farm-dashboard-images"
-                    src={taskImage}
+                    src={Nooftask}
                   />
                 </Grid>
               </Grid>
@@ -433,11 +433,11 @@ export default function ZoneDashboard({
             <CardContent>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
-                  { totalHarvested ?
-                  <h4 className="section-details">
-                    {totalHarvested?.kgs || "" }(kgs)
-                    /{totalHarvested?.qty || " " }(qty)
-                  </h4>:""}
+                  {totalHarvested ?
+                    <h4 className="section-details">
+                      {totalHarvested?.kgs || ""}(kgs)
+                      /{totalHarvested?.qty || " "}(qty)
+                    </h4> : ""}
                   <p className="farm-card">Total Harvested</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
@@ -445,14 +445,14 @@ export default function ZoneDashboard({
                     height="42px"
                     width="42px"
                     className="farm-dashboard-images"
-                    src={harvestImage}
+                    src={Totalharvest}
                   />
                 </Grid>
               </Grid>
             </CardContent>
           </Card>
         </Grid>
-        
+
       </>
     );
   };
@@ -460,20 +460,20 @@ export default function ZoneDashboard({
   const renderZoneInfo = () => {
     return (
       <>
-           <p className="section-title">
-            Zone Name : <span>{farmDashboardZoneList[0]?.name || ""}</span>
-          </p>
-          <p className="section-title">
-            Farm Area:
-            <span>{farmDashboardZoneList[0]?.farmArea || ""}</span>
-          </p>
-          <p className="section-title"> System Type :
-            <span>{farmDashboardZoneList[0]?.systemType || ""}</span>
-          </p>
-          <p className="section-title">
+        <p className="section-title">
+          Zone Name : <span>{farmDashboardZoneList[0]?.name || ""}</span>
+        </p>
+        <p className="section-title">
+          Farm Area:
+          <span>{farmDashboardZoneList[0]?.farmArea || ""}</span>
+        </p>
+        <p className="section-title"> System Type :
+          <span>{farmDashboardZoneList[0]?.systemType || ""}</span>
+        </p>
+        <p className="section-title">
           Zone Type :
-            <span>{farmDashboardZoneList[0]?.zoneType || ""}</span>
-          </p>
+          <span>{farmDashboardZoneList[0]?.zoneType || ""}</span>
+        </p>
       </>
     );
   };
@@ -503,7 +503,7 @@ export default function ZoneDashboard({
           {renderZoneMonthlyHarvestBreakup()}
           {renderFarmZoneUtilization()}
           {renderZoneCropsUtilization()} */}
-            <TabContext value={value}>
+          <TabContext value={value}>
             <Grid item xs={12} sm={12} md={12}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <TabList
@@ -517,21 +517,19 @@ export default function ZoneDashboard({
                   <Tab label="Info" value="5"></Tab>
                 </TabList>
               </Box>
-              <TabPanel value="1"> 
-              {renderZoneSencers()}
-              </TabPanel>
+              <TabPanel value="1"> {renderZoneSencers()}</TabPanel>
               <TabPanel value="2">{renderZoneCropSchedules()}</TabPanel>
               <TabPanel value="3">{renderZoneTaskSchedules()}</TabPanel>
               <TabPanel value="4">
-              {renderZoneMonthlyHarvestBreakup()}
-              <Grid container spacing={2}>
-          {renderFarmZoneUtilization()}
-          {renderZoneCropsUtilization()}
-          </Grid>
+                {renderZoneMonthlyHarvestBreakup()}
+                <Grid container spacing={2}>
+                  {renderFarmZoneUtilization()}
+                  {renderZoneCropsUtilization()}
+                </Grid>
               </TabPanel>
               <TabPanel value="5">{renderZoneInfo()}</TabPanel>
-              </Grid>
-            </TabContext>
+            </Grid>
+          </TabContext>
         </Grid>
       </div>
       {open && (
