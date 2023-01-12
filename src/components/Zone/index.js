@@ -478,14 +478,16 @@ export default function ZoneDashboard({
     );
   };
 
+  let subtitle = `( Zone Area : ${farmDashboardZoneList[0]?.farmArea || "" } )`;
+
   return (
     <div>
       <PageHeader
         title={farmZoneList?.name || ""}
+        subtitle={subtitle ?? ""}
         showBackButton={showBackButton}
         headerDropwdown={headerDropwdown}
         options={getZonerListOptions()}
-        // value={zoneClick}
         value={zoneId}
         labelkey="label"
         valuekey="value"

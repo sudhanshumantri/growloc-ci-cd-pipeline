@@ -51,6 +51,7 @@ import AddFarm from "../../container/addfarm";
 // import ManageItem from "../inventory/manageitem";
 import ManageItem from "../../container/inventory";
 import ManageTasks from "../../container/task";
+import { ProfileInformation } from "../profileinformation";
 // import ZoneDashboard from "../Zone";
 // import Tasks from "../task";
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
@@ -168,6 +169,15 @@ const Layout = ({ loadAuthToken }) => {
             }
           />
           
+          <Route
+            path="profile"
+            element={
+              <PrivateOutlet token={token}>
+                <ProfileInformation />
+              </PrivateOutlet>
+            }
+          />
+
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Routes>

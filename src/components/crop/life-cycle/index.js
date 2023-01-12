@@ -17,7 +17,6 @@ export default function CropLifeCycle({
   lifecycleCropsList,
   isAddLifecycleLoading,
   addLifecycleError,
-
   isCropLifeCycleListLoading,
 }) {
   let { farmId, zoneId} = useParams();

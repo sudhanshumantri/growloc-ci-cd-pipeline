@@ -904,11 +904,16 @@ export default function FarmDashboard({
     );
   };
 
+  const allFarmArea = farmDashboardZoneList?.map((product) => parseInt(product.farmArea))
+  const totalFarmArea = allFarmArea.reduce((acc, curr) => acc + curr,0)
+  const reamingArea = farmdDetails?.farmArea - totalFarmArea;
+  let subtitle = `(Total Farm Area : ${farmdDetails?.farmArea || ""}  Available Farm Area : ${reamingArea ?? ""} )`;
   return (
     <div>
       <PageHeader
         // title="Farm Dashboard"
         title={farmdDetails?.name || ""}
+        subtitle={subtitle}
         buttonArray={buttonArray}
         showBackButton={showBackButton}
       />

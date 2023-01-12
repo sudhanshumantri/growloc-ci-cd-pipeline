@@ -61,8 +61,10 @@ export default function TopHeader({
     }
 
     const handleAccountsNavigation = () => {
-      navigate('/profile')
+      navigate("profile")
+      handleToggleMenu()
     }
+
   if (loginObject) {
     let userName = loginObject?.profile?.name;
     let userNameArray = userName?.split(" ");
@@ -110,11 +112,11 @@ export default function TopHeader({
                              },
                            }}
                             >
-                            <MenuItem sx={{ fontSize: '12px' }} >
+                            <MenuItem sx={{ fontSize: '12px' }} onClick={handleAccountsNavigation}>
                                 <ListItemIcon>
                                     <PersonIcon />
                                 </ListItemIcon>
-                                <ListItemText className='label-custom' onClick={handleAccountsNavigation}> My Profile</ListItemText>
+                                <ListItemText className='label-custom' > My Profile</ListItemText>
                             </MenuItem>
                             <Divider />
                             <MenuItem sx={{ fontSize: '12px' }} component={Link} onClick={() => logoutHandler()}>

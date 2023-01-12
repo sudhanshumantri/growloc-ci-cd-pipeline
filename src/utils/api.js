@@ -46,8 +46,9 @@ const urls = {
     "add-task-dashboard-zone-comment":"farm/task/add-comments/",
     "fetch-zone-all-task":"farm/zone-task/",
     "add-zone-task-comment":"farm/task/add-comments/",
-
-
+    'forgot-password':'',
+    'forgot-password-verify-token':'',
+    'change-password':'user/change/password/',
   },
 };
 function getEndpoint(endpoint) {
@@ -401,6 +402,34 @@ export function callAddZoneTaskComment(data) {
     data,
   });
 }
+
+export function callForgotPasswordHandler(data) {
+  return callApi(getEndpoint('forgot-password'), {
+      method: 'post',
+      removeAuthorizationHeader: false,
+      data
+  });
+}
+
+
+export function callRestPasswordTokenValidationHandler(routeParams) {
+  return callApi(getEndpoint('forgot-password-verify-token'), {
+      method: 'get',
+      removeAuthorizationHeader: false,
+      routeParams
+  });
+}
+export function callChangePasswordHandler(routeParams,data) {
+  return callApi(getEndpoint('change-password'), {
+      method: 'post',
+      removeAuthorizationHeader: false,
+      routeParams,
+      data
+  });
+}
+
+
+
 
 
 

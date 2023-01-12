@@ -12,6 +12,9 @@ const TextBox = ({
   isWhite,
   inputRef,
   defaultValue,
+  fullWidth,
+  multiline,
+  rows,
   ...params
 }) => {
 
@@ -33,6 +36,9 @@ const TextBox = ({
           error ={error}
           helperText={helperText}
           inputRef ={inputRef}
+          fullWidth={fullWidth}
+          multiline={multiline}
+          rows={rows}
         />
 
     </>

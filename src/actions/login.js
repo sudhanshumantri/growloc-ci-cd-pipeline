@@ -4,6 +4,10 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
     LOGOUT,
+    FORGOT_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_FAILURE
+
 } from './actionTypes';
 export function loadAuthToken(data) {
     return {
@@ -33,5 +37,24 @@ export function loginFailure(error) {
 export function logout() {
     return {
         type: LOGOUT
+    };
+};
+
+export function forgotPasswordRequest(data) {
+    return {
+        type: FORGOT_PASSWORD_REQUEST,
+        data
+    };
+}
+export function forgotPasswordSuccess(data) {
+    return {
+        type: FORGOT_PASSWORD_SUCCESS,
+        data
+    };
+}
+export function forgotPasswordFailure(error) {
+    return {
+        type: FORGOT_PASSWORD_FAILURE,
+        error
     };
 }

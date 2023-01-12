@@ -50,9 +50,10 @@ export default function AddZoneModal({
   const {farmdDetails} = farmData;
 
   const allFarmArea = data.map((product) => parseInt(product.farmArea))
-  const totalFarmArea = allFarmArea.reduce((acc, curr) => acc + curr)
+  const totalFarmArea = allFarmArea.reduce((acc, curr) => acc + curr,0)
 
   const reamingArea = farmdDetails?.farmArea - totalFarmArea;
+
   const validateFarmDashboardZone = () => {
     let errors = { ...validation };
     let isValid = true;
@@ -86,7 +87,6 @@ export default function AddZoneModal({
       handleSave(requestFarmDashBoardZoneData);
     }
   };
-
   const renderActionButton = () => {
     return (
       <>
