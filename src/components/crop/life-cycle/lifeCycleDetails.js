@@ -153,7 +153,7 @@ export default function CropLifeCycleDetails({
     updateCropToLifecycleSchedule(scheduleHarvestingData);
     handleScheduleHarvestingModalToggle();
   };
-  const handleEditToggle = () => {
+  const handleParametersInformationEditToggle = () => {
     setIsStageEditOpen(!isStageEditOpen);
   };
   const handleActiveStep = (id) => {
@@ -197,7 +197,7 @@ export default function CropLifeCycleDetails({
       parameters,
     };
     addCropToLifecycleParameters(paylad);
-    handleEditToggle();
+    handleParametersInformationEditToggle();
   };
   const handleActionButton = () => {
     let buttonArray = [];
@@ -289,7 +289,7 @@ export default function CropLifeCycleDetails({
     return (
       <>
         {info.map((data, index) => (
-          <span className="label-light-bold" key={index}>
+          <span className="label-custom" key={index}>
             {data.title && (
               <>
                 <b>{data.title}</b>:
@@ -419,65 +419,111 @@ export default function CropLifeCycleDetails({
       </Grid>
     );
   };
+  const renderSelectedSegmentSensorInformation = (selectedStageInformation) => {
+    return (
+      <Grid item xs={12} sm={12} md={12}>
+        <p className="section-title">Sensors Information </p>
+        <Paper className="life-cycle-details-card life-cycle-spacing ">
+          <Table size="small" aria-label="a dense table">
+            <TableHead className="table-header-row">
+              <TableRow>
+                <TableCell className="label-custom"><b>Parameter</b></TableCell>
+                <TableCell className="label-custom"><b>Current Value</b></TableCell>
+                <TableCell className="label-custom"><b>Ideal Value</b>
+                  <EditOutlinedIcon
+                    className="icon"
+                    sx={{ color: "#517223", fontSize: "16px" }}
+                    onClick={handleParametersInformationEditToggle}
+                  />
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {selectedStageInformation.parameters.map((param, index) => {
+                return (
+                  <TableRow
+                    // key={index}
+                    key={index}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell className="label-custom" align="left">
+                     {param.name}
+                    </TableCell>
+                    <TableCell className="table-header" align="left">
+                      {param.value} <b>{param.unit}</b>
+                    </TableCell>
+                    <TableCell className="table-header" align="left">
+                      {param.value} <b>{param.unit}</b>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </Paper>
+      </Grid>
+    )
+  }
   const renderSelectedStageInformation = () => {
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let selectedStageInformation = FarmCropLifecycleStages[activeStep];
 
     return (
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={6}>
+        {renderSelectedSegmentSensorInformation(selectedStageInformation)}
+        <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">
             {selectedStageInformation.stage + " Stage Information"}
           </p>
           <div className="life-cycle-details-card life-cycle-spacing ">
             <p className="label-light ">
-              <span className="label-light-bold">Crop Name: </span>
+              <span className="label-custom">Crop Name: </span>
               {lifecycleDetails.cropDetails.crop.crop.name}
             </p>
             <Divider />
 
             <p className="label-light">
-              <span className="label-light-bold">Current Stage: </span>
+              <span className="label-custom">Current Stage: </span>
               {selectedStageInformation.stage}
             </p>
             <Divider />
 
             <p className="label-light">
-              <span className="label-light-bold">Units: </span>
+              <span className="label-custom">Units: </span>
               {selectedStageInformation.qty}
             </p>
             <Divider />
 
             <p className="label-light">
-              <span className="label-light-bold">Expected Start Date : </span>
+              <span className="label-custom">Expected Start Date : </span>
               {moment(selectedStageInformation.expected_start_date).format(
                 "MMMM Do YYYY"
               )}
             </p>
             <Divider />
             <p className="label-light">
-              <span className="label-light-bold">Actual Start Date : </span>
+              <span className="label-custom">Actual Start Date : </span>
               {selectedStageInformation?.start_date
                 ? moment(selectedStageInformation.start_date).format(
-                    "MMMM Do YYYY hh:mm:ss A"
-                  )
+                  "MMMM Do YYYY hh:mm:ss A"
+                )
                 : "Not Yet Started"}
             </p>
             <Divider />
             <p className="label-light">
-              <span className="label-light-bold">Duration: </span>
+              <span className="label-custom">Duration: </span>
               {selectedStageInformation.duration}
             </p>
             <Divider />
           </div>
         </Grid>
-        <Grid item xs={12} sm={6} md={6}>
+        {/* <Grid item xs={12} sm={6} md={6}>
           <p className="section-title">
             {selectedStageInformation.stage + " Parameters Information"}
             <EditOutlinedIcon
               className="icon"
               sx={{ color: "#517223", fontSize: "20px" }}
-              onClick={handleEditToggle}
+              onClick={handleParametersInformationEditToggle}
             />
           </p>
           <div className="life-cycle-details-card life-cycle-spacing">
@@ -485,7 +531,7 @@ export default function CropLifeCycleDetails({
               return (
                 <div key={index}>
                   <p className="label-light" key={index}>
-                    <span className="label-light-bold">{param.name}: </span>
+                    <span className="label-custom">{param.name}: </span>
                     {param.value} <b>{param.unit}</b>
                   </p>
                   <Divider />
@@ -493,43 +539,9 @@ export default function CropLifeCycleDetails({
               );
             })}
           </div>
-        </Grid>
+        </Grid> */}
         {renderHistoryInformation()}
-        <Grid item xs={12} sm={12} md={12}>
-          <p className="section-title">Sensors Information </p>
-          <Paper className="life-cycle-details-card life-cycle-spacing ">
-            <Table size="small" aria-label="a dense table">
-              <TableHead className="table-header-row">
-                <TableRow>
-                  <TableCell>Parameter</TableCell>
-                  <TableCell>Current Value</TableCell>
-                  <TableCell>Ideal Value</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {selectedStageInformation.parameters.map((param, index) => {
-                  return (
-                    <TableRow
-                      // key={index}
-                      key={index}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell className="table-header" align="left">
-                        {param.name}
-                      </TableCell>
-                      <TableCell className="table-header" align="left">
-                        {param.value} <b>{param.unit}</b>
-                      </TableCell>
-                      <TableCell className="table-header" align="left">
-                        {param.value} <b>{param.unit}</b>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </Paper>
-        </Grid>
+
       </Grid>
     );
   };
@@ -563,7 +575,7 @@ export default function CropLifeCycleDetails({
                 isHarvestStage={isHarvestStage}
                 isContiniousHarvet={
                   lifecycleDetails.cropDetails.crop.crop.variety == "Vine" ||
-                  lifecycleDetails.cropDetails.crop.crop.variety == "Herb"
+                    lifecycleDetails.cropDetails.crop.crop.variety == "Herb"
                     ? true
                     : false
                 }
@@ -571,8 +583,8 @@ export default function CropLifeCycleDetails({
                   maxQty
                     ? maxQty
                     : lifecycleDetails.cropDetails.FarmCropLifecycleStages[
-                        activeStep
-                      ].qty
+                      activeStep
+                    ].qty
                 }
               />
             )}
@@ -595,7 +607,7 @@ export default function CropLifeCycleDetails({
             {isStageEditOpen && (
               <EditParameters
                 open={isStageEditOpen}
-                handleClose={handleEditToggle}
+                handleClose={handleParametersInformationEditToggle}
                 modalData={lifecycleDetails}
                 activeStep={activeStep}
                 handleSave={handleParametersSave}
