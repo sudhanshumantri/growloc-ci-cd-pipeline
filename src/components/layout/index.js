@@ -110,7 +110,16 @@ const Layout = ({ loadAuthToken }) => {
               </PrivateOutlet>
             }
           />
-          <Route path="add-farm/" element={<AddFarm />} />
+'          {/* <Route
+            exact
+            path="/admin"
+            element={
+              <PrivateOutlet token={token}>
+                <AdminLayout />
+              </PrivateOutlet>
+            }
+          /> */}
+'          <Route path="add-farm/" element={<AddFarm />} />
           <Route path="edit-farm/:farmId" element={<AddFarm />} />
           <Route
             path="farm/:farmId"
