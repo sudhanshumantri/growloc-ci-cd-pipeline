@@ -4,11 +4,22 @@ import { createStructuredSelector } from "reselect";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Routes, Route } from "react-router-dom";
-import PrivateOutlet from "../privateroute";
-import ManageTasks from "../task";
-import Login from "../login";
+import store from "../../../store";
+import { getAsyncInjectors } from "../../../utils/asyncInjectors";
+import loginReducer from "../../../reducers/login";
+import usersReducer from "../../../reducers/users";
+import loginSagas from "../../../sagas/login";
+import userSagas from "../../../sagas/users";
+import { selectToken } from "../../../selectors/login";
+import { loadAuthToken } from "../../../actions/login";
+import { AdminDashboard } from "../../admin/adminDashboard";
+import PrivateOutlet from "../../privateroute";
+const { injectReducer, injectSagas } = getAsyncInjectors(store);
+injectReducer("login", loginReducer);
+injectReducer("users", usersReducer);
+injectSagas(userSagas);
+injectSagas(loginSagas);
 const drawerWidth = 240;
-
 const AdminLayout = ({ loadAuthToken }) => {
   const token = localStorage.getItem("AUTH_TOKEN");
   let loginObject = localStorage.getItem("AUTH_OBJECT");
@@ -22,7 +33,6 @@ const AdminLayout = ({ loadAuthToken }) => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      {token && <SideBar loginObject={loginObject} />}
       <Box
         component="main"
         sx={{
@@ -32,18 +42,23 @@ const AdminLayout = ({ loadAuthToken }) => {
         }}
       >
         <Routes>
-          <Route path="login" element={<Login />} />
           <Route
-            path="task"
+            path="/admin"
+            element={
+                <AdminDashboard />
+            }
+          />
+          <Route
+            path="/user"
             element={
               <PrivateOutlet token={token}>
-                <ManageTasks />
+                <AdminDashboard />
               </PrivateOutlet>
             }
           />
         </Routes>
       </Box>
-    </Box>
+    // </Box>
   );
 };
 const mapDispatchToProps = {
@@ -58,9 +73,6 @@ function withRouter(Component) {
   }
   return ComponentWithRouterProp;
 }
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AdminLayout));
-
-
-
-// "phone":1122334455,
-// "password":"admin@123"
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(AdminLayout)
+);
