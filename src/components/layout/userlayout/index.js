@@ -52,6 +52,7 @@ import AddFarm from "../../../container/addfarm";
 import ManageItem from "../../../container/inventory";
 import ManageTasks from "../../../container/task";
 import { ProfileInformation } from "../../profileinformation";
+import { ErrorPage } from "../../errorpage";
 // import ZoneDashboard from "../Zone";
 // import Tasks from "../task";
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
@@ -92,7 +93,7 @@ const UserLayout = ({ loadAuthToken }) => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      {token && <SideBar loginObject={loginObject} />}
+      {token && <SideBar loginObject={loginObject} />} 
       <Box
         component="main"
         sx={{
@@ -102,7 +103,6 @@ const UserLayout = ({ loadAuthToken }) => {
         }}
       >
         <Routes>
-          
           {/* <Route path="/" element={<SideBar loginObject={loginObject} />}> */}
             <Route
               exact
@@ -174,10 +174,10 @@ const UserLayout = ({ loadAuthToken }) => {
                 </PrivateOutlet>
               }
             />
-          {/* </Route> */}
-
+          <Route  element={<ErrorPage />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+        <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Box>
     </Box>

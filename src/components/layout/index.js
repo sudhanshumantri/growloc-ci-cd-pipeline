@@ -20,12 +20,19 @@ injectReducer("users", usersReducer);
 injectSagas(userSagas);
 injectSagas(loginSagas);
 
+
+
 const Layout = () => {
+    let loginObject = localStorage.getItem("AUTH_OBJECT");
+    if (loginObject) {
+      loginObject = JSON.parse(loginObject);
+    }
+    const { profile } = loginObject || ""; 
   
   return (
     <>
-     <Userlayout/>
-   <Adminlayout/>     
+    { profile?.role === "admin" ?  <Adminlayout/>:  
+     <Userlayout/> }
     </>
   );
 };
