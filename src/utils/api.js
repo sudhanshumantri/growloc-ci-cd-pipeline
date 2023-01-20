@@ -53,6 +53,8 @@ const urls = {
     "fetch-user-profile": "",
     "update-user-profile": "",
     "update-user-phone": "",
+    "fetch-admin-list": "",
+
   },
 };
 function getEndpoint(endpoint) {
@@ -447,6 +449,13 @@ export function callupdateChangeEmail(data) {
       method: 'POST',
       removeAuthorizationHeader: false,
       data
+  });
+}
+export function callFetchAdminList(routeParams) {
+  return callApi(getEndpoint("fetch-admin-list"), {
+    method: "get",
+    removeAuthorizationHeader: false,
+    routeParams,
   });
 }
 

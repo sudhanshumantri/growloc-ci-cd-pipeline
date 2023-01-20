@@ -53,6 +53,7 @@ import ManageItem from "../../../container/inventory";
 import ManageTasks from "../../../container/task";
 import { ProfileInformation } from "../../profileinformation";
 import { ErrorPage } from "../../errorpage";
+import { ForgotPassword } from "../../forgotpassword";
 // import ZoneDashboard from "../Zone";
 // import Tasks from "../task";
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
@@ -175,6 +176,7 @@ const UserLayout = ({ loadAuthToken }) => {
               }
             />
           <Route  element={<ErrorPage />} />
+          <Route path="forgotpassword" element={<ForgotPassword />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         <Route path="*" element={<ErrorPage />} />

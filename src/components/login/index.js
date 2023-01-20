@@ -141,7 +141,7 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
           </Grid>
           <Grid container>
             <Grid item xs>
-              <Link className='custom-anchor-tag' href="#" variant="body2">
+              <Link className='custom-anchor-tag' href="#/forgotpassword" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
