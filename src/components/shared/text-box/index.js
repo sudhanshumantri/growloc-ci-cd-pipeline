@@ -15,6 +15,7 @@ const TextBox = ({
   fullWidth,
   multiline,
   rows,
+  onInput,
   ...params
 }) => {
 
@@ -39,6 +40,7 @@ const TextBox = ({
           fullWidth={fullWidth}
           multiline={multiline}
           rows={rows}
+          onInput={onInput}
         />
 
     </>

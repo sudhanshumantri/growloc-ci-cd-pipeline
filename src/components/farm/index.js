@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
@@ -27,16 +27,15 @@ export default function ManageFarm({
   const [selectedFarmId, setSeletedFarmId] = useState(null);
   const [expanded, setExpanded] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [showMenu,setShowMenu] = useState(false)
 
   const newOpen = Boolean(anchorEl);
-
-  const handleOpenMoreOptions = (event) => {
+  const handleOpenMoreOptions = (event, id) => {
     event.preventDefault();
+    setShowMenu({[id]: true})
     setAnchorEl(event.currentTarget);
   };
-  const handleCloseMoreOptions = (event) => {
-    event.preventDefault();
-
+  const handleCloseMoreOptions = () => {
     setAnchorEl(null);
   };
 
@@ -51,11 +50,14 @@ export default function ManageFarm({
   };
 
   const handleDelete = (e, elem) => {
+    console.log(elem,"elem");
     e.preventDefault();
     const { farmId, farm } = elem;
     const farmDetails = { farmId, name: farm.name };
     setFarmInfo(farmDetails);
     setIsDeleteModelOpen(true);
+    setShowMenu({});
+    setAnchorEl(null);
   };
 
   const handleConfirmRemove = () => {
@@ -96,6 +98,7 @@ export default function ManageFarm({
     e.preventDefault();
     setExpanded(!expanded);
   };
+
 
   return (
     <div>
@@ -139,7 +142,7 @@ export default function ManageFarm({
                 >
                   <Grid container spacing={2} alignItems="center">
                     <Grid item xs={10} sm={10} md={10}>
-                      <p className="farm-card-title">{elem.farm.name}</p>
+                      <p className="farm-card-title" >{elem.farm.name}</p>
                     </Grid>
                     <Grid item xs={2} sm={2} md={2}>
                       <AuthOutlet
@@ -150,20 +153,21 @@ export default function ManageFarm({
                         <IconButton
                           className="farm-card-icon"
                           aria-label="settings"
-                          onClick={handleOpenMoreOptions}
+                          onClick={(e)=>handleOpenMoreOptions(e, elem.id)}
                         >
                           <MoreHorizIcon
                             id="basic-button"
-                            aria-controls={newOpen ? "basic-menu" : undefined}
+                            aria-controls={showMenu ? "basic-menu" : undefined}
                             aria-haspopup="true"
-                            aria-expanded={newOpen ? "true" : undefined}
+                            aria-expanded={showMenu ? "true" : undefined}
                           />
                         </IconButton>
                       </AuthOutlet>
                       <Menu
-                        id="basic-menu"
+                        id={elem.id}
                         anchorEl={anchorEl}
-                        open={newOpen}
+                        open={showMenu[elem.id]}
+                        keepMounted
                         PaperProps={{
                            sx: {
                             width: "300px",
@@ -176,14 +180,15 @@ export default function ManageFarm({
                           "aria-labelledby": "basic-button",
                         }}
                       >
-                        <MenuItem onClick={(e) => handleEdit(e, elem)}>
+                        <MenuItem selected={false}
+                        onClick={(e) => handleEdit(e, elem)}>
                           <ListItemIcon>
                             <CreateIcon />
                           </ListItemIcon>
                           <ListItemText>Edit</ListItemText>
                         </MenuItem>
                         <Divider />
-                        <MenuItem onClick={(e) => handleDelete(e, elem)}>
+                        <MenuItem selected={false} onClick={(e) => handleDelete(e, elem)}>
                           <ListItemIcon>
                             <DeleteIcon />
                           </ListItemIcon>
@@ -208,5 +213,3 @@ export default function ManageFarm({
     </div>
   );
 }
-
-///

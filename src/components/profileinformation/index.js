@@ -87,22 +87,30 @@ export const ProfileInformation = () => {
       <>
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <h3>Email address</h3>
+            <h3>Phone Number</h3>
           </Grid>
           <Grid item xs={12}>
             <span className="label-light">
-              To make changes to your email address, please verify your current
-              password{" "}
+              To make changes to your phone number, please verify your current
+              password
             </span>
           </Grid>
+          
           <Grid item xs={6}>
-            <span className="custom-input-label">Phone</span>
+            <span className="custom-input-label">Phone Number</span>
             <TextBox
               fullWidth
               value={profile?.phone}
               name="email"
             />
           </Grid>
+          <Grid item xs={6}>
+             <span className='custom-input-label'>Current Password</span>
+                    <TextBox
+                         fullWidth                         
+                         name="password"
+                    />
+                </Grid>
           <Grid item xs={12}>
             <CustomButton title="Update" />
           </Grid>

@@ -4,7 +4,7 @@ const endpointLocation = "remote";
 const urls = {
   remote: {
     login: "auth/login",
-    'signup': 'auth/register',
+    signup: "auth/register",
     "fetch-farms-list": "farm/get-all-farm",
     "fetch-crops-list": "crop/get-all-crops",
     "add-farm": "farm/add-new-farm",
@@ -14,41 +14,47 @@ const urls = {
     "crop-lifecycle-transition": "farm/crop/life-cycle-transition",
     "fetch-crop-lifecycle": "farm/crop/get-all-life-cycle",
     "fetch-crop-lifecycle-details": "farm/crop/life-cycle-details/",
-    "update-crop-lifecycle-parameters":"farm/crop/update-life-cycle-stage-parameters",
-    "update-crop-lifecycle-schedule":"farm//crop/schedule-lifecycle/",
+    "update-crop-lifecycle-parameters":
+      "farm/crop/update-life-cycle-stage-parameters",
+    "update-crop-lifecycle-schedule": "farm//crop/schedule-lifecycle/",
     "fetch-users": "farm/get-all-farm-users",
     "add-user": "farm/add-new-user-to-farm",
     "update-user": "farm/update-farm-user",
     "delete-user": "farm/delete-farm-user",
-    "update-farm-crop" : "farm/crop/update-crop",
-    "delete-farm-crop" : "farm/crop/delete-crop",
-    "update-farm" : "farm/update-farm/",
-    "delete-farm" :"farm/delete-farm/",
+    "update-farm-crop": "farm/crop/update-crop",
+    "delete-farm-crop": "farm/crop/delete-crop",
+    "update-farm": "farm/update-farm/",
+    "delete-farm": "farm/delete-farm/",
     "fetch-farm-all-dashboard": "farm/get-farm-dashboard-data/",
-    "fetch-farm-harvest-dashboard":"farm/get-farm-harvesteed-breakup",
+    "fetch-farm-harvest-dashboard": "farm/get-farm-harvesteed-breakup",
     "fetch-farm-details": "farm/get-farm-details/",
-    "add-taskschedule-task":"farm/task/",
-    "fetch-farm-all-inventory":"farm/inventory/",
-    "add-farm-inventory":"farm/inventory/",
-    "update-farm-inventory" : "farm/inventory/",
-    "delete-farm-inventory" : "farm/inventory/",
-    "fetch-farm-all-task":"farm/task/",
-    "add-farm-task-comment":"farm/task/add-comments/",
-    "add-task-comment":"farm/task/add-comments/",
-    "add-farm-dashboard-zone":"farm/add-new-zone",
-    "fetch-all-farm-zone":"farm/get-all-zones/",
-    "update-farm-dashboard-zone" :"farm/update-zone/",
-    "delete-farm-dashboard-zone" : "farm/delete-zone/",
-    "fetch-farm-zone":"farm/get-zone-details/",
+    "add-taskschedule-task": "farm/task/",
+    "fetch-farm-all-inventory": "farm/inventory/",
+    "add-farm-inventory": "farm/inventory/",
+    "update-farm-inventory": "farm/inventory/",
+    "delete-farm-inventory": "farm/inventory/",
+    "fetch-farm-all-task": "farm/task/",
+    "add-farm-task-comment": "farm/task/add-comments/",
+    "add-task-comment": "farm/task/add-comments/",
+    "add-farm-dashboard-zone": "farm/add-new-zone",
+    "fetch-all-farm-zone": "farm/get-all-zones/",
+    "update-farm-dashboard-zone": "farm/update-zone/",
+    "delete-farm-dashboard-zone": "farm/delete-zone/",
+    "fetch-farm-zone": "farm/get-zone-details/",
     "fetch-farm-all-dashobard-zone": "farm/get-zone-dashboard-data/",
-    "fetch-farm-dashboard-zone-harvest":"farm/get-zone-harvesteed-breakup",
-    "add-farm-dashboard-zone-task":"farm/task/",
-    "add-task-dashboard-zone-comment":"farm/task/add-comments/",
-    "fetch-zone-all-task":"farm/zone-task/",
-    "add-zone-task-comment":"farm/task/add-comments/",
-    'forgot-password':'',
-    'forgot-password-verify-token':'',
-    'change-password':'user/change/password/',
+    "fetch-farm-dashboard-zone-harvest": "farm/get-zone-harvesteed-breakup",
+    "add-farm-dashboard-zone-task": "farm/task/",
+    "add-task-dashboard-zone-comment": "farm/task/add-comments/",
+    "fetch-zone-all-task": "farm/zone-task/",
+    "add-zone-task-comment": "farm/task/add-comments/",
+    "forgot-password": "",
+    "forgot-password-verify-token": "",
+    "change-password": "",
+    "fetch-user-profile": "",
+    "update-user-profile": "",
+    "update-user-phone": "",
+    "fetch-admin-list": "",
+
   },
 };
 function getEndpoint(endpoint) {
@@ -85,10 +91,10 @@ export function callLoginHandler(data) {
   });
 }
 export function callRegisterHandler(data) {
-  return callApi(getEndpoint('signup'), {
-      method: 'POST',
-      removeAuthorizationHeader: true,
-      data
+  return callApi(getEndpoint("signup"), {
+    method: "POST",
+    removeAuthorizationHeader: true,
+    data,
   });
 }
 export function callFetchFarmList() {
@@ -207,11 +213,10 @@ export function callUpdateFarm(data, routeParams) {
   });
 }
 export function callDeleteFarm(routeParams) {
-
   return callApi(getEndpoint("delete-farm"), {
     method: "delete",
     removeAuthorizationHeader: false,
-    routeParams
+    routeParams,
   });
 }
 //
@@ -235,7 +240,7 @@ export function callFetchFarmDetailsList(routeParams) {
   return callApi(getEndpoint("fetch-farm-details"), {
     method: "get",
     removeAuthorizationHeader: false,
-    routeParams
+    routeParams,
   });
 }
 //
@@ -252,7 +257,7 @@ export function callfetchFarmInventoryDetails(routeParams) {
   return callApi(getEndpoint("fetch-farm-all-inventory"), {
     method: "get",
     removeAuthorizationHeader: false,
-    routeParams
+    routeParams,
   });
 }
 
@@ -265,13 +270,12 @@ export function callAddFarmInventory(data) {
 }
 //
 
-export function callUpdateFarmInventory(data,routeParams) {
+export function callUpdateFarmInventory(data, routeParams) {
   return callApi(getEndpoint("update-farm-inventory"), {
     method: "PUT",
     removeAuthorizationHeader: false,
     data: data,
-    routeParams
-
+    routeParams,
   });
 }
 //
@@ -279,7 +283,7 @@ export function callDeleteFarmInventory(routeParams) {
   return callApi(getEndpoint("delete-farm-inventory"), {
     method: "delete",
     removeAuthorizationHeader: false,
-    routeParams
+    routeParams,
   });
 }
 //
@@ -288,7 +292,7 @@ export function callfetchFarmTaskDetails(routeParams, queryParams) {
     method: "get",
     removeAuthorizationHeader: false,
     routeParams,
-    queryParams
+    queryParams,
   });
 }
 //
@@ -327,13 +331,12 @@ export function callFetchFarmDashboardZoneList(routeParams) {
   });
 }
 
-export function callUpdateFarmDashboardZoneList(data,routeParams) {
+export function callUpdateFarmDashboardZoneList(data, routeParams) {
   return callApi(getEndpoint("update-farm-dashboard-zone"), {
     method: "PUT",
     removeAuthorizationHeader: false,
     data: data,
-    routeParams
-
+    routeParams,
   });
 }
 //
@@ -341,7 +344,7 @@ export function callDeleteFarmDashboardZoneList(routeParams) {
   return callApi(getEndpoint("delete-farm-dashboard-zone"), {
     method: "delete",
     removeAuthorizationHeader: false,
-    routeParams
+    routeParams,
   });
 }
 //
@@ -349,7 +352,7 @@ export function callfetchFarmZoneDetails(routeParams) {
   return callApi(getEndpoint("fetch-farm-zone"), {
     method: "get",
     removeAuthorizationHeader: false,
-    routeParams
+    routeParams,
   });
 }
 //
@@ -386,7 +389,7 @@ export function callAddFarmDashboardZoneTaskComment(data) {
   });
 }
 
-export function callfetchZoneTaskDetails(routeParams,queryParams) {
+export function callfetchZoneTaskDetails(routeParams, queryParams) {
   return callApi(getEndpoint("fetch-zone-all-task"), {
     method: "get",
     removeAuthorizationHeader: false,
@@ -404,46 +407,55 @@ export function callAddZoneTaskComment(data) {
 }
 
 export function callForgotPasswordHandler(data) {
-  return callApi(getEndpoint('forgot-password'), {
-      method: 'post',
-      removeAuthorizationHeader: false,
-      data
+  return callApi(getEndpoint("forgot-password"), {
+    method: "post",
+    removeAuthorizationHeader: false,
+    data,
   });
 }
-
 
 export function callRestPasswordTokenValidationHandler(routeParams) {
-  return callApi(getEndpoint('forgot-password-verify-token'), {
-      method: 'get',
-      removeAuthorizationHeader: false,
-      routeParams
+  return callApi(getEndpoint("forgot-password-verify-token"), {
+    method: "get",
+    removeAuthorizationHeader: false,
+    routeParams,
   });
 }
-export function callChangePasswordHandler(routeParams,data) {
-  return callApi(getEndpoint('change-password'), {
-      method: 'post',
+export function callChangePasswordHandler(routeParams, data) {
+  return callApi(getEndpoint("change-password"), {
+    method: "post",
+    removeAuthorizationHeader: false,
+    routeParams,
+    data,
+  });
+}
+
+export function callfetchUserProfile() {
+  return callApi(getEndpoint('fetch-user-profile'), {
+      method: 'get',
       removeAuthorizationHeader: false,
-      routeParams,
+
+  });
+}
+export function callupdateUserProfile(data) {
+  return callApi(getEndpoint('update-user-profile'), {
+      method: 'POST',
+      removeAuthorizationHeader: false,
       data
   });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export function callupdateChangeEmail(data) {
+  return callApi(getEndpoint('update-user-phone'), {
+      method: 'POST',
+      removeAuthorizationHeader: false,
+      data
+  });
+}
+export function callFetchAdminList(routeParams) {
+  return callApi(getEndpoint("fetch-admin-list"), {
+    method: "get",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
 

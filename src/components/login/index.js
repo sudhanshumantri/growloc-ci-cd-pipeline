@@ -7,6 +7,7 @@ import ButtonCustom from "../shared/button";
 import growlocCover from '../../../public/assets/growlocCover.webp'
 import logo from '../../../public/assets/logo.png';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
 function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -140,7 +141,7 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
           </Grid>
           <Grid container>
             <Grid item xs>
-              <Link className='custom-anchor-tag' href="#" variant="body2">
+              <Link className='custom-anchor-tag' href="#/forgotpassword" variant="body2">
                 Forgot password?
               </Link>
             </Grid>

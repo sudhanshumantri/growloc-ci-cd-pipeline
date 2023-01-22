@@ -7,10 +7,14 @@ const AuthOutlet = ({ children, isAuthRequired, from, action, defaultReturn }) =
   useEffect(() => {
     if (isAuthRequired) {
       const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
+      if(AUTH_OBJECT) {
       const role = AUTH_OBJECT.profile.role;
       const actions = ROLE_BASED_ACCESS[from][role];
       const isAuth = actions.includes(action);
       setIsAuthorized(isAuth || false);
+      } else{
+        setIsAuthorized(false);
+      }
     } else {
       setIsAuthorized(true);
     }

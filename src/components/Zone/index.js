@@ -461,24 +461,24 @@ export default function ZoneDashboard({
     return (
       <>
         <p className="section-title">
-          Zone Name : <span>{farmDashboardZoneList[0]?.name || ""}</span>
+          Zone Name : <span>{farmZoneList?.name || ""}</span>
         </p>
         <p className="section-title">
           Farm Area:
-          <span>{farmDashboardZoneList[0]?.farmArea || ""}</span>
+          <span>{farmZoneList?.farmArea || ""}</span>
         </p>
         <p className="section-title"> System Type :
-          <span>{farmDashboardZoneList[0]?.systemType || ""}</span>
+          <span>{farmZoneList?.systemType || ""}</span>
         </p>
         <p className="section-title">
           Zone Type :
-          <span>{farmDashboardZoneList[0]?.zoneType || ""}</span>
+          <span>{farmZoneList?.zoneType || ""}</span>
         </p>
       </>
     );
   };
 
-  let subtitle = `( Zone Area : ${farmDashboardZoneList[0]?.farmArea || "" } )`;
+  let subtitle = `( Zone Area : ${farmZoneList?.farmArea || "" } )`;
 
   return (
     <div>
