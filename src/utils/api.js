@@ -53,7 +53,7 @@ const urls = {
     "fetch-user-profile": "",
     "update-user-profile": "",
     "update-user-phone": "",
-    "fetch-admin-list": "",
+    "fetch-admin-list": "farm/admin-farm-dashboard-data/",
 
   },
 };

@@ -18,16 +18,22 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
 import { SEVERITY_LEVEL } from "../../../config";
+import Badge from '@mui/material/Badge';
+import PhotoIcon from '@mui/icons-material/Photo';
+import Carousel from 'react-material-ui-carousel'
 // import Chip from '@mui/material/Chip';
 
 import "./style.css";
 
 function Row({ row, handleCommentModalToggle }) {
   const [open, setOpen] = React.useState(false);
+  const [selectedImage, setSelectedImage] = React.useState(null);
+
   const formatSerityLevel = (value) => {
     const sLevel = SEVERITY_LEVEL.find((level) => level.value === value) || {};
     return sLevel.name || "-";
   };
+
   const formatDueDate = (dueDate) => {
     const a = moment(dueDate);
     const b = moment(new Date()).format("YYYY-MM-DD");
@@ -41,6 +47,23 @@ function Row({ row, handleCommentModalToggle }) {
       return moment(dueDate).format("DD-MM-YYYY");
     }
   };
+
+  // const handleImageClcik = (commentUrl) => {
+  //   console.log(commentUrl,"commentUrl");
+  //   return (
+  //     <>
+  //    {selectedImage !== null && (
+  //     <Modal open={true} onClose={() => setSelectedImage(null)}>
+  //       <Carousel activeIndex={selectedImage}>
+  //           <img key={index} src={commentUrl} alt={`Image ${index + 1}`} />
+  //       </Carousel>
+  //     </Modal>
+  //   )}
+      
+  //     </>
+      
+  //   )
+  // }
   // format("YYYY-MM-DD");
   return (
     <React.Fragment>
@@ -117,6 +140,7 @@ function Row({ row, handleCommentModalToggle }) {
                     <TableCell>Date</TableCell>
                     <TableCell>User</TableCell>
                     <TableCell>Comment</TableCell>
+                    <TableCell>Image</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -130,6 +154,12 @@ function Row({ row, handleCommentModalToggle }) {
                       <TableCell>{historyRow.user?.name}</TableCell>
                       <TableCell component="th" scope="row">
                         {historyRow.comment}
+                      </TableCell>
+                      <TableCell>
+          <Badge color="secondary" badgeContent={1}>
+          <img src={historyRow.commentUrl} width='50' height='50'/>
+          </Badge>
+
                       </TableCell>
                     </TableRow>
                   ))}

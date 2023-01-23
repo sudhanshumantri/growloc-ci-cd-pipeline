@@ -10,8 +10,7 @@ const INITIAL_STATE = fromJS({
   adminListError: null,
   
 });
-export default function farmReducer(state = INITIAL_STATE, action = {}) {
-  let farmList = state.toJS()["farmList"];
+export default function adminReducer(state = INITIAL_STATE, action = {}) {
   switch (action.type) {
     case FETCH_ALL_ADMIN_DASHBOARD_REQUEST:
       return state

@@ -12,9 +12,11 @@ import {
 import TextBox from "../text-box";
 import CustomButton from "../button";
 
+
+
 export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
   const [taskComment, setTaskComments] = useState("");
-  // const [selectImage,setSelectImage] = useState("");
+  const [selectImage,setSelectImage] = useState("");
 
   const handleChange = (e) => {
     setTaskComments(e.target.value);
@@ -25,9 +27,8 @@ export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
     const file = e.target.files[0];
     const baseImage =  await convertBaseImage(file)
     console.log(baseImage, "baseUrl");
-    // setSelectImage(baseImage)
+    setSelectImage(baseImage)
   }
-
 
 const convertBaseImage = (file) => {
   return new Promise ((resolve,reject)=>{
@@ -35,7 +36,6 @@ const convertBaseImage = (file) => {
     fileReader.readAsDataURL(file);
     fileReader.onload = () => {
       resolve(fileReader.result);
-
     }
     fileReader.onerror = (error) => {
       reject(error)
@@ -47,11 +47,13 @@ const convertBaseImage = (file) => {
   const handleSaveComment = () => {
     let payload = {
       comment: taskComment,
-
+      image:selectImage,
+      
     };
+    console.log(payload);
       handleSave(payload);
   };
-   
+
  
   
 
@@ -96,12 +98,13 @@ const convertBaseImage = (file) => {
               <FormControl fullWidth>
                 <TextField
                 name="image"
+                isWhite={true}
                 type="file"
-                onChange={uploadImage}
+                defaultValue={selectImage}               
+                 onChange={uploadImage}
                 />
               </FormControl>
             </Grid>
-
 
           </Grid>
         </DialogContent>
@@ -110,3 +113,37 @@ const convertBaseImage = (file) => {
     </div>
   );
 }
+
+
+// import React, { useState } from 'react';
+
+// function ImageConverter() {
+//   const [base64Image, setBase64Image] = useState('');
+
+//   const handleFileChange = (e) => {
+//     const file = e.target.files[0];
+//     const reader = new FileReader();
+//     reader.readAsDataURL(file);
+//     reader.onload = () => {
+//       setBase64Image(reader.result);
+//     };
+//   };
+
+//   return (
+//     <>
+//       <input type='file' onChange={handleFileChange} />
+//       {base64Image && <img src={base64Image} alt='base64 image' />}
+//     </>
+//   );
+// }
+
+// export default ImageConverter;
+// In this example, the component has a state variable called base64Image that is used to store the base64 string of the image. The handleFileChange function is used to handle the onChange event of the file input. Inside the function, a FileReader object is created and the readAsDataURL method is used to read the image file.
+
+// The onload event is then used to update the base64Image state variable with the base64 string of the image. Finally, the component renders an input element of type file to select the image, and if there is a base64Image present, it will render an image tag with the src as the base64Image
+
+// You can also use libraries like react-base64-image-upload or base64-img to convert the image to base64 string.
+
+
+
+
