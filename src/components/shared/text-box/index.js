@@ -16,6 +16,9 @@ const TextBox = ({
   multiline,
   rows,
   onInput,
+  multiple,
+  inputProps,
+
   ...params
 }) => {
 
@@ -41,6 +44,8 @@ const TextBox = ({
           multiline={multiline}
           rows={rows}
           onInput={onInput}
+          multiple={multiple}
+          inputProps={inputProps}
         />
 
     </>
