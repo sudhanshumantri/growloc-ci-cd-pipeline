@@ -1,10 +1,11 @@
 import "./styles.css";
 import * as React from "react";
 import { useState } from "react";
-import { Backdrop, CircularProgress, TextField, Box, Grid, Paper, Avatar, Typography, Link } from "@mui/material/";
+import { Backdrop, CircularProgress, TextField, Box, Grid, Paper, Avatar, Typography, Link, Checkbox,FormControlLabel } from "@mui/material/";
 import CssBaseline from "@mui/material/CssBaseline";
 import ButtonCustom from "../shared/button";
 import growlocCover from '../../../public/assets/growlocCover.webp'
+import loginpage from '../../../public/assets/loginpage.png'
 import logo from '../../../public/assets/logo.png';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
@@ -44,28 +45,54 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
     return <p className="error-message">{isLoginError}</p>;
   };
   return (
-    <Grid container component="main" sx={{ height: '100vh' }}>
+    <Grid
+      container
+      component="main"
+      sx={{
+        height: '100vh',
+        backgroundImage: `url(${loginpage})`,
+        backgroundRepeat: 'no-repeat',
+        //backgroundColor: '#517223',
+        backgroundPosition: 'center',
+        backgroundSize: '100% 100vh',
+      }}
+    >
       <CssBaseline />
       <Grid
         item
         xs={false}
         sm={4}
-        md={7}
+        md={6}
         display='flex'
         alignItems={'center'}
         justifyContent='center'
-        sx={{
-          backgroundColor: "F9F9F9",
-          //  backgroundImage: `url(${growlocCover})`,
-          backgroundRepeat: 'no-repeat',
-          backgroundColor: '#517223',
-          backgroundPosition: 'bottom',
-          backgroundSize: 'contain',
-        }}
+      // sx={{
+      //   backgroundColor: "F9F9F9",
+      //  // backgroundImage: `url(${growlocCover})`,
+      //   backgroundRepeat: 'no-repeat',
+      //   backgroundColor: '#517223',
+      //   backgroundPosition: 'bottom',
+      //   backgroundSize: 'contain',
+      // }}
+
       >
         <img src={logo} />
       </Grid>
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid
+        item xs={12}
+        sm={8} md={5}
+        component={Paper}
+        elevation={0} square
+        // justifyContent='center'
+        sx={{
+          backgroundColor: '#E5E4D7',
+          //   display : 'flex',
+          //  alignItems:'center',
+          height: '75%',
+          marginTop: '80px',
+          borderRadius: '10px'
+        }}
+      >
         <Box
           sx={{
             my: 2,
@@ -75,7 +102,9 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ bgcolor: '#517223' }}>
+          <Avatar
+            sx={{ bgcolor: '#517223' }}
+          >
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h3" variant="h5">
@@ -129,6 +158,14 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
                   setPassword(e.target.value);
                   setPasswordError(false);
                 }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12} >
+              <FormControlLabel
+                label="Remember me"
+                control={
+                  <Checkbox/>
+                }
               />
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12} >
