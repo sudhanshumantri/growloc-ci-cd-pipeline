@@ -44,23 +44,22 @@ export default function ZoneDashboard({
   isFarmDashboardZoneCommetLoading,
   fecthFarmDashboardZone,
   farmDashboardZoneList,
+  fetchFarmInventory,
+  farmInventoryList,
+
 }) {
+
   const { farmId, zoneId } = useParams();
   const [month, setMonth] = useState(3);
   const [open, setOpen] = useState(false);
   const [openCommetTask, setCommetTask] = useState(false);
   const [rowdata, setRowData] = useState({});
   const [openZoneSensors, setZoneSensors] = useState(false);
-
   const [value, setValue] = React.useState("1");
-
   const handleZoneTabChange = (event, newValue) => {
     setValue(newValue);
   };
-
   const navigate = useNavigate();
-
-  console.log(farmDashboardZoneList[0]?.name, "farmDashboardZoneList");
 
   React.useEffect(() => {
     if (zoneId) {
@@ -69,6 +68,7 @@ export default function ZoneDashboard({
       fetchFarmDashboardHarvest({ zoneId: parseInt(zoneId), month });
       fetchUsers(farmId);
       fecthFarmDashboardZone(farmId);
+      fetchFarmInventory(farmId);
     }
   }, [zoneId]);
   const handleBackButton = () => {
@@ -540,6 +540,7 @@ export default function ZoneDashboard({
           handleSave={handleZoneTaskSave}
           handleClose={handleModalToggle}
           usersList={usersList}
+          farmInventoryList={farmInventoryList}
         />
       )}
       {openCommetTask && (
@@ -547,6 +548,8 @@ export default function ZoneDashboard({
           open={openCommetTask}
           handleSave={handleZoneTaskCommentSave}
           handleClose={handleCommentModalToggle}
+
+          
         />
       )}
       {openZoneSensors && (

@@ -10,7 +10,7 @@ const TextBox = ({
   error,
   helperText,
   isWhite,
-  inputRef,
+  // inputRef,
   defaultValue,
   fullWidth,
   multiline,
@@ -39,7 +39,7 @@ const TextBox = ({
           onChange={onChange}
           error ={error}
           helperText={helperText}
-          inputRef ={inputRef}
+          // inputRef ={inputRef}
           fullWidth={fullWidth}
           multiline={multiline}
           rows={rows}

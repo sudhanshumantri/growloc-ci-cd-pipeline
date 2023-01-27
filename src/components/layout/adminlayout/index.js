@@ -16,6 +16,8 @@ import AdminDashboard from "../../../container/admin"
 import adminSagas  from "../../../sagas/admin";
 import adminReducer from "../../../reducers/admin";
 import PrivateOutlet from "../../privateroute";
+import AdminSideBar from "../../admin/adminsidebar";
+
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
 injectReducer("login", loginReducer);
 injectReducer("users", usersReducer);
@@ -38,6 +40,7 @@ const AdminLayout = ({ loadAuthToken }) => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
+      {token && <AdminSideBar loginObject={loginObject}/>}
       <Box
         component="main"
         sx={{

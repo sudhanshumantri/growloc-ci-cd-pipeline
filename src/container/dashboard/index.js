@@ -29,7 +29,6 @@ import {
   selectIsUpdataFarmDashboardZoneLoading,
   selectUpdateFarmDashboardZoneError,
   selectIsDeleteFarmDashboardZoneLoading,
-
 } from "../../selectors/dashboard";
 import {
   selectUsersList

@@ -9,3 +9,6 @@
   .custom-table-row{
     background-color: red;
   }
+  .css-34nofg-MuiTableRow-root>* {
+    border-bottom: unset;
+  }

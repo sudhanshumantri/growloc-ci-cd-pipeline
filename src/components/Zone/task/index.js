@@ -15,6 +15,7 @@ export default function ManageZoneTasks({
     isZoneTaskListLoading,
     isZoneTaskCommentLoading,
     addZoneTaskComment,
+    
 }) {
 
   let { zoneId } = useParams();

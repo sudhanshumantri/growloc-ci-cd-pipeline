@@ -22,11 +22,11 @@ export function* fetchUsersList({ data }) {
 export function* addUser({ data }) {
   let responseData = yield call(callAddUser, data);
   if (responseData?.status == 200) {
-    const {status, error} = responseData.data;
+    const {status, message} = responseData.data;
     if(status) {
     yield put(addUserSuccess(responseData.data.data));
     } else {
-      addNotification(error, 5000,true, "danger");
+      addNotification(message, 5000,true, "danger");
       yield put(addUserFailure("Something went wrong"));
     }
   } else {

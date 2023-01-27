@@ -27,6 +27,8 @@ import "./style.css";
 
 function Row({ row, handleCommentModalToggle }) {
   const [open, setOpen] = React.useState(false);
+  // const [openImage, setOpenImage] = React.useState(false);
+
   const [selectedImage, setSelectedImage] = React.useState(null);
 
   const formatSerityLevel = (value) => {
@@ -43,9 +45,9 @@ function Row({ row, handleCommentModalToggle }) {
   //   </>)
   // }
 
-  const handleImageClick = (index) => {
-    setSelectedImage(index);
-  };
+  // const handleImageClick = (index) => {
+  //   setSelectedImage(index);
+  // };
 
   const formatDueDate = (dueDate) => {
     const a = moment(dueDate);
@@ -61,16 +63,18 @@ function Row({ row, handleCommentModalToggle }) {
     }
   };
 
- 
+
 
   const renderImageBadge = (historyRow) => {
-    const [open, setOpen] = React.useState(false);
+    const [openImage, setOpenImage] = React.useState(false);
+
     const handleImageClick = (images) => {
-      setOpen(true);
+      setOpenImage(true);
     }
     const handleClose = () => {
-      setOpen(false);
+      setOpenImage(false);
     };
+  
     return (
       <div >
         <Badge
@@ -82,18 +86,20 @@ function Row({ row, handleCommentModalToggle }) {
             <img src={historyRow.images[0].url} width='50' height='50'/>
           }
         </Badge>
-        <Modal
-          open={open}
+         <Modal
+          open={openImage}
           onClose={handleClose}
-        >
-          <Carousel autoPlay={false}>
+          
+        > 
+          <Carousel autoPlay={false} >
           {
             historyRow.images.map((image,index)=>{
-              return <img key={index} src={image.url} width='30%' className="carsole-image" alt="Example image" />
+              return <img key={index} src={image.url} className="carsole-image"  width='30%' alt="Example image" />
             })
           }
           </Carousel>
-        </Modal>
+          </Modal>
+
 
       </div>
     );
@@ -140,13 +146,13 @@ function Row({ row, handleCommentModalToggle }) {
           {row.createdByProfile.name}
         </TableCell>
         <TableCell className="table-header" align="left">
-          --
+        {/* {row.itemName} */}
         </TableCell>
         {/* <TableCell className="table-header" align="left">
           {moment(row.createdOn).format("YYYY-MM-DD")}
         </TableCell> */}
         {/* <TableCell className="table-header" align="left">
-        {row.createdByProfile.name}
+        {row.itemName}
         </TableCell> */}
         <TableCell className="table-header" align="left">
           <Chip

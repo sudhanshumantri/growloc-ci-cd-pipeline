@@ -39,8 +39,7 @@ export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
       comment: taskComment,
       images: images,
     };
-    console.log(payload);
-    // handleSave(payload);
+    handleSave(payload);
   };
 
 
