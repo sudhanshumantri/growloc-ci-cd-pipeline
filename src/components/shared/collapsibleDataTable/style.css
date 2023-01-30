@@ -19,8 +19,9 @@
     padding: '5px, 10px';
   }
   .carsole-image{
-    margin: 15% 30% 0% !important;
+    margin: 15% 30% 0%  !important;
     text-align: center;
+    /* padding-left: 6%; */
   }
 .css-1f8sh1y {
     height: 600px !important;

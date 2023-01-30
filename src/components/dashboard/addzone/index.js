@@ -33,6 +33,8 @@ export default function AddZoneModal({
   const [zoneData, setZoneData] = useState(zoneDetails);
   const [unitErrorMessage, setUnitErrorMessage] = useState("");
 
+  console.log(zoneDetails,"zoneDetails");
+
   const [validation, setValidation] = useState({
     name: false,
     farmArea: false,
@@ -45,12 +47,9 @@ export default function AddZoneModal({
     validation[name] && setValidation({ ...validation, [name]: false });
   };
 
-
   const {farmdDetails} = farmData;
-
   const allFarmArea = data.map((product) => parseInt(product.farmArea))
   const totalFarmArea = allFarmArea.reduce((acc, curr) => acc + curr,0)
-
   const reamingArea = farmdDetails?.farmArea - totalFarmArea;
 
   const validateFarmDashboardZone = () => {
@@ -69,8 +68,8 @@ export default function AddZoneModal({
         errors.farmArea = true;
         isValid = false;
         setUnitErrorMessage(`Area can't be greter than ${reamingArea} `);
-      }
-    }
+      } 
+    } 
     setValidation(errors);
     return isValid;
   };
