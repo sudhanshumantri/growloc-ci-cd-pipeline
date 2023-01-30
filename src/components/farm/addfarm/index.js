@@ -87,7 +87,6 @@ export default function AddFarm({
 
   const { farmId } = useParams();
   const {zoneId} = useParams();
-  console.log(zoneId);
   const { ref: materialRef } = usePlacesWidget({
     apiKey: "AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY",
     onPlaceSelected: (place) => handleLocationUpdate(place),

@@ -8,52 +8,41 @@ import {
   DialogContent,
   Grid,
   TextField,
+  Button,
 } from "@mui/material/";
 import TextBox from "../text-box";
 import CustomButton from "../button";
 
 export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
   const [taskComment, setTaskComments] = useState("");
-  // const [selectImage,setSelectImage] = useState("");
+  const [images, setImages] = useState([]);
 
   const handleChange = (e) => {
     setTaskComments(e.target.value);
   };
-
-
-  const uploadImage =  async (e) => {
-    const file = e.target.files[0];
-    const baseImage =  await convertBaseImage(file)
-    console.log(baseImage, "baseUrl");
-    // setSelectImage(baseImage)
+  const handleFileChange = (event) => {
+    event.preventDefault();
+    const files = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImages((prevImages) => [...prevImages, reader.result]);
+      };
+      reader.readAsDataURL(file);
+    }
   }
+    
 
-
-const convertBaseImage = (file) => {
-  return new Promise ((resolve,reject)=>{
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-
-    }
-    fileReader.onerror = (error) => {
-      reject(error)
-    }
-
-  })
-
-}
   const handleSaveComment = () => {
     let payload = {
       comment: taskComment,
-
+      images: images,
     };
-      handleSave(payload);
+    handleSave(payload);
   };
-   
- 
-  
+
+
 
   const renderActionButton = () => {
     return (
@@ -94,19 +83,27 @@ const convertBaseImage = (file) => {
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">Add Image</span>
               <FormControl fullWidth>
-                <TextField
-                name="image"
-                type="file"
-                onChange={uploadImage}
+                <TextBox
+                  id="upload-images"
+                  type="file"
+                  onChange={handleFileChange}
+                  inputProps={{ multiple: true }}
                 />
               </FormControl>
             </Grid>
-
-
+            {images.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt="Uploaded Image"
+                style={{ width: "200px", height: "200px", margin: "10px" }}
+              />
+            ))}
           </Grid>
         </DialogContent>
         {renderActionButton()}
       </Dialog>
-    </div>
+    </div>  
   );
 }
+

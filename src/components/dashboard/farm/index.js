@@ -104,7 +104,6 @@ export default function FarmDashboard({
     setValue(newValue);
   };
   const handleTabInfoChange = (event, newValue) => {
-    console.log(newValue, "newValue");
     setTabInfo(newValue);
   };
 

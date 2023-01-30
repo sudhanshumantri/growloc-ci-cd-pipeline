@@ -212,7 +212,6 @@ export default function CropLifeCycleDetails({
     let { cropDetails } = lifecycleDetails;
     //  cropDetails.crop.crop.variety
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
-    console.log(FarmCropLifecycleStages, "FarmCropLifecycleStages");
     let selectedStageInformation = FarmCropLifecycleStages[activeStep];
     if (selectedStageInformation.qty > 0) {
       if (activeStep + 1 < FarmCropLifecycleStages.length) {

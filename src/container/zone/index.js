@@ -5,6 +5,12 @@ import { createStructuredSelector } from "reselect";
 import {fetchFarmZoneRequest,fetchFarmZoneDashboardRequest,fetchFarmZoneDashboardHarvestRequest,addFarmDashboardZoneTaskRequest,addFarmDashboardZoneTaskCommentRequest } from "../../actions/zone";
 import {fetchFarmDashboardZoneRequest } from "../../actions/dashboard";
 import { fetchUsersRequest } from "../../actions/users";
+import { fetchFarmInventoryRequest } from "../../actions/inventory";
+
+import {
+  selectFarmInventoryList,
+} from "../../selectors/inventory";
+
 import {
   selectUsersList
 } from "../../selectors/users"
@@ -47,7 +53,9 @@ const mapStateToProps = createStructuredSelector({
     farmDashboardZoneCommetError:selectFarmDashboardZoneCommetError(),
     usersList: selectUsersList(),
     loginObject: selectLoginObject(),
-    farmDashboardZoneList:selectFarmDashboardZoneList()
+    farmDashboardZoneList:selectFarmDashboardZoneList(),
+    farmInventoryList: selectFarmInventoryList(),
+
 });
 const mapDispatchToProps = {
    fetchFarmZone:fetchFarmZoneRequest,
@@ -57,6 +65,7 @@ const mapDispatchToProps = {
    addFarmDashboardZoneTask: addFarmDashboardZoneTaskRequest,
    fetchUsers: fetchUsersRequest,
    fecthFarmDashboardZone:fetchFarmDashboardZoneRequest,
+   fetchFarmInventory: fetchFarmInventoryRequest,
 
 
 

@@ -18,16 +18,37 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
 import { SEVERITY_LEVEL } from "../../../config";
+import {Badge,Modal} from "@mui/material/";
+import PhotoIcon from "@mui/icons-material/Photo";
+import Carousel from "react-material-ui-carousel";
 // import Chip from '@mui/material/Chip';
 
 import "./style.css";
 
 function Row({ row, handleCommentModalToggle }) {
   const [open, setOpen] = React.useState(false);
+  // const [openImage, setOpenImage] = React.useState(false);
+
+  const [selectedImage, setSelectedImage] = React.useState(null);
+
   const formatSerityLevel = (value) => {
     const sLevel = SEVERITY_LEVEL.find((level) => level.value === value) || {};
     return sLevel.name || "-";
   };
+  // const handleImageClick = (image) => {
+  //   console.log(image,"image");
+  //   return (<>
+
+  //   <Carousel >
+
+  //   </Carousel>
+  //   </>)
+  // }
+
+  // const handleImageClick = (index) => {
+  //   setSelectedImage(index);
+  // };
+
   const formatDueDate = (dueDate) => {
     const a = moment(dueDate);
     const b = moment(new Date()).format("YYYY-MM-DD");
@@ -41,7 +62,50 @@ function Row({ row, handleCommentModalToggle }) {
       return moment(dueDate).format("DD-MM-YYYY");
     }
   };
-  // format("YYYY-MM-DD");
+
+
+
+  const renderImageBadge = (historyRow) => {
+    const [openImage, setOpenImage] = React.useState(false);
+
+    const handleImageClick = (images) => {
+      setOpenImage(true);
+    }
+    const handleClose = () => {
+      setOpenImage(false);
+    };
+  
+    return (
+      <div >
+        <Badge
+          color="secondary"
+          badgeContent={historyRow.images.length || 0}
+          onClick={() => handleImageClick(historyRow.images)}
+        >
+          {historyRow.images.length === 0 ? "" : 
+            <img src={historyRow.images[0].url} width='50' height='50'/>
+          }
+        </Badge>
+         <Modal
+          open={openImage}
+          onClose={handleClose}
+          
+        > 
+          <Carousel autoPlay={false} >
+          {
+            historyRow.images.map((image,index)=>{
+              return <img key={index} src={image.url} className="carsole-image"  width='30%' alt="Example image" />
+            })
+          }
+          </Carousel>
+          </Modal>
+
+
+      </div>
+    );
+  }
+  
+
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -82,13 +146,13 @@ function Row({ row, handleCommentModalToggle }) {
           {row.createdByProfile.name}
         </TableCell>
         <TableCell className="table-header" align="left">
-          --
+        {/* {row.itemName} */}
         </TableCell>
         {/* <TableCell className="table-header" align="left">
           {moment(row.createdOn).format("YYYY-MM-DD")}
         </TableCell> */}
         {/* <TableCell className="table-header" align="left">
-        {row.createdByProfile.name}
+        {row.itemName}
         </TableCell> */}
         <TableCell className="table-header" align="left">
           <Chip
@@ -96,7 +160,7 @@ function Row({ row, handleCommentModalToggle }) {
             style={{ backgroundColor: "#EB955D" }}
           />
         </TableCell>
-        
+
         <TableCell>
           <IconButton
             title="Add New"
@@ -117,6 +181,7 @@ function Row({ row, handleCommentModalToggle }) {
                     <TableCell>Date</TableCell>
                     <TableCell>User</TableCell>
                     <TableCell>Comment</TableCell>
+                    <TableCell>Image</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -130,6 +195,9 @@ function Row({ row, handleCommentModalToggle }) {
                       <TableCell>{historyRow.user?.name}</TableCell>
                       <TableCell component="th" scope="row">
                         {historyRow.comment}
+                      </TableCell>
+                      <TableCell>
+                         {renderImageBadge(historyRow)}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -150,13 +218,13 @@ export default function CollapsibleTable({ data, handleCommentModalToggle }) {
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead className="table-header-row">
-           <TableRow> 
+          <TableRow>
             <TableCell>#</TableCell>
             {headers.map((header, index) => (
               <TableCell key={index} align="left">
                 {header.label}
               </TableCell>
-            ))} 
+            ))}
             <TableCell>Comment</TableCell>
           </TableRow>
         </TableHead>
