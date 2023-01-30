@@ -86,7 +86,6 @@ const UserLayout = ({ loadAuthToken }) => {
   if (loginObject) {
     loginObject = JSON.parse(loginObject);
   }
-  console.log(loginObject, "loginObject");
   loadAuthToken({
     token,
     loginObject,

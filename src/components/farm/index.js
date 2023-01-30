@@ -50,7 +50,6 @@ export default function ManageFarm({
   };
 
   const handleDelete = (e, elem) => {
-    console.log(elem,"elem");
     e.preventDefault();
     const { farmId, farm } = elem;
     const farmDetails = { farmId, name: farm.name };

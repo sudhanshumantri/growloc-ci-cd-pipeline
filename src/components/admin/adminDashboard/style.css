@@ -1,0 +1,14 @@
+.table-header-row {
+    background: #e5e4d7 !important;
+    
+  }
+  .table-header {
+    font-size: 13px ;
+    font-weight: bold;
+  }
+  .custom-table-row{
+    background-color: red;
+  }
+  .css-34nofg-MuiTableRow-root>* {
+    border-bottom: unset;
+  }

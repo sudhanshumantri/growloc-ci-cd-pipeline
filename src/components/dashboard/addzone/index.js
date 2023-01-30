@@ -45,7 +45,6 @@ export default function AddZoneModal({
     validation[name] && setValidation({ ...validation, [name]: false });
   };
 
-  console.log(data,"data");
 
   const {farmdDetails} = farmData;
 

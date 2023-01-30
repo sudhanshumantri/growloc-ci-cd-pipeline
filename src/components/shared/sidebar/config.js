@@ -418,4 +418,17 @@ const zoneMenuItems = [
   },
 ];
 
-export { farmMenuItems, menuItems, zoneMenuItems };
+const adminMenuItems = [
+  {
+    title: "Dashboard",
+    id: "dashboard",
+    navigation: "/dashboard",
+    icon: Irrigation,
+    css: { borderBottom: "1px solid white" },
+  },
+];
+ 
+
+
+
+export { farmMenuItems, menuItems, zoneMenuItems,adminMenuItems };

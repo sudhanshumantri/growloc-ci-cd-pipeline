@@ -67,10 +67,13 @@ export default function TopHeader({
 
   if (loginObject) {
     let userName = loginObject?.profile?.name;
+    let userRole =loginObject?.profile?.role;
     let userNameArray = userName?.split(" ");
-    if (userNameArray) {
+    if (userNameArray) {  
     }
     let avatarName = userNameArray[0]?.charAt(0);
+    
+
     return (
       <AppBar position="fixed" open={open} drawerwidth={drawerWidth}>
         <Container maxWidth="xl">
@@ -84,6 +87,7 @@ export default function TopHeader({
                                 <Typography variant="p" className='label-white' bold ="true"noWrap component="div" sx={{ cursor: 'pointer' }} >
                                   Hi  {userName}
                                 </Typography>
+                                { userRole === "admin" ? "" :
                                 <IconButton
                                     aria-label="settings"
                                     onClick={handleToggleMenu}
@@ -96,6 +100,7 @@ export default function TopHeader({
                                         aria-expanded={showMenu ? "true" : undefined}
                                     />
                                 </IconButton>
+  }
                             </Box>
                         </Toolbar>
                         <Menu

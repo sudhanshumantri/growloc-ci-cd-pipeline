@@ -13,7 +13,6 @@ import TextBox from "../shared/text-box";
 export const ProfileInformation = () => {
   const navigate = useNavigate();
   let loginObject = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
-  console.log(loginObject, "loginObject");
   const { profile } = loginObject;
 
   const handleBackButton = () => {

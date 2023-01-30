@@ -114,23 +114,22 @@ export default function AddTaskModal({
     return options;
   }, [usersList]);
 
-  // const getInventoryOptions = useCallback(() => {
-  //   const options = [];
-  //   if (farmInventoryList.length) {
-  //     farmInventoryList.forEach((inventory) => {
-  //       if (inventory?.name) {
-  //         const { id, name } = inventory;
-  //         options.push({ label: name, value: id});
-  //       }
-  //     });
-  //   }
-  //   return options;
-  // }, [farmInventoryList]);
+  const getInventoryOptions = useCallback(() => {
+    const options = [];
+    if (farmInventoryList.length) {
+      farmInventoryList.forEach((inventory) => {
+        if (inventory?.name) {
+          const { id, name } = inventory;
+          options.push({ label: name, value: id});
+        }
+      });
+    }
+    return options;
+  }, [farmInventoryList]);
 
   const handleTaskSave = () => {
     if (validateTask()) {
       let requestObject = cleanObject(taskData);
-      console.log(requestObject, "requestObject");
       handleSave(requestObject);
     }
   };
@@ -296,6 +295,7 @@ export default function AddTaskModal({
                   labelKey="label"
                   valueKey="value"
                   value={taskData.itemName}
+                  options={getInventoryOptions()}
                   isWhite={true}
                   handleChange={handleChange}
                 />
