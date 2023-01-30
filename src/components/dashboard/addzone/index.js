@@ -25,7 +25,7 @@ export default function AddZoneModal({
     name: "",
     farmArea: "",
     zoneType: "",
-    systemType:"",
+    systemType: "",
   },
   data,
   farmData,
@@ -36,8 +36,8 @@ export default function AddZoneModal({
   const [validation, setValidation] = useState({
     name: false,
     farmArea: false,
-    systemType:false,
-    unitErrorMessage:false,
+    systemType: false,
+    unitErrorMessage: false,
   });
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -45,13 +45,13 @@ export default function AddZoneModal({
     validation[name] && setValidation({ ...validation, [name]: false });
   };
 
-
-  const {farmdDetails} = farmData;
-
-  const allFarmArea = data.map((product) => parseInt(product.farmArea))
-  const totalFarmArea = allFarmArea.reduce((acc, curr) => acc + curr,0)
-
+  const { farmdDetails } = farmData;
+  const allFarmArea = data.map((product) => parseInt(product.farmArea));
+  const totalFarmArea = allFarmArea.reduce((acc, curr) => acc + curr, 0);
   const reamingArea = farmdDetails?.farmArea - totalFarmArea;
+  const remaingEditArea = parseInt(zoneDetails?.farmArea);
+  const area = zoneDetails.id ? reamingArea + remaingEditArea : reamingArea;
+
 
   const validateFarmDashboardZone = () => {
     let errors = { ...validation };
@@ -64,12 +64,10 @@ export default function AddZoneModal({
       errors.farmArea = true;
       isValid = false;
       setUnitErrorMessage("Area can't be empty ");
-    } else {
-      if(zoneData.farmArea > reamingArea) {
-        errors.farmArea = true;
-        isValid = false;
-        setUnitErrorMessage(`Area can't be greter than ${reamingArea} `);
-      }
+    } else if (zoneData.farmArea > area) {
+      errors.farmArea = true;
+      isValid = false;
+      setUnitErrorMessage(`Area can't be greter than ${area} `);
     }
     setValidation(errors);
     return isValid;
@@ -79,8 +77,8 @@ export default function AddZoneModal({
     let requestFarmDashBoardZoneData = {
       name: zoneData.name,
       farmArea: zoneData.farmArea,
-      zoneType:zoneData.zoneType,
-      systemType:zoneData.systemType,
+      zoneType: zoneData.zoneType,
+      systemType: zoneData.systemType,
     };
     if (validateFarmDashboardZone()) {
       handleSave(requestFarmDashBoardZoneData);
@@ -109,14 +107,24 @@ export default function AddZoneModal({
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">
-        {zoneDetails.id ? "Update Zone" : "Add a new zone"}
+          {zoneDetails.id ? "Update Zone" : "Add a new zone"}
         </DialogTitle>
         <br />
         <DialogContent sx={{ paddingTop: "10px" }}>
           <Grid container spacing={2}>
-          <Grid item xs={12} sm={12} md={12}>
-              <p className = "input-label">Total Farm Area : {farmdDetails?.farmArea}</p>
-              <p className = "input-label">  Avaible Farm Area : {reamingArea}</p>
+            <Grid item xs={12} sm={12} md={12}>
+              <p className="input-label">
+                Total Farm Area : {farmdDetails?.farmArea}
+              </p>
+              {zoneDetails.farmArea ? (
+                <p className="input-label">
+                  Aviable Farm Area : {area}
+                </p>
+              ) : (
+                <p className="input-label">
+                  Avaible Farm Area : {reamingArea}
+                </p>
+              )}
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label"> Name</span>
@@ -184,7 +192,6 @@ export default function AddZoneModal({
                 />
               </FormControl>
             </Grid>
-
           </Grid>
         </DialogContent>
         {renderActionButton()}

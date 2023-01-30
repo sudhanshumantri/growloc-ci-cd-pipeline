@@ -35,7 +35,7 @@ export default function AddTaskModal({
     dueDate: moment(),
     startTime: null,
     endTime: null,
-    itemName: null,
+    itemName: "",
     qty: null,
     severity: null,
   });
@@ -120,7 +120,7 @@ export default function AddTaskModal({
       farmInventoryList.forEach((inventory) => {
         if (inventory?.name) {
           const { id, name } = inventory;
-          options.push({ label: name, value: id});
+          options.push({ label: name, value: name});
         }
       });
     }
@@ -130,6 +130,7 @@ export default function AddTaskModal({
   const handleTaskSave = () => {
     if (validateTask()) {
       let requestObject = cleanObject(taskData);
+      console.log(requestObject,"requestObject");
       handleSave(requestObject);
     }
   };

@@ -1,4 +1,4 @@
-import * as React from "react";
+import  React,{useState} from "react";
 import moment from "moment";
 // import Paper from "@mui/material/Paper";
 import {
@@ -13,41 +13,22 @@ import {
   TableRow,
   Paper,
   Chip,
+  Badge,
+  Modal
 } from "@mui/material/";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
 import { SEVERITY_LEVEL } from "../../../config";
-import {Badge,Modal} from "@mui/material/";
-import PhotoIcon from "@mui/icons-material/Photo";
 import Carousel from "react-material-ui-carousel";
-// import Chip from '@mui/material/Chip';
-
 import "./style.css";
-
 function Row({ row, handleCommentModalToggle }) {
-  const [open, setOpen] = React.useState(false);
-  // const [openImage, setOpenImage] = React.useState(false);
-
-  const [selectedImage, setSelectedImage] = React.useState(null);
-
+  const [open, setOpen] = useState(false);
+  const [openImage, setOpenImage] = useState(false);
   const formatSerityLevel = (value) => {
     const sLevel = SEVERITY_LEVEL.find((level) => level.value === value) || {};
     return sLevel.name || "-";
   };
-  // const handleImageClick = (image) => {
-  //   console.log(image,"image");
-  //   return (<>
-
-  //   <Carousel >
-
-  //   </Carousel>
-  //   </>)
-  // }
-
-  // const handleImageClick = (index) => {
-  //   setSelectedImage(index);
-  // };
 
   const formatDueDate = (dueDate) => {
     const a = moment(dueDate);
@@ -63,24 +44,22 @@ function Row({ row, handleCommentModalToggle }) {
     }
   };
 
-
+  const handleImageClick = (images) => {
+    setOpenImage(!openImage);
+  }
+  const handleClose = () => {
+    setOpenImage(false);
+  };
 
   const renderImageBadge = (historyRow) => {
-    const [openImage, setOpenImage] = React.useState(false);
+    
 
-    const handleImageClick = (images) => {
-      setOpenImage(true);
-    }
-    const handleClose = () => {
-      setOpenImage(false);
-    };
-  
     return (
       <div >
         <Badge
           color="secondary"
           badgeContent={historyRow.images.length || 0}
-          onClick={() => handleImageClick(historyRow.images)}
+          onClick={()=>handleImageClick(historyRow.image)}
         >
           {historyRow.images.length === 0 ? "" : 
             <img src={historyRow.images[0].url} width='50' height='50'/>
@@ -88,18 +67,17 @@ function Row({ row, handleCommentModalToggle }) {
         </Badge>
          <Modal
           open={openImage}
-          onClose={handleClose}
-          
+          onClick={handleClose}
         > 
-          <Carousel autoPlay={false} >
+          <Carousel autoPlay={false}    
+>
           {
             historyRow.images.map((image,index)=>{
-              return <img key={index} src={image.url} className="carsole-image"  width='30%' alt="Example image" />
+              return  <img key={index} src={image.url} alt={image} className="carsole-image"  width='30%' />
             })
           }
           </Carousel>
           </Modal>
-
 
       </div>
     );
@@ -146,7 +124,7 @@ function Row({ row, handleCommentModalToggle }) {
           {row.createdByProfile.name}
         </TableCell>
         <TableCell className="table-header" align="left">
-        {/* {row.itemName} */}
+        {row.itemName}
         </TableCell>
         {/* <TableCell className="table-header" align="left">
           {moment(row.createdOn).format("YYYY-MM-DD")}

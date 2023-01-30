@@ -108,7 +108,7 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
         .set("TaskScheduleTaskListError", null);
     case ADD_TASK_SUCCESS:
       const createdByProfile = AUTH_OBJECT.profile
-      farmdDetails.Tasks.push({ ...action.data, createdByProfile });
+      farmdDetails.Tasks.push({ ...action.data, createdByProfile, TasksHistory: [] });
       return state
         .set("isTaskScheduleTaskLoading", false)
         .set("dashboardFarmList", dashboardFarmList)
@@ -127,7 +127,7 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
         (l) => l.id == action.data.taskId
       );
       const user = AUTH_OBJECT.profile;
-      farmdDetails.Tasks[taskRow].TasksHistory.push({ ...action.data, user });
+      farmdDetails.Tasks[taskRow].TasksHistory.push({ ...action.data, user, comments:[] });
       return state
         .set("isFarmTaskCommentLoading", false)
         .set("dashboardFarmList", dashboardFarmList)
