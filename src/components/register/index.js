@@ -12,6 +12,7 @@ import ButtonCustom from "../shared/button";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import growlocCover from '../../../public/assets/growlocCover.webp'
 import logo from '../../../public/assets/logo.png';
+import loginpage from '../../../public/assets/loginpage.png';
 //import bottomImage from '../../assets/login-bottom-image.png';
 export default class Resgister extends React.Component {
   constructor() {
@@ -83,7 +84,16 @@ export default class Resgister extends React.Component {
           this.renderLoader()
         )}
 
-        <Grid container component="main" sx={{ height: '100vh' }}>
+        <Grid container component="main" 
+         sx={{
+          height: '100vh',
+          backgroundImage: `url(${loginpage})`,
+          backgroundRepeat: 'no-repeat',
+          //backgroundColor: '#517223',
+          backgroundPosition: 'center',
+          backgroundSize: '100% 100vh',
+        }}
+        >
           <CssBaseline />
           <Grid
             item
@@ -94,18 +104,27 @@ export default class Resgister extends React.Component {
             flexDirection={'column'}
             alignItems={'center'}
             justifyContent='center'
-            sx={{
-              backgroundColor: "F9F9F9",
-              //  backgroundImage: `url(${growlocCover})`,
-              backgroundRepeat: 'no-repeat',
-              backgroundColor: '#517223',
-              backgroundPosition: 'bottom',
-              backgroundSize: 'contain',
-            }}
+            // sx={{
+            //   backgroundColor: "F9F9F9",
+            //   //  backgroundImage: `url(${growlocCover})`,
+            //   backgroundRepeat: 'no-repeat',
+            //   backgroundColor: '#517223',
+            //   backgroundPosition: 'bottom',
+            //   backgroundSize: 'contain',
+            // }}
           >
             <img src={logo} />
           </Grid>
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square
+           sx={{
+            backgroundColor: '#E5E4D7',
+            height: '75%',
+            marginTop: '80px',
+            borderRadius: '10px',
+            overflowY : 'scroll'
+
+          }}
+          >
             <Box
               sx={{
                 my: 2,

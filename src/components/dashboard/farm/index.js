@@ -53,6 +53,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import { display } from "@mui/system";
 
 export default function FarmDashboard({
   dashboardFarmList,
@@ -649,27 +650,156 @@ export default function FarmDashboard({
     return (100 / farmdDetails?.farmArea) * parseInt(farmArea) + "%";
   };
   const renderFarmZoneGridView = () => {
-    return (
+   let totalFarmArea = parseInt(farmdDetails.farmArea);
+   let zoneAreas = farmDashboardZoneList.map(zone=>parseInt(zone.farmArea));
+   let totalZoneArea = zoneAreas.reduce((a,b)=>a+b);
+   let newZoneData = [...farmDashboardZoneList];
+   newZoneData.push({name : 'Empty Areas',id:farmDashboardZoneList.length+1,farmArea:totalFarmArea-totalZoneArea});
+  //  newZoneData = newZoneData.sort((a,b)=>parseInt(a.farmArea)-parseInt(b.farmArea));
+   newZoneData = newZoneData.map((zone,idx)=>{
+             let fraction = parseInt(zone.farmArea)/totalFarmArea;
+             let height = 400*fraction;
+             let width = 100*fraction;
+             zone.height = Math.ceil(height);
+             zone.width = Math.ceil(width);
+             if(width<25){
+              zone.col = 1;
+             }else if(width>25 && width < 50){
+              zone.col = 2
+             }else if(width>50 && width < 75){
+              zone.col = 3;
+             }else{
+              zone.col = 4
+             }
+             if(height < 100 ){
+              zone.row = 1;
+             }else if(height>100 && height < 200){
+                zone.row = 2;
+             }else if(height > 200 && height < 300){
+              zone.row = 3;
+             }else{
+              zone.row = 4;
+             }
+              return zone;
+   });
+  //  let prevZone = newZoneData[0];
+  //  for(let i=1;i<newZoneData.length;i++){
+  //   let curZone = newZoneData[i];
+  //   if(prevZone.farmArea == curZone.farmArea){
+  //     newZoneData[i].size = prevZone.size;
+  //   }else{
+  //     prevZone = curZone;
+  //   }
+  //  }
+  //  let sizes = newZoneData.map(zone=>parseInt(zone.size));
+  //  let totalSize = sizes.reduce((a,b)=>a+b);
+    //let noOfCol = 1;
+  //  let noOfRow = Math.ceil(totalSize/noOfCol);
+  // let col1Data = [];
+  // let col2Data = [];
+  // let col3Data = [];
+  // if(newZoneData.length>4 && newZoneData.length<9){
+  //   noOfCol = 2;
+  //   col1Data = [...newZoneData.slice(0,4)];
+  //   col2Data = [...newZoneData.slice(4)];
+  // }else if(newZoneData.length>=9){
+  //   noOfCol = 3;
+  // }
+     return(
       <>
-        <GridList cellHeight={400}>
+      {/* <div style={{
+        width : '100%',
+        height : '400px',
+        display : 'flex',
+        flexWrap : 'wrap',
+        padding : '0 4px'
+      }}>
+      <div style={{
+        flex:'50%',
+        maxWidth :'50%',
+        padding : '0 4px'
+      }}>
+           {col1Data.map((zone,idx)=>{
+          return(
+            <div 
+            key={`zone-${idx}`}
+            style = {{backgroundColor:'skyblue',height:`${100}px`}}
+            >{zone.name}</div>
+          )
+         })}
+        </div>
+        <div 
+        style={{
+          flex:'50%',
+          maxWidth :'50%',
+          padding : '0 4px'
+        }}
+        >
+           {col2Data.map((zone,idx)=>{
+          return(
+            <div key={`zone-${idx}`}
+            style = {{backgroundColor:'skyblue',height:`${100}px`}}
+            >{zone.name}</div>
+          )
+         })}
+        </div>
+      </div> */}
+       <div style={{
+        height : '400px',
+        width : '100%',
+        display : 'grid',
+        gap : '10px',
+        //gridTemplateColumns:'repeat(auto-fill, minmax(260px, 1fr))',
+        //gridTemplateRows :`repeat(auto-fit, 1fr)`,
+        gridTemplateColumns : `repeat(4,1fr)`,
+        gridAutoFlow : 'dense'
+       }
+       }>
+        {newZoneData.map((zone,idx)=>{
+          return(
+            <div
+            key = {zone.id}
+            style = {{
+              backgroundColor : 'skyblue',
+              //gridColumnEnd : `span ${zone.col}`,
+              //gridRowEnd :`span ${zone.row}`
+              gridColumn : `auto/span ${zone.col}`,
+              gridRow : `auto/span ${zone.row}`
+            }}
+            >{zone.name}</div>
+          )
+        })}
+      </div>
+       {/* <Wrapper cols={3}>
+        {
+          farmDashboardZoneList.map((zone)=>{
+            return (
+              <ReactGrid key={zone.id}>
+                <div>{zone.name}</div>
+              </ReactGrid>
+            )
+          })
+        }
+       </Wrapper> */}
+        {/* <GridList cellHeight={400}>
           {(farmDashboardZoneList || []).map((tile) => {
             return (
               <GridListTile key={tile.name} cols={tile.cols || 1} style={{ background: "red" }} backgroundColor='red'>
-                {/* <img src={tile.img} alt={tile.title} /> */}
+                <img src={tile.img} alt={tile.title} />
                 <GridListTileBar
                   title={tile.name}
 
-                // actionIcon={
-                //   <IconButton className={classes.icon}>
-                //     <InfoIcon />
-                //   </IconButton>
-                // }
+                actionIcon={
+                  <IconButton className={classes.icon}>
+                    <InfoIcon />
+                  </IconButton>
+                }
                 />
               </GridListTile>
 
             )
           })}
-        </GridList>
+        </GridList> */}
 
         {/* <ImageList sx={{ height: 400 }} variant="quilted" rowHeight={400}>
           {(farmDashboardZoneList || []).map((item) => (
