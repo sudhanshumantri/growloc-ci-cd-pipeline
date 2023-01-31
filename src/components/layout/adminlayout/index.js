@@ -51,7 +51,7 @@ const AdminLayout = ({ loadAuthToken }) => {
       >
         <Routes>
           <Route
-            path="/admin"
+            path="/"
             element={
                 <AdminDashboard />
             }

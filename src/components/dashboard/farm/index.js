@@ -14,7 +14,7 @@ import {
   Autocomplete,
 } from "@mui/material";
 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PageHeader from "../../shared/page-header";
 import DataTable from "../../shared/dataTable";
 import PieChart from "../../shared/chart/pieChart";
@@ -650,64 +650,64 @@ export default function FarmDashboard({
     return (100 / farmdDetails?.farmArea) * parseInt(farmArea) + "%";
   };
   const renderFarmZoneGridView = () => {
-   let totalFarmArea = parseInt(farmdDetails.farmArea);
-   let zoneAreas = farmDashboardZoneList.map(zone=>parseInt(zone.farmArea));
-   let totalZoneArea = zoneAreas.reduce((a,b)=>a+b);
-   let newZoneData = [...farmDashboardZoneList];
-   newZoneData.push({name : 'Empty Areas',id:farmDashboardZoneList.length+1,farmArea:totalFarmArea-totalZoneArea});
-  //  newZoneData = newZoneData.sort((a,b)=>parseInt(a.farmArea)-parseInt(b.farmArea));
-   newZoneData = newZoneData.map((zone,idx)=>{
-             let fraction = parseInt(zone.farmArea)/totalFarmArea;
-             let height = 400*fraction;
-             let width = 100*fraction;
-             zone.height = Math.ceil(height);
-             zone.width = Math.ceil(width);
-             if(width<25){
-              zone.col = 1;
-             }else if(width>25 && width < 50){
-              zone.col = 2
-             }else if(width>50 && width < 75){
-              zone.col = 3;
-             }else{
-              zone.col = 4
-             }
-             if(height < 100 ){
-              zone.row = 1;
-             }else if(height>100 && height < 200){
-                zone.row = 2;
-             }else if(height > 200 && height < 300){
-              zone.row = 3;
-             }else{
-              zone.row = 4;
-             }
-              return zone;
-   });
-  //  let prevZone = newZoneData[0];
-  //  for(let i=1;i<newZoneData.length;i++){
-  //   let curZone = newZoneData[i];
-  //   if(prevZone.farmArea == curZone.farmArea){
-  //     newZoneData[i].size = prevZone.size;
-  //   }else{
-  //     prevZone = curZone;
-  //   }
-  //  }
-  //  let sizes = newZoneData.map(zone=>parseInt(zone.size));
-  //  let totalSize = sizes.reduce((a,b)=>a+b);
+    let totalFarmArea = parseInt(farmdDetails.farmArea);
+    let zoneAreas = farmDashboardZoneList.map(zone => parseInt(zone.farmArea));
+    let totalZoneArea = zoneAreas.reduce((a, b) => a + b);
+    let newZoneData = [...farmDashboardZoneList];
+    newZoneData.push({ name: 'Empty Zone', id: farmDashboardZoneList.length + 1, farmArea: totalFarmArea - totalZoneArea });
+    //  newZoneData = newZoneData.sort((a,b)=>parseInt(a.farmArea)-parseInt(b.farmArea));
+    newZoneData = newZoneData.map((zone, idx) => {
+      let fraction = parseInt(zone.farmArea) / totalFarmArea;
+      let height = 400 * fraction;
+      let width = 100 * fraction;
+      zone.height = Math.ceil(height);
+      zone.width = Math.ceil(width);
+      if (width < 25) {
+        zone.col = 1;
+      } else if (width > 25 && width < 50) {
+        zone.col = 2
+      } else if (width > 50 && width < 75) {
+        zone.col = 3;
+      } else {
+        zone.col = 4
+      }
+      if (height < 100) {
+        zone.row = 1;
+      } else if (height > 100 && height < 200) {
+        zone.row = 2;
+      } else if (height > 200 && height < 300) {
+        zone.row = 3;
+      } else {
+        zone.row = 4;
+      }
+      return zone;
+    });
+    //  let prevZone = newZoneData[0];
+    //  for(let i=1;i<newZoneData.length;i++){
+    //   let curZone = newZoneData[i];
+    //   if(prevZone.farmArea == curZone.farmArea){
+    //     newZoneData[i].size = prevZone.size;
+    //   }else{
+    //     prevZone = curZone;
+    //   }
+    //  }
+    //  let sizes = newZoneData.map(zone=>parseInt(zone.size));
+    //  let totalSize = sizes.reduce((a,b)=>a+b);
     //let noOfCol = 1;
-  //  let noOfRow = Math.ceil(totalSize/noOfCol);
-  // let col1Data = [];
-  // let col2Data = [];
-  // let col3Data = [];
-  // if(newZoneData.length>4 && newZoneData.length<9){
-  //   noOfCol = 2;
-  //   col1Data = [...newZoneData.slice(0,4)];
-  //   col2Data = [...newZoneData.slice(4)];
-  // }else if(newZoneData.length>=9){
-  //   noOfCol = 3;
-  // }
-     return(
+    //  let noOfRow = Math.ceil(totalSize/noOfCol);
+    // let col1Data = [];
+    // let col2Data = [];
+    // let col3Data = [];
+    // if(newZoneData.length>4 && newZoneData.length<9){
+    //   noOfCol = 2;
+    //   col1Data = [...newZoneData.slice(0,4)];
+    //   col2Data = [...newZoneData.slice(4)];
+    // }else if(newZoneData.length>=9){
+    //   noOfCol = 3;
+    // }
+    return (
       <>
-      {/* <div style={{
+        {/* <div style={{
         width : '100%',
         height : '400px',
         display : 'flex',
@@ -744,33 +744,47 @@ export default function FarmDashboard({
          })}
         </div>
       </div> */}
-       <div style={{
-        height : '400px',
-        width : '100%',
-        display : 'grid',
-        gap : '10px',
-        //gridTemplateColumns:'repeat(auto-fill, minmax(260px, 1fr))',
-        //gridTemplateRows :`repeat(auto-fit, 1fr)`,
-        gridTemplateColumns : `repeat(4,1fr)`,
-        gridAutoFlow : 'dense'
-       }
-       }>
-        {newZoneData.map((zone,idx)=>{
-          return(
-            <div
-            key = {zone.id}
-            style = {{
-              backgroundColor : 'skyblue',
-              //gridColumnEnd : `span ${zone.col}`,
-              //gridRowEnd :`span ${zone.row}`
-              gridColumn : `auto/span ${zone.col}`,
-              gridRow : `auto/span ${zone.row}`
-            }}
-            >{zone.name}</div>
-          )
-        })}
-      </div>
-       {/* <Wrapper cols={3}>
+        <div style={{
+          height: '400px',
+          width: '100%',
+          display: 'grid',
+          gap: '10px',
+          //gridTemplateColumns:'repeat(auto-fill, minmax(260px, 1fr))',
+          //gridTemplateRows :`repeat(auto-fit, 1fr)`,
+          gridTemplateColumns: `repeat(4,1fr)`,
+          gridAutoFlow: 'dense'
+        }
+        }>
+          {newZoneData.map((zone, idx) => {
+            return (
+
+              <div
+                className="zone-gridview-cards"
+                key={zone.id}
+                style={{
+                  backgroundColor: zone.name == 'Empty Zone' ? 'grey' : '#517223',
+                  //gridColumnEnd : `span ${zone.col}`,
+                  //gridRowEnd :`span ${zone.row}`
+                  gridColumn: `auto/span ${zone.col}`,
+                  gridRow: `auto/span ${zone.row}`
+                }}
+              >
+                {zone.name == 'Empty Zone' ? (
+                  <>
+                    <p className="zone-gridview-cars-header">{zone.name}</p>
+                    <p className="label-white">Area: {zone.farmArea} sqft.</p>
+                  </>
+                ) : (
+                  <Link to={'/farm/' + farmId + '/zone/' + zone.id}>
+                    <p className="zone-gridview-cars-header">{zone.name}</p>
+                    <p className="label-white">Area: {zone.farmArea} sqft.</p>
+                  </Link>
+                )}
+              </div>
+            )
+          })}
+        </div>
+        {/* <Wrapper cols={3}>
         {
           farmDashboardZoneList.map((zone)=>{
             return (
@@ -1034,7 +1048,7 @@ export default function FarmDashboard({
   };
 
   const allFarmArea = farmDashboardZoneList?.map((product) => parseInt(product.farmArea))
-  const totalFarmArea = allFarmArea.reduce((acc, curr) => acc + curr,0)
+  const totalFarmArea = allFarmArea.reduce((acc, curr) => acc + curr, 0)
   const reamingArea = farmdDetails?.farmArea - totalFarmArea;
   let subtitle = `(Total Farm Area : ${farmdDetails?.farmArea || ""}  Available Farm Area : ${reamingArea ?? ""} )`;
   return (
@@ -1116,7 +1130,7 @@ export default function FarmDashboard({
             handleSave={handleFarmDashboardZone}
             zoneDetails={zoneData}
             data={farmDashboardZoneList}
-            farmData = {dashboardFarmList}
+            farmData={dashboardFarmList}
           />
         )}
         {isDeleteModelOpen && (
