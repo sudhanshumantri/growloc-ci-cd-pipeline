@@ -79,6 +79,7 @@ export default function CropLifeCycleDetails({
       handler: handleBackButton,
     },
   ];
+ 
 
   useEffect(() => {
     if (!isLifecycleDetailsLoading) {

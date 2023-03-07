@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Pusher from 'pusher-js';
 import DataTable from "../../shared/dataTable";
 import PageHeader from "../../shared/page-header";
 import AddNewCropToLifeCycleModal from "./addCropToLifeCycleModal";
@@ -18,6 +19,8 @@ export default function CropLifeCycle({
   isAddLifecycleLoading,
   addLifecycleError,
   isCropLifeCycleListLoading,
+  fetchPusherSensorData,
+  sensorDataList
 }) {
   let { farmId, zoneId} = useParams();
   const navigate = useNavigate();
@@ -66,7 +69,21 @@ export default function CropLifeCycle({
       redirection: false,
     },
   ];
+  useEffect(()=>{
+    // const pusher = new Pusher('74168d0c587988b1d7a3', {
+    //   cluster: 'ap2',
+    //   encrypted: true
+    // });
+    // const channel = pusher.subscribe('sensor-channel');
+    // channel.bind('sensor-event', data => {
+    //   console.log("working sensor data========",data);
+    // });
+    fetchPusherSensorData();
+    console.log("sensor data=========",sensorDataList);
+
+  },[sensorDataList]);
   React.useEffect(() => {
+    
     fecthCropFarm({ farmId: parseInt(farmId) });
     fetchAllCropsLifecycle({ farmId: parseInt(farmId) });
   }, []);

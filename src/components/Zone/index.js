@@ -92,6 +92,9 @@ export default function ZoneDashboard({
   const handleZoneSensorsModalToggle = () => {
     setZoneSensors(!openZoneSensors);
   };
+  const handleZoneSensorSave = (data)=>{
+    console.log("add sensor======",data);
+  }
   const handleZoneTaskSave = (data) => {
     if (data) {
       data.createdBy = loginObject?.profile.id;
@@ -555,6 +558,7 @@ export default function ZoneDashboard({
       {openZoneSensors && (
         <AddZoneSensorsModal
           open={openZoneSensors}
+          handleSave={handleZoneSensorSave}
           handleClose={handleZoneSensorsModalToggle}
         />
       )}
