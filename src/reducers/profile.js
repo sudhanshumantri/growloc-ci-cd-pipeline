@@ -31,14 +31,16 @@ export default function profileReducer(state = INITIAL_STATE, action = {}) {
         case FETCH_USER_PROFILE_DETAILS_FAILURE:
             return state
                 .set('profileInfo', null)
-
         case UPDATE_USER_PROFILE_DETAILS_REQUEST:
             return state
                 .set('isLoading', true)
                 .set('isSuccess', false)
         case UPDATE_USER_PROFILE_DETAILS_SUCCESS:
+            const newData = {...action.data}
+            console.log(newData,"newData");
             return state
                 .set('isLoading', false)
+                // .set('profileInfo', newData)
         case UPDATE_USER_PROFILE_DETAILS_FAILURE:
             return state
                 .set('error', action.data)

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Grid,
   DialogContent,
@@ -10,11 +10,29 @@ import PageHeader from "../shared/page-header";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../shared/button";
 import TextBox from "../shared/text-box";
-export const ProfileInformation = () => {
+// export  const ProfileInformation = (updateUserProfile) => {
+  export default function ProfileInformation({updateUserProfile,logout,updateUserPhone}) {
   const navigate = useNavigate();
   let loginObject = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
   const { profile } = loginObject;
+  const [profileData, SetProfileData] = useState(profile)
+  const [password, setPassword] = useState("");
+  const [validation, setValidation] = useState({
+    name: false,
+    email: false,
+    address:false,
 
+  });
+  const [phoneValidations,setPhoneValidations] = useState({
+    phone:false,
+    password:false,
+  })
+
+  const handleChange = (e) => {
+    const { value, name } = e.target;
+    SetProfileData({ ...profileData, [name]: value });
+    validation[name] && setValidation({ ...validation, [name]: false });
+  };
   const handleBackButton = () => {
     navigate(-1);
   };
@@ -25,6 +43,45 @@ export const ProfileInformation = () => {
     },
   ];
 
+  const handleProfileValidations = () => {
+    let errors = { ...validation };
+    let isValid = true;
+    if (!profileData.name) {
+      errors.name = true;
+      isValid = false;
+    }
+    if (!profileData.email) {
+      errors.email = true;
+      isValid = false;
+    }
+
+    if (!profileData.address) {
+      errors.address = true;
+      isValid = false;
+    }
+    setValidation(errors);
+    return isValid;
+  };
+
+  const handleProfileDataSave = () => {
+    let payload = {
+      name: profileData.name,
+      email: profileData.email,
+      address: profileData.address,
+      userId:profileData.userId
+    };
+    if(handleProfileValidations()) {
+      updateUserProfile(payload);
+    }
+  };
+const handlePhoneNumberChange = () => {
+  const payload = {
+    oldPhone: profile?.phone,
+    newPhone: profileData.phone,
+    password: password,
+  };
+  updateUserPhone(payload)
+}
   const renderPersonalInfo = () => {
     return (
       <>
@@ -33,7 +90,7 @@ export const ProfileInformation = () => {
             <h3>Personal</h3>
           </Grid>
           <Grid item xs={12}>
-              Your Phone Number is currently <b>{profile.phone}</b>{" "}
+              Your Phone Number is currently <b>{profileData.phone}</b>{" "}
           </Grid>
           <Grid item xs={12}>
             <h3>Profile</h3>
@@ -44,8 +101,10 @@ export const ProfileInformation = () => {
               isWhite={true}
               fullWidth
               name="name"
-              value={profile?.name}
-              variant="outlined"
+              value={profileData?.name}
+              onChange={handleChange}
+              error={validation.name}
+              helperText={validation.name ? "Please provide name" : ""}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -54,8 +113,11 @@ export const ProfileInformation = () => {
               size="small"
               fullWidth
               isWhite={true}
-              name="phone"
-              value={profile?.email}
+              name="email"
+              value={profileData?.email}
+              onChange={handleChange}
+              error={validation.email}
+              helperText={validation.email ? "Please provide Email" : ""}
             />
           </Grid>
           <Grid item xs={8}>
@@ -63,15 +125,17 @@ export const ProfileInformation = () => {
             <TextBox
               isWhite={true}
               multiline={true}
-              value={profile?.address}
-              variant="outlined"
+              value={profileData?.address}
               rows={2}
               name="address"
               fullWidth
+              onChange={handleChange}
+              error={validation.address}
+              helperText={validation.address ? "Please provide address" : ""}
             />
           </Grid>
           <Grid item xs={12}>
-            <CustomButton title="Update" />
+            <CustomButton title="Update"  handleButtonClick={handleProfileDataSave}/>
           </Grid>
           <Grid item xs={12}>
             <hr />
@@ -81,7 +145,7 @@ export const ProfileInformation = () => {
     );
   };
 
-  const renderEmailInfo = () => {
+  const renderPhoneInfo = () => {
     return (
       <>
         <Grid container spacing={1}>
@@ -94,13 +158,13 @@ export const ProfileInformation = () => {
               password
             </span>
           </Grid>
-          
           <Grid item xs={6}>
             <span className="custom-input-label">Phone Number</span>
             <TextBox
               fullWidth
-              value={profile?.phone}
-              name="email"
+              value={profileData?.phone}
+              name="phone"
+              onChange={handleChange}
             />
           </Grid>
           <Grid item xs={6}>
@@ -108,10 +172,11 @@ export const ProfileInformation = () => {
                     <TextBox
                          fullWidth                         
                          name="password"
-                    />
+                         value={password}
+                         onChange={(e) => setPassword(e.target.value)} />
                 </Grid>
           <Grid item xs={12}>
-            <CustomButton title="Update" />
+            <CustomButton title="Update" handleButtonClick={handlePhoneNumberChange}  />
           </Grid>
           <Grid item xs={12}>
             <hr />
@@ -155,42 +220,14 @@ export const ProfileInformation = () => {
       </Grid>
     );
   };
-
   return (
     <div>
       <PageHeader title="Profile Information" showBackButton={showBackButton} />
       <div className="page-container">
         <DialogContent sx={{ paddingTop: "10px" }}>
-          {/* <Grid container sx={{ margin: "1px", width: 500 }} spacing={2}> */}
-          {/* <Grid item xs={12} sm={6} md={6}>
-              <span className="input-label">Name</span>
-              <FormControl fullWidth>
-                <TextBox isWhite={true} value={profile?.name} />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <span className="input-label">Email</span>
-              <FormControl fullWidth>
-                <TextBox isWhite={true} value={profile?.email} />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={12} md={12}>
-              <span className="input-label">Phone Number</span>
-              <FormControl fullWidth>
-                <TextBox isWhite={true} value={profile?.phone} />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={12} md={12}>
-              <span className="input-label">Role</span>
-              <FormControl fullWidth>
-                <TextBox isWhite={true} value={profile?.role} />
-              </FormControl>
-            </Grid> */}
-          {/* {renderEmailInfo()} */}
           {renderPersonalInfo()}
-          {renderEmailInfo()}
+          {renderPhoneInfo()}
           {renderPasswordSection()}
-          {/* </Grid> */}
         </DialogContent>
       </div>
     </div>
