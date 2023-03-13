@@ -24,7 +24,7 @@ export default function CropLifeCycle({
 }) {
   let { farmId, zoneId} = useParams();
   const navigate = useNavigate();
-
+  
   let headers = [
     {
       label: "Batch No",
@@ -84,8 +84,8 @@ export default function CropLifeCycle({
   },[sensorDataList]);
   React.useEffect(() => {
     
-    fecthCropFarm({ farmId: parseInt(farmId) });
-    fetchAllCropsLifecycle({ farmId: parseInt(farmId) });
+    fecthCropFarm({ farmId: farmId });
+    fetchAllCropsLifecycle({ farmId: farmId });
   }, []);
   const [open, setOpen] = useState(false);
   const handleModalToggle = () => {

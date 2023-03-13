@@ -72,8 +72,8 @@ export default function AddCropModal({
   };
   const handleSaveCrop = () => {
     let requestData = {
-      farmId: parseInt(farmId),
-      zoneId: parseInt(zoneId),
+      farmId: farmId,
+      zoneId: zoneId,
       qty: parseInt(units),
       batchNo: batchNo,
       crop: selectedCrop,

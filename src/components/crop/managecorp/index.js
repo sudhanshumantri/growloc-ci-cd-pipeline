@@ -64,7 +64,7 @@ export default function ManageCrop({
 
   React.useEffect(() => {
     fetchCrop();
-    fecthCropFarm({ farmId: parseInt(farmId) });
+    fecthCropFarm({ farmId: farmId });
   }, []);
   const handleEdit = (cropData) => {
     const { id, crop, farmId, qty } = cropData;
@@ -171,7 +171,7 @@ export default function ManageCrop({
 
   React.useEffect(() => {
     fetchCrop();
-    fecthCropFarm({ farmId: parseInt(farmId) });
+    fecthCropFarm({ farmId: farmId });
   }, []);
   return (
     <div>

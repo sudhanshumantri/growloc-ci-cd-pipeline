@@ -54,7 +54,7 @@ export default function AddInventoryItems({
   };
   const handleFarmInventorySave = () => {
     let payload = {
-      farmId: parseInt(farmId),
+      farmId: farmId,
       name: itemData.name,
       qty: itemData.qty,
       units: itemData.units,
