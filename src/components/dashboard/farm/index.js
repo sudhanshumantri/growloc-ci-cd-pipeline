@@ -116,9 +116,10 @@ export default function FarmDashboard({
     fecthFarmDashboardZone(farmId);
     fetchFarmDashboard(farmId);
     fetchFarmInventory(farmId);
-    fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
+    //fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
     // fecthCropFarm({ farmId: parseInt(farmId) });
     // fetchAllCropsLifecycle({ farmId: parseInt(farmId) });
+    fetchFarmDashboardHarvest({ farmId: farmId, month });
     fecthCropFarm(farmId);
     fetchAllCropsLifecycle(farmId);
 
@@ -173,13 +174,13 @@ export default function FarmDashboard({
   const handleChange = (event) => {
     const { value } = event.target;
     setMonth(value);
-    fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month: value });
+    fetchFarmDashboardHarvest({ farmId:farmId, month: value });
   };
 
   const handleTaskSave = (data) => {
     if (data) {
-      data.createdBy = loginObject?.profile.id;
-      data.farmId = parseInt(farmId);
+      data.createdBy = loginObject?.profile.userId;
+      data.farmId = farmId;
       addTaskScheduleTask(data);
     }
     handleModalToggle();
@@ -197,7 +198,7 @@ export default function FarmDashboard({
     } else {
       addFarmDashboardZone({
         ...data,
-        farmId: parseInt(farmId),
+        farmId: farmId,
       });
     }
     handleZoneModalToggle();
@@ -319,7 +320,9 @@ export default function FarmDashboard({
       label: "Name",
       key: "name",
       redirection: true,
-      redirectionKey: "id",
+      // redirectionKey: "id",
+      // baseEndPoint: `#/farm/${farmId}/zone/`,
+      redirectionKey: "zone_internal_id",
       baseEndPoint: `#/farm/${farmId}/zone/`,
     },
     {

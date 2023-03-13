@@ -68,7 +68,7 @@ export default function AddCropModal({
           : null,
     };
     let data = {
-      farmId: parseInt(farmId),
+      farmId: farmId,
       crop: cropData,
       qty: parseInt(units),
     };

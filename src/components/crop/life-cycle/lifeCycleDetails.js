@@ -101,7 +101,7 @@ export default function CropLifeCycleDetails({
     if (data) {
       data.createdBy = loginObject?.profile.id;
       data.cropLifeCycleId = parseInt(lifecycleId);
-      data.farmId = parseInt(farmId);
+      data.farmId = farmId;
       addTaskScheduleTask(data);
     }
     handleTaskModalToggle();

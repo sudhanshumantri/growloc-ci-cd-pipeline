@@ -52,7 +52,7 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
   let farmDashboardZoneList = state.toJS()["farmDashboardZoneList"]
   const { farmdDetails } = dashboardFarmList;
   const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
-
+  
   switch (action.type) {
     case FETCH_ALL_DASHBOARD_FARM_REQUEST:
       return state

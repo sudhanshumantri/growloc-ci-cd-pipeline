@@ -46,7 +46,7 @@ export default function AddUsersModal({
   };
   const handleSaveUser = () => {
     let payload = {
-      farmId: parseInt(farmId),
+      farmId: farmId,
       name: userData.name,
       password: userData.password,
       phone: parseInt(userData.phone),

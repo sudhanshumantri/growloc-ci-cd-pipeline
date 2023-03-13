@@ -92,14 +92,16 @@ export default function ZoneDashboard({
   const handleZoneSensorsModalToggle = () => {
     setZoneSensors(!openZoneSensors);
   };
-  const handleZoneSensorSave = (data)=>{
-    console.log("add sensor======",data);
+  const handleZoneSensorSave = (data) => {
+    console.log("add sensor======", data);
   }
   const handleZoneTaskSave = (data) => {
     if (data) {
-      data.createdBy = loginObject?.profile.id;
-      data.farmId = parseInt(farmId);
-      data.zoneId = parseInt(zoneId);
+      data.createdBy = loginObject?.profile.userId;
+      // data.farmId = ;
+      // data.zoneId = parseInt(zoneId);
+      data.farmId = farmId;
+      data.zoneId = zoneId;
       addFarmDashboardZoneTask(data);
     }
     handleModalToggle();
@@ -219,8 +221,8 @@ export default function ZoneDashboard({
     if (farmDashboardZoneList.length) {
       farmDashboardZoneList.forEach((list) => {
         if (list?.name) {
-          const { name, id } = list;
-          options.push({ label: name, value: id });
+          const { name, zone_internal_id } = list;
+          options.push({ label: name, value: zone_internal_id });
         }
       });
     }
@@ -481,7 +483,7 @@ export default function ZoneDashboard({
     );
   };
 
-  let subtitle = `( Zone Area : ${farmZoneList?.farmArea || "" } )`;
+  let subtitle = `( Zone Area : ${farmZoneList?.farmArea || ""} )`;
 
   return (
     <div>
@@ -552,7 +554,7 @@ export default function ZoneDashboard({
           handleSave={handleZoneTaskCommentSave}
           handleClose={handleCommentModalToggle}
 
-          
+
         />
       )}
       {openZoneSensors && (

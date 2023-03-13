@@ -42,7 +42,8 @@ export default function ManageFarm({
   const handleEdit = (e, elem) => {
     e.preventDefault();
     const { farm } = elem;
-    navigate("/edit-farm/" + farm.id);
+    //navigate("/edit-farm/" + farm.id);
+    navigate("/edit-farm/" + farm.farm_internal_id);
   };
 
   const handleModalToggle = () => {
@@ -112,7 +113,7 @@ export default function ManageFarm({
             <Grid
               item
               component={Link}
-              to={`/farm/${elem.farmId}/dashboard`}
+              to={`/farm/${elem.farm.farm_internal_id}/dashboard`}
               xs={4}
               sm={4}
               md={4}
