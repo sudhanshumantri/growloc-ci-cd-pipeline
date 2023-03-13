@@ -65,7 +65,7 @@ export default function ZoneDashboard({
     if (zoneId) {
       fetchFarmZone(zoneId);
       fetchFarmDashboardZone(zoneId);
-      fetchFarmDashboardHarvest({ zoneId: parseInt(zoneId), month });
+      fetchFarmDashboardHarvest({ zoneId: zoneId, month });
       fetchUsers(farmId);
       fecthFarmDashboardZone(farmId);
       fetchFarmInventory(farmId);
@@ -210,7 +210,7 @@ export default function ZoneDashboard({
       addFarmDashboardZoneTaskComment({
         ...data,
         taskId: parseInt(rowdata.id),
-        userId: parseInt(rowdata.createdByProfile.id),
+        userId: rowdata.createdByProfile.userId,
       });
     }
     handleCommentModalToggle();
