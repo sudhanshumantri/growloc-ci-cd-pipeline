@@ -69,6 +69,7 @@ export function* updatePassword({ data }) {
         yield call(browserHistory.push, "/login");
         yield call(browserHistory.go, "/login");
     } else {
+        
         yield put(updateUserNewPasswordFailure("Something went wrong"));
     }
 }

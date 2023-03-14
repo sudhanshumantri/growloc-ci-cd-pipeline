@@ -59,6 +59,9 @@ import ManageTasks from "../../../container/task";
 // import  ProfileInformation  from "../../profileinformation";
 import { ErrorPage } from "../../errorpage";
 import { ForgotPassword } from "../../forgotpassword";
+import FarmEfficiency from "../../reports/farmefficiency";
+import CapacityEfficiency from "../../reports/capacityefficiency";
+import Energyfficiency from "../../reports/energyefficiency";
 // import ZoneDashboard from "../Zone";
 // import Tasks from "../task";
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
@@ -141,6 +144,9 @@ const UserLayout = ({ loadAuthToken }) => {
               <Route path="task" element={<ManageTasks />} />
               <Route path="water-management" element={<WaterManagement />} />
               <Route path="monitor" element={<Monitor />} />
+              <Route path="reports/farm-efficiency" element={<FarmEfficiency />} />
+              <Route path="reports/capacity-efficiency" element={<CapacityEfficiency />} />
+              <Route path="reports/energy-efficiency" element={<Energyfficiency/>} />
             </Route>
             <Route
               path="farm/:farmId/zone/:zoneId"
