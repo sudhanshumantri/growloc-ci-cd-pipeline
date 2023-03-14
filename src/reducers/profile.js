@@ -19,6 +19,9 @@ const INITIAL_STATE = fromJS({
     isSuccess: true,
 });
 export default function profileReducer(state = INITIAL_STATE, action = {}) {
+    let profileInfo = state.toJS()["profileInfo"];
+    const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
+    console.log(AUTH_OBJECT,"AUTH_OBJECT");
     switch (action.type) {
         case FETCH_USER_PROFILE_DETAILS_REQUEST:
             return state
@@ -36,11 +39,8 @@ export default function profileReducer(state = INITIAL_STATE, action = {}) {
                 .set('isLoading', true)
                 .set('isSuccess', false)
         case UPDATE_USER_PROFILE_DETAILS_SUCCESS:
-            const newData = {...action.data}
-            console.log(newData,"newData");
             return state
                 .set('isLoading', false)
-                // .set('profileInfo', newData)
         case UPDATE_USER_PROFILE_DETAILS_FAILURE:
             return state
                 .set('error', action.data)

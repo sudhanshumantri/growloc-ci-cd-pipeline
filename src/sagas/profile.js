@@ -1,5 +1,7 @@
-import { call, all, put, select, takeLatest } from 'redux-saga/effects';
+import { call, all, put, select, takeLatest,delay } from 'redux-saga/effects';
 import {  callChangePasswordHandler,  callupdateChangePhone,  callupdateUserProfile } from '../utils/api';
+import store, { browserHistory } from "../store";
+
 import {
     updateUserProfileSuccess,
     updateUserProfileFailure,
@@ -25,7 +27,12 @@ export function* updatePhoneNumber({ data }) {
     console.log(responseData,"data");
     if (responseData?.status == 200 && responseData.data.status) {
         yield put(updateUserPhoneOrPasswordSuccess(responseData.data.data));
-        addNotification(" Phone Number Updated Successfully", 5000,true, "success");
+        addNotification(" Phone Number Updated. You would be logged out and use the new Phone Number to login again.", 5000,true, "success");
+        localStorage.removeItem("AUTH_TOKEN");
+        localStorage.removeItem("AUTH_OBJECT");
+        yield delay(1000);
+        yield call(browserHistory.push, "/login");
+        yield call(browserHistory.go, "/login");
     } else {
         yield put(updateUserPhoneOrPasswordFailure("Something went wrong"));
     }

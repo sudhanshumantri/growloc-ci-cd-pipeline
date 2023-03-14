@@ -10,11 +10,12 @@ import PageHeader from "../shared/page-header";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../shared/button";
 import TextBox from "../shared/text-box";
+import Loader from "../shared/loader";
 // export  const ProfileInformation = (updateUserProfile) => {
-  export default function ProfileInformation({updateUserProfile,logout,updateUserPhone}) {
+  export default function ProfileInformation({updateUserProfile,logout,updateUserPhone,isLoading,isSuccess}) {
   const navigate = useNavigate();
   let loginObject = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
-  const { profile } = loginObject;
+  const { profile } = loginObject || "";
   const [profileData, SetProfileData] = useState(profile)
   const [password, setPassword] = useState("");
   const [validation, setValidation] = useState({
@@ -23,10 +24,6 @@ import TextBox from "../shared/text-box";
     address:false,
 
   });
-  const [phoneValidations,setPhoneValidations] = useState({
-    phone:false,
-    password:false,
-  })
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -42,7 +39,6 @@ import TextBox from "../shared/text-box";
       handler: handleBackButton,
     },
   ];
-
   const handleProfileValidations = () => {
     let errors = { ...validation };
     let isValid = true;
@@ -54,7 +50,6 @@ import TextBox from "../shared/text-box";
       errors.email = true;
       isValid = false;
     }
-
     if (!profileData.address) {
       errors.address = true;
       isValid = false;
@@ -90,7 +85,7 @@ const handlePhoneNumberChange = () => {
             <h3>Personal</h3>
           </Grid>
           <Grid item xs={12}>
-              Your Phone Number is currently <b>{profileData.phone}</b>{" "}
+              Your Phone Number is currently <b>{profile?.phone}</b>{" "}
           </Grid>
           <Grid item xs={12}>
             <h3>Profile</h3>
@@ -224,6 +219,8 @@ const handlePhoneNumberChange = () => {
     <div>
       <PageHeader title="Profile Information" showBackButton={showBackButton} />
       <div className="page-container">
+      {isLoading && <Loader title="Updating Profile" />}
+      {isSuccess && <Loader title="Updating Phone Number" />}
         <DialogContent sx={{ paddingTop: "10px" }}>
           {renderPersonalInfo()}
           {renderPhoneInfo()}
