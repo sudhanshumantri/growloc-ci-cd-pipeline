@@ -11,7 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import ProfileInformation from '../../components/profileinformation';
 import { selectLoginObject } from '../../selectors/login';
 import { selectIsLoading, selectUserProfile, selectIsError, selectIsSuccess } from '../../selectors/profile';
-import { fetchUserProfileRequest, updateUserProfileRequest, updateUserPhoneOrPasswordRequest } from '../../actions/profile'
+import { fetchUserProfileRequest, updateUserProfileRequest, updateUserPhoneOrPasswordRequest ,updateUserNewPasswordRequest} from '../../actions/profile'
 import { logout } from '../../actions/login';
 const mapStateToProps = createStructuredSelector({
     loginObject: selectLoginObject(),
@@ -24,6 +24,7 @@ const mapDispatchToProps = {
     fetchUserProfile: fetchUserProfileRequest,
     updateUserProfile: updateUserProfileRequest,
     updateUserPhone: updateUserPhoneOrPasswordRequest,
+    updateNewPassword : updateUserNewPasswordRequest,
     logout: logout,
     }
 function withRouter(Component) {

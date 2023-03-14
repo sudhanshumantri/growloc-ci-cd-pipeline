@@ -49,7 +49,7 @@ const urls = {
     "add-zone-task-comment": "farm/task/add-comments/",
     "forgot-password": "",
     "forgot-password-verify-token": "",
-    "change-password": "",
+    "change-password": "auth/update-password",
     "fetch-user-profile": "",
     "update-user-profile": "auth/update-profile",
     "update-user-phone": "auth/update-phone",
@@ -422,11 +422,10 @@ export function callRestPasswordTokenValidationHandler(routeParams) {
     routeParams,
   });
 }
-export function callChangePasswordHandler(routeParams, data) {
+export function callChangePasswordHandler( data) {
   return callApi(getEndpoint("change-password"), {
     method: "post",
     removeAuthorizationHeader: false,
-    routeParams,
     data,
   });
 }

@@ -8,6 +8,9 @@ import {
     UPDATE_USER_PHONE_PASSWORD_REQUEST,
     UPDATE_USER_PHONE_PASSWORD_SUCCESS,
     UPDATE_USER_PHONE_PASSWORD_FAILURE,
+    UPDATE_USER_PASSWORD_REQUEST,
+    UPDATE_USER_PASSWORD_SUCCESS,
+    UPDATE_USER_PASSWORD_FAILURE
 } from './actionTypes';
 
 export function fetchUserProfileRequest(data) {
@@ -61,6 +64,25 @@ export function updateUserPhoneOrPasswordSuccess(data) {
 export function updateUserPhoneOrPasswordFailure(data) {
     return {
         type: UPDATE_USER_PHONE_PASSWORD_FAILURE,
+        data
+    };
+}
+
+export function updateUserNewPasswordRequest(data) {
+    return {
+        type: UPDATE_USER_PASSWORD_REQUEST,
+        data
+    };
+}
+export function updateUserNewPasswordSuccess(data) {
+    return {
+        type: UPDATE_USER_PASSWORD_SUCCESS,
+        data
+    };
+}
+export function updateUserNewPasswordFailure(data) {
+    return {
+        type: UPDATE_USER_PASSWORD_FAILURE,
         data
     };
 }
