@@ -9,7 +9,9 @@ import {
     UPDATE_USER_PHONE_PASSWORD_REQUEST,
     UPDATE_USER_PHONE_PASSWORD_SUCCESS,
     UPDATE_USER_PHONE_PASSWORD_FAILURE,
-
+    UPDATE_USER_PASSWORD_REQUEST,
+    UPDATE_USER_PASSWORD_SUCCESS,
+    UPDATE_USER_PASSWORD_FAILURE
 } from '../actions/actionTypes'
 
 const INITIAL_STATE = fromJS({
@@ -19,7 +21,6 @@ const INITIAL_STATE = fromJS({
     isSuccess: true,
 });
 export default function profileReducer(state = INITIAL_STATE, action = {}) {
-    let profileInfo = state.toJS()["profileInfo"];
     const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
     console.log(AUTH_OBJECT,"AUTH_OBJECT");
     switch (action.type) {
@@ -59,6 +60,24 @@ export default function profileReducer(state = INITIAL_STATE, action = {}) {
                 .set('isSuccess', false)
                 .set('error', action.data)
                 .set('isLoading', false)
+        //
+        case UPDATE_USER_PASSWORD_REQUEST:
+            return state
+                .set('isLoading', true)
+                .set('isSuccess', false)
+                .set('error', false)
+        case UPDATE_USER_PASSWORD_SUCCESS:
+            return state
+                .set('isSuccess', action.data)
+                .set('isLoading', false)
+                .set('error', false)
+        case  UPDATE_USER_PASSWORD_FAILURE:
+            return state
+                .set('isSuccess', false)
+                .set('error', action.data)
+                .set('isLoading', false)
+
+
 
         default:
             return state;
