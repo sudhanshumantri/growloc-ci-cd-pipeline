@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import PageHeader from "../shared/page-header";
-export default function Monitors() {
+import PageHeader from "../../shared/page-header";
+export default function Energyfficiency({ }) {
 
     return (
         <div>
-            <PageHeader title="Monitors" />
+            <PageHeader title="Energy Efficiency" />
             <div className="page-container">
-
             </div>
         </div>
     )

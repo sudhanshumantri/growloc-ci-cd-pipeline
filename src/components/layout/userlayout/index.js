@@ -21,6 +21,7 @@ import CropLifeCycle from "../../../container/life-cycle";
 import CropLifeCycleDetails from "../../../container/life-cycle/lifeCycleDetails";
 import ZoneDashboard from "../../../container/zone";
 import ManageZoneTasks from "../../../container/zonetask";
+import ProfileInformation from "../../../container/profile"
 import FarmOutlet from "../../farmoutlet";
 import { getAsyncInjectors } from "../../../utils/asyncInjectors";
 import loginReducer from "../../../reducers/login";
@@ -34,6 +35,7 @@ import inventoryReducer from "../../../reducers/inventory";
 import taskReducer from "../../../reducers/task";
 import zoneReducer from "../../../reducers/zone";
 import zoneTaskReducer from "../../../reducers/zone/task";
+ import profileReducer from "../../../reducers/profile"
 import pusherReducer from "../../../reducers/pusher";
 import loginSagas from "../../../sagas/login";
 import registerSagas from "../../../sagas/register";
@@ -45,7 +47,8 @@ import lifeCycleSagas from "../../../sagas/life-cycle";
 import inventorySagas from "../../../sagas/inventory";
 import taskSagas from "../../../sagas/task";
 import zoneSagas from "../../../sagas/zone";
-import  pusherSagas  from "../../../sagas/pusher";
+import pusherSagas  from "../../../sagas/pusher";
+import profileSagas from "../../../sagas/profile"
 import zoneTaskSagas from "../../../sagas/zone/task";
 import { selectToken } from "../../../selectors/login";
 import { loadAuthToken } from "../../../actions/login";
@@ -53,9 +56,12 @@ import AddFarm from "../../../container/addfarm";
 // import ManageItem from "../inventory/manageitem";
 import ManageItem from "../../../container/inventory";
 import ManageTasks from "../../../container/task";
-import { ProfileInformation } from "../../profileinformation";
+// import  ProfileInformation  from "../../profileinformation";
 import { ErrorPage } from "../../errorpage";
 import { ForgotPassword } from "../../forgotpassword";
+import FarmEfficiency from "../../reports/farmefficiency";
+import CapacityEfficiency from "../../reports/capacityefficiency";
+import Energyfficiency from "../../reports/energyefficiency";
 // import ZoneDashboard from "../Zone";
 // import Tasks from "../task";
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
@@ -72,6 +78,8 @@ injectReducer("task", taskReducer);
 injectReducer("zone", zoneReducer);
 injectReducer("zoneTask", zoneTaskReducer);
 injectReducer("pusherData",pusherReducer);
+injectReducer("profile",profileReducer);
+injectSagas(profileSagas);
 injectSagas(pusherSagas);
 injectSagas(farmSagas);
 injectSagas(userSagas);
@@ -136,6 +144,9 @@ const UserLayout = ({ loadAuthToken }) => {
               <Route path="task" element={<ManageTasks />} />
               <Route path="water-management" element={<WaterManagement />} />
               <Route path="monitor" element={<Monitor />} />
+              <Route path="reports/farm-efficiency" element={<FarmEfficiency />} />
+              <Route path="reports/capacity-efficiency" element={<CapacityEfficiency />} />
+              <Route path="reports/energy-efficiency" element={<Energyfficiency/>} />
             </Route>
             <Route
               path="farm/:farmId/zone/:zoneId"

@@ -24,7 +24,6 @@ const ASSETS_URL = "../../../../public/assets/";
 import logo from "../../../../public/assets/logo.png";
 import { adminMenuItems } from "../../shared/sidebar/config";
 import Dashboard from "../../../../public/assets/Dashboard.png";
-
 import "./style.css";
 const drawerWidth = 300;
 const openedMixin = (theme) => ({

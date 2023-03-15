@@ -1,99 +1,85 @@
-import { call, all, put, select, takeLatest } from 'redux-saga/effects';
-import {  callChangePasswordHandler,  callupdateChangeEmail,  callupdateUserProfile } from '../utils/api';
+import { call, all, put, select, takeLatest,delay } from 'redux-saga/effects';
+import {  callChangePasswordHandler,  callupdateChangePhone,  callupdateUserProfile } from '../utils/api';
+import store, { browserHistory } from "../store";
+
 import {
-    fetchUserProfileFailure,
-    fetchUserProfileSuccess,
     updateUserProfileSuccess,
     updateUserProfileFailure,
     updateUserPhoneOrPasswordSuccess,
     updateUserPhoneOrPasswordFailure,
+    updateUserNewPasswordSuccess,
+    updateUserNewPasswordFailure
 } from '../actions/profile';
 import { loadAuthToken } from '../actions/login'
-
-export function* fetchUserProfile({ data }) {
-    let responseData = yield call(callfetchUserProfile, data);
-    if (responseData?.status == 200) {
-        yield put(
-            fetchUserProfileSuccess(responseData.data),
-        );
-
-    } else {
-        yield put(
-            fetchUserProfileFailure(
-                'Something went wrong'
-            ),
-        );
-    }
-}
-
+import { addNotification } from "../components/shared/notification";
 export function* updateUserProfile({ data }) {
-    let { type, body, routeParams } = data;
-    let responseData = ''
-    if (type == 'personal') {
-        responseData = yield call(callupdateUserProfile, body);
-        if (responseData?.status == 200) {
-            const token = localStorage.getItem('AUTH_TOKEN');
-            let loginObject = localStorage.getItem('AUTH_OBJECT');
-            if (loginObject) {
-                loginObject = JSON.parse(loginObject);
-                loginObject.name = body.name;
-                localStorage.setItem('AUTH_OBJECT', JSON.stringify(loginObject));
-                yield put(
-                    loadAuthToken(
-                        {
-                            token,
+    const {callback, ...remaingData} = data;
+    let responseData = yield call(callupdateUserProfile, remaingData);
+    console.log(responseData,"responseData");
+    if (responseData?.status == 200 && responseData.data.status) {
+        const token = localStorage.getItem('AUTH_TOKEN');
+        let loginObject = localStorage.getItem('AUTH_OBJECT');
+              if (loginObject) {
+               loginObject = JSON.parse(loginObject);
+               const {profile} = loginObject;
+               profile.name = responseData.data.data.name;
+               profile.email = responseData.data.data.email;
+               profile.address= responseData.data.data.address
+               localStorage.setItem('AUTH_OBJECT', JSON.stringify(loginObject));
+           yield put(
+                loadAuthToken({
+                          token,
                             loginObject
                         }
                     ))
-
-            }
-            yield put(
-                updateUserProfileSuccess(
-                    responseData.data
-                ),
-            );
-        } else {
-            yield put(
-                updateUserProfileFailure(
-                    'Something went wrong'
-                ),
-            );
-        }
-    } else if (type == 'update-phone') {
-        let loginObj = {
-            username,
-            password
-        }
-        responseData = yield call(callLoginHandler, loginObj);
-        if (responseData?.status == 200 && responseData.data.islogin) {
-            let emailUpdateData = {
-            }
-            responseData = yield call(callupdateChangeEmail, emailUpdateData);
-            if (responseData?.status == 200) {
-                yield put(updateUserPhoneOrPasswordSuccess('Phone Number Updated. You would be logged out and use the new email to login again.'))
-            } else {
-                yield put(updateUserPhoneOrPasswordFailure('Something went wrong'))
-            }
-
-        } else {
-            yield put(updateUserPhoneOrPasswordFailure('Invalid Credentials Provided'))
-        }
-    } else if (type == 'change-password') {
-        responseData = yield call(callChangePasswordHandler, routeParams, body);
-        if (responseData?.status == 200) {
-            yield put(updateUserPhoneOrPasswordSuccess('Password Updated. You would be logged out and use the new password to login again.'))
-        } else {
-            yield put(updateUserPhoneOrPasswordFailure('Something went wrong'))
-        }
+          }
+         yield put(updateUserProfileSuccess(responseData.data.data));
+        addNotification(" Updated Profile Successfully", 5000,true, "success");
+    } else {
+        yield put(updateUserProfileFailure("Something went wrong"));
     }
+}
 
+
+
+export function* updatePhoneNumber({ data }) {
+    let responseData = yield call(callupdateChangePhone, data);
+    console.log(responseData,"data");
+    if (responseData?.status == 200 && responseData.data.status) {
+        yield put(updateUserPhoneOrPasswordSuccess(responseData.data.data));
+        addNotification(" Phone Number Updated. You would be logged out and use the new Phone Number to login again.", 5000,true, "success");
+        localStorage.removeItem("AUTH_TOKEN");
+        localStorage.removeItem("AUTH_OBJECT");
+        yield delay(1000);
+        yield call(browserHistory.push, "/login");
+        yield call(browserHistory.go, "/login");
+    } else {
+        yield put(updateUserPhoneOrPasswordFailure("Something went wrong"));
+    }
+}
+export function* updatePassword({ data }) {
+    let responseData = yield call(callChangePasswordHandler, data);
+    console.log(responseData,"data");
+    if (responseData?.status == 200 && responseData.data.status) {
+        yield put(updateUserNewPasswordSuccess(responseData.data.data));
+        addNotification(" Password Updated. You would be logged out and use the new password to login again.", 5000,true, "success");
+        localStorage.removeItem("AUTH_TOKEN");
+        localStorage.removeItem("AUTH_OBJECT");
+        yield delay(1000);
+        yield call(browserHistory.push, "/login");
+        yield call(browserHistory.go, "/login");
+    } else {
+        
+        yield put(updateUserNewPasswordFailure("Something went wrong"));
+    }
 }
 
 export function* profileSagas() {
     yield all([
-        takeLatest('FETCH_USER_PROFILE_DETAILS_REQUEST', fetchUserProfile),
         takeLatest('UPDATE_USER_PROFILE_DETAILS_REQUEST', updateUserProfile),
-        takeLatest('UPDATE_USER_PHONE_PASSWORD_REQUEST', updateUserProfile),
+        takeLatest('UPDATE_USER_PHONE_PASSWORD_REQUEST', updatePhoneNumber),
+        takeLatest('UPDATE_USER_PASSWORD_REQUEST', updatePassword),
+
     ]);
 }
 
