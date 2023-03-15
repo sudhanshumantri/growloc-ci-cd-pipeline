@@ -56,6 +56,8 @@ const urls = {
     "fetch-admin-list": "farm/admin-farm-dashboard-data/",
     "add-admin-zone-sensors": "sensor/zone/add",
     "delete-admin-zone-sensors": "sensor/zone/",
+    "fetch-farm-all-reports": "",
+
   },
 };
 function getEndpoint(endpoint) {
@@ -470,6 +472,14 @@ export function callAddAdminsensors(data) {
 export function callDeleteAdminsensors(routeParams) {
   return callApi(getEndpoint("delete-admin-zone-sensors"), {
     method: "delete",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
+
+export function callfetchFarmReportsDetails(routeParams) {
+  return callApi(getEndpoint("fetch-farm-all-reports"), {
+    method: "GET",
     removeAuthorizationHeader: false,
     routeParams,
   });

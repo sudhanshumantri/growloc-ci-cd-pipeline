@@ -22,6 +22,7 @@ import CropLifeCycleDetails from "../../../container/life-cycle/lifeCycleDetails
 import ZoneDashboard from "../../../container/zone";
 import ManageZoneTasks from "../../../container/zonetask";
 import ProfileInformation from "../../../container/profile"
+import FarmEfficiency from "../../../container/reports";
 import FarmOutlet from "../../farmoutlet";
 import { getAsyncInjectors } from "../../../utils/asyncInjectors";
 import loginReducer from "../../../reducers/login";
@@ -37,6 +38,7 @@ import zoneReducer from "../../../reducers/zone";
 import zoneTaskReducer from "../../../reducers/zone/task";
  import profileReducer from "../../../reducers/profile"
 import pusherReducer from "../../../reducers/pusher";
+import reportsReducer from "../../../reducers/reports";
 import loginSagas from "../../../sagas/login";
 import registerSagas from "../../../sagas/register";
 import cropsSagas from "../../../sagas/crops";
@@ -50,6 +52,7 @@ import zoneSagas from "../../../sagas/zone";
 import pusherSagas  from "../../../sagas/pusher";
 import profileSagas from "../../../sagas/profile"
 import zoneTaskSagas from "../../../sagas/zone/task";
+import reportsSagas from "../../../sagas/reports";
 import { selectToken } from "../../../selectors/login";
 import { loadAuthToken } from "../../../actions/login";
 import AddFarm from "../../../container/addfarm";
@@ -59,7 +62,7 @@ import ManageTasks from "../../../container/task";
 // import  ProfileInformation  from "../../profileinformation";
 import { ErrorPage } from "../../errorpage";
 import { ForgotPassword } from "../../forgotpassword";
-import FarmEfficiency from "../../reports/farmefficiency";
+// import FarmEfficiency from "../../reports/farmefficiency";
 import CapacityEfficiency from "../../reports/capacityefficiency";
 import Energyfficiency from "../../reports/energyefficiency";
 // import ZoneDashboard from "../Zone";
@@ -79,6 +82,7 @@ injectReducer("zone", zoneReducer);
 injectReducer("zoneTask", zoneTaskReducer);
 injectReducer("pusherData",pusherReducer);
 injectReducer("profile",profileReducer);
+injectReducer("reports",reportsReducer);
 injectSagas(profileSagas);
 injectSagas(pusherSagas);
 injectSagas(farmSagas);
@@ -91,6 +95,8 @@ injectSagas(inventorySagas);
 injectSagas(taskSagas);
 injectSagas(zoneSagas);
 injectSagas(zoneTaskSagas);
+injectSagas(reportsSagas);
+
 const drawerWidth = 240;
 const UserLayout = ({ loadAuthToken }) => {
   const token = localStorage.getItem("AUTH_TOKEN");
