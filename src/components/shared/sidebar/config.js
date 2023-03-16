@@ -385,24 +385,28 @@ const zoneMenuItems = [
       },
     ],
   },
+
   {
     title: "Reports",
-    id: "Reports",
+    id: "reports",
     icon: Report,
     navigation: "reports",
-    isAuthRequired: true,
-    from: "reports",
-    action: "view",
+    link: "/reports",
     css: { borderBottom: "1px solid white" },
     subMenu: [
       {
         id: "1",
-        name: "Avg Weight Per Plant",
-        navigation: "reports/avgweight",
+        name: "zone Efficiency",
+        navigation: "/reports/zone-efficiency",
+        link: "/reports/zone-efficiency",
       },
-      { id: "2", name: "Farm Efficiency", navigation: "reports/efficiency" },
+      { id: "2", name: " Capacity Efficiency", navigation: "/reports/capacity-efficiency",link: "/reports/capacity-efficiency",
+    },
+      { id: "3", name: " Energy Efficiency", navigation: "/reports/energy-efficiency",link: "/reports/energy-efficiency" },
+
     ],
   },
+
 
   {
     title: "Users",

@@ -1,12 +1,13 @@
 import { call, all, put, takeLatest } from "redux-saga/effects";
-import { callfetchFarmInventoryDetails,callAddFarmInventory,callUpdateFarmInventory,callDeleteFarmInventory} from "../utils/api";
+import { callfetchFarmReportsDetails,} from "../utils/api";
 import {
     fetchFarmReportsSuccess,
     fetchFarmReportsFailure,
 } from "../actions/reports";
 
 export function* fetchFarmReportsList({ data }) {
-  let responseData = yield call(callfetchFarmInventoryDetails, data);
+  console.log(data,"data");
+  let responseData = yield call(callfetchFarmReportsDetails, data);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(fetchFarmReportsSuccess(responseData.data.data));
   } else {
