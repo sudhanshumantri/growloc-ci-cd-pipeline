@@ -69,7 +69,6 @@ const mapStateToProps = createStructuredSelector({
   farmCropList: selectCropFarmList(),
   lifecycleCropsList: selectLifecycleCropsList(),
   isAddLifecycleLoading: selectIsAddLifecycleLoading(),
-
 });
 const mapDispatchToProps = {
   fetchFarmDashboard: fetchDashboardFarmRequest,
@@ -84,8 +83,7 @@ const mapDispatchToProps = {
   deleteFarmDashboardZone:deleteFarmDashboardZoneRequest,
   fecthCropFarm: fetchFarmCropsRequest,
   addCropToLifecycle: addCropToLifecycleRequest,
-  fetchAllCropsLifecycle: fetchAllCropsLifecycleRequest
-
+  fetchAllCropsLifecycle: fetchAllCropsLifecycleRequest,
 
 
 };

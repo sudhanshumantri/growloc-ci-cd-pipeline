@@ -7,7 +7,8 @@ import {
   callAddFarmDashboardZone,
   callFetchFarmDashboardZoneList,
   callUpdateFarmDashboardZoneList,
-  callDeleteFarmDashboardZoneList
+  callDeleteFarmDashboardZoneList,
+  callFetchAllUserZoneSensor
 } from "../utils/api";
 import {
   fetchDashboardFarmSuccess,
@@ -26,6 +27,8 @@ import {
   updateFarmDashboardZoneFailure,
   deleteFarmDashboardZoneSuccess,
   deleteFarmDashboardZoneFailure,
+  fetchAllUserZoneSensorSuccess,
+  fetchAllUserZoneSensorFailure
 } from "../actions/dashboard";
 
 export function* fetchFarmDashboardList({ data }) {
@@ -102,6 +105,14 @@ export function* deleteFarmDashboardZoneList({ data }) {
   }
 }
 
+export function* fetchAllUserZoneSensor({ data }) {
+  let responseData = yield call(callFetchAllUserZoneSensor, data);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(fetchAllUserZoneSensorSuccess(responseData.data.data));
+  } else {
+    yield put(fetchAllUserZoneSensorFailure("Something went wrong"));
+  }
+}
 
 
 export function* farmDashboardSagas() {
@@ -114,6 +125,7 @@ export function* farmDashboardSagas() {
     takeLatest("FETCH_ALL_FARM_DASHBOARD_ZONE_REQUEST", fetchFarmDashboardZoneList),
     takeLatest("UPDATE_FARM_DASHBOARD_ZONE_REQUEST", updateFarmDashboardZoneList),
     takeLatest("DELETE_FARM_DASHBOARD_ZONE_REQUEST", deleteFarmDashboardZoneList),
+    takeLatest("FETCH_ALL_USER_ZONE_SENSORS_REQUEST", fetchAllUserZoneSensor),
 
   ]);
 }

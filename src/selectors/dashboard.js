@@ -82,6 +82,15 @@ export const selectUpdateFarmDashboardZoneError = () =>
     selectFarmDashboard,
     (services) => services.toJS()["isDeleteFarmDashboardZoneLoading"]
   );
-
+//
+export const selectAllUserZoneSensor = () =>
+  createSelector(selectFarmDashboard, (services) => services.toJS()["allZoneSensorList"]);
+export const selectIsZoneSensorLoading = () =>
+  createSelector(
+    selectFarmDashboard,
+    (services) => services.toJS()["isZoneSensorLoading"]
+  );
+export const selectLoadingAllZoneSensorError = () =>
+  createSelector(selectFarmDashboard, (services) => services.toJS()["loadingAllZoneSensorError"]);
 
 
