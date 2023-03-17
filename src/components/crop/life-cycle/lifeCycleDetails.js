@@ -442,11 +442,12 @@ export default function CropLifeCycleDetails({
       </Grid>
     );
   };
-  const renderSelectedSegmentSensorInformation = (selectedStageInformation, data) => {
-    console.log("check====", data);
+  const renderSelectedSegmentSensorInformation = (selectedStageInformation, obj) => {
+    let data = obj.payload;
     return (
       <Grid item xs={12} sm={12} md={12}>
         <p className="section-title">Sensors Information </p>
+        <p >Last Updated : {moment(new Date(obj.timestamp)).format("MMMM Do YYYY hh:mm:ss A")}</p>
         <Paper className="life-cycle-details-card life-cycle-spacing ">
           <Table size="small" aria-label="a dense table">
             <TableHead className="table-header-row">
@@ -513,7 +514,7 @@ export default function CropLifeCycleDetails({
 
     return (
       <Grid container spacing={2}>
-        {isPusherData ? renderSelectedSegmentSensorInformation(selectedStageInformation, recentPusherData.data[0].payload) : !isRecentZoneSensorDataLoading ? renderSelectedSegmentSensorInformation(selectedStageInformation, recentZoneSensorData.data[0].payload) : ""}
+        {isPusherData ? renderSelectedSegmentSensorInformation(selectedStageInformation, recentPusherData.data[0]) : !isRecentZoneSensorDataLoading ? renderSelectedSegmentSensorInformation(selectedStageInformation, recentZoneSensorData.data[0]) : ""}
         <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">
             {selectedStageInformation.stage + " Stage Information"}
