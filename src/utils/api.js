@@ -59,6 +59,7 @@ const urls = {
     "fetch-all-zone-sensors" : "sensor/get-all-zone-sensor",
     "fetch-farm-all-reports": "farm/get-all-farm-sensor-data",
     "fetch-zone-all-reports": "farm/get-all-zone-sensor-data",
+    "fetch-recent-zone-sensor-data":"farm/get-lattest-zone-sensor-data",
   },
 };
 function getEndpoint(endpoint) {
@@ -494,6 +495,15 @@ export function callfetchFarmReportsDetails(queryParams) {
 }
 export function callfetchZoneReportsDetails(queryParams) {
   return callApi(getEndpoint("fetch-zone-all-reports"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    queryParams,
+  });
+}
+
+
+export function callfetchRecenzoneSensorData(queryParams) {
+  return callApi(getEndpoint("fetch-recent-zone-sensor-data"), {
     method: "GET",
     removeAuthorizationHeader: false,
     queryParams,

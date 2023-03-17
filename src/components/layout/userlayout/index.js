@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Pusher from "pusher-js";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import Box from "@mui/material/Box";
@@ -8,6 +9,8 @@ import { Routes, Route } from "react-router-dom";
 import store from "../../../store";
 import PrivateOutlet from "../../privateroute";
 // import FarmDashboard from "../dashboard/farm";
+import { fetchPusherRequest } from "../../../actions/pusher";
+import { fetchAllUserZoneSensorRequest } from "../../../actions/dashboard";
 import FarmDashboard from "../../../container/dashboard";
 import ManageCrop from "../../../container/managecrops";
 import Monitor from "../../monitor";
@@ -102,7 +105,7 @@ injectSagas(reportsSagas);
 injectSagas(zoneReportsSagas)
 
 const drawerWidth = 240;
-const UserLayout = ({ loadAuthToken }) => {
+const UserLayout = ({ loadAuthToken,fetchAllUserZoneSensor,fetchPusherData }) => {
   const token = localStorage.getItem("AUTH_TOKEN");
   let loginObject = localStorage.getItem("AUTH_OBJECT");
   if (loginObject) {
@@ -112,6 +115,18 @@ const UserLayout = ({ loadAuthToken }) => {
     token,
     loginObject,
   });
+  useEffect(() => {
+    fetchAllUserZoneSensor()
+    const pusher = new Pusher('74168d0c587988b1d7a3', {
+      cluster: 'ap2',
+      encrypted: true
+    });
+    const channel = pusher.subscribe('sensor-channel');
+    channel.bind("sensor-event", data => {
+      fetchPusherData(data.data);
+      //fetchPusherData(data.data);
+    });
+  }, []);
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -213,6 +228,8 @@ const UserLayout = ({ loadAuthToken }) => {
 };
 const mapDispatchToProps = {
   loadAuthToken: loadAuthToken,
+  fetchPusherData : fetchPusherRequest,
+  fetchAllUserZoneSensor : fetchAllUserZoneSensorRequest
 };
 const mapStateToProps = createStructuredSelector({
   token: selectToken(),

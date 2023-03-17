@@ -1,7 +1,7 @@
 import { put, all, takeLatest, call } from "redux-saga/effects";
 import Pusher from 'pusher-js';
 import { fetchPusherFailure, fetchPusherSuccess } from '../actions/pusher';
-import { getPusherData } from "../utils/pusher";
+
 
 export function* fetchSensorDataPusher({ data }) {
    if(data){

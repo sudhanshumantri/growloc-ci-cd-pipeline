@@ -1,36 +1,42 @@
 import { fromJS } from "immutable";
 import {
-    FETCH_ALL_FARM_ZONE_REQUEST,
-    FETCH_ALL_FARM_ZONE_SUCCESS,
-    FETCH_ALL_FARM_ZONE_FAILURE,
-    FETCH_ALL_FARM_ZONE_DASHBOARD_REQUEST,
-    FETCH_ALL_FARM_ZONE_DASHBOARD_SUCCESS,
-    FETCH_ALL_FARM_ZONE_DASHBOARD_FAILURE,
-    FETCH_ALL_FARM_ZONE_DASHBOARD_HARVEST_REQUEST,
-    FETCH_ALL_FARM_ZONE_DASHBOARD_HARVEST_SUCCESS,
-    FETCH_ALL_FARM_ZONE_DASHBOARD_HARVEST_FAILURE,
-    ADD_FARM_DASHBOARD_ZONE_TASK_REQUEST,
-    ADD_FARM_DASHBOARD_ZONE_TASK_SUCCESS,
-    ADD_FARM_DASHBOARD_ZONE_TASK_FAILURE,
-    ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_REQUEST,
-    ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_SUCCESS,
-    ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_FAILURE
+  FETCH_ALL_FARM_ZONE_REQUEST,
+  FETCH_ALL_FARM_ZONE_SUCCESS,
+  FETCH_ALL_FARM_ZONE_FAILURE,
+  FETCH_ALL_FARM_ZONE_DASHBOARD_REQUEST,
+  FETCH_ALL_FARM_ZONE_DASHBOARD_SUCCESS,
+  FETCH_ALL_FARM_ZONE_DASHBOARD_FAILURE,
+  FETCH_ALL_FARM_ZONE_DASHBOARD_HARVEST_REQUEST,
+  FETCH_ALL_FARM_ZONE_DASHBOARD_HARVEST_SUCCESS,
+  FETCH_ALL_FARM_ZONE_DASHBOARD_HARVEST_FAILURE,
+  ADD_FARM_DASHBOARD_ZONE_TASK_REQUEST,
+  ADD_FARM_DASHBOARD_ZONE_TASK_SUCCESS,
+  ADD_FARM_DASHBOARD_ZONE_TASK_FAILURE,
+  ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_REQUEST,
+  ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_SUCCESS,
+  ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_FAILURE,
+  FETCH_RECENT_ZONE_SENSOR_DATA_REQUEST,
+  FETCH_RECENT_ZONE_SENSOR_DATA_SUCCESS,
+  FETCH_RECENT_ZONE_SENSOR_DATA_FAILURE,
 } from "../actions/actionTypes";
 
 const INITIAL_STATE = fromJS({
   isFarmZoneLoading: false,
   farmZoneList: [],
   farmZoneError: null,
-  isFarmZoneDashboardListLoading:false,
-  farmZoneDashboardListError:null,
-  farmZoneDashboardList:[],
-  farmZoneDashboardHarvestList:[],
-  isFarmZoneDashboardHarvestListLoading:false,
-  farmZoneDashboardHarvestListError:false,
-  isFarmDashboardZoneTaskLoading:false,
-  farmDashboardZoneTaskError:null,
-  isFarmDashboardZoneCommetLoading:false,
-  farmDashboardZoneCommetError:null,
+  isFarmZoneDashboardListLoading: false,
+  farmZoneDashboardListError: null,
+  farmZoneDashboardList: [],
+  farmZoneDashboardHarvestList: [],
+  isFarmZoneDashboardHarvestListLoading: false,
+  farmZoneDashboardHarvestListError: false,
+  isFarmDashboardZoneTaskLoading: false,
+  farmDashboardZoneTaskError: null,
+  isFarmDashboardZoneCommetLoading: false,
+  farmDashboardZoneCommetError: null,
+  isRecentZoneSensorDataLoading: false,
+  recentZoneSensorData: {},
+  recentZoneSensorDataError: null,
 });
 
 export default function zoneReducer(state = INITIAL_STATE, action = {}) {
@@ -54,8 +60,8 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
         .set("isFarmZoneLoading", false)
         .set("farmZoneList", [])
         .set("farmZoneError", action.error);
-        //
-        case FETCH_ALL_FARM_ZONE_DASHBOARD_REQUEST:
+    //
+    case FETCH_ALL_FARM_ZONE_DASHBOARD_REQUEST:
       return state
         .set("isFarmZoneDashboardListLoading", true)
         .set("farmZoneDashboardList", [])
@@ -86,8 +92,8 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
         .set("isFarmZoneDashboardHarvestListLoading", false)
         .set("farmZoneDashboardHarvestList", [])
         .set("farmZoneDashboardHarvestListError", action.error);
-        //
-        case ADD_FARM_DASHBOARD_ZONE_TASK_REQUEST:
+    //
+    case ADD_FARM_DASHBOARD_ZONE_TASK_REQUEST:
       return state
         .set("isFarmDashboardZoneTaskLoading", true)
         .set("farmDashboardZoneTaskError", null);
@@ -117,11 +123,28 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
         .set("isFarmDashboardZoneCommetLoading", false)
         .set("farmZoneDashboardList", farmZoneDashboardList)
         .set("farmDashboardZoneCommetError", null);
-      case ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_FAILURE:
+    case ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_FAILURE:
       return state
         .set("isFarmDashboardZoneCommetLoading", false)
         .set("farmDashboardZoneCommetError", action.error);
-        //
+    //
+    case FETCH_RECENT_ZONE_SENSOR_DATA_REQUEST:
+     
+      return state
+        .set("isRecentZoneSensorDataLoading", true)
+        .set("recentZoneSensorData", {})
+        .set("recentZoneSensorDataError", null);
+    case FETCH_RECENT_ZONE_SENSOR_DATA_SUCCESS:
+     
+      return state
+        .set("isRecentZoneSensorDataLoading", false)
+        .set("recentZoneSensorData", action.data)
+        .set("recentZoneSensorDataError", null);
+    case FETCH_RECENT_ZONE_SENSOR_DATA_FAILURE:
+      return state
+        .set("isRecentZoneSensorDataLoading", false)
+        .set("recentZoneSensorData", {})
+        .set("recentZoneSensorDataError", action.error);
     default:
       return state;
   }
