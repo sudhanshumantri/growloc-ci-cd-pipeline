@@ -1,8 +1,7 @@
-import { call, all, put, select, takeLatest } from 'redux-saga/effects';
+import { call, all, put, select, takeLatest,delay} from 'redux-saga/effects';
 import { callLoginHandler, callRegisterHandler } from '../utils/api';
 import store, { browserHistory } from '../store';
 import { addNotification } from "../components/shared/notification";
-
 import {
     registerSuccess, registerFailure
 } from '../actions/register'
@@ -10,8 +9,9 @@ export function* registerHandler({ data }) {
     let responseData = yield call(callRegisterHandler, data);
     if (responseData?.status == 200 && responseData.data.status ) {
         addNotification("Account sucessfully created. Kindly Login", 5000,true, "success");
-        // yield call(browserHistory.push, "/login");
-        // yield call(browserHistory.go, "/login");
+        yield delay(1000);
+        yield call(browserHistory.push, "/login");
+        yield call(browserHistory.go, "/login");
         yield put(
             registerSuccess(),
         );

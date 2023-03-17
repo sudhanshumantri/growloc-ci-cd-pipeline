@@ -56,7 +56,6 @@ export default function ProfileInformation({
   };
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
-    setPhoneValidations(false);
   };
   const handleBackButton = () => {
     navigate(-1);
@@ -109,7 +108,7 @@ export default function ProfileInformation({
     let payload = {
       name: profileData.name,
       email: profileData.email,
-      address: profileData.address
+      address: profileData.address,
     };
     if (handleProfileValidations()) {
       updateUserProfile(payload);
@@ -327,8 +326,8 @@ export default function ProfileInformation({
     <div>
       <PageHeader title="Profile Information" showBackButton={showBackButton} />
       <div className="page-container">
-         {isLoading && <Loader title="Updating Profile" />}
-      {/* {isSuccess && <Loader title="Updating Phone Number" />} */} 
+        {isLoading && <Loader title="Updating Profile" />}
+        {/* {isSuccess && <Loader title="Updating Phone Number" />} */}
         <DialogContent sx={{ paddingTop: "10px" }}>
           {renderPersonalInfo()}
           {renderPhoneInfo()}
