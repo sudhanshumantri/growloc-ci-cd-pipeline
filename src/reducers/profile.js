@@ -22,7 +22,6 @@ const INITIAL_STATE = fromJS({
 });
 export default function profileReducer(state = INITIAL_STATE, action = {}) {
     const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
-    console.log(AUTH_OBJECT,"AUTH_OBJECT");
     switch (action.type) {
         case FETCH_USER_PROFILE_DETAILS_REQUEST:
             return state

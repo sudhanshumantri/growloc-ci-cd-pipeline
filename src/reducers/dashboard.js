@@ -23,7 +23,10 @@ import {
   UPDATE_FARM_DASHBOARD_ZONE_FAILURE,
   DELETE_FARM_DASHBOARD_ZONE_REQUEST,
   DELETE_FARM_DASHBOARD_ZONE_SUCCESS,
-  DELETE_FARM_DASHBOARD_ZONE_FAILURE
+  DELETE_FARM_DASHBOARD_ZONE_FAILURE,
+  FETCH_ALL_USER_ZONE_SENSORS_REQUEST,
+  FETCH_ALL_USER_ZONE_SENSORS_SUCCESS,
+  FETCH_ALL_USER_ZONE_SENSORS_FAILURE
 } from "../actions/actionTypes";
 import login from "../sagas/login";
 const INITIAL_STATE = fromJS({
@@ -46,6 +49,10 @@ const INITIAL_STATE = fromJS({
   updateFarmDashboardZoneError:null,
   isDeleteFarmDashboardZoneLoading:false,
   deleteFarmDashboardZoneError:false,
+  isZoneSensorLoading : false,
+  allZoneSensorList: [],
+  loadingAllZoneSensorError: null,
+
 });
 export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
   let dashboardFarmList = state.toJS()["dashboardFarmList"];
@@ -181,6 +188,22 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
               .set("deleteFarmDashboardZoneError", null);
           case DELETE_FARM_DASHBOARD_ZONE_FAILURE:
             return state.set("farmDashboardZoneList","");
+          //
+          case FETCH_ALL_USER_ZONE_SENSORS_REQUEST:
+            return state
+              .set("isZoneSensorLoading", true)
+              .set("allZoneSensorList", [])
+              .set("loadingAllZoneSensorError", null);
+          case FETCH_ALL_USER_ZONE_SENSORS_SUCCESS:
+            return state
+              .set("isZoneSensorLoading", false)
+              .set("allZoneSensorList", action.data)
+              .set("loadingAllZoneSensorError", null);
+          case FETCH_ALL_USER_ZONE_SENSORS_FAILURE:
+            return state
+              .set("isZoneSensorLoading", false)
+              .set("allZoneSensorList", [])
+              .set("loadingAllZoneSensorError", action.error);
     default:
       return state;
   }

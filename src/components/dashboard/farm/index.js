@@ -214,7 +214,7 @@ export default function FarmDashboard({
       addFarmTaskComment({
         ...data,
         taskId: parseInt(rowdata.id),
-        userId: parseInt(rowdata.createdByProfile.id),
+        userId: rowdata.createdByProfile.userId,
       });
     }
     handleCommentModalToggle();

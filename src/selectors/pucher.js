@@ -1,9 +1,12 @@
 import { createSelector } from "reselect";
-const selectSensorData = (state)=> state.get("pusherData");
+const selectPusherSensorData = (state) => state.get("pusherData");
 
-export const selectSensorDataPusher = () =>
-  createSelector(selectSensorData, (services) => {
-    console.log('selector========',services.toJS()["sensorData"])
-    return services.toJS()["sensorData"]
-  });
-  
+export const selectPusherData = () =>
+  createSelector(selectPusherSensorData, (services) => services.toJS()["pusherData"]);
+export const selectIsPusherDataLoading = () =>
+  createSelector(
+    selectPusherSensorData,
+    (services) => services.toJS()["isPusherDataLoading"]
+  );
+export const selectPusherDataLoadingError = () =>
+  createSelector(selectPusherSensorData, (services) => services.toJS()["pusherDataLoadingError"]);

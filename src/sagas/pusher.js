@@ -1,24 +1,20 @@
-import {  put, all,takeLatest } from "redux-saga/effects";
+import { put, all, takeLatest, call } from "redux-saga/effects";
 import Pusher from 'pusher-js';
-import {fetchPusherSensorData} from '../actions/pusher';
+import { fetchPusherFailure, fetchPusherSuccess } from '../actions/pusher';
+import { getPusherData } from "../utils/pusher";
 
-export function* fetchSensorDataPusher() {
-    const pusher = new Pusher('74168d0c587988b1d7a3', {
-        cluster: 'ap2',
-        encrypted: true
-      });
-      const channel = pusher.subscribe('sensor-channel');
-      channel.bind('sensor-event', data => {
-        const sensorData =  data;
-        console.log("data from saga pusher======",sensorData);
-        localStorage.setItem("sendorData",sensorData.data);
-        put(fetchPusherSensorData(sensorData.data));
-      });
+export function* fetchSensorDataPusher({ data }) {
+   if(data){
+    yield put(fetchPusherSuccess(data));
+   }else{
+    yield put(fetchPusherFailure("Something went wrong"));
+   }
+
 }
 export function* pusherSagas() {
   yield all([
-      takeLatest("FETCH_SENSOR_DATA_PUSHER", fetchSensorDataPusher)
-      
+    takeLatest("FETCH_SENSOR_DATA_PUSHER_REQUEST", fetchSensorDataPusher)
+
 
   ]);
 }

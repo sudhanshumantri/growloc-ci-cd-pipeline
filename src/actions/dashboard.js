@@ -22,7 +22,10 @@ import {
   UPDATE_FARM_DASHBOARD_ZONE_FAILURE,
   DELETE_FARM_DASHBOARD_ZONE_REQUEST,
   DELETE_FARM_DASHBOARD_ZONE_SUCCESS,
-  DELETE_FARM_DASHBOARD_ZONE_FAILURE
+  DELETE_FARM_DASHBOARD_ZONE_FAILURE,
+  FETCH_ALL_USER_ZONE_SENSORS_REQUEST,
+  FETCH_ALL_USER_ZONE_SENSORS_SUCCESS,
+  FETCH_ALL_USER_ZONE_SENSORS_FAILURE
 } from "./actionTypes";
 export function fetchDashboardFarmRequest(data) {
   return {
@@ -185,4 +188,23 @@ export function deleteFarmDashboardZoneFailure(error) {
   };
 }
 
+//
+export function fetchAllUserZoneSensorRequest(data) {
+  return {
+    type: FETCH_ALL_USER_ZONE_SENSORS_REQUEST,
+    data,
+  };
+}
+export function fetchAllUserZoneSensorSuccess(data) {
+  return {
+    type: FETCH_ALL_USER_ZONE_SENSORS_SUCCESS,
+    data,
+  };
+}
+export function fetchAllUserZoneSensorFailure(data) {
+  return {
+    type: FETCH_ALL_USER_ZONE_SENSORS_FAILURE,
+    data,
+  };
+}
 

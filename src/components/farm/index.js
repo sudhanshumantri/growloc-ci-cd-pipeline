@@ -1,8 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Pusher from 'pusher-js';
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
-import { Card,Grid,CardContent,CardActions,Menu,MenuItem ,IconButton, ListItemIcon, ListItemText, Divider} from "@mui/material";
+import { Card, Grid, CardContent, CardActions, Menu, MenuItem, IconButton, ListItemIcon, ListItemText, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
@@ -19,6 +20,14 @@ export default function ManageFarm({
   deleteFarm,
   isdeleteFarmLoading,
   isUpdateFarmLoading,
+  fetchAllUserZoneSensor,
+  isAllUserZoneSensorLoading,
+  allUserZoneSensorList,
+  loadingAllZoneSensorError,
+  pusherData,
+  isPusherDataLoading,
+  pusherDataloadingError,
+  fetchPusherData
 }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -27,12 +36,12 @@ export default function ManageFarm({
   const [selectedFarmId, setSeletedFarmId] = useState(null);
   const [expanded, setExpanded] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [showMenu,setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(false)
 
   const newOpen = Boolean(anchorEl);
   const handleOpenMoreOptions = (event, id) => {
     event.preventDefault();
-    setShowMenu({[id]: true})
+    setShowMenu({ [id]: true })
     setAnchorEl(event.currentTarget);
   };
   const handleCloseMoreOptions = () => {
@@ -71,6 +80,22 @@ export default function ManageFarm({
   React.useEffect(() => {
     fetchFarm();
     // addFarm()
+    fetchAllUserZoneSensor();
+  }, []);
+  console.log("pusher data in component =======",pusherData);
+  React.useEffect(() => {
+    const pusher = new Pusher('74168d0c587988b1d7a3', {
+      cluster: 'ap2',
+      encrypted: true
+    });
+    const channel = pusher.subscribe('sensor-channel');
+    channel.bind("sensor-event", data => {
+      //console.log("check in get pusher data=====",data.data);
+      fetchPusherData(data.data);
+       
+    });
+    
+    
   }, []);
 
   let buttonArray = [
@@ -153,7 +178,7 @@ export default function ManageFarm({
                         <IconButton
                           className="farm-card-icon"
                           aria-label="settings"
-                          onClick={(e)=>handleOpenMoreOptions(e, elem.id)}
+                          onClick={(e) => handleOpenMoreOptions(e, elem.id)}
                         >
                           <MoreHorizIcon
                             id="basic-button"
@@ -169,10 +194,10 @@ export default function ManageFarm({
                         open={showMenu[elem.id]}
                         keepMounted
                         PaperProps={{
-                           sx: {
+                          sx: {
                             width: "300px",
-                           border: "2px solid #E5E4D7",
-                           borderRadius: "10px",
+                            border: "2px solid #E5E4D7",
+                            borderRadius: "10px",
                           },
                         }}
                         onClose={handleCloseMoreOptions}
@@ -181,7 +206,7 @@ export default function ManageFarm({
                         }}
                       >
                         <MenuItem selected={false}
-                        onClick={(e) => handleEdit(e, elem)}>
+                          onClick={(e) => handleEdit(e, elem)}>
                           <ListItemIcon>
                             <CreateIcon />
                           </ListItemIcon>
