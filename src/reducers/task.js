@@ -43,7 +43,7 @@ export default function taskReducer(state = INITIAL_STATE, action = {}) {
       );
       const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
       const user = AUTH_OBJECT.profile;
-      FarmTaskList.tasks[taskRowIndex].TasksHistory.push({ ...action.data, user });
+      FarmTaskList.tasks[taskRowIndex].TasksHistory.push({ ...action.data, user ,comments:[]});
           return state
             .set("isTaskCommentLoading", false)
             .set("FarmTaskList", FarmTaskList)

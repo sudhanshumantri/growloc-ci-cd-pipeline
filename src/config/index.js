@@ -2,8 +2,8 @@ import * as React from "react";
 
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 export const api = {
-  //host: 'https://growlock-backend.onrender.com/api/'
-   host: "http://localhost:4000/api/",
+  host: 'https://growlock-backend.onrender.com/api/'
+  //  host: "http://localhost:4000/api/",
 };
 export const WEEKDAYS = [
   { label: "S", value: "7" },

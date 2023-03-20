@@ -13,47 +13,60 @@ export default function AddUsersModal({
     name: "",
     password: "",
     phone: "",
+    email:"",
+    confirmpassword:"",
     role: "farmmanager",
     isEditMode: false,
   },
 }) {
   const { farmId } = useParams();
   const [userData, setUserData] = useState(userDetails);
-  const [isNameError, setIsNameError] = useState(false);
-  const [isPhoneError, setIsPhoneError] = useState(false);
-  const [isPasswordError, setIsPasswordError] = useState(false);
-
+  const [validations,setValidation] = useState({
+    name:false,
+    password:false,
+    phone:false,
+    confirmpassword:false,
+  })
+console.log(userDetails.userId);
   const handleChange = (e) => {
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });
+    validations[name] && setValidation({ ...validations, [name]: false });
   };
-  const handleUserValidation = (data) => {
-    const re = /^[0-10\b]{0,10}$/;
-    let isError = false;
-    if (!userData.name) {
-      setIsNameError(true);
-      isError = true;
+  const handleUserValidation = () => {
+    let errors = { ...validations };
+    let isValid = true;
+    if(!userData.name) {
+      errors.name = true;
+      isValid = false;
     }
-    if (!userData.phone) {
-      setIsPhoneError(true);
-      isError = true;
+    if(!userData.phone || userData.phone.length < 10) {
+      errors.phone = true;
+      isValid = false;
+    }
+    if (!userData.password || userData.password.length < 6) {
+      errors.password = true;
+      isValid = false;
     }
     if (userData.password !== userData.confirmpassword) {
-      setIsPasswordError(true);
-      isError = true;
-    }
-    return isError;
+        errors.confirmpassword = true;
+        isValid = false
+   }
+    setValidation(errors);
+    return isValid;
   };
+
   const handleSaveUser = () => {
     let payload = {
       farmId: farmId,
       name: userData.name,
       password: userData.password,
+      email:userData.email,
       phone: parseInt(userData.phone),
+      password: userData.password,
       role: userData.role,
     };
-    let isError = handleUserValidation(payload);
-    if (!isError) {
+    if (handleUserValidation()) {
       handleSave(payload);
     }
   };
@@ -95,12 +108,9 @@ export default function AddUsersModal({
                   isWhite={true}
                   name="name"
                   value={userData.name}
-                  error={isNameError}
-                  helperText={isNameError ? "Please provide name" : ""}
-                  onChange={(e) => {
-                    isNameError && setIsNameError(false);
-                    handleChange(e);
-                  }}
+                  onChange={handleChange}
+                  error={validations.name}
+                  helperText={validations.name ? "Please provide name" : ""}
                 />
               </FormControl>
             </Grid>
@@ -113,15 +123,26 @@ export default function AddUsersModal({
                   name="phone"
                   disabled={userData.isEditMode}
                   value={userData.phone}
-                  error={isPhoneError}
-                  helperText={isPhoneError ? "Please provide phone number" : ""}
-                  onChange={(e) => {
-                    isPhoneError && setIsPhoneError(false);
-                    handleChange(e);
-                  }}
+                  onChange={handleChange}
+                  error={validations.phone}
+                  helperText={validations.phone ? "Please provide valid phone number" : ""}
+
                 />
               </FormControl>
             </Grid>
+            <Grid item xs={12} sm={6} md={12} hidden={userData.isEditMode}>
+              <span className="input-label">Email</span>
+              <FormControl fullWidth>
+                <TextBox
+                  isWhite={true}
+                  name="email"
+                  disabled={userData.isEditMode}
+                  value={userData.email}
+                  onChange={handleChange}
+                />
+              </FormControl>
+            </Grid>
+
             <Grid item xs={12} sm={6} md={12} hidden={userData.isEditMode}>
               <span className="input-label"> Password</span>
               <FormControl fullWidth>
@@ -131,7 +152,10 @@ export default function AddUsersModal({
                   disabled={userData.isEditMode}
                   variant="outlined"
                   value={userData.password}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
+                  error={validations.password}
+                  helperText={validations.password ?"please provide password atleast 6 characters " : ""}
+
                 />
               </FormControl>
             </Grid>
@@ -142,12 +166,9 @@ export default function AddUsersModal({
                   isWhite={true}
                   name="confirmpassword"
                   value={userData.confirmpassword}
-                  error={isPasswordError}
-                  helperText={isPasswordError ? "Password does not match" : ""}
-                  onChange={(e) => {
-                    isPasswordError && setIsPasswordError(false);
-                    handleChange(e);
-                  }}
+                  onChange={handleChange}
+                  error={validations.confirmpassword}
+                  helperText={validations.confirmpassword ?"password did not match " : ""}
                 />
               </FormControl>
             </Grid>
@@ -167,7 +188,8 @@ export default function AddUsersModal({
                     />
                   }
                   label={<p className="input-label">Farmmanager</p>}
-                  onChange={(e) => handleChange(e)}
+                  onChange={handleChange}
+
                 />
                 <FormControlLabel
                   control={
@@ -175,7 +197,8 @@ export default function AddUsersModal({
                       value="ergonomists"
                       name="role"
                       checked={isButtonSelected("ergonomists")}
-                      onChange={(e) => handleChange(e)}
+                      onChange={handleChange}
+
                     />
                   }
                   label={<p className="input-label">Ergonomists</p>}
@@ -186,7 +209,8 @@ export default function AddUsersModal({
                       value="supervisor"
                       name="role"
                       checked={isButtonSelected("supervisor")}
-                      onChange={(e) => handleChange(e)}
+                      onChange={handleChange}
+
                     />
                   }
                   label={<p className="input-label">Supervisor</p>}
