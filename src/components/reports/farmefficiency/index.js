@@ -22,7 +22,7 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
   const [waterTempData, setWaterTempData,] = useState({labels: [], datasets: []});
   const [lightIntensityData, setlightIntensityData] = useState({labels: [], datasets: []});
   const [humidityData, setHumidityData] = useState({labels: [], datasets: []});
-  const [duration, setDuration] = useState(12);
+  const [duration, setDuration] = useState(4);
   const timeframes = [ "4hr", "12hr", "24hr", "56hr", "1w"];
   const phChartOptions = {
     plugins: {
@@ -30,8 +30,25 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
         display: false,
       },
     },
-  };
+    scales: {
+      y: {
+        ticks: {
+          font: {
+            size: 13,
+          }
+        },
+      },
+      x: {
+        ticks: {
+          font: {
+            size: 11,
+          },
 
+        },
+      },
+    },
+  };
+  
   const handleTimeFrameChange = (event) => {
     const { value } = event.target;
     setDuration(value)
@@ -139,13 +156,23 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
               value={duration}
               exclusive
               onChange={handleTimeFrameChange}
+
             >
               {timeframes.map((timeframe) => (
-                <ToggleButton   key={timeframe} value={timeframe} size="small" aria-label="right">
+                <ToggleButton key={timeframe} value={timeframe} size="small" aria-label="right" 
+                style={
+                  duration === timeframe
+                    ? { backgroundColor: "green", color: "white" }
+                    : duration === 4 && timeframe === "4hr" 
+                    ? { backgroundColor: "green", color: "white" }
+                    : {}
+                }
+                        >
                   {timeframe}
                 </ToggleButton>
               ))}
             </ToggleButtonGroup>
+            
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <Card>
@@ -185,3 +212,24 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
   );
 }
 
+
+
+
+// import React from "react";
+// import { Line } from "react-chartjs-2";
+// import { Card, CardContent, Typography } from "@mui/material";
+// import Loader from "../../shared/loader";
+
+// const LineChart = ({ data, options, isLoading }) => {
+//   return (
+//     <Card>
+//       {isLoading ? (
+//         <Loader title="Fetching data" />
+//       ) : (
+//         <CardContent>
+//           <Line data={data} options={options} />
+//         </CardContent>
+//       )}
+//     </Card>
+//   );
+// };

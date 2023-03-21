@@ -121,11 +121,12 @@ import { useNavigate } from 'react-router-dom';
       if (userInfo.isEditMode) {
         const payload = {
           userId: userInfo.userId,
-          userInfo: {
+           userInfo: {
             name: data.name,
             role: data.role,
           },
         };
+        console.log(payload);
         updateUser(payload);
       } else {
         addUser(data);

@@ -485,7 +485,6 @@ export function callFetchAllUserZoneSensor() {
     removeAuthorizationHeader: false,
   });
 }
-
 export function callfetchFarmReportsDetails(queryParams) {
   return callApi(getEndpoint("fetch-farm-all-reports"), {
     method: "GET",
