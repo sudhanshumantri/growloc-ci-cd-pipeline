@@ -4,10 +4,8 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import { fetchFarmRequest,saveFarmRequest,updateFarmRequest,deleteFarmRequest  } from "../../actions/farm";
-import {fetchAllUserZoneSensorRequest} from "../../actions/dashboard"
 import { fetchCropRequest,fetchFarmCropsRequest} from "../../actions/crops";
 import Farm from "../../components/farm";
-import { fetchPusherRequest } from "../../actions/pusher";
 import {
     selectFarmList,
     selectIsFarmListLoading,
@@ -36,12 +34,7 @@ const mapStateToProps = createStructuredSelector({
     isdeleteFarmLoading:selectIsDeleteFarmLoading(),
     // isUpdateFarmLoading:selectIsUpdateFarmLoading()
     cropList: selectCropList(),
-    isAllUserZoneSensorLoading : selectIsZoneSensorLoading(),
-    allUserZoneSensorList : selectAllUserZoneSensor(),
-    loadingAllZoneSensorError : selectLoadingAllZoneSensorError(),
-    pusherData : selectPusherData(),
-    isPusherDataLoading : selectIsPusherDataLoading(),
-    pusherDataloadingError : selectPusherDataLoadingError()
+    
 
 });
 const mapDispatchToProps = {
@@ -51,8 +44,6 @@ const mapDispatchToProps = {
   deleteFarm:deleteFarmRequest,
   // fetchCrop: fetchCropRequest,
   fecthCropFarm:fetchFarmCropsRequest,
-  fetchAllUserZoneSensor : fetchAllUserZoneSensorRequest,
-  fetchPusherData : fetchPusherRequest
 
 
 };

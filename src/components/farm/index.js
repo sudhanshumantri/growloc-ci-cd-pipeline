@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Pusher from 'pusher-js';
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
 import { Card, Grid, CardContent, CardActions, Menu, MenuItem, IconButton, ListItemIcon, ListItemText, Divider } from "@mui/material";
@@ -20,14 +19,6 @@ export default function ManageFarm({
   deleteFarm,
   isdeleteFarmLoading,
   isUpdateFarmLoading,
-  fetchAllUserZoneSensor,
-  isAllUserZoneSensorLoading,
-  allUserZoneSensorList,
-  loadingAllZoneSensorError,
-  pusherData,
-  isPusherDataLoading,
-  pusherDataloadingError,
-  fetchPusherData
 }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -80,22 +71,6 @@ export default function ManageFarm({
   React.useEffect(() => {
     fetchFarm();
     // addFarm()
-    fetchAllUserZoneSensor();
-  }, []);
-  console.log("pusher data in component =======",pusherData);
-  React.useEffect(() => {
-    const pusher = new Pusher('74168d0c587988b1d7a3', {
-      cluster: 'ap2',
-      encrypted: true
-    });
-    const channel = pusher.subscribe('sensor-channel');
-    channel.bind("sensor-event", data => {
-      //console.log("check in get pusher data=====",data.data);
-      fetchPusherData(data.data);
-       
-    });
-    
-    
   }, []);
 
   let buttonArray = [

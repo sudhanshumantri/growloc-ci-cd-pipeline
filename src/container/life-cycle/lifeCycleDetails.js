@@ -3,11 +3,14 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { fetchFarmCropsRequest } from "../../actions/crops";
 import { fetchCropsLifecycleDetailsRequest,cropsLifecycleTransitionRequest, updateCropToLifecycleParametersRequest,updateCropToLifecycleScheduleRequest } from "../../actions/life-cycle";
+import { getRecentZoneSensorDataRequest } from "../../actions/zone";
 import LifecycleDetails from "../../components/crop/life-cycle/lifeCycleDetails";
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
 import { addTaskSheduleTaskRequest } from "../../actions/dashboard";
-
+import { selectPusherData } from "../../selectors/pucher";
+import { selectAllUserZoneSensor } from "../../selectors/dashboard";
+import { selectRecentZoneSensorData,selectRecentZoneSensorDataError,selectIsRecentZoneSensorDataLoading } from "../../selectors/zone";
 import {
     selectLifecycleDetails,
     selectIsLifecycleDetailsLoading,
@@ -38,6 +41,11 @@ const mapStateToProps = createStructuredSelector({
     usersList: selectUsersList(),
     farmInventoryList: selectFarmInventoryList(),
     loginObject: selectLoginObject(),
+    allUserZoneSensorList : selectAllUserZoneSensor(),
+    pusherData : selectPusherData(),
+    recentZoneSensorData : selectRecentZoneSensorData(),
+    isRecentZoneSensorDataLoading : selectIsRecentZoneSensorDataLoading(),
+    recentZoneSensorDataLoadingError : selectIsRecentZoneSensorDataLoading()
 });
 const mapDispatchToProps = {
     fetchCropsLifecycleDetails: fetchCropsLifecycleDetailsRequest,
@@ -47,7 +55,7 @@ const mapDispatchToProps = {
     fetchUsers: fetchUsersRequest,
     fetchFarmInventory: fetchFarmInventoryRequest,
     addTaskScheduleTask: addTaskSheduleTaskRequest,
-
+    fetchRecentZoneSensorData : getRecentZoneSensorDataRequest,
 };
 export default
     connect(mapStateToProps, mapDispatchToProps)(LifecycleDetails);

@@ -1,5 +1,5 @@
 import { call, all, put, takeLatest } from "redux-saga/effects";
-import { callfetchFarmZoneDetails,callFetchDashboardFarmZoneList,callFetchFarmDashboardZoneHarvestList,callAddFarmDashboardZoneTask,callAddFarmDashboardZoneTaskComment} from "../utils/api";
+import { callfetchFarmZoneDetails,callFetchDashboardFarmZoneList,callFetchFarmDashboardZoneHarvestList,callAddFarmDashboardZoneTask,callAddFarmDashboardZoneTaskComment,callfetchRecenzoneSensorData} from "../utils/api";
 import {
     fetchFarmZoneSuccess,
     fetchFarmZoneFailure,
@@ -11,6 +11,9 @@ import {
     addFarmDashboardZoneTaskFailure,
     addFarmDashboardZoneTaskCommentSuccess,
     addFarmDashboardZoneTaskCommentFailure,
+    getRecentZoneSensorDataFailure,
+    getRecentZoneSensorDataRequest,
+    getRecentZoneSensorDataSuccess
 } from "../actions/zone";
 
 export function* fetchFarmZoneList({ data }) {
@@ -57,6 +60,14 @@ export function* addFarmDashboardZoneComment( {data} ) {
     yield put(addFarmDashboardZoneTaskCommentFailure("Something went wrong"));
   }
 }
+export function* fetchRecentZoneSensorData({ data }) {
+  let responseData = yield call(callfetchRecenzoneSensorData, data);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(getRecentZoneSensorDataSuccess(responseData.data.data));
+  } else {
+    yield put(getRecentZoneSensorDataFailure("Something went wrong"));
+  }
+}
 
 export function* zoneSagas() {
   yield all([
@@ -65,6 +76,7 @@ export function* zoneSagas() {
     takeLatest("FETCH_ALL_FARM_ZONE_DASHBOARD_HARVEST_REQUEST", fetchFarmZoneDashboardHarvestList),
     takeLatest("ADD_FARM_DASHBOARD_ZONE_TASK_REQUEST", addFarmDashboardZoneTask),
     takeLatest("ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_REQUEST", addFarmDashboardZoneComment),
+    takeLatest("FETCH_RECENT_ZONE_SENSOR_DATA_REQUEST", fetchRecentZoneSensorData),
  ]);
 }
 export default [zoneSagas];

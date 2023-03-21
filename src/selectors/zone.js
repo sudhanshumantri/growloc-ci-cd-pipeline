@@ -61,3 +61,21 @@ export const selectFarmDashboardZoneTaskError = () =>
 export const selectFarmDashboardZoneCommetError = () =>
   createSelector(selectZone, (services) => services.toJS()["farmDashboardZoneCommetError"]);
 
+//
+export const selectRecentZoneSensorData = () =>
+  createSelector(
+    selectZone,
+    (services) => services.toJS()["recentZoneSensorData"]
+  );
+export const selectIsRecentZoneSensorDataLoading = () =>
+  createSelector(
+    selectZone,
+    (services) => services.toJS()["isRecentZoneSensorDataLoading"]
+  );
+
+export const selectRecentZoneSensorDataError = () =>
+  createSelector(
+    selectZone,
+    (services) => services.toJS()["recentZoneSensorDataError"]
+  );
+

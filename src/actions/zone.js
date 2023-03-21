@@ -13,7 +13,10 @@ import {
     ADD_FARM_DASHBOARD_ZONE_TASK_FAILURE,
     ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_REQUEST,
     ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_SUCCESS,
-    ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_FAILURE
+    ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_FAILURE,
+    FETCH_RECENT_ZONE_SENSOR_DATA_REQUEST,
+    FETCH_RECENT_ZONE_SENSOR_DATA_SUCCESS,
+    FETCH_RECENT_ZONE_SENSOR_DATA_FAILURE
 
  } from "./actionTypes";
   
@@ -113,6 +116,28 @@ import {
   export function addFarmDashboardZoneTaskCommentFailure(error) {
     return {
       type: ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_FAILURE,
+      error,
+    };
+  }
+
+  export function getRecentZoneSensorDataRequest(data) {
+    
+    return {
+      type: FETCH_RECENT_ZONE_SENSOR_DATA_REQUEST,
+      data,
+    };
+  }
+  export function getRecentZoneSensorDataSuccess(data) {
+   
+    return {
+      type: FETCH_RECENT_ZONE_SENSOR_DATA_SUCCESS,
+      data,
+    };
+  }
+  export function getRecentZoneSensorDataFailure(error) {
+   
+    return {
+      type: FETCH_RECENT_ZONE_SENSOR_DATA_FAILURE,
       error,
     };
   }

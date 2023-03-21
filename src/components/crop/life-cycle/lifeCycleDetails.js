@@ -1,4 +1,5 @@
 import React, { useEffect, useState, Fragment } from "react";
+import Pusher from 'pusher-js';
 import { useParams } from "react-router-dom";
 import { sortBy } from "lodash";
 import PageHeader from "../../shared/page-header";
@@ -47,10 +48,19 @@ export default function CropLifeCycleDetails({
   farmInventoryList,
   addTaskScheduleTask,
   loginObject,
+  allUserZoneSensorList,
+  pusherData,
+  recentZoneSensorData,
+  isRecentZoneSensorDataLoading,
+  recentZoneSensorDataLoadingError,
+  fetchRecentZoneSensorData,
 }) {
   let { farmId } = useParams();
+  let { zoneId } = useParams();
   let { lifecycleId } = useParams();
   const [open, setOpen] = useState(false);
+  const [recentPusherData, setRecentPusherData] = useState({});
+  const [isPusherData, setIsPusherData] = useState(false);
   const [openScheduleHarvestingModal, setScheduleHarvestingModal] =
     useState(false);
   const [isStageEditOpen, setIsStageEditOpen] = useState(false);
@@ -61,14 +71,27 @@ export default function CropLifeCycleDetails({
   const [harvestingSchedules, setHarvestingSchedules] = React.useState([]);
   const [openTaskModal, setTaskModal] = useState(false);
   const navigate = useNavigate();
-
   useEffect(() => {
+    fetchRecentZoneSensorData({ id: zoneId });
     fetchCropsLifecycleDetails(parseInt(lifecycleId));
     fetchFarmInventory(farmId);
     if (usersList.length <= 0) {
       fetchUsers({ farmId });
     }
   }, []);
+
+
+  useEffect(() => {
+    let sensors = allUserZoneSensorList.filter((obj) => obj.zoneId === zoneId);
+    let zonePusheData = pusherData.filter((obj) => obj.zoneId === zoneId)
+    //console.log("check========",zonePusheData,isRecentZoneSensorDataLoading,recentZoneSensorData);
+    zonePusheData = zonePusheData.sort((a, b) => parseInt(b.iot_timestamp) - parseInt(a.iot_timestamp));
+    if (zonePusheData.length) {
+      setRecentPusherData(zonePusheData[0]);
+      setIsPusherData(true);
+    }
+
+  }, [pusherData]);
 
   const handleBackButton = () => {
     navigate(-1);
@@ -79,7 +102,7 @@ export default function CropLifeCycleDetails({
       handler: handleBackButton,
     },
   ];
- 
+
 
   useEffect(() => {
     if (!isLifecycleDetailsLoading) {
@@ -419,10 +442,12 @@ export default function CropLifeCycleDetails({
       </Grid>
     );
   };
-  const renderSelectedSegmentSensorInformation = (selectedStageInformation) => {
+  const renderSelectedSegmentSensorInformation = (selectedStageInformation, obj) => {
+    let data = obj.payload;
     return (
       <Grid item xs={12} sm={12} md={12}>
         <p className="section-title">Sensors Information </p>
+        <p >Last Updated : {moment(new Date(obj.timestamp)).format("MMMM Do YYYY hh:mm:ss A")}</p>
         <Paper className="life-cycle-details-card life-cycle-spacing ">
           <Table size="small" aria-label="a dense table">
             <TableHead className="table-header-row">
@@ -447,10 +472,10 @@ export default function CropLifeCycleDetails({
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell className="label-custom" align="left">
-                     {param.name}
+                      {param.name}
                     </TableCell>
                     <TableCell className="table-header" align="left">
-                      {param.value} <b>{param.unit}</b>
+                      {param.name === "pH Level" ? data["pH"] : param.name == "Electric Conductivity" ? data["conductivity"] : param.name == "Temperature" ? data["waterTemperature"] : param.name == "CO2 Level" ? data["cO2"] : param.name == "Light" ? data["lightIntensity"] : param.name == "Humidity" ? data["humidity"] : ""} <b>{param.unit}</b>
                     </TableCell>
                     <TableCell className="table-header" align="left">
                       {param.value} <b>{param.unit}</b>
@@ -458,6 +483,25 @@ export default function CropLifeCycleDetails({
                   </TableRow>
                 );
               })}
+              {/* {Object.keys(data).map((param, index) => {
+                return (
+                  <TableRow
+                    // key={index}
+                    key={index}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell className="label-custom" align="left">
+                      {param}
+                    </TableCell>
+                    <TableCell className="table-header" align="left">
+                      {data[param]}
+                    </TableCell>
+                    <TableCell className="table-header" align="left">
+                      {data[param]}
+                    </TableCell>
+                  </TableRow>
+                );
+              })} */}
             </TableBody>
           </Table>
         </Paper>
@@ -470,7 +514,7 @@ export default function CropLifeCycleDetails({
 
     return (
       <Grid container spacing={2}>
-        {renderSelectedSegmentSensorInformation(selectedStageInformation)}
+        {isPusherData ? renderSelectedSegmentSensorInformation(selectedStageInformation, recentPusherData.data[0]) : !isRecentZoneSensorDataLoading ? renderSelectedSegmentSensorInformation(selectedStageInformation, recentZoneSensorData.data[0]) : ""}
         <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">
             {selectedStageInformation.stage + " Stage Information"}
