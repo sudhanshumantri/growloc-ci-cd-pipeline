@@ -26,7 +26,7 @@ const urls = {
     "update-farm": "farm/update-farm/",
     "delete-farm": "farm/delete-farm/",
     "fetch-farm-all-dashboard": "farm/get-farm-dashboard-data/",
-    "fetch-farm-harvest-dashboard": "farm/get-farm-harvesteed-breakup",
+    "fetch-farm-harvest-dashboard": "farm/get-farm-harvesteed-breakup/",
     "fetch-farm-details": "farm/get-farm-details/",
     "add-taskschedule-task": "farm/task/",
     "fetch-farm-all-inventory": "farm/inventory/",
@@ -60,8 +60,14 @@ const urls = {
     "fetch-farm-all-reports": "farm/get-all-farm-sensor-data",
     "fetch-zone-all-reports": "farm/get-all-zone-sensor-data",
     "fetch-recent-zone-sensor-data":"farm/get-lattest-zone-sensor-data",
+    "fetch-farm-dashboard-info":"farm/get-farm-dashboard-header-info/",
+    "fetch-farm-dashboard-crop-schedules":"farm/get-farm-dashboard-crop-schedules/",
+    "fetch-farm-dashboard-farm-info":"farm/get-farm-dashboard-info/",
+    "fetch-farm-dashboard-task-schedules":"farm/get-farm-dashboard-task-schedules/"
   },
 };
+
+
 function getEndpoint(endpoint) {
   if (urls[endpointLocation][endpoint]) {
     return api.host + urls[endpointLocation][endpoint];
@@ -233,12 +239,14 @@ export function callFetchDashboardFarmList(routeParams) {
   });
 }
 
-export function callFetchDashboardHarvestList(data) {
+export function callFetchDashboardHarvestList(data, queryParams
+  ) {
   return callApi(getEndpoint("fetch-farm-harvest-dashboard"), {
     method: "post",
     removeAuthorizationHeader: false,
     data,
-  });
+    queryParams
+   });
 }
 //
 export function callFetchFarmDetailsList(routeParams) {
@@ -328,11 +336,12 @@ export function callAddFarmDashboardZone(data) {
 }
 //
 
-export function callFetchFarmDashboardZoneList(routeParams) {
+export function callFetchFarmDashboardZoneList(routeParams, queryParams) {
   return callApi(getEndpoint("fetch-all-farm-zone"), {
-    method: "get",
+    method: "GET",
     removeAuthorizationHeader: false,
     routeParams,
+    queryParams
   });
 }
 
@@ -508,5 +517,40 @@ export function callfetchRecenzoneSensorData(queryParams) {
     queryParams,
   });
 }
+// new dashboard api
 
+export function callFetchDashboardInfoFarmList(routeParams) {
+  return callApi(getEndpoint("fetch-farm-dashboard-info"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
 
+export function callfetchFarmDashobardCropSchedulekDetails(routeParams, queryParams) {
+  return callApi(getEndpoint("fetch-farm-dashboard-crop-schedules"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+    queryParams,
+  });
+}
+
+//
+
+export function callFetchDashboardFarmInfo(routeParams) {
+  return callApi(getEndpoint("fetch-farm-dashboard-farm-info"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
+
+export function callfetchFarmDashobardTaskDetails(routeParams, queryParams) {
+  return callApi(getEndpoint("fetch-farm-dashboard-task-schedules"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+    queryParams,
+  });
+}

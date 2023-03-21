@@ -13,7 +13,6 @@ import {
   ToggleButton,
   Autocomplete,
 } from "@mui/material";
-
 import { Link, useParams } from "react-router-dom";
 import PageHeader from "../../shared/page-header";
 import DataTable from "../../shared/dataTable";
@@ -47,14 +46,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import GridViewIcon from "@mui/icons-material/GridView";
 import ListIcon from "@mui/icons-material/List";
-// import {GridList,GridListTile} from '@material-ui/core/';
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import { display } from "@mui/system";
-
+import TableDynamicPagination from "../../shared/tablepagination";
 export default function FarmDashboard({
   dashboardFarmList,
   fetchFarmDashboard,
@@ -85,6 +77,19 @@ export default function FarmDashboard({
   fetchAllCropsLifecycle,
   addCropToLifecycle,
   isAddLifecycleLoading,
+  isDashboardFarmInfoListLoading,
+  farmDashboardFarmInfoList,
+  fetchFarmDashboardInfo,
+  fetchFarmDashboardCropSchedule,
+  farmDashboardCropSchedulesList,
+  isDashboardCropSchedulesListLoading,
+  isFarmDashboardZoneListLoading,
+  fetchFarmDashboardFarmInfo,
+  farmDashboardInfoList,
+  isDashboardInfoListLoading,
+  fetchFarmDashboardFarmTask,
+  isDashboardFarmTaskLoading,
+  farmDashboardTaskList
 }) {
   const navigate = useNavigate();
   const { farmId } = useParams();
@@ -100,29 +105,59 @@ export default function FarmDashboard({
   const [seletedView, setSelectView] = useState("list");
   const [tabInfo, setTabInfo] = useState("1");
   const [value, setValue] = useState("1");
-
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
-  };
+    if (newValue === "1"  ) {
+      // fecthFarmDashboardZone(farmId);
+      fecthFarmDashboardZone({
+        farmId: farmId,
+        queryParams: { skip: 0, take: 10 },
+      });
+    } else if (newValue === "2"  ) {
+      fetchFarmDashboardCropSchedule({
+        farmId: farmId,
+        queryParams: { skip: 0, take: 10 },
+      });
+      } 
+      else if (newValue === "3" ) {
+        fetchFarmDashboardFarmTask({
+          farmId: farmId,
+          queryParams: { skip: 0, take: 10 },
+        });
+  
+      }
+      else if (newValue === "4" ) {
+        fetchFarmDashboardHarvest({ farmId:farmId, month, queryParams: { skip: 0, take: 10 }
+        })
+      }
+       else if (newValue === "5" ) {
+        fetchFarmDashboardFarmInfo(farmId);
+      }
+  }
   const handleTabInfoChange = (event, newValue) => {
     setTabInfo(newValue);
   };
-
   const handleGridView = () => {
     setSelectView(seletedView == "grid" ? "list" : "grid");
   };
-
+console.log(dashboardHarvestList,"dashboardHarvestList");
   React.useEffect(() => {
-    fecthFarmDashboardZone(farmId);
-    fetchFarmDashboard(farmId);
+    // fecthFarmDashboardZone(farmId);
+    fecthFarmDashboardZone({
+      farmId: farmId,
+      queryParams: { skip: 0, take: 10 },
+    });
+
+    // fetchFarmDashboard(farmId);
     fetchFarmInventory(farmId);
     //fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
     // fecthCropFarm({ farmId: parseInt(farmId) });
     // fetchAllCropsLifecycle({ farmId: parseInt(farmId) });
-    fetchFarmDashboardHarvest({ farmId: farmId, month });
-    fecthCropFarm(farmId);
+    // fetchFarmDashboardHarvest({ farmId: farmId, month });
+    // fecthCropFarm(farmId);
     fetchAllCropsLifecycle(farmId);
-
+    //dashnoard api
+    fetchFarmDashboardInfo(farmId);
     if (usersList.length <= 0) {
       fetchUsers(farmId);
     }
@@ -130,7 +165,7 @@ export default function FarmDashboard({
 
   let { cropSchedules, farmdDetails } = dashboardFarmList;
 
-  const zoneId = (cropSchedules || [])[0]?.zoneId;
+  const zoneId = (farmDashboardCropSchedulesList || [])[0]?.zoneId;
 
   const headers = [
     {
@@ -174,7 +209,7 @@ export default function FarmDashboard({
   const handleChange = (event) => {
     const { value } = event.target;
     setMonth(value);
-    fetchFarmDashboardHarvest({ farmId:farmId, month: value });
+    fetchFarmDashboardHarvest({ farmId:farmId, month: value, });
   };
 
   const handleTaskSave = (data) => {
@@ -259,6 +294,21 @@ export default function FarmDashboard({
     }
     handleCropModalToggle();
   };
+
+  const handleChangePagination = (queryParams) => {
+    fetchFarmDashboardCropSchedule({ farmId: farmId, queryParams });
+  };
+  const handleChangeZonePagination = (queryParams) => {
+    fecthFarmDashboardZone({ farmId: farmId, queryParams });
+  };
+
+  const handleChangeTaskPagination = (queryParams) => {
+    fetchFarmDashboardFarmTask({ farmId: farmId, queryParams });
+  };
+
+  const handleChangeMonthlyHarvestBreakupPagination = (queryParams) => {
+    fetchFarmDashboardHarvest({ farmId: farmId,month, queryParams });
+  }
 
   const TASK_HEADER = [
     {
@@ -398,7 +448,7 @@ export default function FarmDashboard({
   ];
 
   const renderCropSchedules = () => {
-    const { cropSchedules } = dashboardFarmList;
+    const {cropSchedules} = farmDashboardCropSchedulesList
     return (
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={12}>
@@ -406,12 +456,18 @@ export default function FarmDashboard({
         </Grid>
         <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
           <DataTable data={{ headers: headers, rows: cropSchedules || [] }} />
+          <TableDynamicPagination
+              count={farmDashboardCropSchedulesList.length}
+              handleChangePagination={handleChangePagination}
+            />
+
         </Grid>
       </Grid>
     );
   };
   const renderTaskSchedules = () => {
-    const { farmdDetails } = dashboardFarmList;
+    const {tasks} = farmDashboardTaskList
+    console.log(tasks,"tasks");
     return (
       <Grid container spacing={2}>
         <Grid item xs={6} sm={6} md={9} lg={9}>
@@ -429,9 +485,14 @@ export default function FarmDashboard({
              handleCommentModalToggle={handleCommentModalToggle}
              />  */}
           <CollapsibleTable
-            data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }}
+            data={{ headers: TASK_HEADER, rows: tasks || [] }}
             handleCommentModalToggle={handleCommentModalToggle}
           />
+                    <TableDynamicPagination
+              count={farmDashboardTaskList.total}
+              handleChangePagination={handleChangeTaskPagination}
+            />
+
         </Grid>
       </Grid>
     );
@@ -501,6 +562,7 @@ export default function FarmDashboard({
     );
   };
   const renderMonthlyHarvestBreakup = () => {
+    const {cropBasedHarvestedData} = dashboardHarvestList
     return (
       <Grid container spacing={2}>
         <Grid item xs={8} sm={10} md={10}>
@@ -527,8 +589,15 @@ export default function FarmDashboard({
           lg={12}
           className="card-outline-container graph-container"
         >
-          <BarChart chartData={dashboardHarvestList || []} />
+          <BarChart chartData={cropBasedHarvestedData || []} />
         </Grid>
+        <Grid item xs={12} sm={12} md={12} sx={{alignItems:"flex-end"}}>
+        <TableDynamicPagination
+              count={dashboardHarvestList.total}
+              handleChangePagination={handleChangeMonthlyHarvestBreakupPagination}
+            />
+</Grid>
+
       </Grid>
     );
   };
@@ -538,15 +607,21 @@ export default function FarmDashboard({
       <Grid container spacing={2}>
         <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
           <DataTable
-            data={{ headers: ZONE_HEADER, rows: farmDashboardZoneList || [] }}
+            data={{ headers: ZONE_HEADER, rows: farmDashboardZoneList.zoneInformation || [] }}
           />
+                <TableDynamicPagination
+              count={farmDashboardZoneList.length}
+              handleChangePagination={handleChangeZonePagination}
+            />
+
         </Grid>
       </Grid>
     );
   };
 
   const renderFarmSummaryInfo = () => {
-    const { batchCount, totalHarvested, farmdDetails } = dashboardFarmList;
+    const { batchCount,noOfZones,noOfTasks } = farmDashboardFarmInfoList;
+    const {totalHarvested} = farmDashboardFarmInfoList
     return (
       <>
         <Grid item xs={12} sm={12} md={3} lg={3}>
@@ -556,7 +631,7 @@ export default function FarmDashboard({
                 <Grid container spacing={2}>
                   <Grid item xs={6} sm={9} md={9}>
                     <h4 className="section-details">
-                      {farmDashboardZoneList?.length || ""}
+                      {noOfZones || 0}
                     </h4>
                     <p className="farm-card">No of Zones </p>
                   </Grid>
@@ -578,7 +653,7 @@ export default function FarmDashboard({
             <CardContent>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
-                  <h4 className="section-details">{batchCount || " "}</h4>
+                  <h4 className="section-details">{batchCount || 0}</h4>
                   <p className="farm-card">No of Batch</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
@@ -599,7 +674,7 @@ export default function FarmDashboard({
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
                   <h4 className="section-details">
-                    {farmdDetails?.Tasks.length || " "}
+                    {noOfTasks|| 0}
                   </h4>
                   <p className="farm-card">No of Tasks</p>
                 </Grid>
@@ -622,8 +697,8 @@ export default function FarmDashboard({
                 <Grid item xs={6} sm={9} md={9}>
                   {totalHarvested ? (
                     <h4 className="section-details">
-                      {totalHarvested?.kgs || ""}(kgs)/
-                      {totalHarvested?.qty || ""}(qty)
+                      {totalHarvested?.kgs || 0}(kgs)/
+                      {totalHarvested?.qty || 0}(qty)
                     </h4>
                   ) : (
                     " "
@@ -653,8 +728,8 @@ export default function FarmDashboard({
     return (100 / farmdDetails?.farmArea) * parseInt(farmArea) + "%";
   };
   const renderFarmZoneGridView = () => {
-    let totalFarmArea = parseInt(farmdDetails.farmArea);
-    let zoneAreas = farmDashboardZoneList.map(zone => parseInt(zone.farmArea));
+    let totalFarmArea = parseInt(farmDashboardZoneList.farmArea);
+    let zoneAreas = farmDashboardZoneList?.zoneInformation?.map(zone => parseInt(zone.farmArea));
     let totalZoneArea = zoneAreas.reduce((a, b) => a + b);
     let newZoneData = [...farmDashboardZoneList];
     newZoneData.push({ name: 'Empty Zone', id: farmDashboardZoneList.length + 1, farmArea: totalFarmArea - totalZoneArea });
@@ -878,15 +953,14 @@ export default function FarmDashboard({
   };
 
   const renderFarmArea = () => {
-    const { farmdDetails } = dashboardFarmList;
     return (
       <>
         {/* <Grid item xs={12} sm={12} md={12}> */}
         <p className="section-title">
-          Farm Name : <span>{farmdDetails?.name}</span>
+          Farm Name : <span>{farmDashboardInfoList?.name}</span>
         </p>
         <p className="section-title">
-          Farm Area: <span>{farmdDetails?.farmArea}</span>
+          Farm Area: <span>{farmDashboardInfoList?.farmArea}</span>
         </p>
         {/* </Grid> */}
       </>
@@ -894,25 +968,24 @@ export default function FarmDashboard({
   };
 
   const renderGerminationInfo = () => {
-    const { farmdDetails } = dashboardFarmList;
     return (
       <>
         <p className="section-title">
-          Germination Type : <span>{farmdDetails?.germinationType}</span>
+          Germination Type : <span>{farmDashboardInfoList?.germinationType}</span>
         </p>
         <p className="section-title">
-          Germination Area : <span>{farmdDetails?.germinationArea}</span>
+          Germination Area : <span>{farmDashboardInfoList?.germinationArea}</span>
         </p>
         <p className="section-title">
           No of Seeds Per Plantation :
-          <span>{farmdDetails?.germinationSeedsCount}</span>
+          <span>{farmDashboardInfoList?.germinationSeedsCount}</span>
         </p>
         <p className="section-title">
-          Watering Type : <span>{farmdDetails?.germinationWateringType} </span>
+          Watering Type : <span>{farmDashboardInfoList?.germinationWateringType} </span>
         </p>
         <p className="section-title">
-          Watering Schedule:{" "}
-          <span>{farmdDetails?.germinationWateringSchedule}</span>
+          Watering Schedule:
+          <span>{farmDashboardInfoList?.germinationWateringSchedule}</span>
         </p>
       </>
     );
@@ -921,21 +994,21 @@ export default function FarmDashboard({
     return (
       <>
         <p className="section-title">
-          Nursery Type : <span>{farmdDetails?.nurseryType}</span>
+          Nursery Type : <span>{farmDashboardInfoList?.nurseryType}</span>
         </p>
         <p className="section-title">
-          Nursery Area : <span>{farmdDetails?.nurseryArea}</span>
+          Nursery Area : <span>{farmDashboardInfoList?.nurseryArea}</span>
         </p>
         <p className="section-title">
           No of Seeds Per Nursery :{" "}
-          <span>{farmdDetails?.nurserySeedsCount}</span>
+          <span>{farmDashboardInfoList?.nurserySeedsCount}</span>
         </p>
         <p className="section-title">
-          Watering Type : <span>{farmdDetails?.nurseryWateringType}</span>
+          Watering Type : <span>{farmDashboardInfoList?.nurseryWateringType}</span>
         </p>
         <p className="section-title">
           Watering Schedule:{" "}
-          <span>{farmdDetails?.nurseryWateringSchedule}</span>
+          <span>{farmDashboardInfoList?.nurseryWateringSchedule}</span>
         </p>
       </>
     );
@@ -945,23 +1018,23 @@ export default function FarmDashboard({
     return (
       <>
         <p className="section-title">
-          Growring Type : <span>{farmdDetails?.growingType}</span>
+          Growring Type : <span>{farmDashboardInfoList?.growingType}</span>
         </p>
         <p className="section-title">
-          Growring Area : <span>{farmdDetails?.growingArea}</span>
+          Growring Area : <span>{farmDashboardInfoList?.growingArea}</span>
         </p>
         <p className="section-title">
           No Of Plants In Row :{" "}
-          <span>{farmdDetails?.growingPlantCountPerRow}</span>
+          <span>{farmDashboardInfoList?.growingPlantCountPerRow}</span>
         </p>
         <p className="section-title">
-          No Of Rows: <span>{farmdDetails?.growingRowCount}</span>
+          No Of Rows: <span>{farmDashboardInfoList?.growingRowCount}</span>
         </p>
         <p className="section-title">
-          Watering Schedule: <span>{farmdDetails?.growingPlantSpacing}</span>
+          Watering Schedule: <span>{farmDashboardInfoList?.growingPlantSpacing}</span>
         </p>
         <p className="section-title">
-          Plant Spacing: <span>{farmdDetails?.nurseryWateringSchedule}</span>
+          Plant Spacing: <span>{farmDashboardInfoList?.nurseryWateringSchedule}</span>
         </p>
       </>
     );
@@ -971,26 +1044,26 @@ export default function FarmDashboard({
       <>
         <p className="section-title">
           Main Reservoir Capacity :{" "}
-          <span>{farmdDetails?.reservoirCapacity}</span>
+          <span>{farmDashboardInfoList?.reservoirCapacity}</span>
         </p>
         <p>
           Nutrient Water Reservoir Capacity :
-          <span>{farmdDetails?.nutrientWaterReservoirCapacity}</span>
+          <span>{farmDashboardInfoList?.nutrientWaterReservoirCapacity}</span>
         </p>
         <p className="section-title">
           Ph Up/Down Reservoir Capacity :{" "}
-          <span>{farmdDetails?.phReservoirCapacity}</span>
+          <span>{farmDashboardInfoList?.phReservoirCapacity}</span>
         </p>
         <p className="section-title">
           Stock Nutrient Solution Capacity :
-          <span>{farmdDetails?.stockNutrientSolutionCapacity}</span>
+          <span>{farmDashboardInfoList?.stockNutrientSolutionCapacity}</span>
         </p>
         <p className="section-title">
           Nutrient Dilution Ratio :{" "}
-          <span>{farmdDetails?.nutrientdilutionRatio}</span>
+          <span>{farmDashboardInfoList?.nutrientdilutionRatio}</span>
         </p>
         <p className="section-title">
-          Type Of Nutrients : <span>{farmdDetails?.nutrientsType}</span>
+          Type Of Nutrients : <span>{farmDashboardInfoList?.nutrientsType}</span>
         </p>
       </>
     );
@@ -1000,11 +1073,11 @@ export default function FarmDashboard({
       <>
         <p className="section-title">
           Polyhouse Structure Expected Life :
-          <span>{farmdDetails?.polyhouseStructureExpectedLife}</span>
+          <span>{farmDashboardInfoList?.polyhouseStructureExpectedLife}</span>
         </p>
         <p className="section-title">
           Polyhouse Plastic Expected Life :
-          <span>{farmdDetails?.polyhousePlasticExpectedLife}</span>
+          <span>{farmDashboardInfoList?.polyhousePlasticExpectedLife}</span>
         </p>
       </>
     );
@@ -1049,16 +1122,23 @@ export default function FarmDashboard({
       </>
     );
   };
+  console.log(farmDashboardZoneList,"farmDashboardZoneList");
+  let totalFarmArea = 0;
+  farmDashboardZoneList?.zoneInformation?.forEach(function(zone) {
+    totalFarmArea += parseInt(zone.farmArea);
+  });
+  console.log(totalFarmArea);
 
-  const allFarmArea = farmDashboardZoneList?.map((product) => parseInt(product.farmArea))
-  const totalFarmArea = allFarmArea.reduce((acc, curr) => acc + curr, 0)
-  const reamingArea = farmdDetails?.farmArea - totalFarmArea;
-  let subtitle = `(Total Farm Area : ${farmdDetails?.farmArea || ""}  Available Farm Area : ${reamingArea ?? ""} )`;
+  // const totalFarmArea = allFarmArea.reduce((acc, curr) => acc + curr, 0)
+  const reamingArea = farmDashboardFarmInfoList?.farmArea - totalFarmArea;
+
+  let subtitle = `(Total Farm Area : ${farmDashboardFarmInfoList?.farmArea || ""}  Available Farm Area : ${reamingArea ?? ""} )`;
+
   return (
     <div>
       <PageHeader
         // title="Farm Dashboard"
-        title={farmdDetails?.name || ""}
+        title={farmDashboardFarmInfoList?.farmName || ""}
         subtitle={subtitle}
         buttonArray={buttonArray}
         showBackButton={showBackButton}
@@ -1071,8 +1151,14 @@ export default function FarmDashboard({
       {isDeleteFarmDashboardZoneLoading && <Loader title="Deleting Zone" />}
       {isUpdateFarmDashboardZoneLoading && <Loader title="Updating Zone  " />}
       {isAddLifecycleLoading && <Loader title="Adding Crops to Lifecycle " />}
+      {isDashboardCropSchedulesListLoading && <Loader title=" Fecting Crops Schedules Details " />}
+      {isDashboardInfoListLoading && <Loader title=" Fecting Farm Details " />}
+      {isDashboardFarmTaskLoading && <Loader title=" Fecting Task Details " />}
+
+      {/* {isFarmDashboardZoneListLoading && <Loader title=" Fetching Zone Details " />} */}
 
       <div className="page-container">
+
         <Grid container spacing={2}>
           {renderFarmSummaryInfo()}
           <TabContext value={value}>
@@ -1133,7 +1219,7 @@ export default function FarmDashboard({
             handleSave={handleFarmDashboardZone}
             zoneDetails={zoneData}
             data={farmDashboardZoneList}
-            farmData={dashboardFarmList}
+            farmData={farmDashboardFarmInfoList}
           />
         )}
         {isDeleteModelOpen && (

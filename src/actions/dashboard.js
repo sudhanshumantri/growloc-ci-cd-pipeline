@@ -25,7 +25,22 @@ import {
   DELETE_FARM_DASHBOARD_ZONE_FAILURE,
   FETCH_ALL_USER_ZONE_SENSORS_REQUEST,
   FETCH_ALL_USER_ZONE_SENSORS_SUCCESS,
-  FETCH_ALL_USER_ZONE_SENSORS_FAILURE
+  FETCH_ALL_USER_ZONE_SENSORS_FAILURE,
+  FETCH_FARM_DASHBOARD_FARM_INFO_REQUEST,
+  FETCH_FARM_DASHBOARD_FARM_INFO_SUCCESS,
+  FETCH_FARM_DASHBOARD_FARM_INFO_FAILURE,
+  FETCH_FARM_DASHBOARD_CROP_SCHEDULES_REQUEST,
+  FETCH_FARM_DASHBOARD_CROP_SCHEDULES_SUCCESS,
+  FETCH_FARM_DASHBOARD_CROP_SCHEDULES_FAILURE,
+  FETCH_FARM_DASHBOARD_INFO_REQUEST,
+  FETCH_FARM_DASHBOARD_INFO_SUCCESS,
+  FETCH_FARM_DASHBOARD_INFO_FAILURE,
+  FETCH_FARM_DASHBOARD_TASK_REQUEST,
+  FETCH_FARM_DASHBOARD_TASK_SUCCESS,
+  FETCH_FARM_DASHBOARD_TASK_FAILURE
+
+
+
 } from "./actionTypes";
 export function fetchDashboardFarmRequest(data) {
   return {
@@ -207,4 +222,85 @@ export function fetchAllUserZoneSensorFailure(data) {
     data,
   };
 }
+// dashboard new api
+
+export function fetchDashboardFarmInfoRequest(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_FARM_INFO_REQUEST,
+    data,
+  };
+}
+export function fetchDashboardFarmInfoSuccess(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_FARM_INFO_SUCCESS,
+    data,
+  };
+}
+export function fetchDashboardFarmInfoFailure(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_FARM_INFO_FAILURE,
+    data,
+  };
+}
+//crop schedules 
+
+
+export function fetchFarmCropSchedulesRequest(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_CROP_SCHEDULES_REQUEST,
+    data
+  };
+}
+export function fetchFarmCropSchedulesSuccess(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_CROP_SCHEDULES_SUCCESS,
+    data,
+  };
+}
+export function fetchFarmCropSchedulesFailure(error) {
+  return {
+    type: FETCH_FARM_DASHBOARD_CROP_SCHEDULES_FAILURE,
+    error,
+  };
+}
+
+export function fetchFarmDashboardInfoRequest(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_INFO_REQUEST,
+    data
+  };
+}
+export function fetchFarmDashboardInfoSuccess(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_INFO_SUCCESS,
+    data,
+  };
+}
+export function fetchFarmDashboardInfoFailure(error) {
+  return {
+    type: FETCH_FARM_DASHBOARD_INFO_FAILURE,
+    error,
+  };
+}
+
+
+export function fetchFarmDashboardTaskRequest(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_TASK_REQUEST,
+    data
+  };
+}
+export function fetchFarmDashboardTaskSuccess(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_TASK_SUCCESS,
+    data,
+  };
+}
+export function fetchFarmDashboardTaskFailure(error) {
+  return {
+    type: FETCH_FARM_DASHBOARD_TASK_FAILURE,
+    error,
+  };
+}
+
 

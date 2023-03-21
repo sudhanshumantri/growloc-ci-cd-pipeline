@@ -2,14 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
-import { fetchDashboardFarmRequest, fetchDashboardHarvestRequest, addTaskSheduleTaskRequest,addFarmTaskCommentRequest,addFarmDashboardZoneRequest,fetchFarmDashboardZoneRequest,updateFarmDashboardZoneRequest,deleteFarmDashboardZoneRequest } from "../../actions/dashboard";
+import { fetchDashboardFarmRequest, fetchDashboardHarvestRequest, addTaskSheduleTaskRequest,addFarmTaskCommentRequest,addFarmDashboardZoneRequest,fetchFarmDashboardZoneRequest,updateFarmDashboardZoneRequest,deleteFarmDashboardZoneRequest,fetchDashboardFarmInfoRequest,fetchFarmCropSchedulesRequest,fetchFarmDashboardInfoRequest,fetchFarmDashboardTaskRequest} from "../../actions/dashboard";
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
 import { fetchFarmCropsRequest } from "../../actions/crops";
 import { addCropToLifecycleRequest, fetchAllCropsLifecycleRequest } from "../../actions/life-cycle";
-
 import FarmDashboard from "../../components/dashboard/farm";
-
 import {
   selectFarmDashboardList,
   selectIsFarmDashboardListLoading,
@@ -29,6 +27,18 @@ import {
   selectIsUpdataFarmDashboardZoneLoading,
   selectUpdateFarmDashboardZoneError,
   selectIsDeleteFarmDashboardZoneLoading,
+  selectFarmDashboardFarmInfoList,
+  selectIsDashboardFarmInfoListLoading,
+  selectFarmDashboardFarmInfoListError,
+  selectFarmDashboardCropSchedulesList,
+  selectIsDashboardCropSchedulesListLoading,
+  selectFarmDashboardCropSchedulesListError,
+  selectFarmDashboardInfoList,
+  selectIsDashboardInfoListLoading,
+  selectFarmDashboardInfoListError,
+  selectFarmDashboardTaskList,
+  selectIsDashboardFarmTaskLoading,
+  selectFarmDashboardTaskListError
 } from "../../selectors/dashboard";
 import {
   selectUsersList
@@ -69,6 +79,22 @@ const mapStateToProps = createStructuredSelector({
   farmCropList: selectCropFarmList(),
   lifecycleCropsList: selectLifecycleCropsList(),
   isAddLifecycleLoading: selectIsAddLifecycleLoading(),
+
+
+//
+farmDashboardFarmInfoList: selectFarmDashboardFarmInfoList(),
+  isDashboardFarmInfoListLoading: selectIsDashboardFarmInfoListLoading(),
+  farmDashboardFarmInfoListError: selectFarmDashboardFarmInfoListError(),
+  farmDashboardCropSchedulesList: selectFarmDashboardCropSchedulesList(),
+  isDashboardCropSchedulesListLoading: selectIsDashboardCropSchedulesListLoading(),
+  farmDashboardCropSchedulesListError: selectFarmDashboardCropSchedulesListError(),
+  isDashboardInfoListLoading:selectIsDashboardInfoListLoading(),
+  farmDashboardInfoList:selectFarmDashboardInfoList(),
+  farmDashboardInfoListError: selectFarmDashboardInfoListError(),
+  farmDashboardTaskList:selectFarmDashboardTaskList(),
+  isDashboardFarmTaskLoading:selectIsDashboardFarmTaskLoading(),
+  farmDashboardTaskListError:selectFarmDashboardTaskListError(),
+
 });
 const mapDispatchToProps = {
   fetchFarmDashboard: fetchDashboardFarmRequest,
@@ -84,8 +110,10 @@ const mapDispatchToProps = {
   fecthCropFarm: fetchFarmCropsRequest,
   addCropToLifecycle: addCropToLifecycleRequest,
   fetchAllCropsLifecycle: fetchAllCropsLifecycleRequest,
-
-
+  fetchFarmDashboardInfo: fetchDashboardFarmInfoRequest,
+  fetchFarmDashboardCropSchedule:fetchFarmCropSchedulesRequest,
+  fetchFarmDashboardFarmInfo:fetchFarmDashboardInfoRequest,
+  fetchFarmDashboardFarmTask:fetchFarmDashboardTaskRequest,
 };
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {

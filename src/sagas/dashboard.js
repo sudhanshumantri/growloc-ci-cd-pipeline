@@ -8,7 +8,11 @@ import {
   callFetchFarmDashboardZoneList,
   callUpdateFarmDashboardZoneList,
   callDeleteFarmDashboardZoneList,
-  callFetchAllUserZoneSensor
+  callFetchAllUserZoneSensor,
+  callFetchDashboardInfoFarmList,
+  callfetchFarmDashobardCropSchedulekDetails,
+  callFetchDashboardFarmInfo,
+  callfetchFarmDashobardTaskDetails,
 } from "../utils/api";
 import {
   fetchDashboardFarmSuccess,
@@ -28,7 +32,15 @@ import {
   deleteFarmDashboardZoneSuccess,
   deleteFarmDashboardZoneFailure,
   fetchAllUserZoneSensorSuccess,
-  fetchAllUserZoneSensorFailure
+  fetchAllUserZoneSensorFailure,
+  fetchDashboardFarmInfoSuccess,
+  fetchDashboardFarmInfoFailure,
+  fetchFarmCropSchedulesSuccess,
+  fetchFarmCropSchedulesFailure,
+  fetchFarmDashboardInfoSuccess,
+  fetchFarmDashboardInfoFailure,
+  fetchFarmDashboardTaskSuccess,
+  fetchFarmDashboardTaskFailure
 } from "../actions/dashboard";
 
 export function* fetchFarmDashboardList({ data }) {
@@ -41,7 +53,8 @@ export function* fetchFarmDashboardList({ data }) {
 }
 
 export function* fetchFarmDashboardHarvestList({ data }) {
-  let responseData = yield call(callFetchDashboardHarvestList, data);
+  const {queryParams, ...remainingParams} = data;
+  let responseData = yield call(callFetchDashboardHarvestList, remainingParams, queryParams);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(fetchDashboardHarvestSuccess(responseData.data.data));
   } else {
@@ -77,7 +90,8 @@ export function* addFarmDashboardZone({ data }) {
 }
 
 export function* fetchFarmDashboardZoneList({ data }) {
-  let responseData = yield call(callFetchFarmDashboardZoneList, data);
+  const {farmId, queryParams} = data;
+  let responseData = yield call(callFetchFarmDashboardZoneList, farmId, queryParams);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(fetchFarmDashboardZoneSuccess(responseData.data.data));
   } else {
@@ -114,7 +128,51 @@ export function* fetchAllUserZoneSensor({ data }) {
   }
 }
 
+// dashboard new API
+export function* fetchFarmDashboardInfoList({ data }) {
+  console.log(data);
+  let responseData = yield call(callFetchDashboardInfoFarmList, data);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(fetchDashboardFarmInfoSuccess(responseData.data.data));
+  } else {
+    yield put(fetchDashboardFarmInfoFailure("Something went wrong"));
+  }
+}
 
+  export function* fetchFarmDashboardCropScheduleList({ data }) {
+    const {farmId, queryParams} = data;
+    let responseData = yield call(callfetchFarmDashobardCropSchedulekDetails, farmId, queryParams);
+    if (responseData?.status == 200 && responseData.data.status) {
+      yield put(fetchFarmCropSchedulesSuccess(responseData.data.data));
+    } else {
+      yield put(fetchFarmCropSchedulesFailure("Something went wrong"));
+    }
+  }
+
+  export function* fetchFarmDashboardFarmInfoList({ data }) {
+    console.log(data);
+    let responseData = yield call(callFetchDashboardFarmInfo, data);
+    if (responseData?.status == 200 && responseData.data.status) {
+      yield put(fetchFarmDashboardInfoSuccess(responseData.data.data));
+    } else {
+      yield put(fetchFarmDashboardInfoFailure("Something went wrong"));
+    }
+  }
+  //
+
+  
+
+  export function* fetchFarmDashboardTaskList({ data }) {
+    const {farmId, queryParams} = data;
+    let responseData = yield call(callfetchFarmDashobardTaskDetails, farmId, queryParams);
+    if (responseData?.status == 200 && responseData.data.status) {
+      yield put(fetchFarmDashboardTaskSuccess(responseData.data.data));
+    } else {
+      yield put(fetchFarmDashboardTaskFailure("Something went wrong"));
+    }
+  }
+
+  
 export function* farmDashboardSagas() {
   yield all([
     takeLatest("FETCH_ALL_DASHBOARD_FARM_REQUEST", fetchFarmDashboardList),
@@ -126,6 +184,10 @@ export function* farmDashboardSagas() {
     takeLatest("UPDATE_FARM_DASHBOARD_ZONE_REQUEST", updateFarmDashboardZoneList),
     takeLatest("DELETE_FARM_DASHBOARD_ZONE_REQUEST", deleteFarmDashboardZoneList),
     takeLatest("FETCH_ALL_USER_ZONE_SENSORS_REQUEST", fetchAllUserZoneSensor),
+    takeLatest("FETCH_FARM_DASHBOARD_FARM_INFO_REQUEST", fetchFarmDashboardInfoList),
+    takeLatest("FETCH_FARM_DASHBOARD_CROP_SCHEDULES_REQUEST", fetchFarmDashboardCropScheduleList),
+    takeLatest("FETCH_FARM_DASHBOARD_INFO_REQUEST", fetchFarmDashboardFarmInfoList),
+    takeLatest("FETCH_FARM_DASHBOARD_TASK_REQUEST", fetchFarmDashboardTaskList),
 
   ]);
 }

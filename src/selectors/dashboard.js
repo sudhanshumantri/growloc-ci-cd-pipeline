@@ -94,3 +94,52 @@ export const selectLoadingAllZoneSensorError = () =>
   createSelector(selectFarmDashboard, (services) => services.toJS()["loadingAllZoneSensorError"]);
 
 
+  /// new dasboard api
+
+  export const selectFarmDashboardFarmInfoList = () =>
+  createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardFarmInfoList"]);
+export const selectIsDashboardFarmInfoListLoading= () =>
+  createSelector(
+    selectFarmDashboard,
+    (services) => services.toJS()["isDashboardFarmInfoListLoading"]
+  );
+export const selectFarmDashboardFarmInfoListError = () =>
+  createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardFarmInfoListError"]);
+
+//
+export const selectFarmDashboardCropSchedulesList = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardCropSchedulesList"]);
+export const selectIsDashboardCropSchedulesListLoading= () =>
+createSelector(
+  selectFarmDashboard,
+  (services) => services.toJS()["isDashboardCropSchedulesListLoading"]
+);
+export const selectFarmDashboardCropSchedulesListError = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardCropSchedulesListError"]);
+
+//
+export const selectFarmDashboardInfoList = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardInfoList"]);
+export const selectIsDashboardInfoListLoading= () =>
+createSelector(
+  selectFarmDashboard,
+  (services) => services.toJS()["isDashboardInfoListLoading"]
+);
+export const selectFarmDashboardInfoListError = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardInfoListError"]);
+
+//
+export const selectFarmDashboardTaskList = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardTaskList"]);
+export const selectIsDashboardFarmTaskLoading= () =>
+createSelector(
+  selectFarmDashboard,
+  (services) => services.toJS()["isDashboardFarmTaskLoading"]
+);
+export const selectFarmDashboardTaskListError = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardTaskListError"]);
+
+
+
+
+

@@ -45,10 +45,11 @@ export default function AddZoneModal({
     validation[name] && setValidation({ ...validation, [name]: false });
   };
 
-  const { farmdDetails } = farmData;
-  const allFarmArea = data.map((product) => parseInt(product.farmArea));
-  const totalFarmArea = allFarmArea.reduce((acc, curr) => acc + curr, 0);
-  const reamingArea = farmdDetails?.farmArea - totalFarmArea;
+  let totalFarmArea = 0;
+  data?.zoneInformation?.forEach(function(zone) {
+    totalFarmArea += parseInt(zone.farmArea);
+  });
+  const reamingArea = farmData?.farmArea - totalFarmArea;
   const remaingEditArea = parseInt(zoneDetails?.farmArea);
   const area = zoneDetails.id ? reamingArea + remaingEditArea : reamingArea;
 
@@ -114,7 +115,7 @@ export default function AddZoneModal({
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
               <p className="input-label">
-                Total Farm Area : {farmdDetails?.farmArea}
+                Total Farm Area : {farmData?.farmArea}
               </p>
               {zoneDetails.farmArea ? (
                 <p className="input-label">

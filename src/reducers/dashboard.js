@@ -26,7 +26,19 @@ import {
   DELETE_FARM_DASHBOARD_ZONE_FAILURE,
   FETCH_ALL_USER_ZONE_SENSORS_REQUEST,
   FETCH_ALL_USER_ZONE_SENSORS_SUCCESS,
-  FETCH_ALL_USER_ZONE_SENSORS_FAILURE
+  FETCH_ALL_USER_ZONE_SENSORS_FAILURE,
+  FETCH_FARM_DASHBOARD_FARM_INFO_REQUEST,
+  FETCH_FARM_DASHBOARD_FARM_INFO_SUCCESS,
+  FETCH_FARM_DASHBOARD_FARM_INFO_FAILURE,
+  FETCH_FARM_DASHBOARD_CROP_SCHEDULES_REQUEST,
+  FETCH_FARM_DASHBOARD_CROP_SCHEDULES_SUCCESS,
+  FETCH_FARM_DASHBOARD_CROP_SCHEDULES_FAILURE,
+  FETCH_FARM_DASHBOARD_INFO_REQUEST,
+  FETCH_FARM_DASHBOARD_INFO_SUCCESS,
+  FETCH_FARM_DASHBOARD_INFO_FAILURE,
+  FETCH_FARM_DASHBOARD_TASK_REQUEST,
+  FETCH_FARM_DASHBOARD_TASK_SUCCESS,
+  FETCH_FARM_DASHBOARD_TASK_FAILURE
 } from "../actions/actionTypes";
 import login from "../sagas/login";
 const INITIAL_STATE = fromJS({
@@ -52,14 +64,29 @@ const INITIAL_STATE = fromJS({
   isZoneSensorLoading : false,
   allZoneSensorList: [],
   loadingAllZoneSensorError: null,
-
+// dashboard new reducers
+  isDashboardFarmInfoListLoading: false,
+  farmDashboardFarmInfoList: {},
+  farmDashboardFarmInfoListError: null,
+  isDashboardCropSchedulesListLoading: false,
+  farmDashboardCropSchedulesList: [],
+  farmDashboardCropSchedulesListError: null,
+  //
+  isDashboardInfoListLoading: false,
+  farmDashboardInfoList: {},
+  farmDashboardInfoListError: null,
+  //
+  isDashboardFarmTaskLoading: false,
+  farmDashboardTaskList: {},
+  farmDashboardTaskListError: null,
 });
 export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
   let dashboardFarmList = state.toJS()["dashboardFarmList"];
   let farmDashboardZoneList = state.toJS()["farmDashboardZoneList"]
+  let farmDashboardTaskList = state.toJS()["farmDashboardTaskList"]
+  // const { tasks } = farmDashboardTaskList
   const { farmdDetails } = dashboardFarmList;
   const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
-  
   switch (action.type) {
     case FETCH_ALL_DASHBOARD_FARM_REQUEST:
       return state
@@ -115,10 +142,11 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
         .set("TaskScheduleTaskListError", null);
     case ADD_TASK_SUCCESS:
       const createdByProfile = AUTH_OBJECT.profile
-      farmdDetails.Tasks.push({ ...action.data, createdByProfile, TasksHistory: [] });
+      console.log(action.data,"...action.data");
+      farmDashboardTaskList.tasks.push({ ...action.data, createdByProfile, TasksHistory: [] });
       return state
         .set("isTaskScheduleTaskLoading", false)
-        .set("dashboardFarmList", dashboardFarmList)
+        .set("farmDashboardTaskList", farmDashboardTaskList)
         .set("TaskScheduleTaskListError", null);
     case ADD_TASK_FAILURE:
       return state
@@ -150,7 +178,7 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
             .set("farmDashboardZoneError", null);
         case ADD_FARM_DASHBOARD_ZONE_SUCCESS:
           const newZone = {...action.data}
-          farmDashboardZoneList.push(newZone)
+          farmDashboardZoneList.zoneInformation.push(newZone)
           return state
             .set("isFarmDashboardZoneLoading", false)
             .set("farmDashboardZoneList", farmDashboardZoneList)
@@ -165,7 +193,7 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
               .set("updataFarmDashboardZoneError", null);
           case UPDATE_FARM_DASHBOARD_ZONE_SUCCESS:
             const { data} = action.data;
-         const index = farmDashboardZoneList.findIndex((zone) => zone.id === data.id);
+         const index = farmDashboardZoneList.zoneInformation.findIndex((zone) => zone.id === data.id);
          farmDashboardZoneList[index] = data;
             return state
             .set("isUpdateFarmDashboardZoneLoading", false)
@@ -181,7 +209,7 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
               .set("deleteFarmDashboardZoneError", null);
           case DELETE_FARM_DASHBOARD_ZONE_SUCCESS:
             const  id = action.data;
-            const filteredList = farmDashboardZoneList.filter((zone) => zone.id !== id);
+            const filteredList = farmDashboardZoneList.zoneInformation.filter((zone) => zone.id !== id);
             return state
               .set("isDeleteFarmDashboardZoneLoading", false)
               .set("farmDashboardZoneList",filteredList)
@@ -204,6 +232,71 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
               .set("isZoneSensorLoading", false)
               .set("allZoneSensorList", [])
               .set("loadingAllZoneSensorError", action.error);
+
+        // dashboard new api
+        case FETCH_FARM_DASHBOARD_FARM_INFO_REQUEST:
+          return state
+            .set("isDashboardFarmInfoListLoading", true)
+            .set("farmDashboardFarmInfoList", {})
+            .set("DashboardFarmInfoListError", null);
+        case FETCH_FARM_DASHBOARD_FARM_INFO_SUCCESS:
+          return state
+            .set("isDashboardFarmInfoListLoading", false)
+            .set("farmDashboardFarmInfoList", action.data)
+            .set("DashboardFarmInfoListError", null);
+        case FETCH_FARM_DASHBOARD_FARM_INFO_FAILURE:
+          return state
+            .set("isDashboardFarmInfoListLoading", false)
+            .set("farmDashboardFarmInfoList", [])
+            .set("DashboardFarmInfoListError", action.error);
+
+            case FETCH_FARM_DASHBOARD_CROP_SCHEDULES_REQUEST:
+              return state
+                .set("isDashboardCropSchedulesListLoading", true)
+                .set("farmDashboardCropSchedulesList", [])
+                .set("farmDashboardCropSchedulesListError", null);
+            case FETCH_FARM_DASHBOARD_CROP_SCHEDULES_SUCCESS:
+              return state
+                .set("isDashboardCropSchedulesListLoading", false)
+                .set("farmDashboardCropSchedulesList", action.data)
+                .set("farmDashboardCropSchedulesListError", null);
+            case FETCH_FARM_DASHBOARD_CROP_SCHEDULES_FAILURE:
+              return state
+                .set("isDashboardCropSchedulesListLoading", false)
+                .set("farmDashboardCropSchedulesList", [])
+                .set("farmDashboardCropSchedulesListError", action.error);
+        //
+        case FETCH_FARM_DASHBOARD_INFO_REQUEST:
+          return state
+            .set("isDashboardInfoListLoading", true)
+            .set("farmDashboardInfoList", {})
+            .set("farmDashboardInfoListError", null);
+        case FETCH_FARM_DASHBOARD_INFO_SUCCESS:
+          return state
+            .set("isDashboardInfoListLoading", false)
+            .set("farmDashboardInfoList", action.data)
+            .set("farmDashboardInfoListError", null);
+        case FETCH_FARM_DASHBOARD_INFO_FAILURE:
+          return state
+            .set("isDashboardInfoListLoading", false)
+            .set("farmDashboardInfoList", [])
+            .set("farmDashboardInfoListError", action.error);
+        //
+        case FETCH_FARM_DASHBOARD_TASK_REQUEST:
+          return state
+            .set("isDashboardFarmTaskLoading", true)
+            .set("farmDashboardTaskList", {})
+            .set("farmDashboardTaskListError", null);
+        case FETCH_FARM_DASHBOARD_TASK_SUCCESS:
+          return state
+            .set("isDashboardFarmTaskLoading", false)
+            .set("farmDashboardTaskList", action.data)
+            .set("farmDashboardTaskListError", null);
+        case FETCH_FARM_DASHBOARD_TASK_FAILURE:
+          return state
+            .set("isDashboardFarmTaskLoading", false)
+            .set("farmDashboardTaskList", [])
+            .set("farmDashboardTaskListError", action.error);
     default:
       return state;
   }
