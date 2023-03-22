@@ -37,7 +37,16 @@ import {
   FETCH_FARM_DASHBOARD_INFO_FAILURE,
   FETCH_FARM_DASHBOARD_TASK_REQUEST,
   FETCH_FARM_DASHBOARD_TASK_SUCCESS,
-  FETCH_FARM_DASHBOARD_TASK_FAILURE
+  FETCH_FARM_DASHBOARD_TASK_FAILURE,
+  FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_REQUEST,
+  FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_SUCCESS,
+  FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_FAILURE,
+  FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_REQUEST,
+  FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_SUCCESS,
+  FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_FAILURE,
+
+
+
 
 
 
@@ -302,5 +311,46 @@ export function fetchFarmDashboardTaskFailure(error) {
     error,
   };
 }
+
+//
+
+export function fetchFarmDashboardUtilizationCropsRequest(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_REQUEST,
+    data
+  };
+}
+export function fetchFarmDashboardUtilizationCropsSuccess(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_SUCCESS,
+    data,
+  };
+}
+export function fetchFarmDashboardUtilizationCropsFailure(error) {
+  return {
+    type: FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_FAILURE,
+    error,
+  };
+}
+//
+export function fetchFarmDashboardUtilizationStagesRequest(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_REQUEST,
+    data
+  };
+}
+export function fetchFarmDashboardUtilizationStagesSuccess(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_SUCCESS,
+    data,
+  };
+}
+export function fetchFarmDashboardUtilizationStagesFailure(error) {
+  return {
+    type: FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_FAILURE,
+    error,
+  };
+}
+
 
 

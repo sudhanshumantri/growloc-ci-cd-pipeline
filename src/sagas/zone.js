@@ -1,5 +1,6 @@
 import { call, all, put, takeLatest } from "redux-saga/effects";
-import { callfetchFarmZoneDetails,callFetchDashboardFarmZoneList,callFetchFarmDashboardZoneHarvestList,callAddFarmDashboardZoneTask,callAddFarmDashboardZoneTaskComment,callfetchRecenzoneSensorData} from "../utils/api";
+import { callfetchFarmZoneDetails,callFetchDashboardFarmZoneList,callFetchFarmDashboardZoneHarvestList,callAddFarmDashboardZoneTask,callAddFarmDashboardZoneTaskComment,callfetchRecenzoneSensorData,callFetchZoneDashboardZoneInfoList,callfetchZoneDashobardZoneCropSchedulekDetails,callfetchZoneDashobardZoneTaskDetails,callfetchZoneDashobardZoneSensorsDetails
+} from "../utils/api";
 import {
     fetchFarmZoneSuccess,
     fetchFarmZoneFailure,
@@ -13,8 +14,16 @@ import {
     addFarmDashboardZoneTaskCommentFailure,
     getRecentZoneSensorDataFailure,
     getRecentZoneSensorDataRequest,
-    getRecentZoneSensorDataSuccess
-} from "../actions/zone";
+    getRecentZoneSensorDataSuccess,
+    fetchFarmDashboardZoneInfoSuccess,
+    fetchFarmDashboardZoneInfoFailure,
+    fetchZoneDashboardZoneCropScheduleSuccess,
+    fetchZoneDashboardZoneCropScheduleFailure,
+    fetchZoneDashboardZoneTakScheduleSuccess,
+    fetchZoneDashboardZoneTaskScheduleFailure,
+    fetchZoneDashboardZoneSensorSuccess,
+    fetchZoneDashboardZoneSensorFailure
+  } from "../actions/zone";
 
 export function* fetchFarmZoneList({ data }) {
   let responseData = yield call(callfetchFarmZoneDetails, data);
@@ -69,6 +78,45 @@ export function* fetchRecentZoneSensorData({ data }) {
   }
 }
 
+export function* fetchZoneDashboardZoneInfoList({ data }) {
+  let responseData = yield call(callFetchZoneDashboardZoneInfoList, data);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(fetchFarmDashboardZoneInfoSuccess(responseData.data.data));
+  } else {
+    yield put(fetchFarmDashboardZoneInfoFailure("Something went wrong"));
+  }
+}
+
+export function* fetchZoneDashboardZoneCropScheduleList({ data }) {
+  const {zoneId, queryParams} = data;
+  let responseData = yield call(callfetchZoneDashobardZoneCropSchedulekDetails, zoneId, queryParams);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(fetchZoneDashboardZoneCropScheduleSuccess(responseData.data.data));
+  } else {
+    yield put(fetchZoneDashboardZoneCropScheduleFailure("Something went wrong"));
+  }
+}
+export function* fetchZoneDashboardZoneTaskScheduleList({ data }) {
+  const {zoneId, queryParams} = data;
+  let responseData = yield call(callfetchZoneDashobardZoneTaskDetails, zoneId, queryParams);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(fetchZoneDashboardZoneTakScheduleSuccess(responseData.data.data));
+  } else {
+    yield put(fetchZoneDashboardZoneTaskScheduleFailure("Something went wrong"));
+  }
+}
+
+export function* fetchZoneDashboardZoneSensorScheduleList({ data }) {
+  const {zoneId, queryParams} = data;
+  let responseData = yield call(callfetchZoneDashobardZoneSensorsDetails, zoneId, queryParams);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(fetchZoneDashboardZoneSensorSuccess(responseData.data.data));
+  } else {
+    yield put(fetchZoneDashboardZoneSensorFailure("Something went wrong"));
+  }
+}
+
+
 export function* zoneSagas() {
   yield all([
     takeLatest("FETCH_ALL_FARM_ZONE_REQUEST", fetchFarmZoneList),
@@ -77,6 +125,11 @@ export function* zoneSagas() {
     takeLatest("ADD_FARM_DASHBOARD_ZONE_TASK_REQUEST", addFarmDashboardZoneTask),
     takeLatest("ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_REQUEST", addFarmDashboardZoneComment),
     takeLatest("FETCH_RECENT_ZONE_SENSOR_DATA_REQUEST", fetchRecentZoneSensorData),
+    takeLatest("FETCH_ZONE_DASHBOARD_ZONE_INFO_REQUEST", fetchZoneDashboardZoneInfoList),
+    takeLatest("FETCH_ZONE_DASHBOARD_CROP_SCHEDULES_REQUEST", fetchZoneDashboardZoneCropScheduleList),
+    takeLatest("FETCH_ZONE_DASHBOARD_ZONE_TASK_SCHEDULES_REQUEST", fetchZoneDashboardZoneTaskScheduleList),
+    takeLatest("FETCH_ZONE_DASHBOARD_ZONE_SENSOR_REQUEST", fetchZoneDashboardZoneSensorScheduleList),
+
  ]);
 }
 export default [zoneSagas];

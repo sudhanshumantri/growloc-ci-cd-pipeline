@@ -2,11 +2,29 @@ import React from "react";
 import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
-import { fetchDashboardFarmRequest, fetchDashboardHarvestRequest, addTaskSheduleTaskRequest,addFarmTaskCommentRequest,addFarmDashboardZoneRequest,fetchFarmDashboardZoneRequest,updateFarmDashboardZoneRequest,deleteFarmDashboardZoneRequest,fetchDashboardFarmInfoRequest,fetchFarmCropSchedulesRequest,fetchFarmDashboardInfoRequest,fetchFarmDashboardTaskRequest} from "../../actions/dashboard";
+import {
+  fetchDashboardFarmRequest,
+  fetchDashboardHarvestRequest,
+  addTaskSheduleTaskRequest,
+  addFarmTaskCommentRequest,
+  addFarmDashboardZoneRequest,
+  fetchFarmDashboardZoneRequest,
+  updateFarmDashboardZoneRequest,
+  deleteFarmDashboardZoneRequest,
+  fetchDashboardFarmInfoRequest,
+  fetchFarmCropSchedulesRequest,
+  fetchFarmDashboardInfoRequest,
+  fetchFarmDashboardTaskRequest,
+  fetchFarmDashboardUtilizationCropsRequest,
+  fetchFarmDashboardUtilizationStagesRequest
+} from "../../actions/dashboard";
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
 import { fetchFarmCropsRequest } from "../../actions/crops";
-import { addCropToLifecycleRequest, fetchAllCropsLifecycleRequest } from "../../actions/life-cycle";
+import {
+  addCropToLifecycleRequest,
+  fetchAllCropsLifecycleRequest,
+} from "../../actions/life-cycle";
 import FarmDashboard from "../../components/dashboard/farm";
 import {
   selectFarmDashboardList,
@@ -38,19 +56,20 @@ import {
   selectFarmDashboardInfoListError,
   selectFarmDashboardTaskList,
   selectIsDashboardFarmTaskLoading,
-  selectFarmDashboardTaskListError
+  selectFarmDashboardTaskListError,
+  selectFarmDashboardFarmUtilizationCropsList,
+  selectIsFarmDashboardFarmUtilizationCropsLoading,
+  selectFarmDashboardFarmUtilizationCropsError,
+  selectFarmDashboardFarmUtilizationStagesList,
+  selectIsFarmDashboardFarmUtilizationStagesLoading,
+  selectFarmDashboardFarmUtilizationStagesError,
 } from "../../selectors/dashboard";
+import { selectUsersList } from "../../selectors/users";
+import { selectFarmInventoryList } from "../../selectors/inventory";
+import { selectLoginObject } from "../../selectors/login";
 import {
-  selectUsersList
-} from "../../selectors/users"
-import {
-  selectFarmInventoryList,
-} from "../../selectors/inventory";
-import {
-  selectLoginObject
-} from "../../selectors/login";
-import {
-  selectLifecycleCropsList,selectIsAddLifecycleLoading,
+  selectLifecycleCropsList,
+  selectIsAddLifecycleLoading,
 } from "../../selectors/life-cycle";
 import { selectCropFarmList } from "../../selectors/crops";
 
@@ -66,35 +85,48 @@ const mapStateToProps = createStructuredSelector({
   TaskScheduleTaskListError: selectTaskScheduleTaskListError(),
   farmInventoryList: selectFarmInventoryList(),
   loginObject: selectLoginObject(),
-  isFarmTaskCommentLoading:selectIsisFarmTaskCommentLoading(),
-  farmTaskCommentError:selectfarmTaskCommentError(),
-  isFarmDashboardZoneLoading:selectIsFarmDashboardZoneLoading(),
-  farmDashboardZoneError:selectFarmDashboardZoneError(),
-  farmDashboardZoneList:selectFarmDashboardZoneList(),
-  isFarmDashboardZoneListLoading:selectIsFarmDashboardZoneListLoading(),
-  farmDashboardZoneListError:selectFarmDashboardZoneListError(),
-  isUpdateFarmDashboardZoneLoading:selectIsUpdataFarmDashboardZoneLoading(),
-  updateFarmDashboardZoneError:selectUpdateFarmDashboardZoneError(),
-  isDeleteFarmDashboardZoneLoading:selectIsDeleteFarmDashboardZoneLoading(),
+  isFarmTaskCommentLoading: selectIsisFarmTaskCommentLoading(),
+  farmTaskCommentError: selectfarmTaskCommentError(),
+  isFarmDashboardZoneLoading: selectIsFarmDashboardZoneLoading(),
+  farmDashboardZoneError: selectFarmDashboardZoneError(),
+  farmDashboardZoneList: selectFarmDashboardZoneList(),
+  isFarmDashboardZoneListLoading: selectIsFarmDashboardZoneListLoading(),
+  farmDashboardZoneListError: selectFarmDashboardZoneListError(),
+  isUpdateFarmDashboardZoneLoading: selectIsUpdataFarmDashboardZoneLoading(),
+  updateFarmDashboardZoneError: selectUpdateFarmDashboardZoneError(),
+  isDeleteFarmDashboardZoneLoading: selectIsDeleteFarmDashboardZoneLoading(),
   farmCropList: selectCropFarmList(),
   lifecycleCropsList: selectLifecycleCropsList(),
   isAddLifecycleLoading: selectIsAddLifecycleLoading(),
-
-
-//
-farmDashboardFarmInfoList: selectFarmDashboardFarmInfoList(),
+  //
+  farmDashboardFarmInfoList: selectFarmDashboardFarmInfoList(),
   isDashboardFarmInfoListLoading: selectIsDashboardFarmInfoListLoading(),
   farmDashboardFarmInfoListError: selectFarmDashboardFarmInfoListError(),
   farmDashboardCropSchedulesList: selectFarmDashboardCropSchedulesList(),
-  isDashboardCropSchedulesListLoading: selectIsDashboardCropSchedulesListLoading(),
-  farmDashboardCropSchedulesListError: selectFarmDashboardCropSchedulesListError(),
-  isDashboardInfoListLoading:selectIsDashboardInfoListLoading(),
-  farmDashboardInfoList:selectFarmDashboardInfoList(),
+  isDashboardCropSchedulesListLoading:
+    selectIsDashboardCropSchedulesListLoading(),
+  farmDashboardCropSchedulesListError:
+    selectFarmDashboardCropSchedulesListError(),
+  isDashboardInfoListLoading: selectIsDashboardInfoListLoading(),
+  farmDashboardInfoList: selectFarmDashboardInfoList(),
   farmDashboardInfoListError: selectFarmDashboardInfoListError(),
-  farmDashboardTaskList:selectFarmDashboardTaskList(),
-  isDashboardFarmTaskLoading:selectIsDashboardFarmTaskLoading(),
-  farmDashboardTaskListError:selectFarmDashboardTaskListError(),
-
+  farmDashboardTaskList: selectFarmDashboardTaskList(),
+  isDashboardFarmTaskLoading: selectIsDashboardFarmTaskLoading(),
+  farmDashboardTaskListError: selectFarmDashboardTaskListError(),
+  //
+  farmDashboardFarmUtilizationCropsList:
+    selectFarmDashboardFarmUtilizationCropsList(),
+  isFarmDashboardFarmUtilizationCropsLoading:
+    selectIsFarmDashboardFarmUtilizationCropsLoading(),
+  FarmDashboardFarmUtilizationCropsError:
+    selectFarmDashboardFarmUtilizationCropsError(),
+  farmDashboardFarmUtilizationStagesList:
+    selectFarmDashboardFarmUtilizationStagesList(),
+  isFarmDashboardFarmUtilizationStagesLoading:
+    selectIsFarmDashboardFarmUtilizationStagesLoading(),
+  farmDashboardFarmUtilizationStagesError:
+    selectFarmDashboardFarmUtilizationStagesError(),
+  //
 });
 const mapDispatchToProps = {
   fetchFarmDashboard: fetchDashboardFarmRequest,
@@ -103,17 +135,20 @@ const mapDispatchToProps = {
   addTaskScheduleTask: addTaskSheduleTaskRequest,
   fetchFarmInventory: fetchFarmInventoryRequest,
   addFarmTaskComment: addFarmTaskCommentRequest,
-  addFarmDashboardZone:addFarmDashboardZoneRequest,
-  fecthFarmDashboardZone:fetchFarmDashboardZoneRequest,
-  updateFarmDashboardZone:updateFarmDashboardZoneRequest,
-  deleteFarmDashboardZone:deleteFarmDashboardZoneRequest,
+  addFarmDashboardZone: addFarmDashboardZoneRequest,
+  fecthFarmDashboardZone: fetchFarmDashboardZoneRequest,
+  updateFarmDashboardZone: updateFarmDashboardZoneRequest,
+  deleteFarmDashboardZone: deleteFarmDashboardZoneRequest,
   fecthCropFarm: fetchFarmCropsRequest,
   addCropToLifecycle: addCropToLifecycleRequest,
   fetchAllCropsLifecycle: fetchAllCropsLifecycleRequest,
   fetchFarmDashboardInfo: fetchDashboardFarmInfoRequest,
-  fetchFarmDashboardCropSchedule:fetchFarmCropSchedulesRequest,
-  fetchFarmDashboardFarmInfo:fetchFarmDashboardInfoRequest,
-  fetchFarmDashboardFarmTask:fetchFarmDashboardTaskRequest,
+  fetchFarmDashboardCropSchedule: fetchFarmCropSchedulesRequest,
+  fetchFarmDashboardFarmInfo: fetchFarmDashboardInfoRequest,
+  fetchFarmDashboardFarmTask: fetchFarmDashboardTaskRequest,
+  fetchFarmDashboardFarmUtilizationCrops: fetchFarmDashboardUtilizationCropsRequest,
+  fetchFarmDashboardFarmUtilizationStages:fetchFarmDashboardUtilizationStagesRequest
+
 };
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {

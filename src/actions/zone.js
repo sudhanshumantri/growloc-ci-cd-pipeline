@@ -16,7 +16,25 @@ import {
     ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_FAILURE,
     FETCH_RECENT_ZONE_SENSOR_DATA_REQUEST,
     FETCH_RECENT_ZONE_SENSOR_DATA_SUCCESS,
-    FETCH_RECENT_ZONE_SENSOR_DATA_FAILURE
+    FETCH_RECENT_ZONE_SENSOR_DATA_FAILURE,
+    FETCH_ZONE_DASHBOARD_ZONE_INFO_REQUEST,
+    FETCH_FARM_DASHBOARD_ZONE_INFO_SUCCESS,
+    FETCH_FARM_DASHBOARD_ZONE_INFO_FAILURE,
+    FETCH_ZONE_DASHBOARD_CROP_SCHEDULES_REQUEST,
+    FETCH_ZONE_DASHBOARD_CROP_SCHEDULES_SUCCESS,
+    FETCH_ZONE_DASHBOARD_CROP_SCHEDULES_FAILURE,
+    FETCH_ZONE_DASHBOARD_ZONE_TASK_SCHEDULES_REQUEST,
+    FETCH_ZONE_DASHBOARD_ZONE_TASK_SCHEDULES_SUCCESS,
+    FETCH_ZONE_DASHBOARD_ZONE_TASK_SCHEDULES_FAILURE,
+    FETCH_ZONE_DASHBOARD_ZONE_SENSOR_REQUEST,
+    FETCH_ZONE_DASHBOARD_ZONE_SENSOR_SUCCESS,
+    FETCH_ZONE_DASHBOARD_ZONE_SENSOR_FAILURE,
+    FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_CROP_REQUEST,
+    FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_CROP_SUCCESS,
+    FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_CROP_FAILURE,
+    FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_STAGES_REQUEST,
+    FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_STAGES_SUCCESS,
+    FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_STAGES_FAILURE
 
  } from "./actionTypes";
   
@@ -141,9 +159,130 @@ import {
       error,
     };
   }
+//
+
+export function fetchFarmDashboardZoneInfoRequest(data) {
+  return {
+    type: FETCH_ZONE_DASHBOARD_ZONE_INFO_REQUEST,
+    data
+  };
+}
+export function fetchFarmDashboardZoneInfoSuccess(data) {
+  return {
+    type: FETCH_FARM_DASHBOARD_ZONE_INFO_SUCCESS,
+    data,
+  };
+}
+export function fetchFarmDashboardZoneInfoFailure(error) {
+  return {
+    type: FETCH_FARM_DASHBOARD_ZONE_INFO_FAILURE,
+    error,
+  };
+}
 
 
+//
+export function fetchZoneDashboardZoneCropScheduleRequest(data) {
+  return {
+    type: FETCH_ZONE_DASHBOARD_CROP_SCHEDULES_REQUEST,
+    data
+  };
+}
+export function fetchZoneDashboardZoneCropScheduleSuccess(data) {
+  return {
+    type: FETCH_ZONE_DASHBOARD_CROP_SCHEDULES_SUCCESS,
+    data,
+  };
+}
+export function fetchZoneDashboardZoneCropScheduleFailure(error) {
+  return {
+    type: FETCH_ZONE_DASHBOARD_CROP_SCHEDULES_FAILURE,
+    error,
+  };
+}
+
+
+
+export function fetchZoneDashboardZoneTaskScheduleRequest(data) {
+  return {
+    type: FETCH_ZONE_DASHBOARD_ZONE_TASK_SCHEDULES_REQUEST,
+    data
+  };
+}
+export function fetchZoneDashboardZoneTakScheduleSuccess(data) {
+  return {
+    type: FETCH_ZONE_DASHBOARD_ZONE_TASK_SCHEDULES_SUCCESS,
+    data,
+  };
+}
+export function fetchZoneDashboardZoneTaskScheduleFailure(error) {
+  return {
+    type: FETCH_ZONE_DASHBOARD_ZONE_TASK_SCHEDULES_FAILURE,
+    error,
+  };
+}
+
+
+
+    export function fetchZoneDashboardZoneSensorRequest(data) {
+      return {
+        type: FETCH_ZONE_DASHBOARD_ZONE_SENSOR_REQUEST,
+        data
+      };
+    }
+    export function fetchZoneDashboardZoneSensorSuccess(data) {
+      return {
+        type: FETCH_ZONE_DASHBOARD_ZONE_SENSOR_SUCCESS,
+        data,
+      };
+    }
+    export function fetchZoneDashboardZoneSensorFailure(error) {
+      return {
+        type: FETCH_ZONE_DASHBOARD_ZONE_SENSOR_FAILURE,
+        error,
+      };
+    }
+  // uti
   
+
+  export function fetchZoneDashboardZoneUtilizationCropsRequest(data) {
+    return {
+      type: FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_CROP_REQUEST,
+      data
+    };
+  }
+  export function fetchZoneDashboardZoneUtilizationCropsSuccess(data) {
+    return {
+      type: FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_CROP_SUCCESS,
+      data,
+    };
+  }
+  export function fetchZoneDashboardZoneUtilizationCropsFailure(error) {
+    return {
+      type: FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_CROP_FAILURE,
+      error,
+    };
+  }
+  //
+  export function fetchZoneDashboardZoneUtilizationStagesRequest(data) {
+    return {
+      type: FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_STAGES_REQUEST,
+      data
+    };
+  }
+  export function fetchZoneDashboardZoneUtilizationStagesSuccess(data) {
+    return {
+      type: FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_STAGES_SUCCESS,
+      data,
+    };
+  }
+  export function fetchZoneDashboardZoneUtilizationStagesFailure(error) {
+    return {
+      type: FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_STAGES_FAILURE,
+      error,
+    };
+  }
+
 
 
 

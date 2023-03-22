@@ -63,7 +63,11 @@ const urls = {
     "fetch-farm-dashboard-info":"farm/get-farm-dashboard-header-info/",
     "fetch-farm-dashboard-crop-schedules":"farm/get-farm-dashboard-crop-schedules/",
     "fetch-farm-dashboard-farm-info":"farm/get-farm-dashboard-info/",
-    "fetch-farm-dashboard-task-schedules":"farm/get-farm-dashboard-task-schedules/"
+    "fetch-farm-dashboard-task-schedules":"farm/get-farm-dashboard-task-schedules/",
+    "fetch-zone-dashboard-znoe-header-info":"farm/get-zone-dashboard-header-info/",
+    "fetch-zone-dashboard-crop-schedules":"farm/get-zone-dashboard-crop-schedules/",
+    "fetch-zone-dashboard-zone-task-schedules":"farm/zone-task/",
+    "fetch-zone-dashboard-zone-sensors":"farm/get-zone-dashboard-sensors/",
   },
 };
 
@@ -554,3 +558,37 @@ export function callfetchFarmDashobardTaskDetails(routeParams, queryParams) {
     queryParams,
   });
 }
+//
+export function callFetchZoneDashboardZoneInfoList(routeParams) {
+  return callApi(getEndpoint("fetch-zone-dashboard-znoe-header-info"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
+export function callfetchZoneDashobardZoneCropSchedulekDetails(routeParams, queryParams) {
+  return callApi(getEndpoint("fetch-zone-dashboard-crop-schedules"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+    queryParams,
+  });
+}
+
+export function callfetchZoneDashobardZoneTaskDetails(routeParams, queryParams) {
+  return callApi(getEndpoint("fetch-zone-dashboard-zone-task-schedules"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+    queryParams,
+  });
+}
+export function callfetchZoneDashobardZoneSensorsDetails(routeParams, queryParams) {
+  return callApi(getEndpoint("fetch-zone-dashboard-zone-sensors"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+    queryParams,
+  });
+}
+

@@ -38,7 +38,14 @@ import {
   FETCH_FARM_DASHBOARD_INFO_FAILURE,
   FETCH_FARM_DASHBOARD_TASK_REQUEST,
   FETCH_FARM_DASHBOARD_TASK_SUCCESS,
-  FETCH_FARM_DASHBOARD_TASK_FAILURE
+  FETCH_FARM_DASHBOARD_TASK_FAILURE,
+  FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_REQUEST,
+  FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_SUCCESS,
+  FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_FAILURE,
+  FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_REQUEST,
+  FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_SUCCESS,
+  FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_FAILURE,
+
 } from "../actions/actionTypes";
 import login from "../sagas/login";
 const INITIAL_STATE = fromJS({
@@ -79,6 +86,13 @@ const INITIAL_STATE = fromJS({
   isDashboardFarmTaskLoading: false,
   farmDashboardTaskList: {},
   farmDashboardTaskListError: null,
+  isFarmDashboardFarmUtilizationCropsLoading: false,
+  farmDashboardFarmUtilizationCropsList: {},
+  FarmDashboardFarmUtilizationCropsError: null,
+  isFarmDashboardFarmUtilizationStagesLoading: false,
+  farmDashboardFarmUtilizationStagesList: {},
+  farmDashboardFarmUtilizationStagesError: null,
+
 });
 export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
   let dashboardFarmList = state.toJS()["dashboardFarmList"];
@@ -297,6 +311,41 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
             .set("isDashboardFarmTaskLoading", false)
             .set("farmDashboardTaskList", [])
             .set("farmDashboardTaskListError", action.error);
+            //
+          
+            case FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_REQUEST:
+              return state
+                .set("isFarmDashboardFarmUtilizationCropsLoading", true)
+                .set("farmDashboardFarmUtilizationCropsList", {})
+                .set("FarmDashboardFarmUtilizationCropsError", null);
+            case FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_SUCCESS:
+              return state
+                .set("isFarmDashboardFarmUtilizationCropsLoading", false)
+                .set("farmDashboardFarmUtilizationCropsList", action.data)
+                .set("FarmDashboardFarmUtilizationCropsError", null);
+            case FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_FAILURE:
+              return state
+                .set("isFarmDashboardFarmUtilizationCropsLoading", false)
+                .set("farmDashboardFarmUtilizationCropsList", [])
+                .set("FarmDashboardFarmUtilizationCropsError", action.error);
+                case FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_REQUEST:
+                  return state
+                    .set("isFarmDashboardFarmUtilizationStagesLoading", true)
+                    .set("farmDashboardFarmUtilizationStagesList", {})
+                    .set("farmDashboardFarmUtilizationStagesError", null);
+                case FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_SUCCESS:
+                  return state
+                    .set("isFarmDashboardFarmUtilizationStagesLoading", false)
+                    .set("farmDashboardFarmUtilizationStagesList", action.data)
+                    .set("farmDashboardFarmUtilizationStagesError", null);
+                case FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_FAILURE:
+                  return state
+                    .set("isFarmDashboardFarmUtilizationStagesLoading", false)
+                    .set("farmDashboardFarmUtilizationStagesList", [])
+                    .set("farmDashboardFarmUtilizationStagesError", action.error);
+    
+    //
+  
     default:
       return state;
   }

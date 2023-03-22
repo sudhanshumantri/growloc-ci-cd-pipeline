@@ -40,8 +40,15 @@ import {
   fetchFarmDashboardInfoSuccess,
   fetchFarmDashboardInfoFailure,
   fetchFarmDashboardTaskSuccess,
-  fetchFarmDashboardTaskFailure
+  fetchFarmDashboardTaskFailure,
+  fetchFarmDashboardUtilizationCropsSuccess,
+  fetchFarmDashboardUtilizationCropsFailure,
+  fetchFarmDashboardUtilizationStagesSuccess,
+  fetchFarmDashboardUtilizationStagesFailure
 } from "../actions/dashboard";
+
+
+
 
 export function* fetchFarmDashboardList({ data }) {
   let responseData = yield call(callFetchDashboardFarmList, data);
@@ -172,6 +179,25 @@ export function* fetchFarmDashboardInfoList({ data }) {
     }
   }
 
+  export function* fetchFarmDashboardFarmUtlizationCropList({ data }) {
+    console.log(data);
+    let responseData = yield call(callFetchDashboardFarmInfo, data);
+    if (responseData?.status == 200 && responseData.data.status) {
+      yield put(fetchFarmDashboardUtilizationCropsSuccess(responseData.data.data));
+    } else {
+      yield put(fetchFarmDashboardUtilizationCropsFailure("Something went wrong"));
+    }
+  }
+  export function* fetchFarmDashboardFarmUtlizationStagesList({ data }) {
+    console.log(data);
+    let responseData = yield call(callFetchDashboardFarmInfo, data);
+    if (responseData?.status == 200 && responseData.data.status) {
+      yield put(fetchFarmDashboardUtilizationStagesSuccess(responseData.data.data));
+    } else {
+      yield put(fetchFarmDashboardUtilizationStagesFailure("Something went wrong"));
+    }
+  }
+
   
 export function* farmDashboardSagas() {
   yield all([
@@ -188,6 +214,10 @@ export function* farmDashboardSagas() {
     takeLatest("FETCH_FARM_DASHBOARD_CROP_SCHEDULES_REQUEST", fetchFarmDashboardCropScheduleList),
     takeLatest("FETCH_FARM_DASHBOARD_INFO_REQUEST", fetchFarmDashboardFarmInfoList),
     takeLatest("FETCH_FARM_DASHBOARD_TASK_REQUEST", fetchFarmDashboardTaskList),
+    takeLatest("FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_REQUEST", fetchFarmDashboardFarmUtlizationCropList),
+    takeLatest("FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_REQUEST", fetchFarmDashboardFarmUtlizationStagesList),
+
+
 
   ]);
 }

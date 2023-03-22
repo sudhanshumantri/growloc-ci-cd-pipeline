@@ -79,3 +79,66 @@ export const selectRecentZoneSensorDataError = () =>
     (services) => services.toJS()["recentZoneSensorDataError"]
   );
 
+  export const selectZoneDashboardZoneInfoList = () =>
+createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneInfoList"]);
+export const selectIsZoneDashboardZoneInfoLoading= () =>
+createSelector(
+  selectZone,
+  (services) => services.toJS()["isZoneDashboardZoneInfoLoading"]
+);
+export const selectZoneDashboardZoneInfoError = () =>
+createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneInfoError"]);
+
+export const selectZoneDashboardZoneCropSchedulesList= () =>
+createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneCropSchedulesList"]);
+export const selectIsZoneDashboardZoneCropSchedulesListLoading= () =>
+createSelector(
+  selectZone,
+  (services) => services.toJS()["isZoneDashboardZoneCropSchedulesListLoading"]
+);
+export const selectZoneDashboardZoneCropSchedulesListError = () =>
+createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneCropSchedulesListError"]);
+
+
+
+
+export const selectZoneDashboardZoneTaskList= () =>
+createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneTaskList"]);
+export const selectIsZoneDashboardZoneTaskLoading= () =>
+createSelector(
+  selectZone,
+  (services) => services.toJS()["isZoneDashboardZoneTaskLoading"]
+);
+export const selectZoneDashboardZoneTaskListError = () =>
+createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneTaskListError"]);
+//
+
+export const selectZoneDashboardZoneSensorList= () =>
+createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneSensorList"]);
+export const selectIsZoneDashboardZoneSensorLoading= () =>
+createSelector(
+  selectZone,
+  (services) => services.toJS()["isZoneDashboardZoneSensorLoading"]
+);
+export const selectZoneDashboardZoneSensorError = () =>
+createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneSensorError"]);
+
+export const selectZoneDashboardZoneUtilizationCropsList= () =>
+createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneUtilizationCropsList"]);
+export const selectIsZoneDashboardZoneUtilizationCropsLoading= () =>
+createSelector(
+  selectZone,
+  (services) => services.toJS()["isZoneDashboardZoneUtilizationCropsLoading"]
+);
+export const selectZoneDashboardZoneUtilizationCropsError = () =>
+createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneUtilizationCropsError"]);
+export const selectZoneDashboardZoneUtilizationStagesList= () =>
+createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneUtilizationStagesList"]);
+export const selectIsZoneDashboardZoneUtilizationStagesLoading= () =>
+createSelector(
+  selectZone,
+  (services) => services.toJS()["isZoneDashboardZoneUtilizationStagesLoading"]
+);
+export const selectZoneDashboardZoneUtilizationStagesError = () =>
+createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneUtilizationStagesError"]);
+

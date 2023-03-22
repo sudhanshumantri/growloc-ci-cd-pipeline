@@ -457,7 +457,7 @@ console.log(dashboardHarvestList,"dashboardHarvestList");
         <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
           <DataTable data={{ headers: headers, rows: cropSchedules || [] }} />
           <TableDynamicPagination
-              count={farmDashboardCropSchedulesList.length}
+              count={farmDashboardCropSchedulesList.total}
               handleChangePagination={handleChangePagination}
             />
 
@@ -480,7 +480,7 @@ console.log(dashboardHarvestList,"dashboardHarvestList");
             handleButtonClick={handleModalToggle}
           />
         </Grid>
-        <Grid className="card-outline-container " item xs={12} sm={12} md={12}>
+        <Grid className="card-outline-container " item xs={12} sm={12} md={12} >
           {/* <DataTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }}
              handleCommentModalToggle={handleCommentModalToggle}
              />  */}
@@ -610,7 +610,7 @@ console.log(dashboardHarvestList,"dashboardHarvestList");
             data={{ headers: ZONE_HEADER, rows: farmDashboardZoneList.zoneInformation || [] }}
           />
                 <TableDynamicPagination
-              count={farmDashboardZoneList.length}
+              count={farmDashboardZoneList.total}
               handleChangePagination={handleChangeZonePagination}
             />
 
@@ -1131,9 +1131,7 @@ console.log(dashboardHarvestList,"dashboardHarvestList");
 
   // const totalFarmArea = allFarmArea.reduce((acc, curr) => acc + curr, 0)
   const reamingArea = farmDashboardFarmInfoList?.farmArea - totalFarmArea;
-
   let subtitle = `(Total Farm Area : ${farmDashboardFarmInfoList?.farmArea || ""}  Available Farm Area : ${reamingArea ?? ""} )`;
-
   return (
     <div>
       <PageHeader
@@ -1155,7 +1153,7 @@ console.log(dashboardHarvestList,"dashboardHarvestList");
       {isDashboardInfoListLoading && <Loader title=" Fecting Farm Details " />}
       {isDashboardFarmTaskLoading && <Loader title=" Fecting Task Details " />}
 
-      {/* {isFarmDashboardZoneListLoading && <Loader title=" Fetching Zone Details " />} */}
+      {isFarmDashboardZoneListLoading && <Loader title=" Fetching Zone Details " />}
 
       <div className="page-container">
 

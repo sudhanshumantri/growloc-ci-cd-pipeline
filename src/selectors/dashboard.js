@@ -139,6 +139,33 @@ createSelector(
 export const selectFarmDashboardTaskListError = () =>
 createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardTaskListError"]);
 
+//
+export const selectFarmDashboardFarmUtilizationCropsList = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardFarmUtilizationCropsList"]);
+export const selectIsFarmDashboardFarmUtilizationCropsLoading= () =>
+createSelector(
+  selectFarmDashboard,
+  (services) => services.toJS()["isFarmDashboardFarmUtilizationCropsLoading"]
+);
+export const selectFarmDashboardFarmUtilizationCropsError = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["FarmDashboardFarmUtilizationCropsError"]);
+//
+export const selectFarmDashboardFarmUtilizationStagesList = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardFarmUtilizationStagesList"]);
+export const selectIsFarmDashboardFarmUtilizationStagesLoading= () =>
+createSelector(
+  selectFarmDashboard,
+  (services) => services.toJS()["isFarmDashboardFarmUtilizationStagesLoading"]
+);
+export const selectFarmDashboardFarmUtilizationStagesError = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardFarmUtilizationStagesError"]);
+
+
+
+
+
+
+
 
 
 
