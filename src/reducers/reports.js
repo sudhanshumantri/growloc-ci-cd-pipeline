@@ -3,6 +3,13 @@ import {
     FETCH_ALL_FARM_REPORTS_DATA_REQUEST,
     FETCH_ALL_FARM_REPORTS_DATA_SUCCESS,
     FETCH_ALL_FARM_REPORTS_DATA_FAILURE,
+    FETCH_FARM_REPORTS_FARM_AVERAGE_MORTALITY_REQUEST,
+    FETCH_FARM_REPORTS_FARM_AVERAGE_MORTALITY_SUCCESS,
+    FETCH_FARM_REPORTS_FARM_AVERAGE_MORTALITY_FAILURE,
+    FETCH_FARM_REPORTS_FARM_TAT_TASK_CATEGORIES_REQUEST,
+    FETCH_FARM_REPORTS_FARM_TAT_TASK_CATEGORIES_SUCCESS,
+    FETCH_FARM_REPORTS_FARM_TAT_TASK_CATEGORIES_FAILURE
+
   
 } from "../actions/actionTypes";
 
@@ -10,7 +17,13 @@ const INITIAL_STATE = fromJS({
   isFarmReportsListLoading: false,
   farmReportsList: [],
   farmReportsListError: null,
-  
+  isFarmReportsFarmAverageMortalityListLoading: false,
+  farmReportsFarmAverageMortalityList: [],
+  farmReportsFarmAverageMortalityError: null,
+  isFarmReportsFarmTatTaskCategoriesListLoading: false,
+  farmReportsFarmTatTaskCategoriesListList: [],
+  farmReportsFarmTatTaskCategoriesListError: null,
+
 });
 
 export default function reportsReducer(state = INITIAL_STATE, action = {}) {
@@ -30,6 +43,43 @@ export default function reportsReducer(state = INITIAL_STATE, action = {}) {
         .set("isFarmReportsListLoading", false)
         .set("farmReportsList", [])
         .set("farmReportsListError", action.error);
+    
+    //
+       case FETCH_FARM_REPORTS_FARM_AVERAGE_MORTALITY_REQUEST:
+      return state
+        .set("isFarmReportsFarmAverageMortalityListLoading", true)
+        .set("farmReportsFarmAverageMortalityList", [])
+        .set("farmReportsFarmAverageMortalityError", null);
+    case FETCH_FARM_REPORTS_FARM_AVERAGE_MORTALITY_SUCCESS:
+      return state
+        .set("isFarmReportsFarmAverageMortalityListLoading", false)
+        .set("farmReportsFarmAverageMortalityList", action.data)
+        .set("farmReportsFarmAverageMortalityError", null);
+    case FETCH_FARM_REPORTS_FARM_AVERAGE_MORTALITY_FAILURE:
+      return state
+        .set("isFarmReportsFarmAverageMortalityListLoading", false)
+        .set("farmReportsFarmAverageMortalityList", [])
+        .set("farmReportsFarmAverageMortalityError", action.error);
+
+      //
+
+        case FETCH_FARM_REPORTS_FARM_TAT_TASK_CATEGORIES_REQUEST:
+          return state
+            .set("isFarmReportsFarmTatTaskCategoriesListLoading", true)
+            .set("farmReportsFarmTatTaskCategoriesListList", [])
+            .set("farmReportsFarmTatTaskCategoriesListError", null);
+        case FETCH_FARM_REPORTS_FARM_TAT_TASK_CATEGORIES_SUCCESS:
+          return state
+            .set("isFarmReportsFarmTatTaskCategoriesListLoading", false)
+            .set("farmReportsFarmTatTaskCategoriesListList", action.data)
+            .set("farmReportsFarmTatTaskCategoriesListError", null);
+        case FETCH_FARM_REPORTS_FARM_TAT_TASK_CATEGORIES_FAILURE:
+          return state
+            .set("isFarmReportsFarmTatTaskCategoriesListLoading", false)
+            .set("farmReportsFarmTatTaskCategoriesListList", [])
+            .set("farmReportsFarmTatTaskCategoriesListError", action.error);
+    
+          
     default:
       return state;
   }

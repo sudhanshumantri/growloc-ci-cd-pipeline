@@ -27,6 +27,7 @@ import Noofbatch from "../../../public/assets/Noofbatch.png";
 import Totalharvest from "../../../public/assets/Totalharvest.png";
 import Nooftask from "../../../public/assets/Nooftask.png";
 import TableDynamicPagination from "../shared/tablepagination";
+
 export default function ZoneDashboard({
   fetchFarmZone,
   farmZoneList,
@@ -58,8 +59,11 @@ zoneDashboardZoneTaskList,
 fetchZoneDashboardZoneTaskSchedule,
 isZoneDashboardZoneSensorLoading,
 zoneDashboardZoneSensorList,
-fetchZoneDashboardZoneSensorsSchedule,
-
+fetchZoneDashboardZoneSensors,
+fetchZoneDashboardZoneUtilizationCrops,
+zoneDashboardZoneUtilizationCropsList,
+fetchZoneDashboardZoneUtilizationStages,
+zoneDashboardZoneUtilizationStagesList,
 
 }) {
 
@@ -70,10 +74,35 @@ fetchZoneDashboardZoneSensorsSchedule,
   const [rowdata, setRowData] = useState({});
   const [openZoneSensors, setZoneSensors] = useState(false);
   const [value, setValue] = React.useState("1");
-  const handleZoneTabChange = (event, newValue) => {
+
+
+
+  React.useEffect(() => {
+    if (zoneId) {
+      // fetchFarmZone(zoneId);
+      // fetchFarmDashboardHarvest({ zoneId: zoneId, month });
+      // fecthFarmDashboardZone(farmId);
+      fecthFarmDashboardZone({
+        farmId: farmId,
+        queryParams: { skip: 0, take: 10 },
+      });
+
+      fetchZoneDashoboardZoneInfo(zoneId)
+      fetchZoneDashboardZoneSensors({
+        zoneId: zoneId,
+        queryParams: { skip: 0, take: 10 },
+      });
+
+    }
+  }, [zoneId]);
+
+
+
+
+  const handleZoneTabChange = async (event, newValue) => {
     setValue(newValue);
     if (newValue === "1"  ) {
-      fetchZoneDashboardZoneSensorsSchedule({
+      fetchZoneDashboardZoneSensors({
         zoneId: zoneId,
         queryParams: { skip: 0, take: 10 },
       });
@@ -85,14 +114,17 @@ fetchZoneDashboardZoneSensorsSchedule,
       });
       } 
       else if (newValue === "3" ) {
-        fetchZoneDashboardZoneTaskSchedule({
+        await fetchZoneDashboardZoneTaskSchedule({
         zoneId: zoneId,
         queryParams: { skip: 0, take: 10 },
       });
-
+      await fetchFarmInventory(farmId);
+      await fetchUsers(farmId);
       }
       else if (newValue === "4" ) {
-        fetchFarmDashboardHarvest({ zoneId: zoneId, month });
+       await  fetchFarmDashboardHarvest({ zoneId: zoneId, month });
+       await fetchZoneDashboardZoneUtilizationCrops(zoneId),
+       await fetchZoneDashboardZoneUtilizationStages(zoneId)
       }
        else if (newValue === "5" ) {
         fetchFarmZone(zoneId);
@@ -101,21 +133,6 @@ fetchZoneDashboardZoneSensorsSchedule,
   };
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    if (zoneId) {
-      fetchFarmZone(zoneId);
-      // fetchFarmDashboardHarvest({ zoneId: zoneId, month });
-      fetchUsers(farmId);
-      fecthFarmDashboardZone(farmId);
-      fetchFarmInventory(farmId);
-      fetchZoneDashoboardZoneInfo(zoneId)
-      fetchZoneDashboardZoneSensorsSchedule({
-        zoneId: zoneId,
-        queryParams: { skip: 0, take: 10 },
-      });
-
-    }
-  }, [zoneId]);
   const handleBackButton = () => {
     navigate(-1);
   };
@@ -132,7 +149,7 @@ fetchZoneDashboardZoneSensorsSchedule,
     setOpen(!open);
   };
 
-  console.log(zoneDashboardZoneSensorList,"zoneDashboardZoneSensorList");
+  console.log(zoneDashboardZoneUtilizationCropsList,"zoneDashboardZoneUtilizationCropsist");
 
   let headerDropwdown = true;
 
@@ -272,8 +289,8 @@ fetchZoneDashboardZoneSensorsSchedule,
 
   const getZonerListOptions = useCallback(() => {
     const options = [];
-    if (farmDashboardZoneList.length) {
-      farmDashboardZoneList.forEach((list) => {
+    if (farmDashboardZoneList?.zoneInformation?.length) {
+      farmDashboardZoneList?.zoneInformation?.forEach((list) => {
         if (list?.name) {
           const { name, zone_internal_id } = list;
           options.push({ label: name, value: zone_internal_id });
@@ -370,7 +387,6 @@ fetchZoneDashboardZoneSensorsSchedule,
   };
 
   const renderFarmZoneUtilization = () => {
-    const { stagedBasedQtyData } = farmZoneDashboardList;
     return (
       <>
         <Grid item xs={6} sm={6} md={6} lg={6}>
@@ -388,7 +404,7 @@ fetchZoneDashboardZoneSensorsSchedule,
               lg={12}
               className="card-outline-container graph-container"
             >
-              <PieChart chartData={stagedBasedQtyData || []} />
+              <PieChart chartData={zoneDashboardZoneUtilizationStagesList || []} />
             </Grid>
           </Grid>
         </Grid>
@@ -413,7 +429,7 @@ fetchZoneDashboardZoneSensorsSchedule,
             lg={12}
             className="card-outline-container graph-container"
           >
-            <PieChart chartData={cropBasedQtyData || []} />
+            <PieChart chartData={zoneDashboardZoneUtilizationCropsList || []} />
           </Grid>
         </Grid>
       </Grid>

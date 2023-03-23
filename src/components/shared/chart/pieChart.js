@@ -27,6 +27,9 @@ ChartJS.register(
 );
 export default function PieChart({ chartData }) {
   const data = useMemo(() => {
+    if (!Array.isArray(chartData)) {
+      return { labels: [], datasets: [] };
+    }  
     const labels = [];
     const values = [];
     const datasets = [];

@@ -78,7 +78,7 @@ const INITIAL_STATE = fromJS({
   zoneDashboardZoneUtilizationCropsList: {},
   zoneDashboardZoneUtilizationCropsError: null,
   isZoneDashboardZoneUtilizationStagesLoading: false,
-  zoneDashboardZoneUtilizationStagesList: {},
+  zoneDashboardZoneUtilizationStagesList: [],
   zoneDashboardZoneUtilizationStagesError: null,
 
 
@@ -164,17 +164,17 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
         .set("isFarmDashboardZoneCommetLoading", true)
         .set("farmDashboardZoneCommetError", null);
     case ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_SUCCESS:
-      const zoneTaskRow = farmdDetails.Tasks.findIndex(
+      const zoneTaskRow = zoneDashboardZoneTaskList.tasks.findIndex(
         (zone) => zone.id == action.data.taskId
       );
       const user = AUTH_OBJECT.profile;
-      farmdDetails.Tasks[zoneTaskRow].TasksHistory.push({
+      zoneDashboardZoneTaskList.tasks[zoneTaskRow].TasksHistory.push({
         ...action.data,
         user,
       });
       return state
         .set("isFarmDashboardZoneCommetLoading", false)
-        .set("farmZoneDashboardList", farmZoneDashboardList)
+        .set("zoneDashboardZoneTaskList", zoneDashboardZoneTaskList)
         .set("farmDashboardZoneCommetError", null);
     case ADD_FARM_DASHOBARD_ZONE_TASKS_COMMENT_FAILURE:
       return state

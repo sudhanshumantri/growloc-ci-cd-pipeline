@@ -13,6 +13,8 @@ import {
   callfetchFarmDashobardCropSchedulekDetails,
   callFetchDashboardFarmInfo,
   callfetchFarmDashobardTaskDetails,
+  callFetchDashboardFarmUtilizationCrops,
+  callFetchDashboardFarmUtilizationStages,
 } from "../utils/api";
 import {
   fetchDashboardFarmSuccess,
@@ -180,8 +182,8 @@ export function* fetchFarmDashboardInfoList({ data }) {
   }
 
   export function* fetchFarmDashboardFarmUtlizationCropList({ data }) {
-    console.log(data);
-    let responseData = yield call(callFetchDashboardFarmInfo, data);
+    console.log(data,"farmDashboardFarmUtilizationCropsList sagas");
+    let responseData = yield call(callFetchDashboardFarmUtilizationCrops, data);
     if (responseData?.status == 200 && responseData.data.status) {
       yield put(fetchFarmDashboardUtilizationCropsSuccess(responseData.data.data));
     } else {
@@ -190,7 +192,7 @@ export function* fetchFarmDashboardInfoList({ data }) {
   }
   export function* fetchFarmDashboardFarmUtlizationStagesList({ data }) {
     console.log(data);
-    let responseData = yield call(callFetchDashboardFarmInfo, data);
+    let responseData = yield call(callFetchDashboardFarmUtilizationStages, data);
     if (responseData?.status == 200 && responseData.data.status) {
       yield put(fetchFarmDashboardUtilizationStagesSuccess(responseData.data.data));
     } else {
@@ -216,9 +218,6 @@ export function* farmDashboardSagas() {
     takeLatest("FETCH_FARM_DASHBOARD_TASK_REQUEST", fetchFarmDashboardTaskList),
     takeLatest("FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_REQUEST", fetchFarmDashboardFarmUtlizationCropList),
     takeLatest("FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_REQUEST", fetchFarmDashboardFarmUtlizationStagesList),
-
-
-
   ]);
 }
 export default [farmDashboardSagas];

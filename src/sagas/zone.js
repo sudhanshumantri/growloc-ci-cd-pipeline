@@ -1,5 +1,5 @@
 import { call, all, put, takeLatest } from "redux-saga/effects";
-import { callfetchFarmZoneDetails,callFetchDashboardFarmZoneList,callFetchFarmDashboardZoneHarvestList,callAddFarmDashboardZoneTask,callAddFarmDashboardZoneTaskComment,callfetchRecenzoneSensorData,callFetchZoneDashboardZoneInfoList,callfetchZoneDashobardZoneCropSchedulekDetails,callfetchZoneDashobardZoneTaskDetails,callfetchZoneDashobardZoneSensorsDetails
+import { callfetchFarmZoneDetails,callFetchDashboardFarmZoneList,callFetchFarmDashboardZoneHarvestList,callAddFarmDashboardZoneTask,callAddFarmDashboardZoneTaskComment,callfetchRecenzoneSensorData,callFetchZoneDashboardZoneInfoList,callfetchZoneDashobardZoneCropSchedulekDetails,callfetchZoneDashobardZoneTaskDetails,callfetchZoneDashobardZoneSensorsDetails,callFetchDashboardFarmZoneUtilizationCrops,callFetchDashboardFarmZoneUtilizationStages
 } from "../utils/api";
 import {
     fetchFarmZoneSuccess,
@@ -22,7 +22,11 @@ import {
     fetchZoneDashboardZoneTakScheduleSuccess,
     fetchZoneDashboardZoneTaskScheduleFailure,
     fetchZoneDashboardZoneSensorSuccess,
-    fetchZoneDashboardZoneSensorFailure
+    fetchZoneDashboardZoneSensorFailure,
+    fetchZoneDashboardZoneUtilizationCropsSuccess,
+    fetchZoneDashboardZoneUtilizationCropsFailure,
+    fetchZoneDashboardZoneUtilizationStagesSuccess,
+    fetchZoneDashboardZoneUtilizationStagesFailure
   } from "../actions/zone";
 
 export function* fetchFarmZoneList({ data }) {
@@ -116,7 +120,24 @@ export function* fetchZoneDashboardZoneSensorScheduleList({ data }) {
   }
 }
 
+export function* fetchZoneDashboardZoneUtilizationCropsList({ data }) {
+  
+  let responseData = yield call(callFetchDashboardFarmZoneUtilizationCrops, data);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(fetchZoneDashboardZoneUtilizationCropsSuccess(responseData.data.data));
+  } else {
+    yield put(fetchZoneDashboardZoneUtilizationCropsFailure("Something went wrong"));
+  }
+}
 
+export function* fetchZoneDashboardZoneUtilizationStagesList({ data }) {
+  let responseData = yield call(callFetchDashboardFarmZoneUtilizationStages, data);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(fetchZoneDashboardZoneUtilizationStagesSuccess(responseData.data.data));
+  } else {
+    yield put(fetchZoneDashboardZoneUtilizationStagesFailure("Something went wrong"));
+  }
+}
 export function* zoneSagas() {
   yield all([
     takeLatest("FETCH_ALL_FARM_ZONE_REQUEST", fetchFarmZoneList),
@@ -129,7 +150,8 @@ export function* zoneSagas() {
     takeLatest("FETCH_ZONE_DASHBOARD_CROP_SCHEDULES_REQUEST", fetchZoneDashboardZoneCropScheduleList),
     takeLatest("FETCH_ZONE_DASHBOARD_ZONE_TASK_SCHEDULES_REQUEST", fetchZoneDashboardZoneTaskScheduleList),
     takeLatest("FETCH_ZONE_DASHBOARD_ZONE_SENSOR_REQUEST", fetchZoneDashboardZoneSensorScheduleList),
-
+    takeLatest("FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_CROP_REQUEST", fetchZoneDashboardZoneUtilizationCropsList),
+    takeLatest("FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_STAGES_REQUEST", fetchZoneDashboardZoneUtilizationStagesList),
  ]);
 }
 export default [zoneSagas];

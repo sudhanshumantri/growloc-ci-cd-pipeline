@@ -89,7 +89,12 @@ export default function FarmDashboard({
   isDashboardInfoListLoading,
   fetchFarmDashboardFarmTask,
   isDashboardFarmTaskLoading,
-  farmDashboardTaskList
+  farmDashboardTaskList,
+  fetchFarmDashboardFarmUtilizationCrops,
+  farmDashboardFarmUtilizationCropsList,
+  fetchFarmDashboardFarmUtilizationStages,
+  farmDashboardFarmUtilizationStagesList,
+
 }) {
   const navigate = useNavigate();
   const { farmId } = useParams();
@@ -105,7 +110,7 @@ export default function FarmDashboard({
   const [seletedView, setSelectView] = useState("list");
   const [tabInfo, setTabInfo] = useState("1");
   const [value, setValue] = useState("1");
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = async (event, newValue) => {
     setValue(newValue);
     if (newValue === "1"  ) {
       // fecthFarmDashboardZone(farmId);
@@ -120,15 +125,21 @@ export default function FarmDashboard({
       });
       } 
       else if (newValue === "3" ) {
-        fetchFarmDashboardFarmTask({
+        await fetchFarmDashboardFarmTask({
           farmId: farmId,
           queryParams: { skip: 0, take: 10 },
         });
-  
+        await fetchFarmInventory(farmId);
+        if (usersList.length <= 0) {
+          await fetchUsers(farmId);
+        }
       }
       else if (newValue === "4" ) {
-        fetchFarmDashboardHarvest({ farmId:farmId, month, queryParams: { skip: 0, take: 10 }
+       await fetchFarmDashboardHarvest({ farmId:farmId, month, queryParams: { skip: 0, take: 10 },
         })
+        await fetchFarmDashboardFarmUtilizationCrops(farmId),
+        await fetchFarmDashboardFarmUtilizationStages(farmId)
+
       }
        else if (newValue === "5" ) {
         fetchFarmDashboardFarmInfo(farmId);
@@ -140,7 +151,6 @@ export default function FarmDashboard({
   const handleGridView = () => {
     setSelectView(seletedView == "grid" ? "list" : "grid");
   };
-console.log(dashboardHarvestList,"dashboardHarvestList");
   React.useEffect(() => {
     // fecthFarmDashboardZone(farmId);
     fecthFarmDashboardZone({
@@ -149,7 +159,7 @@ console.log(dashboardHarvestList,"dashboardHarvestList");
     });
 
     // fetchFarmDashboard(farmId);
-    fetchFarmInventory(farmId);
+    // fetchFarmInventory(farmId);
     //fetchFarmDashboardHarvest({ farmId: parseInt(farmId), month });
     // fecthCropFarm({ farmId: parseInt(farmId) });
     // fetchAllCropsLifecycle({ farmId: parseInt(farmId) });
@@ -158,10 +168,14 @@ console.log(dashboardHarvestList,"dashboardHarvestList");
     fetchAllCropsLifecycle(farmId);
     //dashnoard api
     fetchFarmDashboardInfo(farmId);
-    if (usersList.length <= 0) {
-      fetchUsers(farmId);
-    }
+    // if (usersList.length <= 0) {
+    //   fetchUsers(farmId);
+    // }
   }, []);
+
+
+  console.log(farmDashboardFarmUtilizationCropsList,"farmDashboardFarmUtilizationCropsList yoooo");
+
 
   let { cropSchedules, farmdDetails } = dashboardFarmList;
 
@@ -498,7 +512,6 @@ console.log(dashboardHarvestList,"dashboardHarvestList");
     );
   };
   const renderFarmUtilization = () => {
-    const { stagedBasedQtyData } = dashboardFarmList;
     return (
       <>
         <Grid item xs={12} sm={12} md={6} lg={6}>
@@ -516,7 +529,7 @@ console.log(dashboardHarvestList,"dashboardHarvestList");
               lg={12}
               className="card-outline-container graph-container"
             >
-              <PieChart chartData={stagedBasedQtyData || []} />
+              <PieChart chartData={farmDashboardFarmUtilizationStagesList || []} />
             </Grid>
           </Grid>
         </Grid>
@@ -524,7 +537,6 @@ console.log(dashboardHarvestList,"dashboardHarvestList");
     );
   };
   const renderCropsUtilization = () => {
-    const { cropBasedQtyData } = dashboardFarmList;
     return (
       <Grid item xs={12} sm={12} md={6} lg={6}>
         <Grid container spacing={2}>
@@ -541,7 +553,7 @@ console.log(dashboardHarvestList,"dashboardHarvestList");
             lg={12}
             className="card-outline-container graph-container"
           >
-            <PieChart chartData={cropBasedQtyData || []} />
+            <PieChart chartData={farmDashboardFarmUtilizationCropsList || []} />
           </Grid>
         </Grid>
       </Grid>
@@ -728,11 +740,12 @@ console.log(dashboardHarvestList,"dashboardHarvestList");
     return (100 / farmdDetails?.farmArea) * parseInt(farmArea) + "%";
   };
   const renderFarmZoneGridView = () => {
-    let totalFarmArea = parseInt(farmDashboardZoneList.farmArea);
+    let totalFarmArea = parseInt(farmDashboardFarmInfoList?.farmArea);
     let zoneAreas = farmDashboardZoneList?.zoneInformation?.map(zone => parseInt(zone.farmArea));
     let totalZoneArea = zoneAreas.reduce((a, b) => a + b);
-    let newZoneData = [...farmDashboardZoneList];
-    newZoneData.push({ name: 'Empty Zone', id: farmDashboardZoneList.length + 1, farmArea: totalFarmArea - totalZoneArea });
+    let newZoneData = [...farmDashboardZoneList.zoneInformation];
+    console.log(newZoneData,"newZoneData");
+    newZoneData.push({ name: 'Empty Zone', id: farmDashboardZoneList?.zoneInformation?.length + 1, farmArea: totalFarmArea - totalZoneArea });
     //  newZoneData = newZoneData.sort((a,b)=>parseInt(a.farmArea)-parseInt(b.farmArea));
     newZoneData = newZoneData.map((zone, idx) => {
       let fraction = parseInt(zone.farmArea) / totalFarmArea;

@@ -15,13 +15,15 @@ import { useParams } from "react-router-dom";
 import { LogarithmicScale } from "chart.js";
 import Loader from "../../shared/loader";
 
-export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmReportsListLoading}) {
+export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmReportsListLoading,farmReportsFarmAverageMortalityList,fetchFarmReportsFarmAverageMorality}) {
   let { farmId } = useParams();
   console.log(farmId,"farmId");
   const [phData, setPhData] = useState({labels: [], datasets: []});
   const [waterTempData, setWaterTempData,] = useState({labels: [], datasets: []});
   const [lightIntensityData, setlightIntensityData] = useState({labels: [], datasets: []});
   const [humidityData, setHumidityData] = useState({labels: [], datasets: []});
+  const [averageMobilty, SetAverageMobiltyData] = useState({labels: [], datasets: []});
+
   const [duration, setDuration] = useState(4);
   const timeframes = [ "4hr", "12hr", "24hr", "56hr", "1w"];
   const phChartOptions = {
@@ -53,6 +55,7 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
     const { value } = event.target;
     setDuration(value)
     fetchFarmReports({ id:farmId, duration: parseInt(value) });
+    fetchFarmReportsFarmAverageMorality(farmId)
   };
   useEffect(()=>{
     fetchFarmReports({farmId, duration});
@@ -82,11 +85,6 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
       humidityValues.push(humidityValue)
       labels.push(createdOn);
     });
-
-    console.log(phValues, "phValues", farmReportsList);
-    console.log(waterTempValues, "waterTempValues");
-    console.log(lightIntensitValues, "lightIntensitValues");
-    console.log(humidityValues, "humidityValues");
 
     const phChartData = {
       labels,
@@ -139,6 +137,30 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
     setHumidityData(humidityData)
 
   }, [farmReportsList]);
+
+  useEffect(() => {
+    const labels = [];
+    const mortalityValues = [];
+    farmReportsFarmAverageMortalityList.forEach((report) => {
+      const { stage, avgMortalityRate } = report;
+      labels.push(stage);
+      mortalityValues.push(avgMortalityRate);
+    });
+
+    const mortalityChartData = {
+      labels,
+      datasets: [
+        {
+          data: mortalityValues,
+          fill: false,
+          borderColor: "rgba(75,192,192,1)",
+          tension: 0.1,
+        },
+      ],
+    };
+    SetAverageMobiltyData(mortalityChartData);
+  }, [farmReportsFarmAverageMortalityList]);
+
 
   return (
     <>
@@ -206,6 +228,14 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
               </CardContent>
             </Card>
           </Grid> 
+          <Grid item xs={12} md={6} lg={4}>
+            <Card>
+              <CardContent>
+                <span className="input-label">Humidity</span>
+                <Line data={averageMobilty} options={phChartOptions} />
+              </CardContent>
+            </Card>
+          </Grid> 
       </Grid>
       </div>
     </>
@@ -215,21 +245,3 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
 
 
 
-// import React from "react";
-// import { Line } from "react-chartjs-2";
-// import { Card, CardContent, Typography } from "@mui/material";
-// import Loader from "../../shared/loader";
-
-// const LineChart = ({ data, options, isLoading }) => {
-//   return (
-//     <Card>
-//       {isLoading ? (
-//         <Loader title="Fetching data" />
-//       ) : (
-//         <CardContent>
-//           <Line data={data} options={options} />
-//         </CardContent>
-//       )}
-//     </Card>
-//   );
-// };

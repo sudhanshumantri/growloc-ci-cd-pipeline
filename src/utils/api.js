@@ -68,6 +68,15 @@ const urls = {
     "fetch-zone-dashboard-crop-schedules":"farm/get-zone-dashboard-crop-schedules/",
     "fetch-zone-dashboard-zone-task-schedules":"farm/zone-task/",
     "fetch-zone-dashboard-zone-sensors":"farm/get-zone-dashboard-sensors/",
+    "fetch-farm-dashboard-farm-utilization-crops":"farm/get-farm-utilization-based-on-crops/",
+    "fetch-farm-dashboard-farm-utilization-stages":"farm/get-farm-utilization-based-on-stages/",
+    "fetch-zone-dashboard-zone-utilization-crops":"farm/get-farm-zone-utilization-based-on-crops/",
+    "fetch-zone-dashboard-zone-utilization-stages":"farm/get-farm-zone-utilization-based-on-stages/",
+    "fetch-zone-reports-zone-average-mortality":"farm/get-zone-average-mortality-rate/",
+    "fetch-farm-reports-farm-average-mortality":"farm/get-farm-average-mortality-rate/",
+    "fetch-farm-reports-farm-tat-task-categories":"get-farm-tat-for-task-categories/",
+
+
   },
 };
 
@@ -406,7 +415,6 @@ export function callAddFarmDashboardZoneTaskComment(data) {
     data,
   });
 }
-
 export function callfetchZoneTaskDetails(routeParams, queryParams) {
   return callApi(getEndpoint("fetch-zone-all-task"), {
     method: "get",
@@ -446,7 +454,6 @@ export function callChangePasswordHandler( data) {
     data,
   });
 }
-
 export function callfetchUserProfile() {
   return callApi(getEndpoint('fetch-user-profile'), {
       method: 'get',
@@ -591,4 +598,67 @@ export function callfetchZoneDashobardZoneSensorsDetails(routeParams, queryParam
     queryParams,
   });
 }
+
+//
+
+export function callFetchDashboardFarmUtilizationCrops(routeParams) {
+  return callApi(getEndpoint("fetch-farm-dashboard-farm-utilization-crops"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
+export function callFetchDashboardFarmUtilizationStages(routeParams) {
+  return callApi(getEndpoint("fetch-farm-dashboard-farm-utilization-stages"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
+export function callFetchDashboardFarmZoneUtilizationCrops(routeParams) {
+  return callApi(getEndpoint("fetch-zone-dashboard-zone-utilization-crops"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
+export function callFetchDashboardFarmZoneUtilizationStages(routeParams) {
+  return callApi(getEndpoint("fetch-zone-dashboard-zone-utilization-stages"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
+
+export function callFetchDashboardFarmReportsZoneAverageMortality(routeParams) {
+  return callApi(getEndpoint("fetch-zone-reports-zone-average-mortality"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
+
+export function callFetchDashboardFarmReportsFarmAverageMortality(routeParams) {
+  return callApi(getEndpoint("fetch-farm-reports-farm-average-mortality"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
+export function callFetchDashboardFarmTatTaskCategories(routeParams) {
+  return callApi(getEndpoint("fetch-farm-reports-farm-tat-task-categories"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
+
+export function callFetchDashboardZoneTatTaskCategories(routeParams) {
+  return callApi(getEndpoint("fetch-farm-reports-zone-tat-task-categories"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams,
+  });
+}
+
 
