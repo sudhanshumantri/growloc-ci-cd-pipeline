@@ -84,7 +84,7 @@ export default function CropLifeCycleDetails({
   useEffect(() => {
     let sensors = allUserZoneSensorList.filter((obj) => obj.zoneId === zoneId);
     let zonePusheData = pusherData.filter((obj) => obj.zoneId === zoneId)
-    //console.log("check========",zonePusheData,isRecentZoneSensorDataLoading,recentZoneSensorData);
+    console.log("check========",zonePusheData,pusherData);
     zonePusheData = zonePusheData.sort((a, b) => parseInt(b.iot_timestamp) - parseInt(a.iot_timestamp));
     if (zonePusheData.length) {
       setRecentPusherData(zonePusheData[0]);

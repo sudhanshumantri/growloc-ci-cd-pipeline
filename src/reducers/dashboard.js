@@ -207,8 +207,9 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
               .set("updataFarmDashboardZoneError", null);
           case UPDATE_FARM_DASHBOARD_ZONE_SUCCESS:
             const { data} = action.data;
-         const index = farmDashboardZoneList.zoneInformation.findIndex((zone) => zone.id === data.id);
-         farmDashboardZoneList[index] = data;
+          
+         const index = farmDashboardZoneList.zoneInformation.findIndex((zone) => zone.zone_internal_id === data.zone_internal_id);
+         farmDashboardZoneList.zoneInformation[index] = data;
             return state
             .set("isUpdateFarmDashboardZoneLoading", false)
             .set("farmDashboardZoneList", farmDashboardZoneList)
@@ -223,10 +224,11 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
               .set("deleteFarmDashboardZoneError", null);
           case DELETE_FARM_DASHBOARD_ZONE_SUCCESS:
             const  id = action.data;
-            const filteredList = farmDashboardZoneList.zoneInformation.filter((zone) => zone.id !== id);
+            const filteredList = farmDashboardZoneList.zoneInformation.filter((zone) => zone.zone_internal_id !== id);
+            let newfarmDashboardZoneList = {...farmDashboardZoneList,zoneInformation:filteredList};
             return state
               .set("isDeleteFarmDashboardZoneLoading", false)
-              .set("farmDashboardZoneList",filteredList)
+              .set("farmDashboardZoneList",newfarmDashboardZoneList)
               .set("deleteFarmDashboardZoneError", null);
           case DELETE_FARM_DASHBOARD_ZONE_FAILURE:
             return state.set("farmDashboardZoneList","");
