@@ -90,7 +90,7 @@ const INITIAL_STATE = fromJS({
   farmDashboardFarmUtilizationCropsList: {},
   FarmDashboardFarmUtilizationCropsError: null,
   isFarmDashboardFarmUtilizationStagesLoading: false,
-  farmDashboardFarmUtilizationStagesList: {},
+  farmDashboardFarmUtilizationStagesList: [],
   farmDashboardFarmUtilizationStagesError: null,
 
 });
@@ -207,7 +207,6 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
               .set("updataFarmDashboardZoneError", null);
           case UPDATE_FARM_DASHBOARD_ZONE_SUCCESS:
             const { data} = action.data;
-          
          const index = farmDashboardZoneList.zoneInformation.findIndex((zone) => zone.zone_internal_id === data.zone_internal_id);
          farmDashboardZoneList.zoneInformation[index] = data;
             return state
@@ -333,7 +332,7 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
                 case FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_REQUEST:
                   return state
                     .set("isFarmDashboardFarmUtilizationStagesLoading", true)
-                    .set("farmDashboardFarmUtilizationStagesList", {})
+                    .set("farmDashboardFarmUtilizationStagesList", [])
                     .set("farmDashboardFarmUtilizationStagesError", null);
                 case FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_SUCCESS:
                   return state

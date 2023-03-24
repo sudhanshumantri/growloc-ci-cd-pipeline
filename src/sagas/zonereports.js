@@ -1,8 +1,10 @@
 import { call, all, put, takeLatest } from "redux-saga/effects";
-import { callfetchZoneReportsDetails,} from "../utils/api";
+import { callfetchZoneReportsDetails,callFetchDashboardFarmReportsZoneAverageMortality,callFetchDashboardZoneTatTaskCategories} from "../utils/api";
 import {
     fetchZoneReportsSuccess,
     fetchZoneReportsFailure,
+    fetchFarmReportsZoneAverageMortalitySuccess,
+    fetchFarmReportsZoneAverageMortalityFailure
 } from "../actions/zonereports";
 
 export function* fetchZoneReportsList({ data }) {
@@ -14,9 +16,33 @@ export function* fetchZoneReportsList({ data }) {
     yield put(fetchZoneReportsFailure("Something went wrong"));
   }
 }
+export function* fetchZoneReportsAverageMortalityList({ data }) {
+  console.log(data,"data");
+  let responseData = yield call(callFetchDashboardFarmReportsZoneAverageMortality, data);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(fetchFarmReportsZoneAverageMortalitySuccess(responseData.data.data));
+  } else {
+    yield put(fetchFarmReportsZoneAverageMortalityFailure("Something went wrong"));
+  }
+}
+
+export function* fetchZoneReportZoneTatCategoriesList({ data }) {
+  console.log(data,"data");
+  let responseData = yield call(callFetchDashboardZoneTatTaskCategories, data);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(fetchFarmReportsZoneAverageMortalitySuccess(responseData.data.data));
+  } else {
+    yield put(fetchFarmReportsZoneAverageMortalityFailure("Something went wrong"));
+  }
+}
+
 export function* zoneReportsSagas() {
   yield all([
     takeLatest("FETCH_ALL_ZONE_SENSORS_REPORTS_DATA_REQUEST", fetchZoneReportsList),
+    takeLatest("FETCH_FARM_REPORTS_ZONE_AVERAGE_MORTALITY_REQUEST", fetchZoneReportsAverageMortalityList),
+    takeLatest("FETCH_FARM_REPORTS_FARM_TAT_TASK_CATEGORIES_REQUEST", fetchZoneReportZoneTatCategoriesList),
+
+
  ]);
 }
 export default [zoneReportsSagas];

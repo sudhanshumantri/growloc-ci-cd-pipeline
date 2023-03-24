@@ -125,6 +125,7 @@ createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneSenso
 
 export const selectZoneDashboardZoneUtilizationCropsList= () =>
 createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneUtilizationCropsList"]);
+
 export const selectIsZoneDashboardZoneUtilizationCropsLoading= () =>
 createSelector(
   selectZone,
@@ -132,6 +133,7 @@ createSelector(
 );
 export const selectZoneDashboardZoneUtilizationCropsError = () =>
 createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneUtilizationCropsError"]);
+
 export const selectZoneDashboardZoneUtilizationStagesList= () =>
 createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneUtilizationStagesList"]);
 export const selectIsZoneDashboardZoneUtilizationStagesLoading= () =>

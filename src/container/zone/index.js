@@ -94,7 +94,6 @@ const mapStateToProps = createStructuredSelector({
   isZoneDashboardZoneSensorLoading: selectIsZoneDashboardZoneSensorLoading(),
   zoneDashboardZoneSensorList: selectZoneDashboardZoneSensorList(),
   zoneDashboardZoneSensorError: selectZoneDashboardZoneSensorError(),
-//
 isZoneDashboardZoneUtilizationCropsLoading: selectIsZoneDashboardZoneUtilizationCropsLoading(),
 zoneDashboardZoneUtilizationCropsList: selectZoneDashboardZoneUtilizationCropsList(),
 zoneDashboardZoneUtilizationCropsError: selectZoneDashboardZoneUtilizationCropsError(),
@@ -115,7 +114,7 @@ const mapDispatchToProps = {
   fetchZoneDashoboardZoneInfo: fetchFarmDashboardZoneInfoRequest,
   fetchZoneDashboardZoneCropSchdule: fetchZoneDashboardZoneCropScheduleRequest,
   fetchZoneDashboardZoneTaskSchedule: fetchZoneDashboardZoneTaskScheduleRequest,
-  fetchZoneDashboardZoneSensorsSchedule:fetchZoneDashboardZoneSensorRequest,
+  fetchZoneDashboardZoneSensors:fetchZoneDashboardZoneSensorRequest,
   fetchZoneDashboardZoneUtilizationCrops:fetchZoneDashboardZoneUtilizationCropsRequest,
   fetchZoneDashboardZoneUtilizationStages:fetchZoneDashboardZoneUtilizationStagesRequest
 };
