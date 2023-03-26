@@ -16,7 +16,6 @@ export default function AddCropModal({
   },
 }) {
   let { farmId } = useParams();
-  // const [open, setOpen] = useState(false);
   const [cropListName, setCropListName] = useState("");
   const [germinationMethod, setGerminationMethod] = useState("");
   const [selectedData, setSelectedData] = useState({});

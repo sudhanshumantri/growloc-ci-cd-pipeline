@@ -8,7 +8,6 @@ import {
 } from "../actions/reports";
 
 export function* fetchFarmReportsList({ data }) {
-  console.log(data,"data");
   let responseData = yield call(callfetchFarmReportsDetails, data);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(fetchFarmReportsSuccess(responseData.data.data));
@@ -17,7 +16,6 @@ export function* fetchFarmReportsList({ data }) {
   }
 }
 export function* fetchFarmReportsFarmAverageMortality({ data }) {
-  console.log(data,"data");
   let responseData = yield call(callFetchDashboardFarmReportsFarmAverageMortality, data);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(fetchFarmReportsFarmAverageMortalitySuccess(responseData.data.data));
@@ -27,7 +25,6 @@ export function* fetchFarmReportsFarmAverageMortality({ data }) {
 }
 
 export function* fetchFarmReportsFarmTatTaskCategories({ data }) {
-  console.log(data,"data");
   let responseData = yield call(callFetchDashboardFarmTatTaskCategories, data);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(fetchFarmReportsFarmAverageMortalitySuccess(responseData.data.data));

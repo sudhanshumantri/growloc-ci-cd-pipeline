@@ -1,21 +1,13 @@
 import './styles.css'
 import React, { useState, useEffect } from "react";
 import Avatar from '@mui/material/Avatar';
-import { Backdrop, CircularProgress, FormControl, Paper, Button } from '@mui/material/';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import TextBox from '../shared/text-box';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { Paper, CssBaseline,TextField,Link,Grid,Box,Typography} from '@mui/material/';
 import ButtonCustom from "../shared/button";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import growlocCover from '../../../public/assets/growlocCover.webp'
 import logo from '../../../public/assets/logo.png';
 import loginpage from '../../../public/assets/loginpage.png';
 import Loader from '../shared/loader';
-//import bottomImage from '../../assets/login-bottom-image.png';
 
   export default function Resgister({registerRequest,isLoading}) {
   const [registrationData,setRegistrationData] = useState({

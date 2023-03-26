@@ -114,7 +114,6 @@ function Row({ row, handleCommentModalToggle }) {
           {row.taskName}
         </TableCell>
         <TableCell className="table-header" align="left">
-          {/* {row.createdByProfile.name} */}
           {row.description}
         </TableCell>
         <TableCell className="table-header" align="left">
@@ -126,12 +125,6 @@ function Row({ row, handleCommentModalToggle }) {
         <TableCell className="table-header" align="left">
         {row.itemName}
         </TableCell>
-        {/* <TableCell className="table-header" align="left">
-          {moment(row.createdOn).format("YYYY-MM-DD")}
-        </TableCell> */}
-        {/* <TableCell className="table-header" align="left">
-        {row.itemName}
-        </TableCell> */}
         <TableCell className="table-header" align="left">
           <Chip
             label={formatDueDate(row.dueDate)}

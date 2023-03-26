@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import Pusher from 'pusher-js';
 import DataTable from "../../shared/dataTable";
 import PageHeader from "../../shared/page-header";
@@ -7,7 +7,6 @@ import AddNewCropToLifeCycleModal from "./addCropToLifeCycleModal";
 import AddIcon from "@mui/icons-material/Add";
 import { Grid } from "@mui/material";
 import Loader from "../../shared/loader";
-import { useNavigate } from 'react-router-dom';
 
 export default function CropLifeCycle({
   fecthCropFarm,

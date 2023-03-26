@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet,useParams } from "react-router-dom";
 import { farmMenuItems, zoneMenuItems } from "../shared/sidebar/config";
-import { useParams } from "react-router-dom";
 
 const FarmOutlet = ({ isFromZone }) => {
   const { farmId, zoneId } = useParams();

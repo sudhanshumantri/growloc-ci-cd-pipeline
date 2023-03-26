@@ -41,9 +41,6 @@ export default function AddTaskModal({
   });
   const [dueDate, setDueDate] = React.useState(moment());
   const [unitErrorMessage, setUnitErrorMessage] = useState("");
-  // const [endTime, setEndTime] = React.useState(
-  //   dayjs("2018-01-01T00:00:00.000Z")
-  // );
   const [validation, setValidation] = useState({
     category: false,
     taskName: false,
@@ -130,7 +127,6 @@ export default function AddTaskModal({
   const handleTaskSave = () => {
     if (validateTask()) {
       let requestObject = cleanObject(taskData);
-      console.log(requestObject,"requestObject");
       handleSave(requestObject);
     }
   };
@@ -175,24 +171,6 @@ export default function AddTaskModal({
                 />
               </FormControl>
             </Grid>
-            {/* <Grid item xs={12} sm={12} md={12}>
-              <span className="input-label">Severity Level</span>
-              <FormControl fullWidth>
-                <SingleCustomSelect
-                  name="severity"
-                  //value={taskData.severity}
-                  value={taskData.severity}
-                  valueKey="value"
-                  labelKey="name"
-                  isWhite={true}
-                  options={SEVERITY_LEVEL} 
-                  handleChange={handleChange}
-                  isError={validation.severity}
-                  errorMessage="Please select a Severity Level"
-                />
-              </FormControl>
-            </Grid> */}
-
             <Grid item xs={12} sm={12} md={12}>
               <FormControl>
                 <span className="input-label">Severity Level</span>

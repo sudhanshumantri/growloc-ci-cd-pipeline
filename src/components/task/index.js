@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import PageHeader from "../shared/page-header";
-import DataTable from "../shared/dataTable";
 import Loader from "../shared/loader";
 import CollapsibleTable from "../shared/collapsibleDataTable";
 import AddFarmTaskComment from "../shared/addfarmtaskcomment";
 import TableDynamicPagination from "../shared/tablepagination";
-import { useNavigate } from 'react-router-dom';
-
 export default function ManageTasks({
   FarmTaskList,
   fetchFarmTask,

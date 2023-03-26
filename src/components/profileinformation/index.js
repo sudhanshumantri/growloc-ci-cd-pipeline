@@ -1,17 +1,10 @@
 import React, { useState } from "react";
-import {
-  Grid,
-  DialogContent,
-  FormControl,
-  TextField,
-  DialogActions,
-} from "@mui/material";
+import { Grid, DialogContent } from "@mui/material";
 import PageHeader from "../shared/page-header";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../shared/button";
 import TextBox from "../shared/text-box";
 import Loader from "../shared/loader";
-// export  const ProfileInformation = (updateUserProfile) => {
 export default function ProfileInformation({
   updateUserProfile,
   logout,
@@ -144,7 +137,6 @@ export default function ProfileInformation({
       password: updatePassword.newPassword,
     };
     if (handleUpdatePassword()) {
-      console.log(payload);
       updateNewPassword(payload);
     }
   };

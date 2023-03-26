@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import {
   FormControl,
   Dialog,
@@ -16,7 +15,6 @@ import CustomButton from "../../shared/button";
 import TextBox from "../../shared/text-box";
 import { GROWING_ZONE } from "../../../config";
 import SingleCustomSelect from "../../shared/select";
-
 export default function AddZoneModal({
   open,
   handleSave,
@@ -46,13 +44,12 @@ export default function AddZoneModal({
   };
 
   let totalFarmArea = 0;
-  data?.zoneInformation?.forEach(function(zone) {
+  data?.zoneInformation?.forEach(function (zone) {
     totalFarmArea += parseInt(zone.farmArea);
   });
   const reamingArea = farmData?.farmArea - totalFarmArea;
   const remaingEditArea = parseInt(zoneDetails?.farmArea);
   const area = zoneDetails.id ? reamingArea + remaingEditArea : reamingArea;
-
 
   const validateFarmDashboardZone = () => {
     let errors = { ...validation };
@@ -118,13 +115,9 @@ export default function AddZoneModal({
                 Total Farm Area : {farmData?.farmArea}
               </p>
               {zoneDetails.farmArea ? (
-                <p className="input-label">
-                  Aviable Farm Area : {area}
-                </p>
+                <p className="input-label">Aviable Farm Area : {area}</p>
               ) : (
-                <p className="input-label">
-                  Avaible Farm Area : {reamingArea}
-                </p>
+                <p className="input-label">Avaible Farm Area : {reamingArea}</p>
               )}
             </Grid>
             <Grid item xs={12} sm={12} md={12}>

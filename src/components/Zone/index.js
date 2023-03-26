@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate} from "react-router-dom";
 import PageHeader from "../shared/page-header";
-import { useNavigate } from "react-router-dom";
 import Loader from "../shared/loader";
-import { Grid, FormControl } from "@mui/material";
+import { Grid, FormControl,Card ,CardContent,Box,Tab} from "@mui/material";
 import DataTable from "../shared/dataTable";
 import SingleCustomSelect from "../shared/select";
 import BarChart from "../shared/chart/barChart";
@@ -15,14 +14,9 @@ import AddIcon from "@mui/icons-material/Add";
 import CollapsibleTable from "../shared/collapsibleDataTable";
 import AddTaskModal from "../shared/addtask/addtask";
 import AddZoneSensorsModal from "./addsensors";
-import { Card, CardContent } from "@mui/material";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
-import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import Noofbatch from "../../../public/assets/Noofbatch.png";
 import Totalharvest from "../../../public/assets/Totalharvest.png";
 import Nooftask from "../../../public/assets/Nooftask.png";
@@ -49,24 +43,22 @@ export default function ZoneDashboard({
   fetchFarmInventory,
   farmInventoryList,
   isZoneDashboardZoneInfoLoading,
-zoneDashboardZoneInfoList,
-fetchZoneDashoboardZoneInfo,
-isZoneDashboardZoneCropSchedulesListLoading,
-zoneDashboardZoneCropSchedulesList,
-fetchZoneDashboardZoneCropSchdule,
-isZoneDashboardZoneTaskLoading,
-zoneDashboardZoneTaskList,
-fetchZoneDashboardZoneTaskSchedule,
-isZoneDashboardZoneSensorLoading,
-zoneDashboardZoneSensorList,
-fetchZoneDashboardZoneSensors,
-fetchZoneDashboardZoneUtilizationCrops,
-zoneDashboardZoneUtilizationCropsList,
-fetchZoneDashboardZoneUtilizationStages,
-zoneDashboardZoneUtilizationStagesList,
-
+  zoneDashboardZoneInfoList,
+  fetchZoneDashoboardZoneInfo,
+  isZoneDashboardZoneCropSchedulesListLoading,
+  zoneDashboardZoneCropSchedulesList,
+  fetchZoneDashboardZoneCropSchdule,
+  isZoneDashboardZoneTaskLoading,
+  zoneDashboardZoneTaskList,
+  fetchZoneDashboardZoneTaskSchedule,
+  isZoneDashboardZoneSensorLoading,
+  zoneDashboardZoneSensorList,
+  fetchZoneDashboardZoneSensors,
+  fetchZoneDashboardZoneUtilizationCrops,
+  zoneDashboardZoneUtilizationCropsList,
+  fetchZoneDashboardZoneUtilizationStages,
+  zoneDashboardZoneUtilizationStagesList,
 }) {
-
   const { farmId, zoneId } = useParams();
   const [month, setMonth] = useState(3);
   const [open, setOpen] = useState(false);
@@ -75,61 +67,47 @@ zoneDashboardZoneUtilizationStagesList,
   const [openZoneSensors, setZoneSensors] = useState(false);
   const [value, setValue] = React.useState("1");
 
-
-
   React.useEffect(() => {
     if (zoneId) {
-      // fetchFarmZone(zoneId);
-      // fetchFarmDashboardHarvest({ zoneId: zoneId, month });
-      // fecthFarmDashboardZone(farmId);
       fecthFarmDashboardZone({
         farmId: farmId,
         queryParams: { skip: 0, take: 10 },
       });
 
-      fetchZoneDashoboardZoneInfo(zoneId)
+      fetchZoneDashoboardZoneInfo(zoneId);
       fetchZoneDashboardZoneSensors({
         zoneId: zoneId,
         queryParams: { skip: 0, take: 10 },
       });
-
     }
   }, [zoneId]);
 
-
-
-
   const handleZoneTabChange = async (event, newValue) => {
     setValue(newValue);
-    if (newValue === "1"  ) {
+    if (newValue === "1") {
       fetchZoneDashboardZoneSensors({
         zoneId: zoneId,
         queryParams: { skip: 0, take: 10 },
       });
-
-    } else if (newValue === "2"  ) {
+    } else if (newValue === "2") {
       fetchZoneDashboardZoneCropSchdule({
         zoneId: zoneId,
         queryParams: { skip: 0, take: 10 },
       });
-      } 
-      else if (newValue === "3" ) {
-        await fetchZoneDashboardZoneTaskSchedule({
+    } else if (newValue === "3") {
+      await fetchZoneDashboardZoneTaskSchedule({
         zoneId: zoneId,
         queryParams: { skip: 0, take: 10 },
       });
       await fetchFarmInventory(farmId);
       await fetchUsers(farmId);
-      }
-      else if (newValue === "4" ) {
-       await  fetchFarmDashboardHarvest({ zoneId: zoneId, month });
-       await fetchZoneDashboardZoneUtilizationCrops(zoneId),
-       await fetchZoneDashboardZoneUtilizationStages(zoneId)
-      }
-       else if (newValue === "5" ) {
-        fetchFarmZone(zoneId);
-      }
-
+    } else if (newValue === "4") {
+      await fetchFarmDashboardHarvest({ zoneId: zoneId, month });
+      await fetchZoneDashboardZoneUtilizationCrops(zoneId),
+        await fetchZoneDashboardZoneUtilizationStages(zoneId);
+    } else if (newValue === "5") {
+      fetchFarmZone(zoneId);
+    }
   };
   const navigate = useNavigate();
 
@@ -149,21 +127,16 @@ zoneDashboardZoneUtilizationStagesList,
     setOpen(!open);
   };
 
-  console.log(zoneDashboardZoneUtilizationCropsList,"zoneDashboardZoneUtilizationCropsist");
-
   let headerDropwdown = true;
 
   const handleZoneSensorsModalToggle = () => {
     setZoneSensors(!openZoneSensors);
   };
   const handleZoneSensorSave = (data) => {
-    console.log("add sensor======", data);
-  }
+  };
   const handleZoneTaskSave = (data) => {
     if (data) {
       data.createdBy = loginObject?.profile.userId;
-      // data.farmId = ;
-      // data.zoneId = parseInt(zoneId);
       data.farmId = farmId;
       data.zoneId = zoneId;
       addFarmDashboardZoneTask(data);
@@ -201,7 +174,6 @@ zoneDashboardZoneUtilizationStagesList,
   ];
 
   const TASK_HEADER = [
-
     {
       label: "Severity",
       key: "severity",
@@ -304,9 +276,6 @@ zoneDashboardZoneUtilizationStagesList,
     const { sensors } = zoneDashboardZoneSensorList;
     return (
       <>
-        {/* <Grid item xs={12} sm={12} md={12}>
-          <p className="section-title">Zone Sensors</p>
-        </Grid> */}
         <Grid container spacing={2}>
           <Grid item xs={6} sm={6} md={9} lg={9}>
             <p className="section-title">Zone Sensors</p>
@@ -320,9 +289,7 @@ zoneDashboardZoneUtilizationStagesList,
           </Grid>
 
           <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
-            <DataTable
-              data={{ headers: ZONE_HEADERS, rows: sensors || [] }}
-            />
+            <DataTable data={{ headers: ZONE_HEADERS, rows: sensors || [] }} />
           </Grid>
         </Grid>
       </>
@@ -343,7 +310,6 @@ zoneDashboardZoneUtilizationStagesList,
               count={zoneDashboardZoneCropSchedulesList.total}
               handleChangePagination={handleChangeCropSchedulePagination}
             />
-
           </Grid>
         </Grid>
       </>
@@ -354,7 +320,6 @@ zoneDashboardZoneUtilizationStagesList,
     return (
       <>
         <Grid container spacing={2}>
-
           <Grid item xs={8} sm={10} md={10}>
             <p className="section-title">Zone Monthly Harvest Breakup</p>
           </Grid>
@@ -404,7 +369,9 @@ zoneDashboardZoneUtilizationStagesList,
               lg={12}
               className="card-outline-container graph-container"
             >
-              <PieChart chartData={zoneDashboardZoneUtilizationStagesList || []} />
+              <PieChart
+                chartData={zoneDashboardZoneUtilizationStagesList || []}
+              />
             </Grid>
           </Grid>
         </Grid>
@@ -451,24 +418,28 @@ zoneDashboardZoneUtilizationStagesList,
               handleButtonClick={handleModalToggle}
             />
           </Grid>
-          <Grid className="card-outline-container " item xs={12} sm={12} md={12}>
-            {/* <DataTable data={{ headers: TASK_HEADER, rows: farmdDetails?.Tasks || [] }} /> */}
+          <Grid
+            className="card-outline-container "
+            item
+            xs={12}
+            sm={12}
+            md={12}
+          >
             <CollapsibleTable
               data={{ headers: TASK_HEADER, rows: tasks || [] }}
               handleCommentModalToggle={handleCommentModalToggle}
             />
-                  <TableDynamicPagination
+            <TableDynamicPagination
               count={zoneDashboardZoneTaskList.total}
               handleChangePagination={handleChangeZoneTaskSchedulePagination}
             />
-
           </Grid>
         </Grid>
       </>
     );
   };
   const renderZoneCard = () => {
-    const { noOfTasks,batchCount,totalHarvested } = zoneDashboardZoneInfoList;
+    const { noOfTasks, batchCount, totalHarvested } = zoneDashboardZoneInfoList;
     return (
       <>
         <Grid item xs={4} sm={4} md={4}>
@@ -498,7 +469,7 @@ zoneDashboardZoneUtilizationStagesList,
             <CardContent>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
-                  <h4 className="section-details">{noOfTasks|| 0}</h4>
+                  <h4 className="section-details">{noOfTasks || 0}</h4>
                   <p className="farm-card">Total Tasks</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
@@ -518,10 +489,10 @@ zoneDashboardZoneUtilizationStagesList,
             <CardContent>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
-                    <h4 className="section-details">
-                      {totalHarvested?.kgs || 0}(kgs)
-                      /{totalHarvested?.qty || 0}(qty)
-                    </h4> 
+                  <h4 className="section-details">
+                    {totalHarvested?.kgs || 0}(kgs) /{totalHarvested?.qty || 0}
+                    (qty)
+                  </h4>
                   <p className="farm-card">Total Harvested</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
@@ -536,7 +507,6 @@ zoneDashboardZoneUtilizationStagesList,
             </CardContent>
           </Card>
         </Grid>
-
       </>
     );
   };
@@ -551,12 +521,12 @@ zoneDashboardZoneUtilizationStagesList,
           Farm Area:
           <span>{farmZoneList?.farmArea || ""}</span>
         </p>
-        <p className="section-title"> System Type :
-          <span>{farmZoneList?.systemType || ""}</span>
+        <p className="section-title">
+          {" "}
+          System Type :<span>{farmZoneList?.systemType || ""}</span>
         </p>
         <p className="section-title">
-          Zone Type :
-          <span>{farmZoneList?.zoneType || ""}</span>
+          Zone Type :<span>{farmZoneList?.zoneType || ""}</span>
         </p>
       </>
     );
@@ -579,19 +549,21 @@ zoneDashboardZoneUtilizationStagesList,
       {isFarmZoneLoading && <Loader title=" Feching Zone Details" />}
       {isFarmDashboardZoneTaskLoading && <Loader title=" adding Task" />}
       {isFarmDashboardZoneCommetLoading && <Loader title="Adding Comment" />}
-      {isZoneDashboardZoneCropSchedulesListLoading && <Loader title="Zone Crop Schedule Details" />}
-      {isZoneDashboardZoneTaskLoading && <Loader title="Zone Task Schedule Details" />}
-      {isFarmZoneDashboardHarvestListLoading && <Loader title="Feching Harvest Breakup details" />}
-      {isZoneDashboardZoneSensorLoading && <Loader title="Feching Zone  details" />}
+      {isZoneDashboardZoneCropSchedulesListLoading && (
+        <Loader title="Zone Crop Schedule Details" />
+      )}
+      {isZoneDashboardZoneTaskLoading && (
+        <Loader title="Zone Task Schedule Details" />
+      )}
+      {isFarmZoneDashboardHarvestListLoading && (
+        <Loader title="Feching Harvest Breakup details" />
+      )}
+      {isZoneDashboardZoneSensorLoading && (
+        <Loader title="Feching Zone  details" />
+      )}
       <div className="page-container">
         <Grid container spacing={2}>
           {renderZoneCard()}
-          {/* {renderZoneSencers()}
-          {renderZoneCropSchedules()}
-          {renderZoneTaskSchedules()}
-          {renderZoneMonthlyHarvestBreakup()}
-          {renderFarmZoneUtilization()}
-          {renderZoneCropsUtilization()} */}
           <TabContext value={value}>
             <Grid item xs={12} sm={12} md={12}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -635,8 +607,6 @@ zoneDashboardZoneUtilizationStagesList,
           open={openCommetTask}
           handleSave={handleZoneTaskCommentSave}
           handleClose={handleCommentModalToggle}
-
-
         />
       )}
       {openZoneSensors && (

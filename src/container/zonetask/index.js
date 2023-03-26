@@ -2,15 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
-import {fetchZoneTaskRequest,addZoneTaskCommentRequest} from "../../actions/zone/task";
-import ManageZoneTasks from "../../components/Zone/task";
+import {fetchZoneTaskRequest,addZoneTaskCommentRequest} from "../../actions/zone";
+import ManageZoneTasks from "../../components/zone/task";
 import {
     selectZoneTaskList,
     selectIsZoneTaskListLoading,
     selectZoneTaskListError,
     selectIsZoneTaskCommentLoading,
     selectZoneTaskCommentError,
-} from "../../selectors/zone/task";
+} from "../../selectors/zone";
 
 const mapStateToProps = createStructuredSelector({
     zoneTaskList:selectZoneTaskList(),

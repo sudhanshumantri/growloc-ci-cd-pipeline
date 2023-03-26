@@ -15,7 +15,6 @@ import { addNotification } from "../components/shared/notification";
 export function* updateUserProfile({ data }) {
     const {callback, ...remaingData} = data;
     let responseData = yield call(callupdateUserProfile, remaingData);
-    console.log(responseData,"responseData");
     if (responseData?.status == 200 && responseData.data.status) {
         const token = localStorage.getItem('AUTH_TOKEN');
         let loginObject = localStorage.getItem('AUTH_OBJECT');
@@ -44,7 +43,6 @@ export function* updateUserProfile({ data }) {
 
 export function* updatePhoneNumber({ data }) {
     let responseData = yield call(callupdateChangePhone, data);
-    console.log(responseData,"data");
     if (responseData?.status == 200 && responseData.data.status) {
         yield put(updateUserPhoneOrPasswordSuccess(responseData.data.data));
         addNotification(" Phone Number Updated. You would be logged out and use the new Phone Number to login again.", 5000,true, "success");
@@ -59,7 +57,6 @@ export function* updatePhoneNumber({ data }) {
 }
 export function* updatePassword({ data }) {
     let responseData = yield call(callChangePasswordHandler, data);
-    console.log(responseData,"data");
     if (responseData?.status == 200 && responseData.data.status) {
         yield put(updateUserNewPasswordSuccess(responseData.data.data));
         addNotification(" Password Updated. You would be logged out and use the new password to login again.", 5000,true, "success");

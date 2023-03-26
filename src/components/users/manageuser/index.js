@@ -2,14 +2,13 @@ import React, { useMemo, useState } from "react";
 import DataTable from "../../shared/dataTable";
 import ConfirmDialogBox from "../../shared/dailog/ConfirmDialogBox";
 import PageHeader from "../../shared/page-header";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import Loader from "../../shared/loader";
 import AddUsersModal from "../adduser";
 import AddIcon from "@mui/icons-material/Add";
 import { Grid } from "@mui/material";
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { useNavigate } from 'react-router-dom';
 
   export default function ManageUsers({
     usersList,
@@ -126,7 +125,6 @@ import { useNavigate } from 'react-router-dom';
             role: data.role,
           },
         };
-        console.log(payload);
         updateUser(payload);
       } else {
         addUser(data);

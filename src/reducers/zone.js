@@ -35,8 +35,13 @@ import {
   FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_CROP_FAILURE,
   FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_STAGES_REQUEST,
   FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_STAGES_SUCCESS,
-  FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_STAGES_FAILURE
-
+  FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_STAGES_FAILURE,
+  FETCH_ALL_ZONE_TASKS_REQUEST,
+  FETCH_ALL_ZONE_TASKS_SUCCESS,
+  FETCH_ALL_ZONE_TASKS_FAILURE,
+  ADD_ZONE_TASK_COMMENT_REQUEST,
+  ADD_ZONE_TASK_COMMENT_SUCCESS,
+  ADD_ZONE_TASK_COMMENT_FAILURE,
 
 } from "../actions/actionTypes";
 
@@ -80,17 +85,17 @@ const INITIAL_STATE = fromJS({
   isZoneDashboardZoneUtilizationStagesLoading: false,
   zoneDashboardZoneUtilizationStagesList: [],
   zoneDashboardZoneUtilizationStagesError: null,
-
-
+  //task
+  isZoneTaskListLoading: false,
+  zoneTaskList: [],
+  zoneTaskListError: null,
+  isZoneTaskCommentLoading:false,
+  zoneTaskCommentError:null,
 });
-
 export default function zoneReducer(state = INITIAL_STATE, action = {}) {
-  let farmZoneDashboardList = state.toJS()["farmZoneDashboardList"];
   let zoneDashboardZoneTaskList = state.toJS()["zoneDashboardZoneTaskList"];
-
-  const { farmdDetails } = farmZoneDashboardList;
   const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
-
+  const { user } = AUTH_OBJECT.profile || "";
   switch (action.type) {
     case FETCH_ALL_FARM_ZONE_REQUEST:
       return state
@@ -167,7 +172,7 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
       const zoneTaskRow = zoneDashboardZoneTaskList.tasks.findIndex(
         (zone) => zone.id == action.data.taskId
       );
-      const user = AUTH_OBJECT.profile;
+      // const user = AUTH_OBJECT.profile;
       zoneDashboardZoneTaskList.tasks[zoneTaskRow].TasksHistory.push({
         ...action.data,
         user,
@@ -295,7 +300,41 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
                 .set("isZoneDashboardZoneUtilizationStagesLoading", false)
                 .set("zoneDashboardZoneUtilizationStagesList", [])
                 .set("zoneDashboardZoneUtilizationStagesError", action.error);
-                  
+                //zone task 
+                case FETCH_ALL_ZONE_TASKS_REQUEST:
+                  return state
+                    .set("isZoneTaskListLoading", true)
+                    .set("zoneTaskList", [])
+                    .set("FarmTaskListError", null);
+                case FETCH_ALL_ZONE_TASKS_SUCCESS:
+                  return state
+                    .set("isZoneTaskListLoading", false)
+                    .set("zoneTaskList", action.data)
+                    .set("FarmTaskListError", null);
+                case FETCH_ALL_ZONE_TASKS_FAILURE:
+                  return state
+                    .set("isZoneTaskListLoading", false)
+                    .set("zoneTaskList", [])  
+                    .set("zoneTaskListError", action.error);
+                    //
+            
+                    case ADD_ZONE_TASK_COMMENT_REQUEST:
+                      return state
+                        .set("isZoneTaskCommentLoading", true)
+                        .set("zoneTaskCommentError", null);
+                    case ADD_ZONE_TASK_COMMENT_SUCCESS:
+                  const ZoneTaskRowIndex = zoneTaskList.tasks.findIndex(
+                    (l) => l.id == action.data.taskId
+                  );
+                  zoneTaskList.tasks[ZoneTaskRowIndex].TasksHistory.push({ ...action.data, user });
+                      return state
+                        .set("isZoneTaskCommentLoading", false)
+                        .set("zoneTaskList", zoneTaskList)
+                        .set("zoneTaskCommentError", null);
+                    case ADD_ZONE_TASK_COMMENT_FAILURE:
+                      return state
+                        .set("isZoneTaskCommentLoading", false)
+                        .set("zoneTaskCommentError", action.error);
     default:
       return state;
   }

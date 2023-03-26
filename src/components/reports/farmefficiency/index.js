@@ -5,27 +5,39 @@ import {
   Grid,
   Card,
   CardContent,
-  Typography,
-  Box,
-  Paper,
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { LogarithmicScale } from "chart.js";
 import Loader from "../../shared/loader";
 
-export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmReportsListLoading,farmReportsFarmAverageMortalityList,fetchFarmReportsFarmAverageMorality}) {
+export default function FarmEfficiency({
+  fetchFarmReports,
+  farmReportsList,
+  isFarmReportsListLoading,
+  farmReportsFarmAverageMortalityList,
+  fetchFarmReportsFarmAverageMorality,
+}) {
   let { farmId } = useParams();
-  console.log(farmId,"farmId");
-  const [phData, setPhData] = useState({labels: [], datasets: []});
-  const [waterTempData, setWaterTempData,] = useState({labels: [], datasets: []});
-  const [lightIntensityData, setlightIntensityData] = useState({labels: [], datasets: []});
-  const [humidityData, setHumidityData] = useState({labels: [], datasets: []});
-  const [averageMobilty, SetAverageMobiltyData] = useState({labels: [], datasets: []});
-
-  const [duration, setDuration] = useState(4);
-  const timeframes = [ "4hr", "12hr", "24hr", "56hr", "1w"];
+  const [phData, setPhData] = useState({ labels: [], datasets: [] });
+  const [waterTempData, setWaterTempData] = useState({
+    labels: [],
+    datasets: [],
+  });
+  const [lightIntensityData, setlightIntensityData] = useState({
+    labels: [],
+    datasets: [],
+  });
+  const [humidityData, setHumidityData] = useState({
+    labels: [],
+    datasets: [],
+  });
+  const [averageMobilty, SetAverageMobiltyData] = useState({
+    labels: [],
+    datasets: [],
+  });
+  const [duration, setDuration] = useState(100);
+  const timeframes = ["4hr", "12hr", "24hr", "56hr", "1w"];
   const phChartOptions = {
     plugins: {
       legend: {
@@ -37,7 +49,7 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
         ticks: {
           font: {
             size: 13,
-          }
+          },
         },
       },
       x: {
@@ -45,44 +57,51 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
           font: {
             size: 11,
           },
-
+          callback: function (value, index, values) {
+            if (index === 0) {
+              return [values[0], values.pop()];
+            } else if (index === values.length - 1) {
+              return [];
+            } else {
+              return value;
+            }
+          },
         },
       },
     },
   };
-  
+
   const handleTimeFrameChange = (event) => {
     const { value } = event.target;
-    setDuration(value)
-    fetchFarmReports({ id:farmId, duration: parseInt(value) });
-    fetchFarmReportsFarmAverageMorality(farmId)
+    setDuration(value);
+    fetchFarmReports({ id: farmId, duration: parseInt(value) });
+    fetchFarmReportsFarmAverageMorality(farmId);
   };
-  useEffect(()=>{
-    fetchFarmReports({farmId, duration});
-  },[])
+  useEffect(() => {
+    fetchFarmReports({ farmId, duration });
+  }, []);
   useEffect(() => {
     const labels = [];
     const phValues = [];
-    const waterTempValues =[];
-    const lightIntensitValues =[];
-    const humidityValues =[];
-    (farmReportsList||[]).forEach((report) => {
+    const waterTempValues = [];
+    const lightIntensitValues = [];
+    const humidityValues = [];
+    (farmReportsList || []).forEach((report) => {
       const { data, created_on } = report;
       const phValue = data[0].payload.pH;
       const waterTempValue = data[0].payload.waterTemperature;
       const lightIntensitValue = data[0].payload.lightIntensity;
-      const humidityValue= data[0].payload.humidity;
+      const humidityValue = data[0].payload.humidity;
       const createdOn = new Date(created_on).toLocaleString("en-US", {
         hour: "numeric",
         minute: "numeric",
         second: "numeric",
         hour12: true,
-  
       });
       phValues.push(phValue);
       waterTempValues.push(waterTempValue);
-      lightIntensitValues.push(lightIntensitValue)
-      humidityValues.push(humidityValue)
+      lightIntensitValues.push(lightIntensitValue);
+      humidityValues.push(humidityValue);
       labels.push(createdOn);
     });
 
@@ -134,8 +153,7 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
         },
       ],
     };
-    setHumidityData(humidityData)
-
+    setHumidityData(humidityData);
   }, [farmReportsList]);
 
   useEffect(() => {
@@ -161,12 +179,13 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
     SetAverageMobiltyData(mortalityChartData);
   }, [farmReportsFarmAverageMortalityList]);
 
-
   return (
     <>
       <PageHeader title="Farm Efficiency" />
       <div className="page-container">
-      {isFarmReportsListLoading && <Loader title="Fetching farm reports details"/>}
+        {isFarmReportsListLoading && (
+          <Loader title="Fetching farm reports details" />
+        )}
 
         <Grid container spacing={2}>
           <Grid
@@ -178,23 +197,25 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
               value={duration}
               exclusive
               onChange={handleTimeFrameChange}
-
             >
               {timeframes.map((timeframe) => (
-                <ToggleButton key={timeframe} value={timeframe} size="small" aria-label="right" 
-                style={
-                  duration === timeframe
-                    ? { backgroundColor: "green", color: "white" }
-                    : duration === 4 && timeframe === "4hr" 
-                    ? { backgroundColor: "green", color: "white" }
-                    : {}
-                }
-                        >
+                <ToggleButton
+                  key={timeframe}
+                  value={timeframe}
+                  size="small"
+                  aria-label="right"
+                  style={
+                    duration === timeframe
+                      ? { backgroundColor: "green", color: "white" }
+                      : duration === 4 && timeframe === "4hr"
+                      ? { backgroundColor: "green", color: "white" }
+                      : {}
+                  }
+                >
                   {timeframe}
                 </ToggleButton>
               ))}
             </ToggleButtonGroup>
-            
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <Card>
@@ -204,14 +225,14 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
               </CardContent>
             </Card>
           </Grid>
-           <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={4}>
             <Card>
               <CardContent>
                 <span className="input-label">Water temp</span>
                 <Line data={waterTempData} options={phChartOptions} />
               </CardContent>
             </Card>
-          </Grid> 
+          </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <Card>
               <CardContent>
@@ -219,7 +240,7 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
                 <Line data={lightIntensityData} options={phChartOptions} />
               </CardContent>
             </Card>
-          </Grid> 
+          </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <Card>
               <CardContent>
@@ -227,7 +248,7 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
                 <Line data={humidityData} options={phChartOptions} />
               </CardContent>
             </Card>
-          </Grid> 
+          </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <Card>
               <CardContent>
@@ -235,13 +256,9 @@ export default function FarmEfficiency({fetchFarmReports,farmReportsList,isFarmR
                 <Line data={averageMobilty} options={phChartOptions} />
               </CardContent>
             </Card>
-          </Grid> 
-      </Grid>
+          </Grid>
+        </Grid>
       </div>
     </>
   );
 }
-
-
-
-

@@ -8,7 +8,6 @@ import Toolbar from "@mui/material/Toolbar";
 import { Routes, Route } from "react-router-dom";
 import store from "../../../store";
 import PrivateOutlet from "../../privateroute";
-// import FarmDashboard from "../dashboard/farm";
 import { fetchPusherRequest } from "../../../actions/pusher";
 import { fetchAllUserZoneSensorRequest } from "../../../actions/dashboard";
 import FarmDashboard from "../../../container/dashboard";
@@ -39,7 +38,6 @@ import dashboardFarmReducer from "../../../reducers/dashboard";
 import inventoryReducer from "../../../reducers/inventory";
 import taskReducer from "../../../reducers/task";
 import zoneReducer from "../../../reducers/zone";
-import zoneTaskReducer from "../../../reducers/zone/task";
  import profileReducer from "../../../reducers/profile"
 import pusherReducer from "../../../reducers/pusher";
 import reportsReducer from "../../../reducers/reports";
@@ -56,22 +54,17 @@ import taskSagas from "../../../sagas/task";
 import zoneSagas from "../../../sagas/zone";
 import pusherSagas  from "../../../sagas/pusher";
 import profileSagas from "../../../sagas/profile"
-import zoneTaskSagas from "../../../sagas/zone/task";
 import reportsSagas from "../../../sagas/reports";
 import  zoneReportsSagas  from "../../../sagas/zonereports";
 import { selectToken } from "../../../selectors/login";
 import { loadAuthToken } from "../../../actions/login";
 import AddFarm from "../../../container/addfarm";
-// import ManageItem from "../inventory/manageitem";
 import ManageItem from "../../../container/inventory";
 import ManageTasks from "../../../container/task";
-// import  ProfileInformation  from "../../profileinformation";
 import { ErrorPage } from "../../errorpage";
 import { ForgotPassword } from "../../forgotpassword";
 import CapacityEfficiency from "../../reports/capacityefficiency";
 import Energyfficiency from "../../reports/energyefficiency";
-// import ZoneDashboard from "../Zone";
-// import Tasks from "../task";
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
 injectReducer("crops", cropsReducer);
 injectReducer("login", loginReducer);
@@ -84,7 +77,6 @@ injectReducer("users", usersReducer);
 injectReducer("inventory", inventoryReducer);
 injectReducer("task", taskReducer);
 injectReducer("zone", zoneReducer);
-injectReducer("zoneTask", zoneTaskReducer);
 injectReducer("pusherData",pusherReducer);
 injectReducer("profile",profileReducer);
 injectReducer("reports",reportsReducer);
@@ -100,10 +92,8 @@ injectSagas(farmDashboardSagas);
 injectSagas(inventorySagas);
 injectSagas(taskSagas);
 injectSagas(zoneSagas);
-injectSagas(zoneTaskSagas);
 injectSagas(reportsSagas);
 injectSagas(zoneReportsSagas)
-
 const drawerWidth = 240;
 const UserLayout = ({ loadAuthToken,fetchAllUserZoneSensor,fetchPusherData }) => {
   const token = localStorage.getItem("AUTH_TOKEN");
@@ -124,7 +114,6 @@ const UserLayout = ({ loadAuthToken,fetchAllUserZoneSensor,fetchPusherData }) =>
     const channel = pusher.subscribe('sensor-channel');
     channel.bind("sensor-event", data => {
       fetchPusherData(data.data);
-      //fetchPusherData(data.data);
     });
   }, []);
   return (
@@ -140,7 +129,6 @@ const UserLayout = ({ loadAuthToken,fetchAllUserZoneSensor,fetchPusherData }) =>
         }}
       >
         <Routes>
-          {/* <Route path="/" element={<SideBar loginObject={loginObject} />}> */}
             <Route
               exact
               path="/"
@@ -197,7 +185,6 @@ const UserLayout = ({ loadAuthToken,fetchAllUserZoneSensor,fetchPusherData }) =>
               <Route path="water-management" element={<WaterManagement />} />
               <Route path="monitor" element={<Monitor />} />
               <Route path="reports/zone-efficiency" element={<ZoneEfficiency />} />
-
             </Route>
             <Route
               path="task"

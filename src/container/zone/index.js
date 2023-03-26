@@ -14,17 +14,16 @@ import {
   fetchZoneDashboardZoneSensorRequest,
   fetchZoneDashboardZoneUtilizationCropsRequest,
   fetchZoneDashboardZoneUtilizationStagesRequest,
+  fetchZoneTaskRequest,
+  addZoneTaskCommentRequest,
 } from "../../actions/zone";
 import { fetchFarmDashboardZoneRequest } from "../../actions/dashboard";
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
-
 import { selectFarmInventoryList } from "../../selectors/inventory";
-
 import { selectUsersList } from "../../selectors/users";
 import { selectLoginObject } from "../../selectors/login";
 import { selectFarmDashboardZoneList } from "../../selectors/dashboard";
-
 import ZoneDashboard from "../../components/Zone";
 import {
   selectFarmZoneList,
@@ -58,7 +57,6 @@ import {
  selectIsZoneDashboardZoneUtilizationStagesLoading,
  selectZoneDashboardZoneUtilizationStagesList,
  selectZoneDashboardZoneUtilizationStagesError,
-
 } from "../../selectors/zone";
 const mapStateToProps = createStructuredSelector({
   farmZoneList: selectFarmZoneList(),
@@ -100,7 +98,6 @@ zoneDashboardZoneUtilizationCropsError: selectZoneDashboardZoneUtilizationCropsE
 isZoneDashboardZoneUtilizationStagesLoading: selectIsZoneDashboardZoneUtilizationStagesLoading(),
 zoneDashboardZoneUtilizationStagesList: selectZoneDashboardZoneUtilizationStagesList(),
 zoneDashboardZoneUtilizationStagesError: selectZoneDashboardZoneUtilizationStagesError(),
-
 });
 const mapDispatchToProps = {
   fetchFarmZone: fetchFarmZoneRequest,
@@ -116,7 +113,7 @@ const mapDispatchToProps = {
   fetchZoneDashboardZoneTaskSchedule: fetchZoneDashboardZoneTaskScheduleRequest,
   fetchZoneDashboardZoneSensors:fetchZoneDashboardZoneSensorRequest,
   fetchZoneDashboardZoneUtilizationCrops:fetchZoneDashboardZoneUtilizationCropsRequest,
-  fetchZoneDashboardZoneUtilizationStages:fetchZoneDashboardZoneUtilizationStagesRequest
+  fetchZoneDashboardZoneUtilizationStages:fetchZoneDashboardZoneUtilizationStagesRequest,
 };
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {

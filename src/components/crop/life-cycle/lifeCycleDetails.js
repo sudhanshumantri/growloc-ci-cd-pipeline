@@ -1,13 +1,12 @@
 import React, { useEffect, useState, Fragment } from "react";
-import Pusher from 'pusher-js';
-import { useParams } from "react-router-dom";
+import Pusher from "pusher-js";
+import { useParams,useNavigate } from "react-router-dom";
 import { sortBy } from "lodash";
 import PageHeader from "../../shared/page-header";
 import Loader from "../../shared/loader";
 import Divider from "@mui/material/Divider";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import AddIcon from "@mui/icons-material/Add";
-import { useNavigate } from "react-router-dom";
 import {
   Stack,
   Stepper,
@@ -80,17 +79,16 @@ export default function CropLifeCycleDetails({
     }
   }, []);
 
-
   useEffect(() => {
     let sensors = allUserZoneSensorList.filter((obj) => obj.zoneId === zoneId);
-    let zonePusheData = pusherData.filter((obj) => obj.zoneId === zoneId)
-    //console.log("check========",zonePusheData,isRecentZoneSensorDataLoading,recentZoneSensorData);
-    zonePusheData = zonePusheData.sort((a, b) => parseInt(b.iot_timestamp) - parseInt(a.iot_timestamp));
+    let zonePusheData = pusherData.filter((obj) => obj.zoneId === zoneId);
+    zonePusheData = zonePusheData.sort(
+      (a, b) => parseInt(b.iot_timestamp) - parseInt(a.iot_timestamp)
+    );
     if (zonePusheData.length) {
       setRecentPusherData(zonePusheData[0]);
       setIsPusherData(true);
     }
-
   }, [pusherData]);
 
   const handleBackButton = () => {
@@ -102,7 +100,6 @@ export default function CropLifeCycleDetails({
       handler: handleBackButton,
     },
   ];
-
 
   useEffect(() => {
     if (!isLifecycleDetailsLoading) {
@@ -234,7 +231,6 @@ export default function CropLifeCycleDetails({
     });
 
     let { cropDetails } = lifecycleDetails;
-    //  cropDetails.crop.crop.variety
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let selectedStageInformation = FarmCropLifecycleStages[activeStep];
     if (selectedStageInformation.qty > 0) {
@@ -415,23 +411,6 @@ export default function CropLifeCycleDetails({
                         "MMMM Do YYYY hh:mm:ss A"
                       )}
                     </TableCell>
-
-                    {/* <TableCell component="th" scope="row">
-                    <p className="label-light">
-                      <span className="label-bold"> {data.qty}</span> units
-                      <span className="label-bold">
-                        {" "}
-                        {data.kgs ? "(" + data.kgs + " Kg) " : ""}
-                      </span>
-                      were moved {data.movement == 1 ? " in to" : "out from"}{" "}
-                      the {selectedStageInformation.stage} stage on{" "}
-                      <span className="label-bold">
-                        {moment(data.start_date).format(
-                          "MMMM Do YYYY hh:mm:ss A"
-                        )}
-                      </span>
-                    </p>
-                  </TableCell> */}
                   </TableRow>
                 );
               })}
@@ -442,19 +421,30 @@ export default function CropLifeCycleDetails({
       </Grid>
     );
   };
-  const renderSelectedSegmentSensorInformation = (selectedStageInformation, obj) => {
+  const renderSelectedSegmentSensorInformation = (
+    selectedStageInformation,
+    obj
+  ) => {
     let data = obj.payload;
     return (
       <Grid item xs={12} sm={12} md={12}>
         <p className="section-title">Sensors Information </p>
-        <p >Last Updated : {moment(new Date(obj.timestamp)).format("MMMM Do YYYY hh:mm:ss A")}</p>
+        <p>
+          Last Updated :{" "}
+          {moment(new Date(obj.timestamp)).format("MMMM Do YYYY hh:mm:ss A")}
+        </p>
         <Paper className="life-cycle-details-card life-cycle-spacing ">
           <Table size="small" aria-label="a dense table">
             <TableHead className="table-header-row">
               <TableRow>
-                <TableCell className="label-custom"><b>Parameter</b></TableCell>
-                <TableCell className="label-custom"><b>Current Value</b></TableCell>
-                <TableCell className="label-custom"><b>Ideal Value</b>
+                <TableCell className="label-custom">
+                  <b>Parameter</b>
+                </TableCell>
+                <TableCell className="label-custom">
+                  <b>Current Value</b>
+                </TableCell>
+                <TableCell className="label-custom">
+                  <b>Ideal Value</b>
                   <EditOutlinedIcon
                     className="icon"
                     sx={{ color: "#517223", fontSize: "16px" }}
@@ -475,7 +465,20 @@ export default function CropLifeCycleDetails({
                       {param.name}
                     </TableCell>
                     <TableCell className="table-header" align="left">
-                      {param.name === "pH Level" ? data["pH"] : param.name == "Electric Conductivity" ? data["conductivity"] : param.name == "Temperature" ? data["waterTemperature"] : param.name == "CO2 Level" ? data["cO2"] : param.name == "Light" ? data["lightIntensity"] : param.name == "Humidity" ? data["humidity"] : ""} <b>{param.unit}</b>
+                      {param.name === "pH Level"
+                        ? data["pH"]
+                        : param.name == "Electric Conductivity"
+                        ? data["conductivity"]
+                        : param.name == "Temperature"
+                        ? data["waterTemperature"]
+                        : param.name == "CO2 Level"
+                        ? data["cO2"]
+                        : param.name == "Light"
+                        ? data["lightIntensity"]
+                        : param.name == "Humidity"
+                        ? data["humidity"]
+                        : ""}{" "}
+                      <b>{param.unit}</b>
                     </TableCell>
                     <TableCell className="table-header" align="left">
                       {param.value} <b>{param.unit}</b>
@@ -483,38 +486,29 @@ export default function CropLifeCycleDetails({
                   </TableRow>
                 );
               })}
-              {/* {Object.keys(data).map((param, index) => {
-                return (
-                  <TableRow
-                    // key={index}
-                    key={index}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell className="label-custom" align="left">
-                      {param}
-                    </TableCell>
-                    <TableCell className="table-header" align="left">
-                      {data[param]}
-                    </TableCell>
-                    <TableCell className="table-header" align="left">
-                      {data[param]}
-                    </TableCell>
-                  </TableRow>
-                );
-              })} */}
             </TableBody>
           </Table>
         </Paper>
       </Grid>
-    )
-  }
+    );
+  };
   const renderSelectedStageInformation = () => {
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let selectedStageInformation = FarmCropLifecycleStages[activeStep];
 
     return (
       <Grid container spacing={2}>
-        {isPusherData ? renderSelectedSegmentSensorInformation(selectedStageInformation, recentPusherData.data[0]) : !isRecentZoneSensorDataLoading ? renderSelectedSegmentSensorInformation(selectedStageInformation, recentZoneSensorData.data[0]) : ""}
+        {isPusherData
+          ? renderSelectedSegmentSensorInformation(
+              selectedStageInformation,
+              recentPusherData.data[0]
+            )
+          : !isRecentZoneSensorDataLoading
+          ? renderSelectedSegmentSensorInformation(
+              selectedStageInformation,
+              recentZoneSensorData.data[0]
+            )
+          : ""}
         <Grid item xs={12} sm={12} md={12}>
           <p className="section-title">
             {selectedStageInformation.stage + " Stage Information"}
@@ -549,8 +543,8 @@ export default function CropLifeCycleDetails({
               <span className="label-custom">Actual Start Date : </span>
               {selectedStageInformation?.start_date
                 ? moment(selectedStageInformation.start_date).format(
-                  "MMMM Do YYYY hh:mm:ss A"
-                )
+                    "MMMM Do YYYY hh:mm:ss A"
+                  )
                 : "Not Yet Started"}
             </p>
             <Divider />
@@ -561,31 +555,8 @@ export default function CropLifeCycleDetails({
             <Divider />
           </div>
         </Grid>
-        {/* <Grid item xs={12} sm={6} md={6}>
-          <p className="section-title">
-            {selectedStageInformation.stage + " Parameters Information"}
-            <EditOutlinedIcon
-              className="icon"
-              sx={{ color: "#517223", fontSize: "20px" }}
-              onClick={handleParametersInformationEditToggle}
-            />
-          </p>
-          <div className="life-cycle-details-card life-cycle-spacing">
-            {selectedStageInformation.parameters.map((param, index) => {
-              return (
-                <div key={index}>
-                  <p className="label-light" key={index}>
-                    <span className="label-custom">{param.name}: </span>
-                    {param.value} <b>{param.unit}</b>
-                  </p>
-                  <Divider />
-                </div>
-              );
-            })}
-          </div>
-        </Grid> */}
-        {renderHistoryInformation()}
 
+        {renderHistoryInformation()}
       </Grid>
     );
   };
@@ -619,7 +590,7 @@ export default function CropLifeCycleDetails({
                 isHarvestStage={isHarvestStage}
                 isContiniousHarvet={
                   lifecycleDetails.cropDetails.crop.crop.variety == "Vine" ||
-                    lifecycleDetails.cropDetails.crop.crop.variety == "Herb"
+                  lifecycleDetails.cropDetails.crop.crop.variety == "Herb"
                     ? true
                     : false
                 }
@@ -627,8 +598,8 @@ export default function CropLifeCycleDetails({
                   maxQty
                     ? maxQty
                     : lifecycleDetails.cropDetails.FarmCropLifecycleStages[
-                      activeStep
-                    ].qty
+                        activeStep
+                      ].qty
                 }
               />
             )}
