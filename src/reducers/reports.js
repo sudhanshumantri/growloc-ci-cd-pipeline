@@ -19,7 +19,7 @@ const INITIAL_STATE = fromJS({
   farmReportsFarmAverageMortalityList: [],
   farmReportsFarmAverageMortalityError: null,
   isFarmReportsFarmTatTaskCategoriesListLoading: false,
-  farmReportsFarmTatTaskCategoriesListList: [],
+  farmReportsFarmTatTaskCategoriesList: [],
   farmReportsFarmTatTaskCategoriesListError: null,
 
 });
@@ -64,17 +64,17 @@ export default function reportsReducer(state = INITIAL_STATE, action = {}) {
         case FETCH_FARM_REPORTS_FARM_TAT_TASK_CATEGORIES_REQUEST:
           return state
             .set("isFarmReportsFarmTatTaskCategoriesListLoading", true)
-            .set("farmReportsFarmTatTaskCategoriesListList", [])
+            .set("farmReportsFarmTatTaskCategoriesList", [])
             .set("farmReportsFarmTatTaskCategoriesListError", null);
         case FETCH_FARM_REPORTS_FARM_TAT_TASK_CATEGORIES_SUCCESS:
           return state
             .set("isFarmReportsFarmTatTaskCategoriesListLoading", false)
-            .set("farmReportsFarmTatTaskCategoriesListList", action.data)
+            .set("farmReportsFarmTatTaskCategoriesList", action.data)
             .set("farmReportsFarmTatTaskCategoriesListError", null);
         case FETCH_FARM_REPORTS_FARM_TAT_TASK_CATEGORIES_FAILURE:
           return state
             .set("isFarmReportsFarmTatTaskCategoriesListLoading", false)
-            .set("farmReportsFarmTatTaskCategoriesListList", [])
+            .set("farmReportsFarmTatTaskCategoriesList", [])
             .set("farmReportsFarmTatTaskCategoriesListError", action.error);
     
           

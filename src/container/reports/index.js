@@ -12,7 +12,7 @@ import {
     selectFarmReportsFarmAverageMortalityList,
     selectIsFarmReportsFarmAverageMortalityListLoading,
     selectFarmReportsFarmAverageMortalityError,
-    selectFarmReportsFarmTatTaskCategoriesListList,
+    selectFarmReportsFarmTatTaskCategoriesList,
     selectIsFarmReportsFarmTatTaskCategoriesListLoading,
     selectFarmReportsFarmTatTaskCategoriesListError
 } from "../../selectors/reports";
@@ -24,9 +24,8 @@ const mapStateToProps = createStructuredSelector({
   farmReportsFarmAverageMortalityList:selectFarmReportsFarmAverageMortalityList(),
   farmReportsFarmAverageMortalityError: selectFarmReportsFarmAverageMortalityError(),
   isFarmReportsFarmTatTaskCategoriesListLoading: selectIsFarmReportsFarmTatTaskCategoriesListLoading(),
-  farmReportsFarmTatTaskCategoriesListList: selectFarmReportsFarmTatTaskCategoriesListList(),
+  farmReportsFarmTatTaskCategoriesList: selectFarmReportsFarmTatTaskCategoriesList(),
   farmReportsFarmTatTaskCategoriesListError: selectFarmReportsFarmTatTaskCategoriesListError(),
-
 });
 const mapDispatchToProps = {
    fetchFarmReports:fetchFarmReportsRequest,

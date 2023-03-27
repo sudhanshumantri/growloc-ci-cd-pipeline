@@ -74,9 +74,8 @@ const urls = {
     "fetch-zone-dashboard-zone-utilization-stages":"farm/get-farm-zone-utilization-based-on-stages/",
     "fetch-zone-reports-zone-average-mortality":"farm/get-zone-average-mortality-rate/",
     "fetch-farm-reports-farm-average-mortality":"farm/get-farm-average-mortality-rate/",
-    "fetch-farm-reports-farm-tat-task-categories":"get-farm-tat-for-task-categories/",
-
-
+    "fetch-farm-reports-farm-tat-task-categories":"farm/get-farm-tat-for-task-categories/",
+"fetch-farm-reports-zone-tat-task-categories":"farm/get-zone-tat-for-task-categories/"
   },
 };
 

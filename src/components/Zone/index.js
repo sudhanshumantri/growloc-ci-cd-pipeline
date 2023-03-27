@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { useParams,useNavigate} from "react-router-dom";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
-import { Grid, FormControl,Card ,CardContent,Box,Tab} from "@mui/material";
+import { Grid, FormControl,Card ,CardContent,Box,Tab,ToggleButtonGroup,ToggleButton} from "@mui/material";
 import DataTable from "../shared/dataTable";
 import SingleCustomSelect from "../shared/select";
 import BarChart from "../shared/chart/barChart";
@@ -21,6 +21,7 @@ import Noofbatch from "../../../public/assets/Noofbatch.png";
 import Totalharvest from "../../../public/assets/Totalharvest.png";
 import Nooftask from "../../../public/assets/Nooftask.png";
 import TableDynamicPagination from "../shared/tablepagination";
+import ZoneEfficiency from "../zonereports/zoneefficiency";
 
 export default function ZoneDashboard({
   fetchFarmZone,
@@ -58,6 +59,15 @@ export default function ZoneDashboard({
   zoneDashboardZoneUtilizationCropsList,
   fetchZoneDashboardZoneUtilizationStages,
   zoneDashboardZoneUtilizationStagesList,
+  zoneReportsList,
+  isZoneReportsListLoading,
+  fetchZoneReports,
+  isFarmReportsZoneAverageMortalityListLoading,
+  farmReportsZoneAverageMortalityList,
+  fecthFarmReportsZoneAverageMortality,
+  isFarmReportsZoneTatTaskCategoriesListLoading,
+  farmReportsZoneTatTaskCategoriesList,
+  fetchFarmReportsZoneTatTaskRequest,
 }) {
   const { farmId, zoneId } = useParams();
   const [month, setMonth] = useState(3);
@@ -66,6 +76,15 @@ export default function ZoneDashboard({
   const [rowdata, setRowData] = useState({});
   const [openZoneSensors, setZoneSensors] = useState(false);
   const [value, setValue] = React.useState("1");
+  const [selectedPlatform, setSelectedPlatform] = useState("farmEfficiency");
+  const [selectedComponent, setSelectedComponent] = useState(null);
+  const platforms = [
+    { value: "farmEfficiency", label: "Farm Efficiency" },
+    { value: "mortalityRate", label: "Mortality Rate" },
+    { value: "taskTat", label: "TASK TAT" },
+    { value: "CapacityEfficiency", label: "Capacity Efficiency" },
+  ];
+
 
   React.useEffect(() => {
     if (zoneId) {
@@ -80,8 +99,12 @@ export default function ZoneDashboard({
         queryParams: { skip: 0, take: 10 },
       });
     }
+    fetchZoneReports(zoneId)
+    fecthFarmReportsZoneAverageMortality(zoneId)
+    fetchFarmReportsZoneTatTaskRequest(zoneId)
   }, [zoneId]);
 
+  console.log(farmReportsZoneTatTaskCategoriesList,"farmReportsZoneTatTaskCategoriesList");
   const handleZoneTabChange = async (event, newValue) => {
     setValue(newValue);
     if (newValue === "1") {
@@ -236,6 +259,35 @@ export default function ZoneDashboard({
       redirection: false,
     },
   ];
+
+
+
+
+  const renderReportdDetails = () => {
+    return (
+      <>
+       <ToggleButtonGroup
+    value={selectedPlatform}
+    exclusive
+    onChange={handlePlatformChange}
+    aria-label="Platform"
+  >
+    {platforms.map((platform) => (
+      <ToggleButton key={platform.value} value={platform.value} style={{
+        backgroundColor:
+          selectedPlatform === platform.value ? "green" : undefined,
+      }}
+>
+        {platform.label}
+        
+      </ToggleButton>
+    ))}
+  </ToggleButtonGroup>
+  {selectedComponent}
+      </>
+    );
+  };
+
   const handleChange = (event) => {
     const { value } = event.target;
     setMonth(value);
@@ -305,40 +357,118 @@ export default function ZoneDashboard({
     );
   };
 
-  const renderZoneMonthlyHarvestBreakup = () => {
+  const handlePlatformChange = (event, newPlatform) => {
+    setSelectedPlatform(newPlatform);
+  console.log(newPlatform,"newPlatform");
+    switch (newPlatform) {
+      case "farmEfficiency":
+        setSelectedComponent(<ZoneEfficiency  zoneReportsList={zoneReportsList} fetchZoneReports={fetchZoneReports} isZoneReportsListLoading={isZoneReportsListLoading}/>);
+        break;
+      case "mortalityRate":
+        setSelectedComponent(renderAverageMortality());
+        break;
+      case "taskTat":
+        setSelectedComponent(renderTatTaskCategerios());
+        break;
+      case "CapacityEfficiency":
+        setSelectedComponent(renderMonthlyHarvestBreakup());
+        break;
+      default:
+        setSelectedComponent(null);
+        break;
+    }
+  };
+
+
+  const renderMonthlyHarvestBreakup = () => {
     return (
-      <>
-        <Grid container spacing={2}>
-          <Grid item xs={8} sm={10} md={10}>
-            <p className="section-title">Zone Monthly Harvest Breakup</p>
-          </Grid>
-          <Grid item xs={4} sm={2} md={2}>
-            <FormControl fullWidth>
-              <span className="input-label">Select Month</span>
-              <SingleCustomSelect
-                value={month}
-                valueKey="value"
-                labelKey="name"
-                lable="Select Month"
-                options={HARVEST_MONTH_OPTIONS}
-                handleChange={handleChange}
-              />
-            </FormControl>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={12}
-            lg={12}
-            className="card-outline-container graph-container"
-          >
-            <BarChart chartData={farmZoneDashboardHarvestList || []} />
-          </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={8} sm={10} md={10}>
+          <span className="section-title">Zone Monthly Harvest Breakup</span>
         </Grid>
-      </>
+        <Grid item xs={4} sm={2} md={2}>
+          <FormControl fullWidth>
+            <span className="input-label">Select Month</span>
+            <SingleCustomSelect
+              value={month}
+              valueKey="value"
+              labelKey="name"
+              lable="Select Month"
+              options={HARVEST_MONTH_OPTIONS}
+              handleChange={handleChange}
+            />
+          </FormControl>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          className="card-outline-container graph-container"
+        >
+          <BarChart chartData={farmZoneDashboardHarvestList || []} />
+        </Grid>
+               <Grid container spacing={2}>
+               {renderFarmZoneUtilization()}
+                  {renderZoneCropsUtilization()}
+                </Grid>
+
+      </Grid>
     );
   };
+
+
+  const renderAverageMortality = () => {
+    
+    return (
+      <>
+      <Grid container spacing={2}>
+      <Grid item xs={8} sm={10} md={10}>
+        <span className="section-title">Average Mortality</span>
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={12}
+        lg={12}
+        className="card-outline-container graph-container"
+      >
+<BarChart chartData={farmReportsZoneAverageMortalityList || []} labelKey="stage" valueKey="avgMortalityRate" />
+      </Grid>
+      </Grid>
+      </>
+
+    )
+  }
+  const renderTatTaskCategerios = () => {
+    
+    return (
+      <>
+      <Grid container spacing={2}>
+      <Grid item xs={8} sm={10} md={10}>
+        <span className="section-title">Task Tat Category</span>
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={12}
+        lg={12}
+        className="card-outline-container graph-container"
+      >
+<BarChart chartData={farmReportsZoneTatTaskCategoriesList || []} labelKey="category" valueKey="avgTAT" />
+      </Grid>
+      </Grid>
+      </>
+
+    )
+  }
+
+
+
+
 
   const renderFarmZoneUtilization = () => {
     return (
@@ -573,11 +703,11 @@ export default function ZoneDashboard({
               <TabPanel value="2">{renderZoneCropSchedules()}</TabPanel>
               <TabPanel value="3">{renderZoneTaskSchedules()}</TabPanel>
               <TabPanel value="4">
-                {renderZoneMonthlyHarvestBreakup()}
-                <Grid container spacing={2}>
+                {renderReportdDetails()}
+                {/* <Grid container spacing={2}>
                   {renderFarmZoneUtilization()}
                   {renderZoneCropsUtilization()}
-                </Grid>
+                </Grid> */}
               </TabPanel>
               <TabPanel value="5">{renderZoneInfo()}</TabPanel>
             </Grid>

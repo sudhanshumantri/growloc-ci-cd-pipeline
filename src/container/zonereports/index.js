@@ -5,6 +5,7 @@ import { createStructuredSelector } from "reselect";
 import {
   fetchZoneReportsRequest,
   fetchFarmReportsZoneAverageMortalityRequest,
+  fetchFarmReportsZoneTatTaskCategoriesRequest,
 } from "../../actions/zonereports";
 import ZoneEfficiency from "../../components/zonereports/zoneefficiency";
 import {
@@ -37,8 +38,8 @@ const mapStateToProps = createStructuredSelector({
 });
 const mapDispatchToProps = {
   fetchZoneReports: fetchZoneReportsRequest,
-  fecthFarmReportsZoneAverageMortality:
-    fetchFarmReportsZoneAverageMortalityRequest,
+  fecthFarmReportsZoneAverageMortality:fetchFarmReportsZoneAverageMortalityRequest,
+  fetchFarmReportsZoneTatTasktCategerios:fetchFarmReportsZoneTatTaskCategoriesRequest,
 };
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {

@@ -15,12 +15,10 @@ export default function FarmEfficiency({
   fetchFarmReports,
   farmReportsList,
   isFarmReportsListLoading,
-  farmReportsFarmAverageMortalityList,
-  fetchFarmReportsFarmAverageMorality,
 }) {
+
   let { farmId } = useParams();
   const [phData, setPhData] = useState({ labels: [], datasets: [] });
-  
   const [waterTempData, setWaterTempData] = useState({
     labels: [],
     datasets: [],
@@ -33,12 +31,11 @@ export default function FarmEfficiency({
     labels: [],
     datasets: [],
   });
-  const [averageMobilty, SetAverageMobiltyData] = useState({
-    labels: [],
-    datasets: [],
-  });
-  const [duration, setDuration] = useState(100);
-  const timeframes = ["4hr", "12hr", "24hr", "56hr", "1w"];
+  const [duration, setDuration] = useState("4hr");
+  const timeframes = ["4hr", "12hr", "24hr", "3d", "1w"];
+
+
+
   const phChartOptions = {
     plugins: {
       legend: {
@@ -72,13 +69,31 @@ export default function FarmEfficiency({
     },
   };
 
+  const convertDurationToHours = (duration) => {
+    switch (duration) {
+      case "4hr":
+        return 4;
+      case "12hr":
+        return 12;
+      case "24hr":
+        return 24;
+      case "3d":
+        return 24 * 3; 
+      case "1w":
+        return 24 * 7; 
+      default:
+        return 0;
+    }
+  };
+  
+
   const handleTimeFrameChange = (event) => {
     const { value } = event.target;
     setDuration(value);
-    fetchFarmReports({ id: farmId, duration: parseInt(value) });
-    fetchFarmReportsFarmAverageMorality(farmId);
+    const durationInHours = convertDurationToHours(value);
+    fetchFarmReports({ id: farmId, duration: durationInHours });
   };
-  useEffect(() => {
+    useEffect(() => {
     fetchFarmReports({ farmId, duration });
   }, []);
   useEffect(() => {
@@ -157,32 +172,9 @@ export default function FarmEfficiency({
     setHumidityData(humidityData);
   }, [farmReportsList]);
 
-  useEffect(() => {
-    const labels = [];
-    const mortalityValues = [];
-    farmReportsFarmAverageMortalityList.forEach((report) => {
-      const { stage, avgMortalityRate } = report;
-      labels.push(stage);
-      mortalityValues.push(avgMortalityRate);
-    });
-
-    const mortalityChartData = {
-      labels,
-      datasets: [
-        {
-          data: mortalityValues,
-          fill: false,
-          borderColor: "rgba(75,192,192,1)",
-          tension: 0.1,
-        },
-      ],
-    };
-    SetAverageMobiltyData(mortalityChartData);
-  }, [farmReportsFarmAverageMortalityList]);
 
   return (
     <>
-      <PageHeader title="Farm Efficiency" />
       <div className="page-container">
         {isFarmReportsListLoading && (
           <Loader title="Fetching farm reports details" />
@@ -247,14 +239,6 @@ export default function FarmEfficiency({
               <CardContent>
                 <span className="input-label">Humidity</span>
                 <Line data={humidityData} options={phChartOptions} />
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
-              <CardContent>
-                <span className="input-label">Humidity</span>
-                <Line data={averageMobilty} options={phChartOptions} />
               </CardContent>
             </Card>
           </Grid>

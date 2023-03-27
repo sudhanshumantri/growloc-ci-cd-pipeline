@@ -18,20 +18,22 @@ ChartJS.register(ArcElement, CategoryScale,
     Tooltip,
     Filler,
     Legend);
-export default function PieChart({chartData}) {
- 
+export default function PieChart({chartData, labelKey, valueKey}) {
+  console.log(chartData,"chartData");
+
     const data = useMemo(() => {
         const labels = [];
         const values = [];
         const datasets = [];
         for (let item of chartData) {
-          labels.push(item.name);
-          values.push(item.kgs);
+          labels.push(item[labelKey]);
+          values.push(item[valueKey]);
+    
         }
         if (values.length) {
           datasets.push({
             data: values,
-            label: '# Harvested In KGS',
+            label: '',
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
@@ -52,8 +54,8 @@ export default function PieChart({chartData}) {
           });
         }
         return { labels, datasets };
-      }, [chartData]);
-    
+      }, [chartData,labelKey, valueKey]);
+    console.log(data,"data barchart");
     return <Bar options={{
         responsive: true,
         maintainAspectRatio: false,

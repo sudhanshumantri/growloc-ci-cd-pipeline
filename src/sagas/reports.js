@@ -5,6 +5,8 @@ import {
     fetchFarmReportsFailure,
     fetchFarmReportsFarmAverageMortalitySuccess,
     fetchFarmReportsFarmAverageMortalityFailure,
+    fetchFarmReportsFarmTatTaskCategoriesSuccess,
+    fetchFarmReportsFarmTatTaskCategoriesFailure
 } from "../actions/reports";
 
 export function* fetchFarmReportsList({ data }) {
@@ -27,9 +29,9 @@ export function* fetchFarmReportsFarmAverageMortality({ data }) {
 export function* fetchFarmReportsFarmTatTaskCategories({ data }) {
   let responseData = yield call(callFetchDashboardFarmTatTaskCategories, data);
   if (responseData?.status == 200 && responseData.data.status) {
-    yield put(fetchFarmReportsFarmAverageMortalitySuccess(responseData.data.data));
+    yield put(fetchFarmReportsFarmTatTaskCategoriesSuccess(responseData.data.data));
   } else {
-    yield put(fetchFarmReportsFarmAverageMortalityFailure("Something went wrong"));
+    yield put(fetchFarmReportsFarmTatTaskCategoriesFailure("Something went wrong"));
   }
 }
 

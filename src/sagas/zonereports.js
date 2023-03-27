@@ -4,7 +4,10 @@ import {
     fetchZoneReportsSuccess,
     fetchZoneReportsFailure,
     fetchFarmReportsZoneAverageMortalitySuccess,
-    fetchFarmReportsZoneAverageMortalityFailure
+    fetchFarmReportsZoneAverageMortalityFailure,
+    fetchFarmReportsZoneTatTaskCategoriesSuccess,
+    fetchFarmReportsZoneTatTaskCategoriesFailure
+
 } from "../actions/zonereports";
 
 export function* fetchZoneReportsList({ data }) {
@@ -27,9 +30,9 @@ export function* fetchZoneReportsAverageMortalityList({ data }) {
 export function* fetchZoneReportZoneTatCategoriesList({ data }) {
   let responseData = yield call(callFetchDashboardZoneTatTaskCategories, data);
   if (responseData?.status == 200 && responseData.data.status) {
-    yield put(fetchFarmReportsZoneAverageMortalitySuccess(responseData.data.data));
+    yield put(fetchFarmReportsZoneTatTaskCategoriesSuccess(responseData.data.data));
   } else {
-    yield put(fetchFarmReportsZoneAverageMortalityFailure("Something went wrong"));
+    yield put(fetchFarmReportsZoneTatTaskCategoriesFailure("Something went wrong"));
   }
 }
 
@@ -37,7 +40,9 @@ export function* zoneReportsSagas() {
   yield all([
     takeLatest("FETCH_ALL_ZONE_SENSORS_REPORTS_DATA_REQUEST", fetchZoneReportsList),
     takeLatest("FETCH_FARM_REPORTS_ZONE_AVERAGE_MORTALITY_REQUEST", fetchZoneReportsAverageMortalityList),
-    takeLatest("FETCH_FARM_REPORTS_FARM_TAT_TASK_CATEGORIES_REQUEST", fetchZoneReportZoneTatCategoriesList),
+    takeLatest("FETCH_FARM_REPORTS_ZONE_TAT_TASK_CATEGORIES_REQUEST", fetchZoneReportZoneTatCategoriesList),
+
+    // takeLatest("FETCH_FARM_REPORTS_FARM_TAT_TASK_CATEGORIES_REQUEST", fetchZoneReportZoneTatCategoriesList),
 
 
  ]);

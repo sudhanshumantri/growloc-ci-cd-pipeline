@@ -37,10 +37,10 @@ createSelector(
 );
 
 
-export const selectFarmReportsFarmTatTaskCategoriesListList = () =>
+export const selectFarmReportsFarmTatTaskCategoriesList = () =>
 createSelector(
   selectReports,
-  (services) => services.toJS()["farmReportsFarmTatTaskCategoriesListList"]
+  (services) => services.toJS()["farmReportsFarmTatTaskCategoriesList"]
 );
 export const selectIsFarmReportsFarmTatTaskCategoriesListLoading = () =>
 createSelector(

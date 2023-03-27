@@ -196,26 +196,26 @@ const farmMenuItems = [
     ],
   },
 
-  {
-    title: "Reports",
-    id: "reports",
-    icon: Report,
-    navigation: "reports",
-    link: "/reports",
-    css: { borderBottom: "1px solid white" },
-    subMenu: [
-      {
-        id: "1",
-        name: "Farm Efficiency",
-        navigation: "/reports/farm-efficiency",
-        link: "/reports/farm-efficiency",
-      },
-      { id: "2", name: " Capacity Efficiency", navigation: "/reports/capacity-efficiency",link: "/reports/capacity-efficiency",
-    },
-      { id: "3", name: " Energy Efficiency", navigation: "/reports/energy-efficiency",link: "/reports/energy-efficiency" },
+  // {
+  //   title: "Reports",
+  //   id: "reports",
+  //   icon: Report,
+  //   navigation: "reports",
+  //   link: "/reports",
+  //   css: { borderBottom: "1px solid white" },
+  //   subMenu: [
+  //     {
+  //       id: "1",
+  //       name: "Farm Efficiency",
+  //       navigation: "/reports/farm-efficiency",
+  //       link: "/reports/farm-efficiency",
+  //     },
+  //     { id: "2", name: " Capacity Efficiency", navigation: "/reports/capacity-efficiency",link: "/reports/capacity-efficiency",
+  //   },
+  //     { id: "3", name: " Energy Efficiency", navigation: "/reports/energy-efficiency",link: "/reports/energy-efficiency" },
 
-    ],
-  },
+  //   ],
+  // },
   // {
   //     title: 'Manage',
   //     id: "Manage",
@@ -386,26 +386,26 @@ const zoneMenuItems = [
     ],
   },
 
-  {
-    title: "Reports",
-    id: "reports",
-    icon: Report,
-    navigation: "reports",
-    link: "/reports",
-    css: { borderBottom: "1px solid white" },
-    subMenu: [
-      {
-        id: "1",
-        name: "zone Efficiency",
-        navigation: "/reports/zone-efficiency",
-        link: "/reports/zone-efficiency",
-      },
-      { id: "2", name: " Capacity Efficiency", navigation: "/reports/capacity-efficiency",link: "/reports/capacity-efficiency",
-    },
-      { id: "3", name: " Energy Efficiency", navigation: "/reports/energy-efficiency",link: "/reports/energy-efficiency" },
+  // {
+  //   title: "Reports",
+  //   id: "reports",
+  //   icon: Report,
+  //   navigation: "reports",
+  //   link: "/reports",
+  //   css: { borderBottom: "1px solid white" },
+  //   subMenu: [
+  //     {
+  //       id: "1",
+  //       name: "zone Efficiency",
+  //       navigation: "/reports/zone-efficiency",
+  //       link: "/reports/zone-efficiency",
+  //     },
+  //     { id: "2", name: " Capacity Efficiency", navigation: "/reports/capacity-efficiency",link: "/reports/capacity-efficiency",
+  //   },
+  //     { id: "3", name: " Energy Efficiency", navigation: "/reports/energy-efficiency",link: "/reports/energy-efficiency" },
 
-    ],
-  },
+  //   ],
+  // },
 
 
   {

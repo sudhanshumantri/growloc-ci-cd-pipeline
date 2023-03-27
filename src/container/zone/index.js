@@ -17,6 +17,11 @@ import {
   fetchZoneTaskRequest,
   addZoneTaskCommentRequest,
 } from "../../actions/zone";
+import {
+  fetchZoneReportsRequest,
+  fetchFarmReportsZoneAverageMortalityRequest,
+  fetchFarmReportsZoneTatTaskCategoriesRequest,
+} from "../../actions/zonereports";
 import { fetchFarmDashboardZoneRequest } from "../../actions/dashboard";
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
@@ -58,6 +63,18 @@ import {
  selectZoneDashboardZoneUtilizationStagesList,
  selectZoneDashboardZoneUtilizationStagesError,
 } from "../../selectors/zone";
+import {
+  selectZoneReportsList,
+  selectIsZoneReportsListLoading,
+  selectZoneReportsListError,
+  selectFarmReportsZoneAverageMortalityList,
+  selectIsFarmReportsZoneAverageMortalityListLoading,
+  selectFarmReportsZoneAverageMortalityError,
+  selectFarmReportsZoneTatTaskCategoriesList,
+  selectIsFarmReportsZoneTatTaskCategoriesListLoading,
+  selectFarmReportsZoneTatTaskCategoriesError,
+} from "../../selectors/zonereports";
+
 const mapStateToProps = createStructuredSelector({
   farmZoneList: selectFarmZoneList(),
   isFarmZoneLoading: selectIsFarmZoneLoading(),
@@ -98,6 +115,22 @@ zoneDashboardZoneUtilizationCropsError: selectZoneDashboardZoneUtilizationCropsE
 isZoneDashboardZoneUtilizationStagesLoading: selectIsZoneDashboardZoneUtilizationStagesLoading(),
 zoneDashboardZoneUtilizationStagesList: selectZoneDashboardZoneUtilizationStagesList(),
 zoneDashboardZoneUtilizationStagesError: selectZoneDashboardZoneUtilizationStagesError(),
+zoneReportsList: selectZoneReportsList(),
+isZoneReportsListLoading: selectIsZoneReportsListLoading(),
+zoneReportsListError: selectZoneReportsListError(),
+isFarmReportsZoneAverageMortalityListLoading:
+selectIsFarmReportsZoneAverageMortalityListLoading(),
+farmReportsZoneAverageMortalityList:
+selectFarmReportsZoneAverageMortalityList(),
+farmReportsZoneAverageMortalityError:
+selectFarmReportsZoneAverageMortalityError(),
+isFarmReportsZoneTatTaskCategoriesListLoading:
+selectIsFarmReportsZoneTatTaskCategoriesListLoading(),
+farmReportsZoneTatTaskCategoriesList:
+selectFarmReportsZoneTatTaskCategoriesList(),
+farmReportsZoneTatTaskCategoriesError:
+selectFarmReportsZoneTatTaskCategoriesError(),
+
 });
 const mapDispatchToProps = {
   fetchFarmZone: fetchFarmZoneRequest,
@@ -114,6 +147,10 @@ const mapDispatchToProps = {
   fetchZoneDashboardZoneSensors:fetchZoneDashboardZoneSensorRequest,
   fetchZoneDashboardZoneUtilizationCrops:fetchZoneDashboardZoneUtilizationCropsRequest,
   fetchZoneDashboardZoneUtilizationStages:fetchZoneDashboardZoneUtilizationStagesRequest,
+  fetchZoneReports: fetchZoneReportsRequest,
+  fecthFarmReportsZoneAverageMortality:fetchFarmReportsZoneAverageMortalityRequest,
+  fetchFarmReportsZoneTatTaskRequest:fetchFarmReportsZoneTatTaskCategoriesRequest,
+
 };
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {

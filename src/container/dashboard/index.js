@@ -21,6 +21,8 @@ import {
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
 import { fetchFarmCropsRequest } from "../../actions/crops";
+import { fetchFarmReportsRequest,fetchFarmReportsFarmAverageMortalityRequest, fetchFarmReportsFarmTatTaskCategoriesRequest} from "../../actions/reports";
+
 import {
   addCropToLifecycleRequest,
   fetchAllCropsLifecycleRequest,
@@ -66,6 +68,18 @@ import {
 } from "../../selectors/dashboard";
 import { selectUsersList } from "../../selectors/users";
 import { selectFarmInventoryList } from "../../selectors/inventory";
+import {
+  selectFarmReportsList,
+  selectIsFarmReportsListLoading,
+  selectFarmReportsListError,
+  selectFarmReportsFarmAverageMortalityList,
+  selectIsFarmReportsFarmAverageMortalityListLoading,
+  selectFarmReportsFarmAverageMortalityError,
+  selectFarmReportsFarmTatTaskCategoriesList,
+  selectIsFarmReportsFarmTatTaskCategoriesListLoading,
+  selectFarmReportsFarmTatTaskCategoriesListError
+} from "../../selectors/reports";
+
 import { selectLoginObject } from "../../selectors/login";
 import {
   selectLifecycleCropsList,
@@ -127,6 +141,15 @@ const mapStateToProps = createStructuredSelector({
   farmDashboardFarmUtilizationStagesError:
     selectFarmDashboardFarmUtilizationStagesError(),
   //
+  farmReportsList:selectFarmReportsList(),
+  isFarmReportsListLoading:selectIsFarmReportsListLoading(),
+  farmReportsListError:selectFarmReportsListError(),
+  isFarmReportsFarmAverageMortalityListLoading: selectIsFarmReportsFarmAverageMortalityListLoading(),
+  farmReportsFarmAverageMortalityList:selectFarmReportsFarmAverageMortalityList(),
+  farmReportsFarmAverageMortalityError: selectFarmReportsFarmAverageMortalityError(),
+  isFarmReportsFarmTatTaskCategoriesListLoading: selectIsFarmReportsFarmTatTaskCategoriesListLoading(),
+  farmReportsFarmTatTaskCategoriesList: selectFarmReportsFarmTatTaskCategoriesList(),
+  farmReportsFarmTatTaskCategoriesListError: selectFarmReportsFarmTatTaskCategoriesListError(),
 });
 const mapDispatchToProps = {
   fetchFarmDashboard: fetchDashboardFarmRequest,
@@ -147,7 +170,10 @@ const mapDispatchToProps = {
   fetchFarmDashboardFarmInfo: fetchFarmDashboardInfoRequest,
   fetchFarmDashboardFarmTask: fetchFarmDashboardTaskRequest,
   fetchFarmDashboardFarmUtilizationCrops: fetchFarmDashboardUtilizationCropsRequest,
-  fetchFarmDashboardFarmUtilizationStages:fetchFarmDashboardUtilizationStagesRequest
+  fetchFarmDashboardFarmUtilizationStages:fetchFarmDashboardUtilizationStagesRequest,
+  fetchFarmReports:fetchFarmReportsRequest,
+  fetchFarmReportsFarmAverageMorality:fetchFarmReportsFarmAverageMortalityRequest,
+  fetchFarmReportFarmTatTaskCategories:fetchFarmReportsFarmTatTaskCategoriesRequest,
 
 };
 function withRouter(Component) {

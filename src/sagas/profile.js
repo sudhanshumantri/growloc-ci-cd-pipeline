@@ -1,7 +1,6 @@
 import { call, all, put, select, takeLatest,delay } from 'redux-saga/effects';
 import {  callChangePasswordHandler,  callupdateChangePhone,  callupdateUserProfile } from '../utils/api';
 import store, { browserHistory } from "../store";
-
 import {
     updateUserProfileSuccess,
     updateUserProfileFailure,
@@ -35,11 +34,11 @@ export function* updateUserProfile({ data }) {
          yield put(updateUserProfileSuccess(responseData.data.data));
         addNotification(" Updated Profile Successfully", 5000,true, "success");
     } else {
+        let errorMessage=responseData.data?.error?responseData.data?.error:'Something went wrong'
+        addNotification(errorMessage, 5000,true, "danger");
         yield put(updateUserProfileFailure("Something went wrong"));
     }
 }
-
-
 
 export function* updatePhoneNumber({ data }) {
     let responseData = yield call(callupdateChangePhone, data);
@@ -52,6 +51,8 @@ export function* updatePhoneNumber({ data }) {
         yield call(browserHistory.push, "/login");
         yield call(browserHistory.go, "/login");
     } else {
+        let errorMessage=responseData.data?.error?responseData.data?.error:'Something went wrong'
+        addNotification(errorMessage, 5000,true, "danger");
         yield put(updateUserPhoneOrPasswordFailure("Something went wrong"));
     }
 }

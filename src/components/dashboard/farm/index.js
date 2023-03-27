@@ -1,4 +1,4 @@
-import React, { useState, memo,useEffect } from "react";
+import React, { useState, memo, useEffect } from "react";
 import "./style.css";
 import {
   Grid,
@@ -38,6 +38,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import GridViewIcon from "@mui/icons-material/GridView";
 import ListIcon from "@mui/icons-material/List";
+import FarmEfficiency from "../../reports/farmefficiency";
 import TableDynamicPagination from "../../shared/tablepagination";
 export default function FarmDashboard({
   dashboardFarmList,
@@ -86,6 +87,14 @@ export default function FarmDashboard({
   farmDashboardFarmUtilizationCropsList,
   fetchFarmDashboardFarmUtilizationStages,
   farmDashboardFarmUtilizationStagesList,
+  fetchFarmReports,
+  farmReportsList,
+  isFarmReportsListLoading,
+  isFarmReportsFarmAverageMortalityListLoading,
+  farmReportsFarmAverageMortalityList,
+  fetchFarmReportsFarmAverageMorality,
+  fetchFarmReportFarmTatTaskCategories,
+  farmReportsFarmTatTaskCategoriesList,
 }) {
   const navigate = useNavigate();
   const { farmId } = useParams();
@@ -101,88 +110,21 @@ export default function FarmDashboard({
   const [seletedView, setSelectView] = useState("list");
   const [tabInfo, setTabInfo] = useState("1");
   const [value, setValue] = useState("1");
-  const [activeTab, setActiveTab] = useState(['farmEfficiency']);
-
-  ///
-
-  const [phData, setPhData] = useState({ labels: [], datasets: [] });
-  const [waterTempData, setWaterTempData] = useState({
-    labels: [],
-    datasets: [],
-  });
-  const [lightIntensityData, setlightIntensityData] = useState({
-    labels: [],
-    datasets: [],
-  });
-  const [humidityData, setHumidityData] = useState({
-    labels: [],
-    datasets: [],
-  });
-  const [averageMobilty, SetAverageMobiltyData] = useState({
-    labels: [],
-    datasets: [],
-  });
-  const [duration, setDuration] = useState(100);
-  const timeframes = ["4hr", "12hr", "24hr", "56hr", "1w"];
-  const phChartOptions = {
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-    scales: {
-      y: {
-        ticks: {
-          font: {
-            size: 13,
-          },
-        },
-      },
-      x: {
-        ticks: {
-          font: {
-            size: 11,
-          },
-          callback: function (value, index, values) {
-            if (index === 0) {
-              return [values[0], values.pop()];
-            } else if (index === values.length - 1) {
-              return [];
-            } else {
-              return value;
-            }
-          },
-        },
-      },
-    },
-  };
+  const [selectedPlatform, setSelectedPlatform] = useState("farmEfficiency");
+  const [selectedComponent, setSelectedComponent] = useState(null);
 
 
-  ///
-  
-  // const handleToggleButtonClick = (value) => {
-  //   setActiveTab((prev) => {
-  //     if (prev.includes(value)) {
-  //       return prev.filter((v) => v !== value);
-  //     } else {
-  //       return [...prev, value];
-  //     }
-  //   });
-  // };
+  const platforms = [
+    { value: "farmEfficiency", label: "Farm Efficiency" },
+    { value: "mortalityRate", label: "Mortality Rate" },
+    { value: "taskTat", label: "TASK TAT" },
+    { value: "CapacityEfficiency", label: "Capacity Efficiency" },
+  ];
+  useEffect(() => {
+    handlePlatformChange(null, selectedPlatform);
+  }, [selectedPlatform]);
 
-  const handleToggleButtonClick = (value) => {
-    setActiveTab((prevActiveTab) => {
-      if (prevActiveTab.includes(value)) {
-        // Remove the value from the array if it's already selected
-        return prevActiveTab.filter((tab) => tab !== value);
-      } else {
-        // Add the value to the array if it's not already selected
-        return [...prevActiveTab, value];
-      }
-    });
-  };
-  
-      const handleTabChange = async (event, newValue) => {
+  const handleTabChange = async (event, newValue) => {
     setValue(newValue);
     if (newValue === "1") {
       // fecthFarmDashboardZone(farmId);
@@ -196,7 +138,7 @@ export default function FarmDashboard({
         queryParams: { skip: 0, take: 10 },
       });
     } else if (newValue === "3") {
-       fetchFarmDashboardFarmTask({
+      fetchFarmDashboardFarmTask({
         farmId: farmId,
         queryParams: { skip: 0, take: 10 },
       });
@@ -229,8 +171,132 @@ export default function FarmDashboard({
     });
     fetchAllCropsLifecycle(farmId);
     fetchFarmDashboardInfo(farmId);
+    fetchFarmReportsFarmAverageMorality(farmId);
+    fetchFarmReportFarmTatTaskCategories(farmId);
   }, []);
 
+  const renderMonthlyHarvestBreakup = () => {
+    const { cropBasedHarvestedData } = dashboardHarvestList;
+    return (
+      <Grid container spacing={2}>
+        <Grid item xs={8} sm={10} md={10}>
+          <span className="section-title">Monthly Harvest Breakup</span>
+        </Grid>
+        <Grid item xs={4} sm={2} md={2}>
+          <FormControl fullWidth>
+            <span className="input-label">Select Month</span>
+            <SingleCustomSelect
+              value={month}
+              valueKey="value"
+              labelKey="name"
+              lable="Select Month"
+              options={HARVEST_MONTH_OPTIONS}
+              handleChange={handleChange}
+            />
+          </FormControl>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          className="card-outline-container graph-container"
+        >
+          <BarChart chartData={cropBasedHarvestedData || []} />
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} sx={{ alignItems: "flex-end" }}>
+          <TableDynamicPagination
+            count={dashboardHarvestList.total}
+            handleChangePagination={handleChangeMonthlyHarvestBreakupPagination}
+          />
+        </Grid>
+        <Grid container spacing={2}>
+          {renderFarmUtilization()}
+          {renderCropsUtilization()}
+        </Grid>
+      </Grid>
+    );
+  };
+
+  const renderAverageMortality = () => {
+    return (
+      <>
+        <Grid container spacing={2}>
+          <Grid item xs={8} sm={10} md={10}>
+            <span className="section-title">Average Mortality</span>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            className="card-outline-container graph-container"
+          >
+            <BarChart
+              chartData={farmReportsFarmAverageMortalityList || []}
+              labelKey="stage"
+              valueKey="avgMortalityRate"
+            />
+          </Grid>
+        </Grid>
+      </>
+    );
+  };
+  const renderTatTaskCategerios = () => {
+    return (
+      <>
+        <Grid container spacing={2}>
+          <Grid item xs={8} sm={10} md={10}>
+            <span className="section-title">Average Mortality</span>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            className="card-outline-container graph-container"
+          >
+            <BarChart
+              chartData={farmReportsFarmTatTaskCategoriesList || []}
+              labelKey="category"
+              valueKey="avgTAT"
+            />
+          </Grid>
+        </Grid>
+      </>
+    );
+  };
+
+  const handlePlatformChange = (event, newPlatform) => {
+    setSelectedPlatform(newPlatform);
+    console.log(newPlatform, "newPlatform");
+    switch (newPlatform) {
+      case "farmEfficiency":
+        setSelectedComponent(
+          <FarmEfficiency
+            fetchFarmReports={fetchFarmReports}
+            farmReportsList={farmReportsList}
+            isFarmReportsListLoading={isFarmReportsListLoading}
+          />
+        );
+        break;
+      case "mortalityRate":
+        setSelectedComponent(renderAverageMortality());
+        break;
+      case "taskTat":
+        setSelectedComponent(renderTatTaskCategerios());
+        break;
+      case "CapacityEfficiency":
+        setSelectedComponent(renderMonthlyHarvestBreakup());
+        break;
+      default:
+        setSelectedComponent(null);
+        break;
+    }
+  };
 
   const zoneId = (farmDashboardCropSchedulesList || [])[0]?.zoneId;
 
@@ -259,23 +325,6 @@ export default function FarmDashboard({
       key: "message",
     },
   ];
-
-  const buttonData = [
-    { label: "Farm Efficiency", value: "farmEfficiency" },
-    {
-      label: 'Mortality Rate',
-      value: 'mortalityRate'
-    },
-    {
-      label: 'TASK TAT',
-      value: 'taskTat'
-    },
-    {
-      label: 'Capacity Efficiency ',
-      value: 'monthlyHarvestBreakup'
-    }
-  ];
-    
 
   const handleModalToggle = () => {
     setOpen(!open);
@@ -351,14 +400,14 @@ export default function FarmDashboard({
       farmArea: farmArea,
       zoneType: zoneType,
       systemType: systemType,
-      id : zone_internal_id
+      id: zone_internal_id,
     };
     setZoneData(zoneDetails);
     setOpenZone(true);
   };
   const handleDelete = (zoneInfo) => {
     const { zone_internal_id, name } = zoneInfo;
-    const zoneDetails = { id:zone_internal_id, name };
+    const zoneDetails = { id: zone_internal_id, name };
     setZoneData(zoneDetails);
     setIsDeleteModelOpen(true);
   };
@@ -447,7 +496,6 @@ export default function FarmDashboard({
       redirection: false,
       isDate: true,
     },
-
   ];
   const ZONE_HEADER = [
     {
@@ -623,114 +671,60 @@ export default function FarmDashboard({
       </Grid>
     );
   };
-  // const renderMonthlyHarvestBreakup = () => {
-  //   const { cropBasedHarvestedData } = dashboardHarvestList;
-  //   return (
-  //     <Grid container spacing={2}>
-  //       <Grid item xs={8} sm={10} md={10}>
-  //         <span className="section-title">Monthly Harvest Breakup</span>
-  //       </Grid>
-  //       <Grid item xs={4} sm={2} md={2}>
-  //         <FormControl fullWidth>
-  //           <span className="input-label">Select Month</span>
-  //           <SingleCustomSelect
-  //             value={month}
-  //             valueKey="value"
-  //             labelKey="name"
-  //             lable="Select Month"
-  //             options={HARVEST_MONTH_OPTIONS}
-  //             handleChange={handleChange}
-  //           />
-  //         </FormControl>
-  //       </Grid>
-  //       <Grid
-  //         item
-  //         xs={12}
-  //         sm={12}
-  //         md={12}
-  //         lg={12}
-  //         className="card-outline-container graph-container"
-  //       >
-  //         <BarChart chartData={cropBasedHarvestedData || []} />
-  //       </Grid>
-  //       <Grid item xs={12} sm={12} md={12} sx={{ alignItems: "flex-end" }}>
-  //         <TableDynamicPagination
-  //           count={dashboardHarvestList.total}
-  //           handleChangePagination={handleChangeMonthlyHarvestBreakupPagination}
-  //         />
-  //       </Grid>
-  //     </Grid>
-  //   );
-  // };
-  const handleTimeFrameChange = (event) => {
-    const { value } = event.target;
-    setDuration(value);
-    // fetchFarmReports({ id: farmId, duration: parseInt(value) });
-    // fetchFarmReportsFarmAverageMorality(farmId);
-  };
+
   // useEffect(() => {
   //   fetchFarmReports({ farmId, duration });
   // }, []);
 
-  const renderFarmEfficiency = () => {
-    console.log("hello");
-        return (
-      <Grid container spacing={2}>
-        <Grid item xs={8} sm={10} md={10}>
-          <span className="section-title">Monthly Harvest Breakup</span>
-        </Grid>
-      </Grid>
-    );
+  // const renderFarmEfficiency = () => {
+  //   console.log("hello");
+  //       return (
+  //     <Grid container spacing={2}>
+  //       <Grid item xs={8} sm={10} md={10}>
+  //         <span className="section-title">Monthly Harvest Breakup</span>
+  //       </Grid>
+  //     </Grid>
+  //   );
 
-  }
-  const renderMortalityRate = () => {
-    console.log("hello");
-        return (
-      <Grid container spacing={2}>
-        <Grid item xs={8} sm={10} md={10}>
-          <span className="section-title">Mortality</span>
-        </Grid>
-      </Grid>
-    );
-  }
+  // }
+  // const renderMortalityRate = () => {
+  //   console.log("hello");
+  //       return (
+  //     <Grid container spacing={2}>
+  //       <Grid item xs={8} sm={10} md={10}>
+  //         <span className="section-title">Mortality</span>
+  //       </Grid>
+  //     </Grid>
+  //   );
+  // }
 
-  
-  
-
-  const renderToggleButtons = () => {
-    return buttonData.map((button) => (
-      <ToggleButton
-        key={button.value}
-        value={button.value}
-        selected={activeTab.includes(button.value)}
-      >
-        {button.label}
-      </ToggleButton>
-    ));
-  };
-  
   const renderReportdDetails = () => {
     return (
       <>
-        <ToggleButtonGroup
-          value={activeTab}
-          onChange={handleToggleButtonClick}
-          aria-label="Farm Efficiency"
-          sx={{ display: 'flex', flexDirection: 'row' }}
-        >
-          {renderToggleButtons()}
-        </ToggleButtonGroup>
-        <Box sx={{ p: 2 }}>
-          {activeTab.includes('farmEfficiency') && renderFarmEfficiency()}
-          {activeTab.includes('moralityRate') && renderMortalityRate()}
-        </Box>
+        <Grid container spacing={2}>
+          <ToggleButtonGroup
+            value={selectedPlatform}
+            exclusive
+            onChange={handlePlatformChange}
+            aria-label="Platform"
+          >
+            {platforms.map((platform) => (
+              <ToggleButton key={platform.value} value={platform.value} 
+              style={{
+                backgroundColor:
+                  selectedPlatform === platform.value ? "green" : undefined,
+              }}
+              >
+                {platform.label}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+          {selectedComponent}
+        </Grid>
       </>
     );
   };
-  
-  
-        
-  
+
   const renderFarmZoneListView = () => {
     return (
       <Grid container spacing={2}>
@@ -822,10 +816,10 @@ export default function FarmDashboard({
             <CardContent>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
-                    <h4 className="section-details">
-                      {totalHarvested?.kgs || 0}(kgs)/
-                      {totalHarvested?.qty || 0}(qty)
-                    </h4> 
+                  <h4 className="section-details">
+                    {totalHarvested?.kgs || 0}(kgs)/
+                    {totalHarvested?.qty || 0}(qty)
+                  </h4>
                   <p className="farm-card">Total Harves</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
@@ -1158,7 +1152,7 @@ export default function FarmDashboard({
         buttonArray={buttonArray}
         showBackButton={showBackButton}
       />
-      {isDashboardFarmListLoading && <Loader title="Fetching Details" />}
+      {/* {isDashboardFarmListLoading && <Loader title="Fetching Details" />} */}
       {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
       {isTaskScheduleTaskLoading && <Loader title="Adding Tasks" />}
       {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
@@ -1170,8 +1164,9 @@ export default function FarmDashboard({
         <Loader title=" Fecting Crops Schedules Details " />
       )}
       {isDashboardInfoListLoading && <Loader title=" Fecting Farm Details " />}
-      {isDashboardFarmTaskLoading && <Loader title=" Fecting Task Details " />}
-
+      {isFarmReportsListLoading && (
+        <Loader title=" Fecting Farm  Reports Details " />
+      )}
       {isFarmDashboardZoneListLoading && (
         <Loader title=" Fetching Zone Details " />
       )}
@@ -1204,6 +1199,7 @@ export default function FarmDashboard({
               <TabPanel value="3">{renderTaskSchedules()}</TabPanel>
               <TabPanel value="4">
                 {renderReportdDetails()}
+
                 {/* <Grid container spacing={2}>
                   {renderFarmUtilization()}
                   {renderCropsUtilization()}

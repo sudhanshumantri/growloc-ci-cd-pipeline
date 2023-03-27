@@ -17,15 +17,22 @@ export default function ZoneEfficiency({
   fecthFarmReportsZoneAverageMortality,
   farmReportsZoneAverageMortalityList,
 }) {
-  let { zoneId } = useParams();
-  const [averageMobiltyData, SetAverageMobiltyData] = useState({
+  let { farmId } = useParams();
+  const [phData, setPhData] = useState({ labels: [], datasets: [] });
+  const [waterTempData, setWaterTempData] = useState({
     labels: [],
     datasets: [],
   });
-
-  const [duration, setDuration] = useState(4);
-  const timeframes = [ "4hr", "12hr", "24hr", "56hr", "1w"];
-
+  const [lightIntensityData, setlightIntensityData] = useState({
+    labels: [],
+    datasets: [],
+  });
+  const [humidityData, setHumidityData] = useState({
+    labels: [],
+    datasets: [],
+  });
+  const [duration, setDuration] = useState(100);
+  const timeframes = ["4hr", "12hr", "24hr", "56hr", "1w"];
   const phChartOptions = {
     plugins: {
       legend: {
@@ -37,7 +44,7 @@ export default function ZoneEfficiency({
         ticks: {
           font: {
             size: 13,
-          }
+          },
         },
       },
       x: {
@@ -45,60 +52,106 @@ export default function ZoneEfficiency({
           font: {
             size: 11,
           },
-          callback: function(value, index, values) {
-            if (farmReportsZoneAverageMortalityList && farmReportsZoneAverageMortalityList.length > 0) {
-              const stages = farmReportsZoneAverageMortalityList.map((item) => item.stage);
-              if (stages && stages.length > 0) {
-                if (index === 0) {
-                  return stages[0];
-                } else if (index === values.length - 1) {
-                  return stages[stages.length - 1];
-                } else {
-                  return '';
-                }
-              }
+          callback: function (value, index, values) {
+            if (index === 0) {
+              return [values[0], values.pop()];
+            } else if (index === values.length - 1) {
+              return [];
+            } else {
+              return value;
             }
-          }          //
+          },
         },
       },
     },
   };
-        
-  useEffect(()=>{
-    fecthFarmReportsZoneAverageMortality(zoneId)
-  },[])
-  
-  useEffect(() => {
-    if (farmReportsZoneAverageMortalityList && farmReportsZoneAverageMortalityList.length > 0) {
-      const labels = [];
-      const mortalityValues = [];
-      farmReportsZoneAverageMortalityList.forEach((report) => {
-        const { stage, avgMortalityRate } = report;
-        labels.push(stage);
-        mortalityValues.push(avgMortalityRate);
-      });
-  
-      const mortalityChartData = {
-        labels,
-        datasets: [
-          {
-            data: mortalityValues,
-            fill: false,
-            borderColor: "rgba(75,192,192,1)",
-            tension: 0.1,
-          },
-        ],
-      };
-      SetAverageMobiltyData(mortalityChartData);
-    }
-  }, [farmReportsZoneAverageMortalityList]);
 
-  const handleTimeFrameChange = (event, value) => {
+  const handleTimeFrameChange = (event) => {
+    const { value } = event.target;
     setDuration(value);
-  }
+    fetchZoneReports({ id: farmId, duration: parseInt(value) });
+  };
+  useEffect(() => {
+    fetchZoneReports({ farmId, duration });
+  }, []);
+  useEffect(() => {
+    const labels = [];
+    const phValues = [];
+    const waterTempValues = [];
+    const lightIntensitValues = [];
+    const humidityValues = [];
+    (zoneReportsList || []).forEach((report) => {
+      const { data, created_on } = report;
+      const phValue = data[0].payload.pH;
+      const waterTempValue = data[0].payload.waterTemperature;
+      const lightIntensitValue = data[0].payload.lightIntensity;
+      const humidityValue = data[0].payload.humidity;
+      const createdOn = new Date(created_on).toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      });
+      phValues.push(phValue);
+      waterTempValues.push(waterTempValue);
+      lightIntensitValues.push(lightIntensitValue);
+      humidityValues.push(humidityValue);
+      labels.push(createdOn);
+    });
+
+    const phChartData = {
+      labels,
+      datasets: [
+        {
+          data: phValues,
+          fill: false,
+          borderColor: "rgba(75,192,192,1)",
+          tension: 0.1,
+        },
+      ],
+    };
+    setPhData(phChartData);
+    const waterTempChartData = {
+      labels,
+      datasets: [
+        {
+          data: waterTempValues,
+          fill: false,
+          borderColor: "rgba(75,192,192,1)",
+          tension: 0.1,
+        },
+      ],
+    };
+    setWaterTempData(waterTempChartData);
+    const lightIntensityData = {
+      labels,
+      datasets: [
+        {
+          data: lightIntensitValues,
+          fill: false,
+          borderColor: "rgba(75,192,192,1)",
+          tension: 0.1,
+        },
+      ],
+    };
+    setlightIntensityData(lightIntensityData);
+
+    const humidityData = {
+      labels,
+      datasets: [
+        {
+          data: humidityValues,
+          fill: false,
+          borderColor: "rgba(75,192,192,1)",
+          tension: 0.1,
+        },
+      ],
+    };
+    setHumidityData(humidityData);
+  }, [zoneReportsList]);
+
   return (
     <>
-      <PageHeader title="Zone Efficiency" />
       <div className="page-container">
         {isZoneReportsListLoading && (
           <Loader title="Fetching zone reports details" />
@@ -112,14 +165,21 @@ export default function ZoneEfficiency({
             <ToggleButtonGroup
               value={duration}
               exclusive
-              onChange={(event, value) => handleTimeFrameChange(event, value)}
-              >
+              onChange={handleTimeFrameChange}
+            >
               {timeframes.map((timeframe) => (
                 <ToggleButton
                   key={timeframe}
                   value={timeframe}
                   size="small"
                   aria-label="right"
+                  style={
+                    duration === timeframe
+                      ? { backgroundColor: "green", color: "white" }
+                      : duration === 4 && timeframe === "4hr"
+                      ? { backgroundColor: "green", color: "white" }
+                      : {}
+                  }
                 >
                   {timeframe}
                 </ToggleButton>
@@ -127,10 +187,34 @@ export default function ZoneEfficiency({
             </ToggleButtonGroup>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
-            <Card >
+            <Card>
               <CardContent>
-                <span className="input-label">Average Mortality Rate</span>
-                <Line data={averageMobiltyData} options={phChartOptions} width={"100%"}/>
+                <span className="input-label">PH</span>
+                <Line data={phData} options={phChartOptions} />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card>
+              <CardContent>
+                <span className="input-label">Water temp</span>
+                <Line data={waterTempData} options={phChartOptions} />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card>
+              <CardContent>
+                <span className="input-label">Light intensity</span>
+                <Line data={lightIntensityData} options={phChartOptions} />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card>
+              <CardContent>
+                <span className="input-label">Humidity</span>
+                <Line data={humidityData} options={phChartOptions} />
               </CardContent>
             </Card>
           </Grid>
