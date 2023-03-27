@@ -27,7 +27,6 @@ export default function AddUsersModal({
     phone:false,
     confirmpassword:false,
   })
-console.log(userDetails.userId);
   const handleChange = (e) => {
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });

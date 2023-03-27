@@ -26,8 +26,6 @@ export default function AddInventoryItems({
 }) {
   let { farmId } = useParams();
   const [itemData, setItemData] = useState(itemDetails);
-  // const [nameError, setNameError] = useState(false);
-  // const [unitsError, setUnitsError] = useState(false);
   const [validation, setValidation] = useState({
     name: false,
     units: false,

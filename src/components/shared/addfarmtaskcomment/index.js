@@ -7,8 +7,6 @@ import {
   DialogTitle,
   DialogContent,
   Grid,
-  TextField,
-  Button,
 } from "@mui/material/";
 import TextBox from "../text-box";
 import CustomButton from "../button";
@@ -31,8 +29,7 @@ export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
       };
       reader.readAsDataURL(file);
     }
-  }
-    
+  };
 
   const handleSaveComment = () => {
     let payload = {
@@ -41,8 +38,6 @@ export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
     };
     handleSave(payload);
   };
-
-
 
   const renderActionButton = () => {
     return (
@@ -103,7 +98,6 @@ export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
         </DialogContent>
         {renderActionButton()}
       </Dialog>
-    </div>  
+    </div>
   );
 }
-

@@ -139,7 +139,6 @@ export function* fetchAllUserZoneSensor({ data }) {
 
 // dashboard new API
 export function* fetchFarmDashboardInfoList({ data }) {
-  console.log(data);
   let responseData = yield call(callFetchDashboardInfoFarmList, data);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(fetchDashboardFarmInfoSuccess(responseData.data.data));
@@ -159,7 +158,6 @@ export function* fetchFarmDashboardInfoList({ data }) {
   }
 
   export function* fetchFarmDashboardFarmInfoList({ data }) {
-    console.log(data);
     let responseData = yield call(callFetchDashboardFarmInfo, data);
     if (responseData?.status == 200 && responseData.data.status) {
       yield put(fetchFarmDashboardInfoSuccess(responseData.data.data));
@@ -191,7 +189,7 @@ export function* fetchFarmDashboardInfoList({ data }) {
     }
   }
   export function* fetchFarmDashboardFarmUtlizationStagesList({ data }) {
-    console.log(data);
+
     let responseData = yield call(callFetchDashboardFarmUtilizationStages, data);
     if (responseData?.status == 200 && responseData.data.status) {
       yield put(fetchFarmDashboardUtilizationStagesSuccess(responseData.data.data));

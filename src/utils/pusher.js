@@ -8,7 +8,6 @@ export async function getPusherData(){
       });
       const channel = pusher.subscribe('sensor-channel');
       channel.bind("sensor-event", data => {
-        console.log("check in get pusher data=====",data.data);
         fetchPusherRequest(data.data);
          
       });

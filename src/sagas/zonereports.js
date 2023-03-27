@@ -8,7 +8,6 @@ import {
 } from "../actions/zonereports";
 
 export function* fetchZoneReportsList({ data }) {
-  console.log(data,"data");
   let responseData = yield call(callfetchZoneReportsDetails, data);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(fetchZoneReportsSuccess(responseData.data.data));
@@ -17,7 +16,6 @@ export function* fetchZoneReportsList({ data }) {
   }
 }
 export function* fetchZoneReportsAverageMortalityList({ data }) {
-  console.log(data,"data");
   let responseData = yield call(callFetchDashboardFarmReportsZoneAverageMortality, data);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(fetchFarmReportsZoneAverageMortalitySuccess(responseData.data.data));
@@ -27,7 +25,6 @@ export function* fetchZoneReportsAverageMortalityList({ data }) {
 }
 
 export function* fetchZoneReportZoneTatCategoriesList({ data }) {
-  console.log(data,"data");
   let responseData = yield call(callFetchDashboardZoneTatTaskCategories, data);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(fetchFarmReportsZoneAverageMortalitySuccess(responseData.data.data));

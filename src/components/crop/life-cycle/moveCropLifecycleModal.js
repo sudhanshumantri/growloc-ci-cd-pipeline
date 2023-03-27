@@ -12,10 +12,8 @@ import {
   Checkbox,
   Grid,
 } from "@mui/material/";
-
 import ButtonCustom from "../../shared/button";
 import TextBox from "../../shared/text-box";
-
 export default function MoveCropLifeCycleModal({
   title,
   open,
@@ -76,11 +74,8 @@ export default function MoveCropLifeCycleModal({
               <br />
               <FormControl fullWidth>
                 <TextBox
-                  // style={{ width: 300 }}
-                  // label={"No of plants"}
                   isWhite={true}
                   name="units"
-                  // InputLabelProps={{ shrink: true }}
                   value={units}
                   error={unitError}
                   helperText={unitError ? unitErrorMessage : ""}
@@ -94,10 +89,7 @@ export default function MoveCropLifeCycleModal({
                   <span className="input-label">Plants harvested in KGS?</span>
                   <FormControl fullWidth>
                     <TextField
-                      // style={{ width: 300 }}
-                      // label={"Plants harvested in KGS?"}
                       name="units"
-                      // InputLabelProps={{ shrink: true }}
                       value={kgs}
                       onChange={handleKgChange}
                     />

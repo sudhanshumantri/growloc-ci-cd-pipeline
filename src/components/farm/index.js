@@ -21,15 +21,12 @@ export default function ManageFarm({
   isUpdateFarmLoading,
 }) {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const [isDeleteModelOpen, setIsDeleteModelOpen] = useState(false);
   const [farmInfo, setFarmInfo] = useState({});
-  const [selectedFarmId, setSeletedFarmId] = useState(null);
   const [expanded, setExpanded] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [showMenu, setShowMenu] = useState(false)
 
-  const newOpen = Boolean(anchorEl);
   const handleOpenMoreOptions = (event, id) => {
     event.preventDefault();
     setShowMenu({ [id]: true })
@@ -42,7 +39,6 @@ export default function ManageFarm({
   const handleEdit = (e, elem) => {
     e.preventDefault();
     const { farm } = elem;
-    //navigate("/edit-farm/" + farm.id);
     navigate("/edit-farm/" + farm.farm_internal_id);
   };
 
@@ -70,7 +66,6 @@ export default function ManageFarm({
   };
   React.useEffect(() => {
     fetchFarm();
-    // addFarm()
   }, []);
 
   let buttonArray = [

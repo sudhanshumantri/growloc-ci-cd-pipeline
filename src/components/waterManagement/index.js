@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
 import TextBox from "../shared/text-box";
 import SingleCustomSelect from "../shared/select";
 import ButtonCustom from "../shared/button";
 import { Grid, FormControl } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
 
 import {
     WATERING_TYPE, NUTRIENTS_TYPE

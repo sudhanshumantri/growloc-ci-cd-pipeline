@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useParams,useNavigate} from "react-router-dom";
 import PageHeader from "../../shared/page-header";
 import { Grid } from "@mui/material";
 import CollapsibleTable from "../../shared/collapsibleDataTable";

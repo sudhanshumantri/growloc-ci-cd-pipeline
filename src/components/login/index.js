@@ -1,13 +1,25 @@
 import "./styles.css";
 import * as React from "react";
 import { useState } from "react";
-import { Backdrop, CircularProgress, TextField, Box, Grid, Paper, Avatar, Typography, Link, Checkbox,FormControlLabel } from "@mui/material/";
-import CssBaseline from "@mui/material/CssBaseline";
+import {
+  Backdrop,
+  CircularProgress,
+  TextField,
+  Box,
+  Grid,
+  Paper,
+  Avatar,
+  Typography,
+  Link,
+  Checkbox,
+  FormControlLabel,
+  CssBaseline,
+} from "@mui/material/";
 import ButtonCustom from "../shared/button";
-import growlocCover from '../../../public/assets/growlocCover.webp'
-import loginpage from '../../../public/assets/loginpage.png'
-import logo from '../../../public/assets/logo.png';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import growlocCover from "../../../public/assets/growlocCover.webp";
+import loginpage from "../../../public/assets/loginpage.png";
+import logo from "../../../public/assets/logo.png";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
   const [phone, setPhone] = useState("");
@@ -49,12 +61,11 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
       container
       component="main"
       sx={{
-        height: '100vh',
+        height: "100vh",
         backgroundImage: `url(${loginpage})`,
-        backgroundRepeat: 'no-repeat',
-        //backgroundColor: '#517223',
-        backgroundPosition: 'center',
-        backgroundSize: '100% 100vh',
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "100% 100vh",
       }}
     >
       <CssBaseline />
@@ -63,74 +74,66 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
         xs={false}
         sm={4}
         md={6}
-        display='flex'
-        alignItems={'center'}
-        justifyContent='center'
-      // sx={{
-      //   backgroundColor: "F9F9F9",
-      //  // backgroundImage: `url(${growlocCover})`,
-      //   backgroundRepeat: 'no-repeat',
-      //   backgroundColor: '#517223',
-      //   backgroundPosition: 'bottom',
-      //   backgroundSize: 'contain',
-      // }}
-
+        display="flex"
+        alignItems={"center"}
+        justifyContent="center"
       >
         <img src={logo} />
       </Grid>
       <Grid
-        item xs={12}
-        sm={8} md={5}
+        item
+        xs={12}
+        sm={8}
+        md={5}
         component={Paper}
-        elevation={0} square
-        // justifyContent='center'
+        elevation={0}
+        square
         sx={{
-          backgroundColor: '#E5E4D7',
-          //   display : 'flex',
-          //  alignItems:'center',
-          height: '75%',
-          marginTop: '80px',
-          borderRadius: '10px'
+          backgroundColor: "#E5E4D7",
+          height: "75%",
+          marginTop: "80px",
+          borderRadius: "10px",
         }}
       >
         <Box
           sx={{
             my: 2,
             mx: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar
-            sx={{ bgcolor: '#517223' }}
-          >
+          <Avatar sx={{ bgcolor: "#517223" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h3" variant="h5">
             Log In To Your Growloc Account
           </Typography>
-          {/* <h1>Login to your Glowloc Account</h1> */}
           {isLoginError && renderErrorMessage()}
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={12} lg={12} >
-              <span className='input-label'>Phone number</span>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <span className="input-label">Phone number</span>
               <span className="label-light">*</span>
               <TextField
                 required
                 fullWidth
                 id="phone"
                 size="small"
-                className='custom-input-box'
+                className="custom-input-box"
                 // label="Phone number"
                 type="number"
                 name="phone"
                 value={phone}
-                helperText={phoneError ? "Please provide Vaild Phone Number" : ""}
+                helperText={
+                  phoneError ? "Please provide Vaild Phone Number" : ""
+                }
                 error={phoneError}
                 maxLength={10}
                 onInput={(e) => {
-                  e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
+                  e.target.value = Math.max(0, parseInt(e.target.value))
+                    .toString()
+                    .slice(0, 10);
                 }}
                 onChange={(event) => {
                   const { value } = event.target;
@@ -140,14 +143,14 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
                 autoFocus
               />
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={12} >
-              <span className='input-label'>Password</span>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <span className="input-label">Password</span>
               <span className="label-light">*</span>
               <TextField
                 required
                 fullWidth
                 size="small"
-                className='custom-input-box'
+                className="custom-input-box"
                 name="password"
                 type="password"
                 id="password"
@@ -160,15 +163,10 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
                 }}
               />
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={12} >
-              <FormControlLabel
-                label="Remember me"
-                control={
-                  <Checkbox/>
-                }
-              />
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <FormControlLabel label="Remember me" control={<Checkbox />} />
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={12} >
+            <Grid item xs={12} sm={12} md={12} lg={12}>
               <ButtonCustom
                 isFullWidth={true}
                 handleButtonClick={handleButtonClick}
@@ -178,21 +176,27 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
           </Grid>
           <Grid container>
             <Grid item xs>
-              <Link className='custom-anchor-tag' href="#/forgotpassword" variant="body2">
+              <Link
+                className="custom-anchor-tag"
+                href="#/forgotpassword"
+                variant="body2"
+              >
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link className='custom-anchor-tag' href="#/register" variant="body2">
+              <Link
+                className="custom-anchor-tag"
+                href="#/register"
+                variant="body2"
+              >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
           </Grid>
           {isLoginRequested && renderLoader(token)}
         </Box>
-        {/* </Box> */}
       </Grid>
-
     </Grid>
   );
 }

@@ -1,32 +1,26 @@
 import "./styles.css";
 import React, { useState } from "react";
-import Avatar from "@mui/material/Avatar";
 import {
-  Backdrop,
-  CircularProgress,
-  FormControl,
   Paper,
-  Button,
+  Avatar,
+  CssBaseline,
+  TextField,
+  Grid,
+  Box,
+  Typography,
 } from "@mui/material/";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import ButtonCustom from "../shared/button";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import growlocCover from "../../../public/assets/growlocCover.webp";
 import logo from "../../../public/assets/logo.png";
-import loginpage from  "../../../public/assets/loginpage.png";
+import loginpage from "../../../public/assets/loginpage.png";
 import TextBox from "../shared/text-box";
-//import bottomImage from '../../assets/login-bottom-image.png';
 
 export const ForgotPassword = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [password,setPassword] = useState("")
+  const [password, setPassword] = useState("");
 
   const [otp, setOtp] = useState("");
 
@@ -44,27 +38,27 @@ export const ForgotPassword = () => {
     const { value } = event.target;
     setMobileNumber(value);
     setPhoneError(false);
-
-  }
+  };
 
   const handleOtpChange = (e) => {
-   setOtp(e.target.value);
-  }
+    setOtp(e.target.value);
+  };
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value)
-  }
+    setPassword(e.target.value);
+  };
 
   return (
     <>
-      <Grid container component="main"
+      <Grid
+        container
+        component="main"
         sx={{
-          height: '100vh',
+          height: "100vh",
           backgroundImage: `url(${loginpage})`,
-          backgroundRepeat: 'no-repeat',
-          //backgroundColor: '#517223',
-          backgroundPosition: 'center',
-          backgroundSize: '100% 100vh',
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundSize: "100% 100vh",
         }}
       >
         <CssBaseline />
@@ -77,28 +71,24 @@ export const ForgotPassword = () => {
           flexDirection={"column"}
           alignItems={"center"}
           justifyContent="center"
-          // sx={{
-          //   backgroundColor: "F9F9F9",
-          //   backgroundRepeat: "no-repeat",
-          //   backgroundColor: "#517223",
-          //   backgroundPosition: "bottom",
-          //   backgroundSize: "contain",
-          // }}
         >
           <img src={logo} />
         </Grid>
-        <Grid 
-         item xs={12} sm={8} md={4} 
-         component={Paper} elevation={6} square
-         sx={{
-          backgroundColor: '#E5E4D7',
-          //   display : 'flex',
-          //  alignItems:'center',
-          height: '75%',
-          marginTop: '80px',
-          borderRadius: '10px'
-        }}
-         >
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={4}
+          component={Paper}
+          elevation={6}
+          square
+          sx={{
+            backgroundColor: "#E5E4D7",
+            height: "75%",
+            marginTop: "80px",
+            borderRadius: "10px",
+          }}
+        >
           <Box
             sx={{
               my: 2,
@@ -114,7 +104,7 @@ export const ForgotPassword = () => {
             <Typography component="h3" variant="h5">
               Forget Password
             </Typography>
-            <Box component="form" sx={{ mt: 1 }}  onSubmit={handleSubmit}>
+            <Box component="form" sx={{ mt: 1 }} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                   <span className="custom-input-label">Mobile Number</span>
@@ -131,9 +121,10 @@ export const ForgotPassword = () => {
                       phoneError ? "Please provide Vaild Phone Number" : ""
                     }
                     onInput={(e) => {
-                        e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
-                      }}
-      
+                      e.target.value = Math.max(0, parseInt(e.target.value))
+                        .toString()
+                        .slice(0, 10);
+                    }}
                     onChange={handleMobileNumberChnage}
                   />
                 </Grid>
@@ -153,7 +144,7 @@ export const ForgotPassword = () => {
                     <span className="custom-input-label">Enter OTP</span>
                     <span className="label-light">*</span>
                     <TextBox
-                    isWhite={true}
+                      isWhite={true}
                       fullWidth
                       value={otp}
                       onChange={handleOtpChange}
@@ -172,25 +163,29 @@ export const ForgotPassword = () => {
               </Box>
             )}
 
-{ password && (
+            {password && (
               <Box component="form" sx={{ mt: 1 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <span className="custom-input-label">Enter New Password</span>
+                    <span className="custom-input-label">
+                      Enter New Password
+                    </span>
                     <span className="label-light">*</span>
                     <TextBox
-                    isWhite={true}
+                      isWhite={true}
                       size="small"
                       fullWidth
                       value={otp}
-                      onChange ={handlePasswordChange}
+                      onChange={handlePasswordChange}
                       id="otp"
                       name="otp"
                       autoFocus
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <span className="custom-input-label">Re Enter New Password</span>
+                    <span className="custom-input-label">
+                      Re Enter New Password
+                    </span>
                     <span className="label-light">*</span>
                     <TextField
                       required

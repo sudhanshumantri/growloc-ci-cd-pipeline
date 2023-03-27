@@ -67,18 +67,6 @@ export default function AddZoneSensorsModal({
         <br />
         <DialogContent sx={{ paddingTop: "10px" }}>
           <Grid container spacing={2}>
-            {/* <Grid item xs={12} sm={6} md={6}>
-              <span className="input-label">Type</span>
-              <span className="label-light">*</span>
-              <FormControl fullWidth>
-                <TextBox
-                  isWhite={true}
-                  name="type"
-                  value={sensorsData.type}
-                  onChange={handleChange}
-                />
-              </FormControl>
-            </Grid> */}
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">Sensor Id</span>
               <span className="label-light">*</span>

@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {FormControl,DialogActions} from "@mui/material/";
-import ButtonCustom from "../../shared/button";
+import { FormControl, DialogActions } from "@mui/material/";
 import SingleCustomSelect from "../../shared/select";
 import CustomButton from "../../shared/button";
-
 import { Grid } from "@mui/material";
 import {
   GERMINATION_TYPE,
@@ -86,21 +84,11 @@ export default function AddFarm({
   });
 
   const { farmId } = useParams();
-  const {zoneId} = useParams();
+  const { zoneId } = useParams();
   const { ref: materialRef } = usePlacesWidget({
     apiKey: "AIzaSyADsa8IzAq5Q1JhgyllXK67uWc3BUrtwgY",
     onPlaceSelected: (place) => handleLocationUpdate(place),
-    // {
-    //   let lat = null;
-    //   let lng = null;
-    //   if (place?.geometry?.location) {
-    //     lat = place?.geometry?.location.lat();
-    //     lng = place?.geometry?.location.lng();
-    //   }
-    //   farmData.location = place.formatted_address;
-    //   setFarmData({ ...farmData, location: place.formatted_address })
-    // }
-    // inputAutocompleteValue: "country",
+
     options: {
       types: ["geocode", "establishment"],
     },
@@ -281,7 +269,7 @@ export default function AddFarm({
     if (farmId) {
       updateFarm({ payload, farmId });
     } else {
-      addFarm({...payload, zoneId:zoneId});
+      addFarm({ ...payload, zoneId: zoneId });
     }
   };
 
@@ -409,8 +397,8 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
-          <span className="input-label">Watering Type</span>
-              <span className="label-light">*</span>
+            <span className="input-label">Watering Type</span>
+            <span className="label-light">*</span>
             <FormControl fullWidth>
               <SingleCustomSelect
                 isWhite={true}
@@ -490,8 +478,8 @@ export default function AddFarm({
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
-          <span className="input-label">Watering Type</span>
-              <span className="label-light">*</span>
+            <span className="input-label">Watering Type</span>
+            <span className="label-light">*</span>
             <FormControl fullWidth>
               <SingleCustomSelect
                 isWhite={true}
@@ -793,28 +781,14 @@ export default function AddFarm({
   const renderActionButton = () => {
     return (
       <>
-        {/* <div className="flex-row-justify-center-container">
-          <ButtonCustom
-            isLight={true}
-            handleButtonClick={handleClose}
-            title="Cancel"
-          />
-          <ButtonCustom
-            handleButtonClick={handleFarmSave}
-            title={farmId ? "Update" : "Save"}
-          />
-        </div> */}
-         <div className="flex-row-justify-center-container">
+        <div className="flex-row-justify-center-container">
           <DialogActions>
             <CustomButton
               isLight={true}
               handleButtonClick={handleClose}
               title="Cancel"
             />
-            <CustomButton
-            handleButtonClick={handleFarmSave}
-            title="Save"
-            />
+            <CustomButton handleButtonClick={handleFarmSave} title="Save" />
           </DialogActions>
         </div>
       </>

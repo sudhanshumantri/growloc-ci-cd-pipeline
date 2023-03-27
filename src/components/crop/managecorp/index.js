@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import AddCropModal from "../addcrop";
 import DataTable from "../../shared/dataTable";
 import PageHeader from "../../shared/page-header";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Loader from "../../shared/loader";
 import ConfirmDialogBox from "../../shared/dailog/ConfirmDialogBox";
 import AddIcon from "@mui/icons-material/Add";
 import { Grid } from "@mui/material";
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { useNavigate } from 'react-router-dom';
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 export default function ManageCrop({
   fetchCrop,
   cropList,
@@ -46,9 +45,8 @@ export default function ManageCrop({
   };
 
   const handleBackButton = () => {
-    navigate('/')
-  }
-
+    navigate("/");
+  };
 
   let buttonArray = [
     {
@@ -60,7 +58,6 @@ export default function ManageCrop({
       action: "create",
     },
   ];
-  
 
   React.useEffect(() => {
     fetchCrop();
@@ -114,13 +111,11 @@ export default function ManageCrop({
     },
     {
       label: "Germination Method",
-      // key: "crop.estDate",
       key: "crop.germinationMethod.type",
       redirection: false,
     },
     {
       label: "Units Available",
-      // key: "crop.estDate",
       key: "qty",
       redirection: false,
     },
@@ -133,7 +128,6 @@ export default function ManageCrop({
           type: "icon",
           handler: handleEdit,
           icon: <EditOutlinedIcon sx={{ color: "#517223" }} />,
-          // color: "primary",
           isAuthRequired: true,
           from: "crops",
           action: "edit",
@@ -146,7 +140,6 @@ export default function ManageCrop({
           isAuthRequired: true,
           from: "crops",
           action: "delete",
-          // color: "warning",
         },
       ],
     },
@@ -175,7 +168,12 @@ export default function ManageCrop({
   }, []);
   return (
     <div>
-      <PageHeader title="Manage Crops" buttonTitle="back" buttonArray={buttonArray} showBackButton={showBackButton}/>
+      <PageHeader
+        title="Manage Crops"
+        buttonTitle="back"
+        buttonArray={buttonArray}
+        showBackButton={showBackButton}
+      />
       <div className="page-container">
         <Grid container spacing={2}>
           <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
@@ -204,7 +202,6 @@ export default function ManageCrop({
             subHeading={`Are you sure to delete "${cropInfo.name}" ?`}
           />
         )}
-
       </div>
     </div>
   );

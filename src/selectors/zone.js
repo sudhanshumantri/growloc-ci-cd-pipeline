@@ -143,4 +143,32 @@ createSelector(
 );
 export const selectZoneDashboardZoneUtilizationStagesError = () =>
 createSelector(selectZone, (services) => services.toJS()["zoneDashboardZoneUtilizationStagesError"]);
+// tasks
+
+export const selectZoneTaskList = () =>
+  createSelector(
+    selectZone,
+    (services) => services.toJS()["zoneTaskList"]
+  );
+export const selectIsZoneTaskListLoading = () =>
+  createSelector(
+    selectZone,
+    (services) => services.toJS()["isZoneTaskListLoading"]
+  );
+
+  export const selectZoneTaskListError = () =>
+  createSelector(
+    selectZone,
+    (services) => services.toJS()["FarmTaskListError"]
+  );
+
+
+  export const selectIsZoneTaskCommentLoading= () =>
+  createSelector(
+    selectZone,
+    (services) => services.toJS()["isZoneTaskCommentLoading"]
+  );
+
+export const selectZoneTaskCommentError = () =>
+  createSelector(selectZone, (services) => services.toJS()["zoneTaskCommentError"]);
 
