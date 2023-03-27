@@ -155,7 +155,7 @@ import { useNavigate } from 'react-router-dom';
 
 
     React.useEffect(() => {
-      fetchUsers({farmId});
+      fetchUsers(farmId);
     }, []);
 
     // let test = {lat: parseFloat(userLat), lng: parseFloat(userLong)}
