@@ -345,20 +345,20 @@ export default function FarmDashboard({
   };
 
   const handleEdit = (zoneEdit) => {
-    const { id, name, farmArea, zoneType, systemType } = zoneEdit;
+    const { zone_internal_id, name, farmArea, zoneType, systemType } = zoneEdit;
     const zoneDetails = {
       name: name,
       farmArea: farmArea,
       zoneType: zoneType,
       systemType: systemType,
-      id,
+      id : zone_internal_id
     };
     setZoneData(zoneDetails);
     setOpenZone(true);
   };
   const handleDelete = (zoneInfo) => {
-    const { id, name } = zoneInfo;
-    const zoneDetails = { id, name };
+    const { zone_internal_id, name } = zoneInfo;
+    const zoneDetails = { id:zone_internal_id, name };
     setZoneData(zoneDetails);
     setIsDeleteModelOpen(true);
   };

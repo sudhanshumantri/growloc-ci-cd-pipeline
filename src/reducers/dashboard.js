@@ -222,10 +222,11 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
               .set("deleteFarmDashboardZoneError", null);
           case DELETE_FARM_DASHBOARD_ZONE_SUCCESS:
             const  id = action.data;
-            const filteredList = farmDashboardZoneList.zoneInformation.filter((zone) => zone.id !== id);
+            const filteredList = farmDashboardZoneList.zoneInformation.filter((zone) => zone.zone_internal_id !== id);
+            let newfarmDashboardZoneList = {...farmDashboardZoneList,zoneInformation:filteredList};
             return state
               .set("isDeleteFarmDashboardZoneLoading", false)
-              .set("farmDashboardZoneList",filteredList)
+              .set("farmDashboardZoneList",newfarmDashboardZoneList)
               .set("deleteFarmDashboardZoneError", null);
           case DELETE_FARM_DASHBOARD_ZONE_FAILURE:
             return state.set("farmDashboardZoneList","");

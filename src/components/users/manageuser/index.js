@@ -153,7 +153,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 
 
     React.useEffect(() => {
-      fetchUsers({farmId});
+      fetchUsers(farmId);
     }, []);
 
     // let test = {lat: parseFloat(userLat), lng: parseFloat(userLong)}

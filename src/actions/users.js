@@ -14,9 +14,10 @@ import {
 
   } from "./actionTypes";
   
-  export function fetchUsersRequest() {
+  export function fetchUsersRequest(data) {
     return {
       type: FETCH_USERS_REQUEST,
+      data
     };
   }
   export function fetchUsersSuccess(data) {
