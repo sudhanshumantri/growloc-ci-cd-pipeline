@@ -95,7 +95,10 @@ const INITIAL_STATE = fromJS({
 export default function zoneReducer(state = INITIAL_STATE, action = {}) {
   let zoneDashboardZoneTaskList = state.toJS()["zoneDashboardZoneTaskList"];
   const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
-  const { user } = AUTH_OBJECT.profile || "";
+  console.log(AUTH_OBJECT,"AUTH_OBJECT zone reducer");
+  const { profile } = AUTH_OBJECT || "";
+  console.log(profile,"prfile");
+
   switch (action.type) {
     case FETCH_ALL_FARM_ZONE_REQUEST:
       return state
@@ -175,7 +178,7 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
       // const user = AUTH_OBJECT.profile;
       zoneDashboardZoneTaskList.tasks[zoneTaskRow].TasksHistory.push({
         ...action.data,
-        user,
+        profile,
       });
       return state
         .set("isFarmDashboardZoneCommetLoading", false)
@@ -326,7 +329,7 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
                   const ZoneTaskRowIndex = zoneTaskList.tasks.findIndex(
                     (l) => l.id == action.data.taskId
                   );
-                  zoneTaskList.tasks[ZoneTaskRowIndex].TasksHistory.push({ ...action.data, user });
+                  zoneTaskList.tasks[ZoneTaskRowIndex].TasksHistory.push({ ...action.data, profile });
                       return state
                         .set("isZoneTaskCommentLoading", false)
                         .set("zoneTaskList", zoneTaskList)

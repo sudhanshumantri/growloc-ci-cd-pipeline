@@ -50,7 +50,6 @@ export default function usersReducer(state = INITIAL_STATE, action = {}) {
       .set("addUserError", null);
     case ADD_USER_SUCCESS:
       const newUser = { id: action.data?.id, userId: action.data?.profile?.userId, farmId: usersList[0]?.farmId, user:{...action.data}}
-      // console.log(usersList, newUser)
       usersList.push(newUser);
       return state
         .set("isAddUserLoading", false)

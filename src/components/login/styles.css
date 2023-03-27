@@ -23,3 +23,6 @@
 .custom-input-box{
     background-color: #FFFFFF;
 }
+.error-message {
+    color: red;
+}

@@ -11,6 +11,7 @@ import {
   RadioGroup,
   Radio,
 } from "@mui/material/";
+import { useParams } from "react-router-dom";
 import TextBox from "../../shared/text-box";
 import CustomButton from "../../shared/button";
 import SingleCustomSelect from "../../shared/select";
@@ -26,7 +27,11 @@ export default function AddTaskModal({
   handleClose,
   usersList,
   farmInventoryList,
+  fetchFarmInventory,
+  fetchUsers
 }) {
+  const { farmId } = useParams();
+
   const [taskData, setTaskData] = useState({
     category: null,
     taskName: null,
@@ -55,6 +60,12 @@ export default function AddTaskModal({
     );
     return obj;
   };
+
+  useEffect(()=>{
+    fetchFarmInventory(farmId);
+         fetchUsers(farmId);
+       
+  },[])
   const handleChange = (e) => {
     const { value, name } = e.target;
     setTaskData({ ...taskData, [name]: value });

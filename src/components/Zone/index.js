@@ -129,9 +129,6 @@ export default function ZoneDashboard({
 
   let headerDropwdown = true;
 
-  const handleZoneSensorsModalToggle = () => {
-    setZoneSensors(!openZoneSensors);
-  };
   const handleZoneSensorSave = (data) => {
   };
   const handleZoneTaskSave = (data) => {
@@ -280,14 +277,6 @@ export default function ZoneDashboard({
           <Grid item xs={6} sm={6} md={9} lg={9}>
             <p className="section-title">Zone Sensors</p>
           </Grid>
-          <Grid item xs={6} sm={6} md={3} lg={3} sx={{ alignItems: "center" }}>
-            <ButtonCustom
-              title="Add New Sensors"
-              ICON={<AddIcon />}
-              handleButtonClick={handleZoneSensorsModalToggle}
-            />
-          </Grid>
-
           <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
             <DataTable data={{ headers: ZONE_HEADERS, rows: sensors || [] }} />
           </Grid>
@@ -532,11 +521,13 @@ export default function ZoneDashboard({
     );
   };
 
+
+
   let subtitle = `( Zone Area : ${zoneDashboardZoneInfoList?.farmArea || ""} )`;
   return (
     <div>
       <PageHeader
-        title={farmZoneList?.name || ""}
+        title={zoneDashboardZoneInfoList?.name || ""}
         subtitle={subtitle ?? ""}
         showBackButton={showBackButton}
         headerDropwdown={headerDropwdown}

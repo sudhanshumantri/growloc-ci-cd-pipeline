@@ -73,7 +73,6 @@ import Loader from '../shared/loader';
       };
       if (registrationValidations()) {
         registerRequest(payload)
-        // console.log(payload);
       }
     }
     return (

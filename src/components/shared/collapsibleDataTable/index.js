@@ -131,7 +131,8 @@ function Row({ row, handleCommentModalToggle }) {
             style={{ backgroundColor: "#EB955D" }}
           />
         </TableCell>
-
+        <TableCell className="table-header" align="left">
+        </TableCell>
         <TableCell>
           <IconButton
             title="Add New"
@@ -139,10 +140,11 @@ function Row({ row, handleCommentModalToggle }) {
           >
             <AddCommentOutlinedIcon sx={{ color: "#517223" }} />,
           </IconButton>
+
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={10}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={15}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <p className="label-light label-bold">History</p>

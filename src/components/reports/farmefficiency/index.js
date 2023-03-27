@@ -20,6 +20,7 @@ export default function FarmEfficiency({
 }) {
   let { farmId } = useParams();
   const [phData, setPhData] = useState({ labels: [], datasets: [] });
+  
   const [waterTempData, setWaterTempData] = useState({
     labels: [],
     datasets: [],
