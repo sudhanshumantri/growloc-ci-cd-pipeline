@@ -19,7 +19,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ButtonCustom from "../../shared/button";
 import AddTaskModal from "../../shared/addtask/addtask";
 import AddFarmTaskComment from "../../shared/addfarmtaskcomment";
-import { HARVEST_MONTH_OPTIONS, SEVERITY_LEVEL } from "../../../config";
+import { HARVEST_MONTH_OPTIONS, SEVERITY_LEVEL,TOGGLE_DATA } from "../../../config";
 import SingleCustomSelect from "../../shared/select";
 import { useNavigate } from "react-router-dom";
 import AddZoneModal from "../addzone";
@@ -95,7 +95,7 @@ export default function FarmDashboard({
   fetchFarmReportsFarmAverageMorality,
   fetchFarmReportFarmTatTaskCategories,
   farmReportsFarmTatTaskCategoriesList,
-  isFarmReportsFarmTatTaskCategoriesListLoading
+  isFarmReportsFarmTatTaskCategoriesListLoading,
 }) {
   const navigate = useNavigate();
   const { farmId } = useParams();
@@ -114,18 +114,11 @@ export default function FarmDashboard({
   const [selectedPlatform, setSelectedPlatform] = useState("farmEfficiency");
   const [selectedComponent, setSelectedComponent] = useState(null);
 
-  const platforms = [
-    { value: "farmEfficiency", label: "Farm Efficiency" },
-    { value: "mortalityRate", label: "Mortality Rate" },
-    { value: "taskTat", label: "TASK TAT" },
-    { value: "CapacityEfficiency", label: "Capacity Efficiency" },
-  ];
-
   useEffect(() => {
     handlePlatformChange(null, selectedPlatform);
   }, []);
 
-  const handleTabChange =  (event, newValue) => {
+  const handleTabChange = (event, newValue) => {
     setValue(newValue);
     if (newValue === "1") {
       fecthFarmDashboardZone({
@@ -143,13 +136,12 @@ export default function FarmDashboard({
         queryParams: { skip: 0, take: 10 },
       });
     } else if (newValue === "4") {
-      fetchFarmReports(farmId)
+      fetchFarmReports(farmId);
     } else if (newValue === "5") {
       fetchFarmDashboardFarmInfo(farmId);
     }
   };
 
-  console.log(dashboardHarvestList,"dashboardHarvestList");
   const handleTabInfoChange = (event, newValue) => {
     setTabInfo(newValue);
   };
@@ -163,8 +155,7 @@ export default function FarmDashboard({
     });
     fetchAllCropsLifecycle(farmId);
     fetchFarmDashboardInfo(farmId);
-  },[]);
-
+  }, []);
 
   const renderPlatformComponent = () => {
     if (selectedComponent === "farmEfficiency") {
@@ -203,16 +194,15 @@ export default function FarmDashboard({
         break;
       case "CapacityEfficiency":
         fetchFarmDashboardHarvest({ farmId: farmId, month });
-      fetchFarmDashboardFarmUtilizationCrops(farmId),
-      fetchFarmDashboardFarmUtilizationStages(farmId);
-      setSelectedComponent("CapacityEfficiency");
+        fetchFarmDashboardFarmUtilizationCrops(farmId),
+          fetchFarmDashboardFarmUtilizationStages(farmId);
+        setSelectedComponent("CapacityEfficiency");
         break;
       default:
         setSelectedComponent(null);
         break;
     }
   };
-
 
   const renderMonthlyHarvestBreakup = () => {
     const { cropBasedHarvestedData } = dashboardHarvestList;
@@ -242,9 +232,11 @@ export default function FarmDashboard({
           lg={12}
           className="card-outline-container graph-container"
         >
-          <BarChart chartData={dashboardHarvestList || []} labelKey="name"
-              valueKey="kgs"
-/>
+          <BarChart
+            chartData={dashboardHarvestList || []}
+            labelKey="name"
+            valueKey="kgs"
+          />
         </Grid>
         <Grid item xs={12} sm={12} md={12} sx={{ alignItems: "flex-end" }}>
           <TableDynamicPagination
@@ -286,7 +278,10 @@ export default function FarmDashboard({
     );
   };
   const renderTatTaskCategerios = () => {
-    console.log(farmReportsFarmTatTaskCategoriesList,"farmReportsFarmTatTaskCategoriesList");
+    console.log(
+      farmReportsFarmTatTaskCategoriesList,
+      "farmReportsFarmTatTaskCategoriesList"
+    );
     return (
       <>
         <Grid container spacing={2}>
@@ -311,7 +306,6 @@ export default function FarmDashboard({
       </>
     );
   };
-
 
   const zoneId = (farmDashboardCropSchedulesList || [])[0]?.zoneId;
   const headers = [
@@ -686,32 +680,6 @@ export default function FarmDashboard({
     );
   };
 
-  // useEffect(() => {
-  //   fetchFarmReports({ farmId, duration });
-  // }, []);
-
-  // const renderFarmEfficiency = () => {
-  //   console.log("hello");
-  //       return (
-  //     <Grid container spacing={2}>
-  //       <Grid item xs={8} sm={10} md={10}>
-  //         <span className="section-title">Monthly Harvest Breakup</span>
-  //       </Grid>
-  //     </Grid>
-  //   );
-
-  // }
-  // const renderMortalityRate = () => {
-  //   console.log("hello");
-  //       return (
-  //     <Grid container spacing={2}>
-  //       <Grid item xs={8} sm={10} md={10}>
-  //         <span className="section-title">Mortality</span>
-  //       </Grid>
-  //     </Grid>
-  //   );
-  // }
-
   const renderReportdDetails = () => {
     return (
       <>
@@ -722,23 +690,25 @@ export default function FarmDashboard({
             onChange={handlePlatformChange}
             aria-label="Platform"
           >
-            {platforms.map((platform) => (
-              <ToggleButton key={platform.value} value={platform.value} 
-              style={{
-                backgroundColor:
-                  selectedPlatform === platform.value ? "green" : undefined,
-              }}
+            {TOGGLE_DATA.map((platform) => (
+              <ToggleButton
+                key={platform.value}
+                value={platform.value}
+                style={{
+                  backgroundColor:
+                    selectedPlatform === platform.value ? "green" : undefined,
+                }}
               >
                 {platform.label}
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
-          <Grid item xs={12} sm={12} md={12} >
-          {renderPlatformComponent()}
+          <Grid item xs={12} sm={12} md={12}>
+            {renderPlatformComponent()}
           </Grid>
         </Grid>
       </>
-    ); 
+    );
   };
 
   const renderFarmZoneListView = () => {
@@ -836,7 +806,7 @@ export default function FarmDashboard({
                     {totalHarvested?.kgs || 0}(kgs)/
                     {totalHarvested?.qty || 0}(qty)
                   </h4>
-                  <p className="farm-card">Total Harves</p>
+                  <p className="farm-card">Total Harvest</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
                   <img
@@ -976,16 +946,19 @@ export default function FarmDashboard({
     );
   };
 
+
   const renderFarmArea = () => {
     return (
-      <>
-        <p className="section-title">
-          Farm Name : <span>{farmDashboardInfoList?.name}</span>
-        </p>
-        <p className="section-title">
-          Farm Area: <span>{farmDashboardInfoList?.farmArea}</span>
-        </p>
-      </>
+    <>
+    {farmDashboardInfoList ?
+      <p className="section-title">
+        Farm Name : <span>{farmDashboardInfoList?.name}</span>
+      </p> :""}
+      {farmDashboardInfoList ?
+      <p className="section-title">
+        Farm Area: <span>{farmDashboardInfoList?.farmArea}</span>
+      </p>:""}
+    </>
     );
   };
 
@@ -1168,18 +1141,28 @@ export default function FarmDashboard({
         buttonArray={buttonArray}
         showBackButton={showBackButton}
       />
-      {isFarmDashboardZoneListLoading && <Loader title="Fetching Farm Details" />}
+      {isFarmDashboardZoneListLoading && (
+        <Loader title="Fetching Farm Details" />
+      )}
       {isFarmDashboardZoneLoading && <Loader title="Adding Zone" />}
       {isDeleteFarmDashboardZoneLoading && <Loader title="Deleting Zone" />}
       {isAddLifecycleLoading && <Loader title="Adding Crops to Lifecycle " />}
-      {isDashboardCropSchedulesListLoading &&<Loader title=" Fecting Crops Schedules Details"/>}
-      {isDashboardFarmTaskLoading &&<Loader title=" Fecting Task Schedules Details"/>}
-      {isFarmReportsFarmAverageMortalityListLoading &&<Loader title=" Fecting Average Mortality Details"/>}
-      {isFarmReportsFarmTatTaskCategoriesListLoading &&<Loader title=" Fecting Average Tat Task Details"/>}
-      {isDashboardInfoListLoading &&<Loader title=" Fecting Farm details"/>}
+      {isDashboardCropSchedulesListLoading && (
+        <Loader title=" Fetching Crops Schedules Details" />
+      )}
+      {isDashboardFarmTaskLoading && (
+        <Loader title=" Fetching Task Schedules Details" />
+      )}
+      {isFarmReportsFarmAverageMortalityListLoading && (
+        <Loader title=" Fetching Average Mortality Details" />
+      )}
+      {isFarmReportsFarmTatTaskCategoriesListLoading && (
+        <Loader title=" Fetching Average Tat Task Details" />
+      )}
+      {isDashboardInfoListLoading && <Loader title=" Fecting Farm details" />}
       {isTaskScheduleTaskLoading && <Loader title="Adding Tasks" />}
       {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
-
+      {isDashboardHarvestListLoading && <Loader title="Fetching Harvest Details" />}
 
       <div className="page-container">
         <Grid container spacing={2}>
@@ -1209,6 +1192,7 @@ export default function FarmDashboard({
               <TabPanel value="3">{renderTaskSchedules()}</TabPanel>
               <TabPanel value="4">
                 {renderReportdDetails()}
+                {/* {renderReportdDetails()} */}
 
                 {/* <Grid container spacing={2}>
                   {renderFarmUtilization()}

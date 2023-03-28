@@ -207,3 +207,20 @@ export const SEVERITY_LEVEL = [
 ];
 
 
+export const TOGGLE_DATA = [
+  { value: "farmEfficiency", label: "Farm Efficiency" },
+  { value: "mortalityRate", label: "Mortality Rate" },
+  { value: "taskTat", label: "TASK TAT" },
+  { value: "CapacityEfficiency", label: "Capacity Efficiency" },
+];
+
+export const TOGGLE_ZONE_DATA = [
+  { value: "zoneEfficiency", label: "Zone Efficiency" },
+  { value: "mortalityRate", label: "Mortality Rate" },
+  { value: "taskTat", label: "TASK TAT" },
+  { value: "CapacityEfficiency", label: "Capacity Efficiency" },
+];
+
+
+
+

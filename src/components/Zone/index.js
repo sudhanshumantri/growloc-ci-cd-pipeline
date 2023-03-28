@@ -7,7 +7,7 @@ import DataTable from "../shared/dataTable";
 import SingleCustomSelect from "../shared/select";
 import BarChart from "../shared/chart/barChart";
 import PieChart from "../shared/chart/pieChart";
-import { HARVEST_MONTH_OPTIONS } from "../../config";
+import { HARVEST_MONTH_OPTIONS,TOGGLE_ZONE_DATA } from "../../config";
 import AddFarmTaskComment from "../shared/addfarmtaskcomment";
 import ButtonCustom from "../shared/button";
 import AddIcon from "@mui/icons-material/Add";
@@ -76,15 +76,9 @@ export default function ZoneDashboard({
   const [rowdata, setRowData] = useState({});
   const [openZoneSensors, setZoneSensors] = useState(false);
   const [value, setValue] = React.useState("1");
-  const [selectedPlatform, setSelectedPlatform] = useState("farmEfficiency");
+  const [selectedPlatform, setSelectedPlatform] = useState("zoneEfficiency");
   const [selectedComponent, setSelectedComponent] = useState(null);
 
-  const platforms = [
-    { value: "farmEfficiency", label: "Farm Efficiency" },
-    { value: "mortalityRate", label: "Mortality Rate" },
-    { value: "taskTat", label: "TASK TAT" },
-    { value: "CapacityEfficiency", label: "Capacity Efficiency" },
-  ];
 
 
   React.useEffect(() => {
@@ -105,11 +99,10 @@ export default function ZoneDashboard({
 
 
   useEffect(() => {
-    handlePlatformChange(null, selectedPlatform);
-  }, [selectedPlatform]);
+    handlePlatformChange(null, selectedPlatform);   
+  }, []);
 
-  console.log(zoneDashboardZoneTaskList,"zoneDashboardZoneTaskList");
-  const handleZoneTabChange = async (event, newValue) => {
+  const handleZoneTabChange =  (event, newValue) => {
     setValue(newValue);
     if (newValue === "1") {
       fetchZoneDashboardZoneSensors({
@@ -122,16 +115,14 @@ export default function ZoneDashboard({
         queryParams: { skip: 0, take: 10 },
       });
     } else if (newValue === "3") {
-      await fetchZoneDashboardZoneTaskSchedule({
+      fetchZoneDashboardZoneTaskSchedule({
         zoneId: zoneId,
         queryParams: { skip: 0, take: 10 },
       });
-      await fetchFarmInventory(farmId);
-      await fetchUsers(farmId);
     } else if (newValue === "4") {
-      fetchFarmDashboardHarvest({ zoneId: zoneId, month });
-      // await fetchZoneDashboardZoneUtilizationCrops(zoneId),
-      //   await fetchZoneDashboardZoneUtilizationStages(zoneId);
+      // fetchFarmDashboardHarvest({ zoneId: zoneId, month });
+      fetchZoneReports(zoneId)
+
     } else if (newValue === "5") {
       fetchFarmZone(zoneId);
     }
@@ -273,37 +264,75 @@ export default function ZoneDashboard({
 
 
 
-  const renderReportdDetails = () => {
-    return (
-      <>
-       <ToggleButtonGroup
-    value={selectedPlatform}
-    exclusive
-    onChange={handlePlatformChange}
-    aria-label="Platform"
-  >
-    {platforms.map((platform) => (
-      <ToggleButton key={platform.value} value={platform.value} style={{
-        backgroundColor:
-          selectedPlatform === platform.value ? "green" : undefined,
-      }}
->
-        {platform.label}
+//   const renderReportdDetails = () => {
+//     return (
+//       <>
+//       <Grid container spacing={2}>
+//        <ToggleButtonGroup
+//     value={selectedPlatform}
+//     exclusive
+//     onChange={handlePlatformChange}
+//     aria-label="Platform"
+//   >
+//     {TOGGLE_ZONE_DATA.map((platform) => (
+//       <ToggleButton key={platform.value} value={platform.value} style={{
+//         backgroundColor:
+//           selectedPlatform === platform.value ? "green" : undefined,
+//       }}
+// >
+//         {platform.label}
         
-      </ToggleButton>
-    ))}
-  </ToggleButtonGroup>
-  <Grid item xs={12} sm={12} md={12} >
-          {selectedComponent}
-          </Grid>
-      </>
-    );
-  };
+//       </ToggleButton>
+//     ))}
+//   </ToggleButtonGroup>
+//   <Grid item xs={12} sm={12} md={12} >
+//   {renderPlatformComponent()
+//   }       
+//    </Grid>
+//    </Grid>
+//       </>
+//     );
+//   };
+
+const renderReportdDetails = () => {
+  return (
+    <>
+      <Grid container spacing={2}>
+        <ToggleButtonGroup
+          value={selectedPlatform}
+          exclusive
+          onChange={handlePlatformChange}
+          aria-label="Platform"
+        >
+          {TOGGLE_ZONE_DATA.map((platform) => (
+            <ToggleButton
+              key={platform.value}
+              value={platform.value}
+              style={{
+                backgroundColor:
+                  selectedPlatform === platform.value ? "green" : undefined,
+              }}
+            >
+              {platform.label}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
+        <Grid item xs={12} sm={12} md={12}>
+          {renderPlatformComponent()}
+        </Grid>
+      </Grid>
+    </>
+  );
+};
+
+
+
+
 
   const handleChange = (event) => {
     const { value } = event.target;
     setMonth(value);
-    fetchFarmDashboardHarvest({ zoneId: parseInt(zoneId), month: value });
+    fetchFarmDashboardHarvest({ zoneId: zoneId, month: value });
   };
   const handleCommentModalToggle = (rowData) => {
     console.log(rowData,"rowData");
@@ -370,25 +399,45 @@ export default function ZoneDashboard({
     );
   };
 
+
+
+
+  const renderPlatformComponent = () => {
+    if (selectedComponent === "zoneEfficiency") {
+      return (
+<ZoneEfficiency  zoneReportsList={zoneReportsList} fetchZoneReports={fetchZoneReports} isZoneReportsListLoading={isZoneReportsListLoading}/>      );
+    } else if (selectedComponent === "mortalityRate") {
+      return renderAverageMortality();
+    } else if (selectedComponent === "taskTat") {
+      return renderTatTaskCategerios();
+    } else if (selectedComponent === "CapacityEfficiency") {
+      return renderMonthlyHarvestBreakup();
+    } else {
+      return null;
+    }
+  };
+
+
   const handlePlatformChange = (event, newPlatform) => {
     setSelectedPlatform(newPlatform);
-  console.log(newPlatform,"newPlatform");
+    console.log(newPlatform, "newPlatform");
     switch (newPlatform) {
-      case "farmEfficiency":
-        setSelectedComponent(<ZoneEfficiency  zoneReportsList={zoneReportsList} fetchZoneReports={fetchZoneReports} isZoneReportsListLoading={isZoneReportsListLoading}/>);
+      case "zoneEfficiency":
+        setSelectedComponent("zoneEfficiency");
         break;
       case "mortalityRate":
         fecthFarmReportsZoneAverageMortality(zoneId)
-        setSelectedComponent(renderAverageMortality());
+        setSelectedComponent("mortalityRate");
         break;
       case "taskTat":
         fetchFarmReportsZoneTatTaskRequest(zoneId)
-        setSelectedComponent(renderTatTaskCategerios());
+        setSelectedComponent("taskTat");
         break;
       case "CapacityEfficiency":
+        fetchFarmDashboardHarvest({ zoneId: zoneId, month });
         fetchZoneDashboardZoneUtilizationStages(zoneId)
         fetchZoneDashboardZoneUtilizationCrops(zoneId),
-        setSelectedComponent(renderMonthlyHarvestBreakup());
+        setSelectedComponent("CapacityEfficiency");
         break;
       default:
         setSelectedComponent(null);
@@ -630,7 +679,7 @@ export default function ZoneDashboard({
                     {totalHarvested?.kgs || 0}(kgs) /{totalHarvested?.qty || 0}
                     (qty)
                   </h4>
-                  <p className="farm-card">Total Harvested</p>
+                  <p className="farm-card">Total Harvest</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
                   <img
@@ -697,7 +746,7 @@ export default function ZoneDashboard({
         <Loader title="Feching Harvest Breakup details" />
       )} */}
       {isZoneDashboardZoneSensorLoading &&  (
-        <Loader title="Feching Zone sensors details" />
+        <Loader title="Fetching Zone sensors details" />
       )}
   {isZoneDashboardZoneCropSchedulesListLoading && <Loader title="Zone Crop Schedule Details "/>}
   {isZoneDashboardZoneTaskLoading && <Loader title="Zone Task Schedule Details "/>}
@@ -705,7 +754,8 @@ export default function ZoneDashboard({
 {isFarmReportsZoneTatTaskCategoriesListLoading && <Loader title="Zone Average Tat Task Detailas" />}
 {isFarmZoneLoading && <Loader title="Zone information Details" />}
 {isFarmDashboardZoneTaskLoading && <Loader title=" adding Task" />}
-      {isFarmDashboardZoneCommetLoading && <Loader title="Adding Comment" />}
+  {isFarmDashboardZoneCommetLoading && <Loader title="Adding Comment" />}
+  {isFarmZoneDashboardHarvestListLoading && <Loader title="Fetching Harvest details" />}
 
       <div className="page-container">
         <Grid container spacing={2}>
