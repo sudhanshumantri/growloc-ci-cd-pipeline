@@ -95,9 +95,9 @@ const INITIAL_STATE = fromJS({
 export default function zoneReducer(state = INITIAL_STATE, action = {}) {
   let zoneDashboardZoneTaskList = state.toJS()["zoneDashboardZoneTaskList"];
   let zoneTaskList = state.toJS()["zoneTaskList"];
-  console.log(zoneTaskList,"zoneTaskList");
   const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
-  console.log(zoneDashboardZoneTaskList,"zoneDashboardZoneTaskList reducers");
+  const user = AUTH_OBJECT?.profile;
+ // console.log(zoneDashboardZoneTaskList,"zoneDashboardZoneTaskList reducers");
   // const {user} = AUTH_OBJECT.profile || ""
   switch (action.type) {
     case FETCH_ALL_FARM_ZONE_REQUEST:
@@ -175,7 +175,6 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
       const zoneTaskRow = zoneDashboardZoneTaskList.tasks.findIndex(
         (zone) => zone.id == action.data.taskId
       );
-      // const user = AUTH_OBJECT.profile;
       zoneDashboardZoneTaskList.tasks[zoneTaskRow].TasksHistory.push({
         ...action.data,
         user,

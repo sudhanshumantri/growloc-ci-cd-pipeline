@@ -425,14 +425,14 @@ export default function CropLifeCycleDetails({
     selectedStageInformation,
     obj
   ) => {
-    let data = obj.payload;
+    let data = obj?.payload;
     return (
       <Grid item xs={12} sm={12} md={12}>
         <p className="section-title">Sensors Information </p>
-        <p>
+        {data && <p>
           Last Updated :{" "}
-          {moment(new Date(obj.timestamp)).format("MMMM Do YYYY hh:mm:ss A")}
-        </p>
+          {moment(new Date(obj?.timestamp)).format("MMMM Do YYYY hh:mm:ss A")}
+        </p>}
         <Paper className="life-cycle-details-card life-cycle-spacing ">
           <Table size="small" aria-label="a dense table">
             <TableHead className="table-header-row">
@@ -465,7 +465,7 @@ export default function CropLifeCycleDetails({
                       {param.name}
                     </TableCell>
                     <TableCell className="table-header" align="left">
-                      {param.name === "pH Level"
+                      {data && (param.name === "pH Level"
                         ? data["pH"]
                         : param.name == "Electric Conductivity"
                         ? data["conductivity"]
@@ -477,7 +477,7 @@ export default function CropLifeCycleDetails({
                         ? data["lightIntensity"]
                         : param.name == "Humidity"
                         ? data["humidity"]
-                        : ""}{" "}
+                        : "")}{" "}
                       <b>{param.unit}</b>
                     </TableCell>
                     <TableCell className="table-header" align="left">
@@ -495,7 +495,6 @@ export default function CropLifeCycleDetails({
   const renderSelectedStageInformation = () => {
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let selectedStageInformation = FarmCropLifecycleStages[activeStep];
-
     return (
       <Grid container spacing={2}>
         {isPusherData
@@ -506,7 +505,7 @@ export default function CropLifeCycleDetails({
           : !isRecentZoneSensorDataLoading
           ? renderSelectedSegmentSensorInformation(
               selectedStageInformation,
-              recentZoneSensorData.data[0]
+              recentZoneSensorData?.data[0]
             )
           : ""}
         <Grid item xs={12} sm={12} md={12}>

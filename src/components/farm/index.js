@@ -66,6 +66,7 @@ export default function ManageFarm({
   };
   React.useEffect(() => {
     fetchFarm();
+    
   }, []);
 
   let buttonArray = [

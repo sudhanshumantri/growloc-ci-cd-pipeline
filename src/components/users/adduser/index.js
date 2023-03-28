@@ -26,7 +26,7 @@ export default function AddUsersModal({
     password:false,
     phone:false,
     confirmpassword:false,
-  })
+  });
   const handleChange = (e) => {
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });
@@ -56,18 +56,28 @@ export default function AddUsersModal({
   };
 
   const handleSaveUser = () => {
+   if(userData.isEditMode){
+      let payload = {
+        name : userData.name,
+        role : userData.role
+      }
+      if(payload.name && payload.role){
+          handleSave(payload);
+      }
+   }else{
     let payload = {
       farmId: farmId,
       name: userData.name,
       password: userData.password,
       email:userData.email,
       phone: parseInt(userData.phone),
-      password: userData.password,
+      //password: userData.password,
       role: userData.role,
     };
     if (handleUserValidation()) {
       handleSave(payload);
     }
+   }
   };
 
   const isButtonSelected = (value) => {
