@@ -297,7 +297,7 @@ export default function ZoneDashboard({
 const renderReportdDetails = () => {
   return (
     <>
-      <Grid container spacing={2}>
+      <Grid item xs={12} sm={12} md={12} >
         <ToggleButtonGroup
           value={selectedPlatform}
           exclusive
@@ -698,22 +698,26 @@ const renderReportdDetails = () => {
   };
 
   const renderZoneInfo = () => {
+    const { name , farmArea , systemType, zoneType} = farmZoneList;
     return (
       <>
+      {name &&  farmArea && systemType && zoneType && ( 
+        <div>
         <p className="section-title">
-          Zone Name : <span>{farmZoneList?.name || ""}</span>
+          Zone Name : <span>{name}</span>
         </p>
         <p className="section-title">
           Farm Area:
-          <span>{farmZoneList?.farmArea || ""}</span>
+          <span>{farmArea}</span>
         </p>
         <p className="section-title">
-          {" "}
-          System Type :<span>{farmZoneList?.systemType || ""}</span>
+          System Type :<span>{systemType}</span>
         </p>
         <p className="section-title">
-          Zone Type :<span>{farmZoneList?.zoneType || ""}</span>
+          Zone Type :<span>{zoneType}</span>
         </p>
+        </div>
+        )}
       </>
     );
   };
@@ -778,7 +782,10 @@ const renderReportdDetails = () => {
               <TabPanel value="2">{renderZoneCropSchedules()}</TabPanel>
               <TabPanel value="3">{renderZoneTaskSchedules()}</TabPanel>
               <TabPanel value="4">
+                <Grid container spacing={2}>
                 {renderReportdDetails()}
+                </Grid>
+
                 {/* <Grid container spacing={2}>
                   {renderFarmZoneUtilization()}
                   {renderZoneCropsUtilization()}

@@ -683,7 +683,7 @@ export default function FarmDashboard({
   const renderReportdDetails = () => {
     return (
       <>
-        <Grid container spacing={2}>
+           <Grid item xs={12} sm={12} md={12}>
           <ToggleButtonGroup
             value={selectedPlatform}
             exclusive
@@ -703,10 +703,11 @@ export default function FarmDashboard({
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
+          </Grid>
+
           <Grid item xs={12} sm={12} md={12}>
             {renderPlatformComponent()}
           </Grid>
-        </Grid>
       </>
     );
   };
@@ -948,16 +949,19 @@ export default function FarmDashboard({
 
 
   const renderFarmArea = () => {
+    const {name,farmArea} = farmDashboardInfoList
     return (
     <>
-    {farmDashboardInfoList ?
+    {name && farmArea && (
+      <div>
+    <p className="section-title">
+        Farm Name : <span>{name}</span>
+      </p> 
       <p className="section-title">
-        Farm Name : <span>{farmDashboardInfoList?.name}</span>
-      </p> :""}
-      {farmDashboardInfoList ?
-      <p className="section-title">
-        Farm Area: <span>{farmDashboardInfoList?.farmArea}</span>
-      </p>:""}
+        Farm Area: <span>{farmArea}</span>
+      </p>
+      </div>
+    )}
     </>
     );
   };
@@ -966,11 +970,11 @@ export default function FarmDashboard({
     return (
       <>
         <p className="section-title">
-          Germination Type :{" "}
+          Germination Type :
           <span>{farmDashboardInfoList?.germinationType}</span>
         </p>
         <p className="section-title">
-          Germination Area :{" "}
+          Germination Area :
           <span>{farmDashboardInfoList?.germinationArea}</span>
         </p>
         <p className="section-title">
@@ -978,7 +982,7 @@ export default function FarmDashboard({
           <span>{farmDashboardInfoList?.germinationSeedsCount}</span>
         </p>
         <p className="section-title">
-          Watering Type :{" "}
+          Watering Type :
           <span>{farmDashboardInfoList?.germinationWateringType} </span>
         </p>
         <p className="section-title">
@@ -998,15 +1002,15 @@ export default function FarmDashboard({
           Nursery Area : <span>{farmDashboardInfoList?.nurseryArea}</span>
         </p>
         <p className="section-title">
-          No of Seeds Per Nursery :{" "}
+          No of Seeds Per Nursery :
           <span>{farmDashboardInfoList?.nurserySeedsCount}</span>
         </p>
         <p className="section-title">
-          Watering Type :{" "}
+          Watering Type :
           <span>{farmDashboardInfoList?.nurseryWateringType}</span>
         </p>
         <p className="section-title">
-          Watering Schedule:{" "}
+          Watering Schedule:
           <span>{farmDashboardInfoList?.nurseryWateringSchedule}</span>
         </p>
       </>
@@ -1023,18 +1027,18 @@ export default function FarmDashboard({
           Growring Area : <span>{farmDashboardInfoList?.growingArea}</span>
         </p>
         <p className="section-title">
-          No Of Plants In Row :{" "}
+          No Of Plants In Row :
           <span>{farmDashboardInfoList?.growingPlantCountPerRow}</span>
         </p>
         <p className="section-title">
           No Of Rows: <span>{farmDashboardInfoList?.growingRowCount}</span>
         </p>
         <p className="section-title">
-          Watering Schedule:{" "}
+          Watering Schedule:
           <span>{farmDashboardInfoList?.growingPlantSpacing}</span>
         </p>
         <p className="section-title">
-          Plant Spacing:{" "}
+          Plant Spacing:
           <span>{farmDashboardInfoList?.nurseryWateringSchedule}</span>
         </p>
       </>
@@ -1044,7 +1048,7 @@ export default function FarmDashboard({
     return (
       <>
         <p className="section-title">
-          Main Reservoir Capacity :{" "}
+          Main Reservoir Capacity :
           <span>{farmDashboardInfoList?.reservoirCapacity}</span>
         </p>
         <p>
@@ -1052,7 +1056,7 @@ export default function FarmDashboard({
           <span>{farmDashboardInfoList?.nutrientWaterReservoirCapacity}</span>
         </p>
         <p className="section-title">
-          Ph Up/Down Reservoir Capacity :{" "}
+          Ph Up/Down Reservoir Capacity :
           <span>{farmDashboardInfoList?.phReservoirCapacity}</span>
         </p>
         <p className="section-title">
@@ -1060,11 +1064,11 @@ export default function FarmDashboard({
           <span>{farmDashboardInfoList?.stockNutrientSolutionCapacity}</span>
         </p>
         <p className="section-title">
-          Nutrient Dilution Ratio :{" "}
+          Nutrient Dilution Ratio :
           <span>{farmDashboardInfoList?.nutrientdilutionRatio}</span>
         </p>
         <p className="section-title">
-          Type Of Nutrients :{" "}
+          Type Of Nutrients :
           <span>{farmDashboardInfoList?.nutrientsType}</span>
         </p>
       </>
@@ -1191,7 +1195,10 @@ export default function FarmDashboard({
               <TabPanel value="2">{renderCropSchedules()}</TabPanel>
               <TabPanel value="3">{renderTaskSchedules()}</TabPanel>
               <TabPanel value="4">
+              <Grid container spacing={2}>
                 {renderReportdDetails()}
+                </Grid>
+
                 {/* {renderReportdDetails()} */}
 
                 {/* <Grid container spacing={2}>
