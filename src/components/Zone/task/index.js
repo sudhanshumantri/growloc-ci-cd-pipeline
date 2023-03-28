@@ -31,6 +31,7 @@ export default function ManageZoneTasks({
   }, []);
 
   const handleCommentModalToggle = (rowData) => {
+    console.log(rowData,"rowData");
     setRowData(rowData);
     setCommetTask(!openCommetTask);
   };
@@ -40,7 +41,7 @@ export default function ManageZoneTasks({
       addZoneTaskComment({
         ...data,
         taskId: parseInt(rowdata.id),
-        userId: parseInt(rowdata.createdByProfile.id),
+        userId: (rowdata.createdByProfile.userId),
       });
     }
     handleCommentModalToggle();
@@ -83,6 +84,13 @@ export default function ManageZoneTasks({
       redirection: false,
       isDate: true,
     },
+    {
+      label: "Status",
+      key: "task.status",
+      redirection: false,
+      isDate: true,
+    },
+
     
   ];
 

@@ -14,8 +14,6 @@ export default function ZoneEfficiency({
   zoneReportsList,
   fetchZoneReports,
   isZoneReportsListLoading,
-  fecthFarmReportsZoneAverageMortality,
-  farmReportsZoneAverageMortalityList,
 }) {
   let { farmId } = useParams();
   const [phData, setPhData] = useState({ labels: [], datasets: [] });
@@ -32,7 +30,8 @@ export default function ZoneEfficiency({
     datasets: [],
   });
   const [duration, setDuration] = useState(100);
-  const timeframes = ["4hr", "12hr", "24hr", "56hr", "1w"];
+  const timeframes = ["4hr", "12hr", "24hr", "3d", "1w"];
+
   const phChartOptions = {
     plugins: {
       legend: {
@@ -66,11 +65,31 @@ export default function ZoneEfficiency({
     },
   };
 
+  const convertDurationToHours = (duration) => {
+    switch (duration) {
+      case "4hr":
+        return 4;
+      case "12hr":
+        return 12;
+      case "24hr":
+        return 24;
+      case "3d":
+        return 24 * 3; 
+      case "1w":
+        return 24 * 7; 
+      default:
+        return 0;
+    }
+  };
+  
+
   const handleTimeFrameChange = (event) => {
     const { value } = event.target;
     setDuration(value);
-    fetchZoneReports({ id: farmId, duration: parseInt(value) });
+    const durationInHours = convertDurationToHours(value);
+    fetchZoneReports({ id: farmId, duration: durationInHours });
   };
+
   useEffect(() => {
     fetchZoneReports({ farmId, duration });
   }, []);

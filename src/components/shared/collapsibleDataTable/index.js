@@ -132,6 +132,7 @@ function Row({ row, handleCommentModalToggle }) {
           />
         </TableCell>
         <TableCell className="table-header" align="left">
+        {row.status}
         </TableCell>
         <TableCell>
           <IconButton
