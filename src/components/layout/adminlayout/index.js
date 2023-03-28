@@ -20,9 +20,9 @@ import AdminSideBar from "../../admin/adminsidebar";
 
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
 injectReducer("login", loginReducer);
-injectReducer("users", usersReducer);
+//injectReducer("users", usersReducer);
 injectReducer("admin", adminReducer);
-injectSagas(userSagas);
+//injectSagas(userSagas);
 injectSagas(loginSagas);
 injectSagas(adminSagas);
 
