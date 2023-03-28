@@ -95,6 +95,7 @@ export default function FarmDashboard({
   fetchFarmReportsFarmAverageMorality,
   fetchFarmReportFarmTatTaskCategories,
   farmReportsFarmTatTaskCategoriesList,
+  isFarmReportsFarmTatTaskCategoriesListLoading
 }) {
   const navigate = useNavigate();
   const { farmId } = useParams();
@@ -113,21 +114,20 @@ export default function FarmDashboard({
   const [selectedPlatform, setSelectedPlatform] = useState("farmEfficiency");
   const [selectedComponent, setSelectedComponent] = useState(null);
 
-
   const platforms = [
     { value: "farmEfficiency", label: "Farm Efficiency" },
     { value: "mortalityRate", label: "Mortality Rate" },
     { value: "taskTat", label: "TASK TAT" },
     { value: "CapacityEfficiency", label: "Capacity Efficiency" },
   ];
+
   useEffect(() => {
     handlePlatformChange(null, selectedPlatform);
-  }, [selectedPlatform]);
+  }, []);
 
-  const handleTabChange = async (event, newValue) => {
+  const handleTabChange =  (event, newValue) => {
     setValue(newValue);
     if (newValue === "1") {
-      // fecthFarmDashboardZone(farmId);
       fecthFarmDashboardZone({
         farmId: farmId,
         queryParams: { skip: 0, take: 10 },
@@ -142,22 +142,14 @@ export default function FarmDashboard({
         farmId: farmId,
         queryParams: { skip: 0, take: 10 },
       });
-      // await fetchFarmInventory(farmId);
-      // if (usersList.length <= 0) {
-      //   await fetchUsers(farmId);
-      // }
     } else if (newValue === "4") {
-      await fetchFarmDashboardHarvest({
-        farmId: farmId,
-        month,
-        queryParams: { skip: 0, take: 10 },
-      });
-      await fetchFarmDashboardFarmUtilizationCrops(farmId),
-        await fetchFarmDashboardFarmUtilizationStages(farmId);
+      fetchFarmReports(farmId)
     } else if (newValue === "5") {
       fetchFarmDashboardFarmInfo(farmId);
     }
   };
+
+  console.log(dashboardHarvestList,"dashboardHarvestList");
   const handleTabInfoChange = (event, newValue) => {
     setTabInfo(newValue);
   };
@@ -171,9 +163,56 @@ export default function FarmDashboard({
     });
     fetchAllCropsLifecycle(farmId);
     fetchFarmDashboardInfo(farmId);
-    fetchFarmReportsFarmAverageMorality(farmId);
-    fetchFarmReportFarmTatTaskCategories(farmId);
-  }, []);
+  },[]);
+
+
+  const renderPlatformComponent = () => {
+    if (selectedComponent === "farmEfficiency") {
+      return (
+        <FarmEfficiency
+          fetchFarmReports={fetchFarmReports}
+          farmReportsList={farmReportsList}
+          isFarmReportsListLoading={isFarmReportsListLoading}
+        />
+      );
+    } else if (selectedComponent === "mortalityRate") {
+      return renderAverageMortality();
+    } else if (selectedComponent === "taskTat") {
+      return renderTatTaskCategerios();
+    } else if (selectedComponent === "CapacityEfficiency") {
+      return renderMonthlyHarvestBreakup();
+    } else {
+      return null;
+    }
+  };
+
+  const handlePlatformChange = (event, newPlatform) => {
+    setSelectedPlatform(newPlatform);
+    console.log(newPlatform, "newPlatform");
+    switch (newPlatform) {
+      case "farmEfficiency":
+        setSelectedComponent("farmEfficiency");
+        break;
+      case "mortalityRate":
+        fetchFarmReportsFarmAverageMorality(farmId);
+        setSelectedComponent("mortalityRate");
+        break;
+      case "taskTat":
+        fetchFarmReportFarmTatTaskCategories(farmId);
+        setSelectedComponent("taskTat");
+        break;
+      case "CapacityEfficiency":
+        fetchFarmDashboardHarvest({ farmId: farmId, month });
+      fetchFarmDashboardFarmUtilizationCrops(farmId),
+      fetchFarmDashboardFarmUtilizationStages(farmId);
+      setSelectedComponent("CapacityEfficiency");
+        break;
+      default:
+        setSelectedComponent(null);
+        break;
+    }
+  };
+
 
   const renderMonthlyHarvestBreakup = () => {
     const { cropBasedHarvestedData } = dashboardHarvestList;
@@ -203,7 +242,9 @@ export default function FarmDashboard({
           lg={12}
           className="card-outline-container graph-container"
         >
-          <BarChart chartData={cropBasedHarvestedData || []} />
+          <BarChart chartData={dashboardHarvestList || []} labelKey="name"
+              valueKey="kgs"
+/>
         </Grid>
         <Grid item xs={12} sm={12} md={12} sx={{ alignItems: "flex-end" }}>
           <TableDynamicPagination
@@ -245,11 +286,12 @@ export default function FarmDashboard({
     );
   };
   const renderTatTaskCategerios = () => {
+    console.log(farmReportsFarmTatTaskCategoriesList,"farmReportsFarmTatTaskCategoriesList");
     return (
       <>
         <Grid container spacing={2}>
           <Grid item xs={8} sm={10} md={10}>
-            <span className="section-title">Average Mortality</span>
+            <span className="section-title">Tat Task Category</span>
           </Grid>
           <Grid
             item
@@ -270,36 +312,8 @@ export default function FarmDashboard({
     );
   };
 
-  const handlePlatformChange = (event, newPlatform) => {
-    setSelectedPlatform(newPlatform);
-    console.log(newPlatform, "newPlatform");
-    switch (newPlatform) {
-      case "farmEfficiency":
-        setSelectedComponent(
-          <FarmEfficiency
-            fetchFarmReports={fetchFarmReports}
-            farmReportsList={farmReportsList}
-            isFarmReportsListLoading={isFarmReportsListLoading}
-          />
-        );
-        break;
-      case "mortalityRate":
-        setSelectedComponent(renderAverageMortality());
-        break;
-      case "taskTat":
-        setSelectedComponent(renderTatTaskCategerios());
-        break;
-      case "CapacityEfficiency":
-        setSelectedComponent(renderMonthlyHarvestBreakup());
-        break;
-      default:
-        setSelectedComponent(null);
-        break;
-    }
-  };
 
   const zoneId = (farmDashboardCropSchedulesList || [])[0]?.zoneId;
-
   const headers = [
     {
       label: "Batch Number",
@@ -719,10 +733,12 @@ export default function FarmDashboard({
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
-          {selectedComponent}
+          <Grid item xs={12} sm={12} md={12} >
+          {renderPlatformComponent()}
+          </Grid>
         </Grid>
       </>
-    );
+    ); 
   };
 
   const renderFarmZoneListView = () => {
@@ -1152,24 +1168,18 @@ export default function FarmDashboard({
         buttonArray={buttonArray}
         showBackButton={showBackButton}
       />
-      {/* {isDashboardFarmListLoading && <Loader title="Fetching Details" />} */}
-      {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
-      {isTaskScheduleTaskLoading && <Loader title="Adding Tasks" />}
-      {isDashboardHarvestListLoading && <Loader title="Fetching Details" />}
+      {isFarmDashboardZoneListLoading && <Loader title="Fetching Farm Details" />}
       {isFarmDashboardZoneLoading && <Loader title="Adding Zone" />}
       {isDeleteFarmDashboardZoneLoading && <Loader title="Deleting Zone" />}
-      {isUpdateFarmDashboardZoneLoading && <Loader title="Updating Zone  " />}
       {isAddLifecycleLoading && <Loader title="Adding Crops to Lifecycle " />}
-      {isDashboardCropSchedulesListLoading && (
-        <Loader title=" Fecting Crops Schedules Details " />
-      )}
-      {isDashboardInfoListLoading && <Loader title=" Fecting Farm Details " />}
-      {isFarmReportsListLoading && (
-        <Loader title=" Fecting Farm  Reports Details " />
-      )}
-      {isFarmDashboardZoneListLoading && (
-        <Loader title=" Fetching Zone Details " />
-      )}
+      {isDashboardCropSchedulesListLoading &&<Loader title=" Fecting Crops Schedules Details"/>}
+      {isDashboardFarmTaskLoading &&<Loader title=" Fecting Task Schedules Details"/>}
+      {isFarmReportsFarmAverageMortalityListLoading &&<Loader title=" Fecting Average Mortality Details"/>}
+      {isFarmReportsFarmTatTaskCategoriesListLoading &&<Loader title=" Fecting Average Tat Task Details"/>}
+      {isDashboardInfoListLoading &&<Loader title=" Fecting Farm details"/>}
+      {isTaskScheduleTaskLoading && <Loader title="Adding Tasks" />}
+      {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
+
 
       <div className="page-container">
         <Grid container spacing={2}>

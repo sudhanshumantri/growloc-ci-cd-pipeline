@@ -101,6 +101,8 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
   // const { tasks } = farmDashboardTaskList
   const { farmdDetails } = dashboardFarmList;
   const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
+  console.log(AUTH_OBJECT,"AUTH_OBJECT dashboard");
+  
   switch (action.type) {
     case FETCH_ALL_DASHBOARD_FARM_REQUEST:
       return state

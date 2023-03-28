@@ -74,8 +74,8 @@ const INITIAL_STATE = fromJS({
   zoneDashboardZoneTaskList: {},
   zoneDashboardZoneTaskListError: null,
   isZoneDashboardZoneTaskLoading: false,
-  zoneDashboardZoneTaskList: {},
-  zoneDashboardZoneTaskListError: null,
+  // zoneDashboardZoneTaskList: {},
+  // zoneDashboardZoneTaskListError: null,
   isZoneDashboardZoneSensorLoading: false,
   zoneDashboardZoneSensorList: {},
   zoneDashboardZoneSensorError: null,
@@ -94,11 +94,12 @@ const INITIAL_STATE = fromJS({
 });
 export default function zoneReducer(state = INITIAL_STATE, action = {}) {
   let zoneDashboardZoneTaskList = state.toJS()["zoneDashboardZoneTaskList"];
+  let zoneTaskList = state.toJS()["zoneTaskList"];
+  console.log(zoneTaskList,"zoneTaskList");
   const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
-  console.log(AUTH_OBJECT,"AUTH_OBJECT zone reducer");
-  const { profile } = AUTH_OBJECT || "";
-  console.log(profile,"prfile");
-
+  console.log(zoneDashboardZoneTaskList,"zoneDashboardZoneTaskList reducers");
+  const {user} = AUTH_OBJECT.profile || ""
+  const{profile} = AUTH_OBJECT;
   switch (action.type) {
     case FETCH_ALL_FARM_ZONE_REQUEST:
       return state
@@ -178,7 +179,7 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
       // const user = AUTH_OBJECT.profile;
       zoneDashboardZoneTaskList.tasks[zoneTaskRow].TasksHistory.push({
         ...action.data,
-        profile,
+        user,
       });
       return state
         .set("isFarmDashboardZoneCommetLoading", false)
@@ -320,7 +321,7 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
                     .set("zoneTaskList", [])  
                     .set("zoneTaskListError", action.error);
                     //
-            
+  
                     case ADD_ZONE_TASK_COMMENT_REQUEST:
                       return state
                         .set("isZoneTaskCommentLoading", true)
@@ -329,7 +330,7 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
                   const ZoneTaskRowIndex = zoneTaskList.tasks.findIndex(
                     (l) => l.id == action.data.taskId
                   );
-                  zoneTaskList.tasks[ZoneTaskRowIndex].TasksHistory.push({ ...action.data, profile });
+                  zoneTaskList.tasks[ZoneTaskRowIndex].TasksHistory.push({ ...action.data, user });
                       return state
                         .set("isZoneTaskCommentLoading", false)
                         .set("zoneTaskList", zoneTaskList)

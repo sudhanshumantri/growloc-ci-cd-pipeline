@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback,useEffect } from "react";
 import { useParams,useNavigate} from "react-router-dom";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
@@ -78,6 +78,7 @@ export default function ZoneDashboard({
   const [value, setValue] = React.useState("1");
   const [selectedPlatform, setSelectedPlatform] = useState("farmEfficiency");
   const [selectedComponent, setSelectedComponent] = useState(null);
+
   const platforms = [
     { value: "farmEfficiency", label: "Farm Efficiency" },
     { value: "mortalityRate", label: "Mortality Rate" },
@@ -100,11 +101,14 @@ export default function ZoneDashboard({
       });
     }
     fetchZoneReports(zoneId)
-    fecthFarmReportsZoneAverageMortality(zoneId)
-    fetchFarmReportsZoneTatTaskRequest(zoneId)
   }, [zoneId]);
 
-  console.log(farmReportsZoneTatTaskCategoriesList,"farmReportsZoneTatTaskCategoriesList");
+
+  useEffect(() => {
+    handlePlatformChange(null, selectedPlatform);
+  }, [selectedPlatform]);
+
+  console.log(zoneDashboardZoneTaskList,"zoneDashboardZoneTaskList");
   const handleZoneTabChange = async (event, newValue) => {
     setValue(newValue);
     if (newValue === "1") {
@@ -125,9 +129,9 @@ export default function ZoneDashboard({
       await fetchFarmInventory(farmId);
       await fetchUsers(farmId);
     } else if (newValue === "4") {
-      await fetchFarmDashboardHarvest({ zoneId: zoneId, month });
-      await fetchZoneDashboardZoneUtilizationCrops(zoneId),
-        await fetchZoneDashboardZoneUtilizationStages(zoneId);
+      fetchFarmDashboardHarvest({ zoneId: zoneId, month });
+      // await fetchZoneDashboardZoneUtilizationCrops(zoneId),
+      //   await fetchZoneDashboardZoneUtilizationStages(zoneId);
     } else if (newValue === "5") {
       fetchFarmZone(zoneId);
     }
@@ -239,6 +243,12 @@ export default function ZoneDashboard({
       redirection: false,
       isDate: true,
     },
+    {
+      label: "Status",
+      key: "status",
+      redirection: false,
+      isDate: true,
+    },
   ];
   const ZONE_HEADERS = [
     {
@@ -283,7 +293,9 @@ export default function ZoneDashboard({
       </ToggleButton>
     ))}
   </ToggleButtonGroup>
-  {selectedComponent}
+  <Grid item xs={12} sm={12} md={12} >
+          {selectedComponent}
+          </Grid>
       </>
     );
   };
@@ -294,6 +306,7 @@ export default function ZoneDashboard({
     fetchFarmDashboardHarvest({ zoneId: parseInt(zoneId), month: value });
   };
   const handleCommentModalToggle = (rowData) => {
+    console.log(rowData,"rowData");
     setRowData(rowData);
     setCommetTask(!openCommetTask);
   };
@@ -365,12 +378,16 @@ export default function ZoneDashboard({
         setSelectedComponent(<ZoneEfficiency  zoneReportsList={zoneReportsList} fetchZoneReports={fetchZoneReports} isZoneReportsListLoading={isZoneReportsListLoading}/>);
         break;
       case "mortalityRate":
+        fecthFarmReportsZoneAverageMortality(zoneId)
         setSelectedComponent(renderAverageMortality());
         break;
       case "taskTat":
+        fetchFarmReportsZoneTatTaskRequest(zoneId)
         setSelectedComponent(renderTatTaskCategerios());
         break;
       case "CapacityEfficiency":
+        fetchZoneDashboardZoneUtilizationStages(zoneId)
+        fetchZoneDashboardZoneUtilizationCrops(zoneId),
         setSelectedComponent(renderMonthlyHarvestBreakup());
         break;
       default:
@@ -407,7 +424,8 @@ export default function ZoneDashboard({
           lg={12}
           className="card-outline-container graph-container"
         >
-          <BarChart chartData={farmZoneDashboardHarvestList || []} />
+          <BarChart chartData={farmZoneDashboardHarvestList || []}  labelKey="name"
+              valueKey="kgs"/>
         </Grid>
                <Grid container spacing={2}>
                {renderFarmZoneUtilization()}
@@ -651,8 +669,6 @@ export default function ZoneDashboard({
     );
   };
 
-
-
   let subtitle = `( Zone Area : ${zoneDashboardZoneInfoList?.farmArea || ""} )`;
   return (
     <div>
@@ -667,9 +683,10 @@ export default function ZoneDashboard({
         valuekey="value"
         handleChange={handleDropDowmChange}
       />
-      {isFarmZoneLoading && <Loader title=" Feching Zone Details" />}
+      {/* {isFarmZoneLoading && isZoneDashboardZoneSensorLoading &&  <Loader title=" Feching Zone Details" />}
       {isFarmDashboardZoneTaskLoading && <Loader title=" adding Task" />}
       {isFarmDashboardZoneCommetLoading && <Loader title="Adding Comment" />}
+
       {isZoneDashboardZoneCropSchedulesListLoading && (
         <Loader title="Zone Crop Schedule Details" />
       )}
@@ -678,10 +695,18 @@ export default function ZoneDashboard({
       )}
       {isFarmZoneDashboardHarvestListLoading && (
         <Loader title="Feching Harvest Breakup details" />
+      )} */}
+      {isZoneDashboardZoneSensorLoading &&  (
+        <Loader title="Feching Zone sensors details" />
       )}
-      {isZoneDashboardZoneSensorLoading && (
-        <Loader title="Feching Zone  details" />
-      )}
+  {isZoneDashboardZoneCropSchedulesListLoading && <Loader title="Zone Crop Schedule Details "/>}
+  {isZoneDashboardZoneTaskLoading && <Loader title="Zone Task Schedule Details "/>}
+{isFarmReportsZoneAverageMortalityListLoading && <Loader title="Zone Average Mortality Detailas" />}
+{isFarmReportsZoneTatTaskCategoriesListLoading && <Loader title="Zone Average Tat Task Detailas" />}
+{isFarmZoneLoading && <Loader title="Zone information Details" />}
+{isFarmDashboardZoneTaskLoading && <Loader title=" adding Task" />}
+      {isFarmDashboardZoneCommetLoading && <Loader title="Adding Comment" />}
+
       <div className="page-container">
         <Grid container spacing={2}>
           {renderZoneCard()}
@@ -721,6 +746,8 @@ export default function ZoneDashboard({
           handleClose={handleModalToggle}
           usersList={usersList}
           farmInventoryList={farmInventoryList}
+          fetchFarmInventory={fetchFarmInventory}
+          fetchUsers={fetchUsers}
         />
       )}
       {openCommetTask && (
