@@ -42,7 +42,7 @@ export default function AddTaskModal({
     endTime: null,
     itemName: "",
     qty: null,
-    severity: null,
+    severity:1,
   });
   const [dueDate, setDueDate] = React.useState(moment());
   const [unitErrorMessage, setUnitErrorMessage] = useState("");
@@ -188,8 +188,8 @@ export default function AddTaskModal({
                 <RadioGroup
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="severity"
-                  value={taskData.severity ?? ""}
-                  onChange={({ target }) =>
+                  value={taskData.severity}                 
+                   onChange={({ target }) =>
                     handleChange({
                       target: {
                         value: parseInt(target.value),

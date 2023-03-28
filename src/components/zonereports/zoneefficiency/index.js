@@ -29,7 +29,7 @@ export default function ZoneEfficiency({
     labels: [],
     datasets: [],
   });
-  const [duration, setDuration] = useState(100);
+  const [duration, setDuration] = useState("4hr");
   const timeframes = ["4hr", "12hr", "24hr", "3d", "1w"];
 
   const phChartOptions = {

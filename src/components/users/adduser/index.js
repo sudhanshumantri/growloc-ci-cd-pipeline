@@ -79,10 +79,11 @@ export default function AddUsersModal({
     }
    }
   };
-  const isButtonSelected = (value) => {
-   return !!(userData.role === value);
-  };
 
+  const isButtonSelected = (value) => {
+    return userData.role === value || (userData.role === undefined || userData.role === null) && value === "farmmanager";
+  };
+    
   const renderActionButtons = () => {
     return (
       <>
@@ -192,13 +193,11 @@ export default function AddUsersModal({
                     <Checkbox
                       value="farmmanager"
                       name="role"
-                      checked={isButtonSelected("farmmanager")}
+                      checked={isButtonSelected("farmmanager") }
                       onChange={(e) => handleChange(e)}
                     />
                   }
                   label={<p className="input-label">Farmmanager</p>}
-                  onChange={handleChange}
-
                 />
                 <FormControlLabel
                   control={
