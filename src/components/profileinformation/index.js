@@ -47,8 +47,10 @@ export default function ProfileInformation({
     passwordValidations[name] &&
       setPasswordValidations({ ...passwordValidations, [name]: false });
   };
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+  const handlePasswordChange = (e) => {
+    // setPassword(event.target.value);
+    setPassword(e.target.value);
+    setPhoneValidations(false)
   };
   const handleBackButton = () => {
     navigate(-1);
@@ -80,14 +82,16 @@ export default function ProfileInformation({
   const handleUpdatePassword = () => {
     let errors = { ...passwordValidations };
     let isValid = true;
-    if (!updatePassword.newPassword) {
+
+    if (!updatePassword.newPassword || updatePassword.newPassword.length < 6) {
       errors.newPassword = true;
       isValid = false;
     }
+
     if (!updatePassword.confirmPassword) {
       errors.confirmPassword = true;
       isValid = false;
-      setconfirmPasswordError("Please Provide Password ");
+      setconfirmPasswordError("Please Provide confirm Password ");
     }
     if (updatePassword.newPassword !== updatePassword.confirmPassword) {
       errors.confirmPassword = true;
@@ -110,14 +114,11 @@ export default function ProfileInformation({
   const handlePhoneValidations = () => {
     let errors = { ...phoneValidations };
     let isValid = true;
-    if (!profileData.phone) {
-      errors.phone = true;
-      isValid = false;
-    }
-    if (!password) {
+    if (!password || password.length < 6) {
       errors.password = true;
       isValid = false;
     }
+
     setPhoneValidations(errors);
     return isValid;
   };
@@ -242,7 +243,7 @@ export default function ProfileInformation({
               error={phoneValidations.password}
               helperText={
                 phoneValidations.password
-                  ? "Please provide current password"
+                  ? "please provide current password atleast 6 characters"
                   : ""
               }
             />
@@ -285,7 +286,7 @@ export default function ProfileInformation({
             error={passwordValidations.newPassword}
             helperText={
               passwordValidations.newPassword
-                ? "Please provide current password"
+                ? "please provide password atleast 6 characters"
                 : ""
             }
           />

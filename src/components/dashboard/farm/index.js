@@ -430,8 +430,9 @@ export default function FarmDashboard({
   };
 
   const handleZoneCropLifeCycleSave = (lifecycleData) => {
+    console.log(cropData,"cropData");
     if (lifecycleData) {
-      addCropToLifecycle({ ...lifecycleData, zoneId: parseInt(cropData.id) });
+      addCropToLifecycle({ ...lifecycleData, zoneId: (cropData.zone_internal_id)});
     }
     handleCropModalToggle();
   };

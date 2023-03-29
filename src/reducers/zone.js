@@ -178,6 +178,7 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
       zoneDashboardZoneTaskList.tasks[zoneTaskRow].TasksHistory.push({
         ...action.data,
         user,
+        comments:[]
       });
       return state
         .set("isFarmDashboardZoneCommetLoading", false)
