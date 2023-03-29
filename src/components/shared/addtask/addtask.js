@@ -51,8 +51,9 @@ export default function AddTaskModal({
     taskName: false,
     createdFor: false,
     qty: false,
-    unitErrorMessage: false,
     severity: false,
+    itemName:false,
+    units:false
   });
   const cleanObject = (obj) => {
     Object.keys(obj).forEach(
@@ -66,6 +67,9 @@ export default function AddTaskModal({
          fetchUsers(farmId);
        
   },[])
+
+
+
   const handleChange = (e) => {
     const { value, name } = e.target;
     setTaskData({ ...taskData, [name]: value });
@@ -91,17 +95,20 @@ export default function AddTaskModal({
       errors.taskName = true;
       isValid = false;
     }
+    if (!taskData.itemName) {
+      errors.itemName = true;
+      isValid = false;
+    }
     if (taskData.itemName) {
       if (!taskData.qty) {
         errors.qty = true;
         isValid = false;
         setUnitErrorMessage("Unit can't be empty ");
       } else {
-        const targetUnits =
-          farmInventoryList.find((k) => k.id == taskData.inventory) || {};
-        if (parseInt(taskData.qty) > parseInt(targetUnits.qty)) {
-          errors.units = true;
-          setUnitErrorMessage("Unit can't be greater than " + targetUnits.qty);
+        const targetIdx = farmInventoryList.findIndex((item) => item.name == taskData.itemName);
+        if (parseInt(taskData.qty) > parseInt(farmInventoryList[targetIdx].qty)) {
+          errors.qty = true;
+          setUnitErrorMessage("Unit can't be greater than " + farmInventoryList[targetIdx].qty);
           isValid = false;
         }
       }
@@ -109,6 +116,7 @@ export default function AddTaskModal({
     setValidation(errors);
     return isValid;
   };
+  
   const getUserListOptions = useCallback(() => {
     const options = [];
     if (usersList.length) {
@@ -288,6 +296,8 @@ export default function AddTaskModal({
                   options={getInventoryOptions()}
                   isWhite={true}
                   handleChange={handleChange}
+                  isError={validation.itemName}
+                  errorMessage="Please select a invertory"
                 />
               </FormControl>
             </Grid>

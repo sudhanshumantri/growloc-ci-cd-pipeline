@@ -80,7 +80,7 @@ export default function FarmEfficiency({
       case "3d":
         return 24 * 3; 
       case "1w":
-        return 24 * 7; 
+        return 24 * 35; 
       default:
         return 0;
     }

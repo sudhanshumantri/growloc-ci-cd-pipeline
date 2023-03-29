@@ -19,6 +19,7 @@ export default function ProfileInformation({
   const [profileData, setProfileData] = useState(profile);
   const [password, setPassword] = useState("");
   const [confirmPasswordError, setconfirmPasswordError] = useState(false);
+
   const [updatePassword, setUpdatePassword] = useState({
     newPassword: "",
     confirmPassword: "",
@@ -48,9 +49,9 @@ export default function ProfileInformation({
       setPasswordValidations({ ...passwordValidations, [name]: false });
   };
   const handlePasswordChange = (e) => {
-    // setPassword(event.target.value);
-    setPassword(e.target.value);
-    setPhoneValidations(false)
+     setPassword(e.target.value);
+     setPhoneValidations(false)
+    // phoneValidations[e.target.value] && setPhoneValidations({ ...phoneValidations, [e.target.value]: false });
   };
   const handleBackButton = () => {
     navigate(-1);
@@ -82,7 +83,6 @@ export default function ProfileInformation({
   const handleUpdatePassword = () => {
     let errors = { ...passwordValidations };
     let isValid = true;
-
     if (!updatePassword.newPassword || updatePassword.newPassword.length < 6) {
       errors.newPassword = true;
       isValid = false;
@@ -114,11 +114,14 @@ export default function ProfileInformation({
   const handlePhoneValidations = () => {
     let errors = { ...phoneValidations };
     let isValid = true;
+    // if(!profileData.phone) {
+    //   errors.phone = true;
+    //   isValid = false;
+    // }
     if (!password || password.length < 6) {
       errors.password = true;
       isValid = false;
     }
-
     setPhoneValidations(errors);
     return isValid;
   };
