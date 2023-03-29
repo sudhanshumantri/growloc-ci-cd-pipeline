@@ -166,6 +166,8 @@ export default function ZoneDashboard({
     fetchZoneDashboardZoneTaskSchedule({ zoneId: zoneId, queryParams });
   };
 
+
+  console.log(zoneDashboardZoneTaskList,"zoneDashboardZoneTaskList");
   const headers = [
     {
       label: "Batch Number",

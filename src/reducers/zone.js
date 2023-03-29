@@ -157,6 +157,7 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
       zoneDashboardZoneTaskList.tasks.push({
         ...action.data,
         createdByProfile,
+        TasksHistory:[]
       });
       return state
         .set("isFarmDashboardZoneTaskLoading", false)
