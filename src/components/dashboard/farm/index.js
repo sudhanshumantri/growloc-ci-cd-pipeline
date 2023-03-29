@@ -1149,7 +1149,8 @@ export default function FarmDashboard({
       {isFarmDashboardZoneListLoading && (
         <Loader title="Fetching Farm Details" />
       )}
-      {isFarmDashboardZoneLoading && <Loader title="Adding Zone" />}
+      {isUpdateFarmDashboardZoneLoading && <Loader title="Adding Zone" />}
+
       {isDeleteFarmDashboardZoneLoading && <Loader title="Deleting Zone" />}
       {isAddLifecycleLoading && <Loader title="Adding Crops to Lifecycle " />}
       {isDashboardCropSchedulesListLoading && (
