@@ -26,7 +26,8 @@ export function* addUser({ data }) {
     if(status) {
     yield put(addUserSuccess(responseData.data.data));
     } else {
-      addNotification(message, 5000,true, "danger");
+      let errorMessage=responseData.data?.error?responseData.data?.error:'Something went wrong'
+      addNotification(errorMessage, 5000,true, "danger");
       yield put(addUserFailure("Something went wrong"));
     }
   } else {

@@ -62,6 +62,12 @@ export default function ManageTasks({
       redirection: false,
       isDate: true,
     },
+    {
+      label: "Status",
+      key: "status",
+      redirection: false,
+      isDate: true,
+    },
    
   ];
 
@@ -77,13 +83,12 @@ export default function ManageTasks({
   ];
 
 
-
   const handleTaskCommentSave = (data) => {
     if (data) {
       addTaskComment({
         ...data,
         taskId: parseInt(rowdata.id),
-        userId: parseInt(rowdata.createdByProfile.id),
+        userId: rowdata.createdByProfile.userId,
       });
     }
     handleCommentModalToggle();

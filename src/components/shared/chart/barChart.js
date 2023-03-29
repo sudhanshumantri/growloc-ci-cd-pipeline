@@ -19,7 +19,6 @@ ChartJS.register(ArcElement, CategoryScale,
     Filler,
     Legend);
 export default function PieChart({chartData, labelKey, valueKey}) {
-  console.log(chartData,"PieChart");
 
     const data = useMemo(() => {
         const labels = [];
@@ -55,7 +54,6 @@ export default function PieChart({chartData, labelKey, valueKey}) {
         }
         return { labels, datasets };
       }, [chartData,labelKey, valueKey]);
-    console.log(data,"data barchart");
     return <Bar options={{
         responsive: true,
         maintainAspectRatio: false,

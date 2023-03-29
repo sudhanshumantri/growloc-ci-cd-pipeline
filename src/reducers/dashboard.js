@@ -101,7 +101,6 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
   // const { tasks } = farmDashboardTaskList
   const { farmdDetails } = dashboardFarmList;
   const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
-  console.log(AUTH_OBJECT,"AUTH_OBJECT dashboard");
   
   switch (action.type) {
     case FETCH_ALL_DASHBOARD_FARM_REQUEST:
@@ -207,7 +206,7 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
               .set("isUpdateFarmDashboardZoneLoading", true)
               .set("updataFarmDashboardZoneError", null);
           case UPDATE_FARM_DASHBOARD_ZONE_SUCCESS:
-            const { data} = action.data;
+            const {data} = action.data;
          const index = farmDashboardZoneList.zoneInformation.findIndex((zone) => zone.zone_internal_id === data.zone_internal_id);
          farmDashboardZoneList.zoneInformation[index] = data;
             return state

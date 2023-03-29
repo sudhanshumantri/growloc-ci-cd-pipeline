@@ -25,7 +25,7 @@ export function* registerHandler({ data }) {
             ),
         );
     }
-    // ////console.log(data)
+    
 }
 
 export function* registerSagas() {

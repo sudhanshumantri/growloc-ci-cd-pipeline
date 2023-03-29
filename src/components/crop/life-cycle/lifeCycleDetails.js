@@ -46,6 +46,7 @@ export default function CropLifeCycleDetails({
   usersList,
   farmInventoryList,
   addTaskScheduleTask,
+  isTaskScheduleTaskLoading,
   loginObject,
   allUserZoneSensorList,
   pusherData,
@@ -117,9 +118,11 @@ export default function CropLifeCycleDetails({
     }
   }, [isLifecycleDetailsLoading]);
 
+
+
   const handleTaskLifeCycleSave = (data) => {
     if (data) {
-      data.createdBy = loginObject?.profile.id;
+      data.createdBy = loginObject?.profile.userId;
       data.cropLifeCycleId = parseInt(lifecycleId);
       data.farmId = farmId;
       addTaskScheduleTask(data);
@@ -563,6 +566,8 @@ export default function CropLifeCycleDetails({
   return (
     <>
       {isLifecycleDetailsLoading && <Loader title="Fetching Details" />}
+      {/* {isTaskScheduleTaskLoading && <Loader title="Adding task" />} */}
+
       {!isLifecycleDetailsLoading && (
         <>
           {renderHeader()}
@@ -577,6 +582,9 @@ export default function CropLifeCycleDetails({
                 handleClose={handleTaskModalToggle}
                 usersList={usersList}
                 farmInventoryList={farmInventoryList}
+                fetchFarmInventory={fetchFarmInventory}
+                fetchUsers={fetchUsers}
+
               />
             )}
             {open && (
