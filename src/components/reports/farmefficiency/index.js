@@ -16,7 +16,6 @@ export default function FarmEfficiency({
   farmReportsList,
   isFarmReportsListLoading,
 }) {
-
   let { farmId } = useParams();
   const [phData, setPhData] = useState({ labels: [], datasets: [] });
   const [waterTempData, setWaterTempData] = useState({
@@ -33,8 +32,6 @@ export default function FarmEfficiency({
   });
   const [duration, setDuration] = useState("4hr");
   const timeframes = ["4hr", "12hr", "24hr", "3d", "1w"];
-
-
 
   const phChartOptions = {
     plugins: {
@@ -55,20 +52,21 @@ export default function FarmEfficiency({
           font: {
             size: 11,
           },
-          callback: function (value, index, values) {
-            if (index === 0) {
-              return [values[0], values.pop()];
-            } else if (index === values.length - 1) {
-              return [];
-            } else {
-              return value;
-            }
-          },
+        },
+        labels: (ctx) => {
+          const labels = ctx.chart.data.labels;
+          return [labels[0], labels[labels.length - 1]];
+        },
+        callback: function (value, index, values) {
+          if (index === 0 || index === values.length - 1) {
+            return value;
+          }
+          return '';
         },
       },
     },
-  };
-
+  };  
+  
   const convertDurationToHours = (duration) => {
     switch (duration) {
       case "4hr":
@@ -86,7 +84,6 @@ export default function FarmEfficiency({
     }
   };
   
-
   const handleTimeFrameChange = (event) => {
     const { value } = event.target;
     setDuration(value);
@@ -96,7 +93,11 @@ export default function FarmEfficiency({
     useEffect(() => {
     fetchFarmReports({ farmId, duration });
   }, []);
-  useEffect(() => {
+
+
+  console.log(waterTempData.labels,waterTempData);
+
+useEffect(() => {
     const labels = [];
     const phValues = [];
     const waterTempValues = [];
@@ -172,77 +173,75 @@ export default function FarmEfficiency({
     setHumidityData(humidityData);
   }, [farmReportsList]);
 
-
   return (
     <>
       <div className="page-container">
         {isFarmReportsListLoading && (
           <Loader title="Fetching farm reports details" />
         )}
-
-        <Grid container spacing={2}>
-          <Grid
-            item
-            xs={12}
-            sx={{ display: "flex", justifyContent: "flex-end" }}
-          >
-            <ToggleButtonGroup
-              value={duration}
-              exclusive
-              onChange={handleTimeFrameChange}
-            >
-              {timeframes.map((timeframe) => (
-                <ToggleButton
-                  key={timeframe}
-                  value={timeframe}
-                  size="small"
-                  aria-label="right"
-                  style={
-                    duration === timeframe
-                      ? { backgroundColor: "green", color: "white" }
-                      : duration === 4 && timeframe === "4hr"
-                      ? { backgroundColor: "green", color: "white" }
-                      : {}
-                  }
-                >
-                  {timeframe}
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
-              <CardContent>
-                <span className="input-label">PH</span>
-                <Line data={phData} options={phChartOptions} />
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
-              <CardContent>
-                <span className="input-label">Water temp</span>
-                <Line data={waterTempData} options={phChartOptions} />
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
-              <CardContent>
-                <span className="input-label">Light intensity</span>
-                <Line data={lightIntensityData} options={phChartOptions} />
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
-              <CardContent>
-                <span className="input-label">Humidity</span>
-                <Line data={humidityData} options={phChartOptions} />
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+<Grid container spacing={2}>
+  <Grid
+    item
+    xs={12}
+    sx={{ display: "flex", justifyContent: "flex-end" }}
+  >
+    <ToggleButtonGroup
+      value={duration}
+      exclusive
+      onChange={handleTimeFrameChange}
+    >
+      {timeframes.map((timeframe) => (
+        <ToggleButton
+          key={timeframe}
+          value={timeframe}
+          size="small"
+          aria-label="right"
+          style={
+            duration === timeframe
+              ? { backgroundColor: "green", color: "white" }
+              : duration === 4 && timeframe === "4hr"
+              ? { backgroundColor: "green", color: "white" }
+              : {}
+          }
+        >
+          {timeframe}
+        </ToggleButton>
+      ))}
+    </ToggleButtonGroup>
+  </Grid>
+  <Grid item xs={12} sm={6} md={6} lg={6}>
+    <Card>
+      <CardContent>
+        <span className="input-label">PH</span>
+        <Line data={phData} options={phChartOptions} />
+      </CardContent>
+    </Card>
+  </Grid>
+  <Grid item xs={12} sm={6} md={6} lg={6}>
+    <Card>
+      <CardContent>
+        <span className="input-label">Water temp</span>
+        <Line data={waterTempData} options={phChartOptions} />
+      </CardContent>
+    </Card>
+  </Grid>
+  <Grid item xs={12} sm={6} md={6} lg={6}>
+    <Card>
+      <CardContent>
+        <span className="input-label">Light intensity</span>
+        <Line data={lightIntensityData} options={phChartOptions} />
+      </CardContent>
+    </Card>
+  </Grid>
+  <Grid item xs={12} sm={6} md={6} lg={6}>
+    <Card>
+      <CardContent>
+        <span className="input-label">Humidity</span>
+        <Line data={humidityData} options={phChartOptions} />
+      </CardContent>
+    </Card>
+  </Grid>
+</Grid>
       </div>
     </>
   );

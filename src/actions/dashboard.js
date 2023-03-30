@@ -69,7 +69,7 @@ export function fetchDashboardFarmFailure(data) {
     data,
   };
 }
-//
+
 export function fetchDashboardHarvestRequest(data) {
   return {
     type: FETCH_ALL_DASHBOARD_HARVEST_REQUEST,

@@ -31,9 +31,12 @@ export default function profileReducer(state = INITIAL_STATE, action = {}) {
             return state
                 .set('isLoading', false)
                 .set('profileInfo', action.data)
+                .set('isSuccess', false)
         case FETCH_USER_PROFILE_DETAILS_FAILURE:
             return state
-                .set('profileInfo', null)
+            .set('isLoading', false)
+            .set('isSuccess', false)
+            .set('profileInfo', null)
         case UPDATE_USER_PROFILE_DETAILS_REQUEST:
             return state
                 .set('isLoading', true)
@@ -41,8 +44,11 @@ export default function profileReducer(state = INITIAL_STATE, action = {}) {
         case UPDATE_USER_PROFILE_DETAILS_SUCCESS:
             return state
                 .set('isLoading', false)
+                .set('isSuccess', false)
+                .set('error', false)
         case UPDATE_USER_PROFILE_DETAILS_FAILURE:
             return state
+            .set('isLoading', false)
                 .set('error', action.data)
         case UPDATE_USER_PHONE_PASSWORD_REQUEST:
             return state

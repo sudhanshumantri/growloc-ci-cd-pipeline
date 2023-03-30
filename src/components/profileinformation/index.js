@@ -323,7 +323,6 @@ export default function ProfileInformation({
       <PageHeader title="Profile Information" showBackButton={showBackButton} />
       <div className="page-container">
         {isLoading && <Loader title="Updating Profile" />}
-        {/* {isSuccess && <Loader title="Updating Phone Number" />} */}
         <DialogContent sx={{ paddingTop: "10px" }}>
           {renderPersonalInfo()}
           {renderPhoneInfo()}
