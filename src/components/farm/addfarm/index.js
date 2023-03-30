@@ -67,6 +67,7 @@ export default function AddFarm({
   });
   const [validation, setValidation] = useState({
     name: false,
+    farmArea:false,
     germinationType: false,
     germinationWateringType: false,
     nurseryType: false,
@@ -108,8 +109,9 @@ export default function AddFarm({
   const handleChange = (e) => {
     const { value, name } = e.target;
     setFarmData({ ...farmData, [name]: value });
-    setIsCurrentLocation(false);
     validation[name] && setValidation({ ...validation, [name]: false });
+    setIsCurrentLocation(false);
+
   };
   const handleClose = () => {
     navigate("/");
@@ -150,6 +152,11 @@ export default function AddFarm({
       errors.name = true;
       isValid = false;
     }
+    if (!farmData.farmArea) {
+      errors.farmArea = true;
+      isValid = false;
+    }
+
     if (!farmData.germinationType) {
       errors.germinationType = true;
       isValid = false;
@@ -301,6 +308,9 @@ export default function AddFarm({
                 name="farmArea"
                 value={farmData.farmArea}
                 onChange={handleChange}
+                error={validation.farmArea}
+                helperText={validation.farmArea ? "Please provide farm area" : ""}
+
               />
             </FormControl>
           </Grid>
@@ -326,7 +336,7 @@ export default function AddFarm({
               value={farmData.location}
               onChange={handleChange}
               error={validation.location}
-              helperText={validation.location ? "Please provide name" : ""}
+              helperText={validation.location ? "Please provide location" : ""}
             />
           </FormControl>
         </Grid>

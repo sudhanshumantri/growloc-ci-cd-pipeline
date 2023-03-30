@@ -31,7 +31,6 @@ export default function ManageZoneTasks({
   }, []);
 
   const handleCommentModalToggle = (rowData) => {
-    console.log(rowData,"rowData");
     setRowData(rowData);
     setCommetTask(!openCommetTask);
   };

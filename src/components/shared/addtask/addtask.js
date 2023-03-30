@@ -51,8 +51,9 @@ export default function AddTaskModal({
     taskName: false,
     createdFor: false,
     qty: false,
-    units: false,
     severity: false,
+    itemName:false,
+    units:false
   });
   const cleanObject = (obj) => {
     Object.keys(obj).forEach(
@@ -66,6 +67,9 @@ export default function AddTaskModal({
          fetchUsers(farmId);
        
   },[])
+
+
+
   const handleChange = (e) => {
     const { value, name } = e.target;
     setTaskData({ ...taskData, [name]: value });
@@ -91,6 +95,10 @@ export default function AddTaskModal({
       errors.taskName = true;
       isValid = false;
     }
+    if (!taskData.itemName) {
+      errors.itemName = true;
+      isValid = false;
+    }
     if (taskData.itemName) {
       if (!taskData.qty) {
         errors.qty = true;
@@ -108,7 +116,7 @@ export default function AddTaskModal({
     setValidation(errors);
     return isValid;
   };
-  console.log("check======",unitErrorMessage);
+  
   const getUserListOptions = useCallback(() => {
     const options = [];
     if (usersList.length) {
@@ -288,6 +296,8 @@ export default function AddTaskModal({
                   options={getInventoryOptions()}
                   isWhite={true}
                   handleChange={handleChange}
+                  isError={validation.itemName}
+                  errorMessage="Please select a invertory"
                 />
               </FormControl>
             </Grid>

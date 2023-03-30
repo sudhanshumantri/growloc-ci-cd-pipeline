@@ -179,7 +179,6 @@ export default function FarmDashboard({
 
   const handlePlatformChange = (event, newPlatform) => {
     setSelectedPlatform(newPlatform);
-    console.log(newPlatform, "newPlatform");
     switch (newPlatform) {
       case "farmEfficiency":
         setSelectedComponent("farmEfficiency");
@@ -278,10 +277,6 @@ export default function FarmDashboard({
     );
   };
   const renderTatTaskCategerios = () => {
-    console.log(
-      farmReportsFarmTatTaskCategoriesList,
-      "farmReportsFarmTatTaskCategoriesList"
-    );
     return (
       <>
         <Grid container spacing={2}>
@@ -430,7 +425,6 @@ export default function FarmDashboard({
   };
 
   const handleZoneCropLifeCycleSave = (lifecycleData) => {
-    console.log(cropData,"cropData");
     if (lifecycleData) {
       addCropToLifecycle({ ...lifecycleData, zoneId: (cropData.zone_internal_id)});
     }
@@ -885,6 +879,8 @@ export default function FarmDashboard({
           }}
         >
           {newZoneData.map((zone, idx) => {
+
+
             return (
               <div
                 className="zone-gridview-cards"
@@ -902,7 +898,7 @@ export default function FarmDashboard({
                     <p className="label-white">Area: {zone.farmArea} sqft.</p>
                   </>
                 ) : (
-                  <Link to={"/farm/" + farmId + "/zone/" + zone.id}>
+                  <Link to={"/farm/" + farmId + "/zone/" + zone.zone_internal_id}>
                     <p className="zone-gridview-cars-header">{zone.name}</p>
                     <p className="label-white">Area: {zone.farmArea} sqft.</p>
                   </Link>
@@ -1149,7 +1145,9 @@ export default function FarmDashboard({
       {isFarmDashboardZoneListLoading && (
         <Loader title="Fetching Farm Details" />
       )}
-      {isFarmDashboardZoneLoading && <Loader title="Adding Zone" />}
+            {isFarmDashboardZoneLoading && <Loader title="adding Zone" />}
+      {isUpdateFarmDashboardZoneLoading && <Loader title="Updating Zone" />}
+      
       {isDeleteFarmDashboardZoneLoading && <Loader title="Deleting Zone" />}
       {isAddLifecycleLoading && <Loader title="Adding Crops to Lifecycle " />}
       {isDashboardCropSchedulesListLoading && (

@@ -34,7 +34,6 @@ function Row({ row, handleCommentModalToggle }) {
     const a = moment(dueDate);
     const b = moment(new Date()).format("YYYY-MM-DD");
     const diff = a.diff(b, "days");
-    console.log(diff, "diff");
     if (diff === 1) {
       return "Tommorow";
     } else if (diff === 0) {

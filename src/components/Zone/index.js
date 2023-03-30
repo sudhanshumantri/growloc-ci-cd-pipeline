@@ -167,7 +167,6 @@ export default function ZoneDashboard({
   };
 
 
-  console.log(zoneDashboardZoneTaskList,"zoneDashboardZoneTaskList");
   const headers = [
     {
       label: "Batch Number",
@@ -337,7 +336,6 @@ const renderReportdDetails = () => {
     fetchFarmDashboardHarvest({ zoneId: zoneId, month: value });
   };
   const handleCommentModalToggle = (rowData) => {
-    console.log(rowData,"rowData");
     setRowData(rowData);
     setCommetTask(!openCommetTask);
   };
@@ -422,7 +420,6 @@ const renderReportdDetails = () => {
 
   const handlePlatformChange = (event, newPlatform) => {
     setSelectedPlatform(newPlatform);
-    console.log(newPlatform, "newPlatform");
     switch (newPlatform) {
       case "zoneEfficiency":
         setSelectedComponent("zoneEfficiency");

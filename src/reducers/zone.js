@@ -97,8 +97,6 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
   let zoneTaskList = state.toJS()["zoneTaskList"];
   const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
   const user = AUTH_OBJECT?.profile;
- // console.log(zoneDashboardZoneTaskList,"zoneDashboardZoneTaskList reducers");
-  // const {user} = AUTH_OBJECT.profile || ""
   switch (action.type) {
     case FETCH_ALL_FARM_ZONE_REQUEST:
       return state
