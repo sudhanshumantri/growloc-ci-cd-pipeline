@@ -51,7 +51,7 @@ export default function AddTaskModal({
     taskName: false,
     createdFor: false,
     qty: false,
-    unitErrorMessage: false,
+    units: false,
     severity: false,
   });
   const cleanObject = (obj) => {
@@ -97,11 +97,10 @@ export default function AddTaskModal({
         isValid = false;
         setUnitErrorMessage("Unit can't be empty ");
       } else {
-        const targetUnits =
-          farmInventoryList.find((k) => k.id == taskData.inventory) || {};
-        if (parseInt(taskData.qty) > parseInt(targetUnits.qty)) {
-          errors.units = true;
-          setUnitErrorMessage("Unit can't be greater than " + targetUnits.qty);
+        const targetIdx = farmInventoryList.findIndex((item) => item.name == taskData.itemName);
+        if (parseInt(taskData.qty) > parseInt(farmInventoryList[targetIdx].qty)) {
+          errors.qty = true;
+          setUnitErrorMessage("Unit can't be greater than " + farmInventoryList[targetIdx].qty);
           isValid = false;
         }
       }
@@ -109,6 +108,7 @@ export default function AddTaskModal({
     setValidation(errors);
     return isValid;
   };
+  console.log("check======",unitErrorMessage);
   const getUserListOptions = useCallback(() => {
     const options = [];
     if (usersList.length) {
