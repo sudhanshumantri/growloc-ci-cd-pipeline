@@ -23,7 +23,7 @@ injectReducer("login", loginReducer);
 //injectReducer("users", usersReducer);
 injectReducer("admin", adminReducer);
 //injectSagas(userSagas);
-injectSagas(loginSagas);
+// injectSagas(loginSagas);
 injectSagas(adminSagas);
 
 const drawerWidth = 240;

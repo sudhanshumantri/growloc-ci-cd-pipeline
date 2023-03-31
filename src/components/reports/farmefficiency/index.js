@@ -33,6 +33,95 @@ export default function FarmEfficiency({
   const [duration, setDuration] = useState("4hr");
   const timeframes = ["4hr", "12hr", "24hr", "3d", "1w"];
 
+  // const phChartOptions = {
+  //   plugins: {
+  //     legend: {
+  //       display: false,
+  //     },
+  //   },
+  //   scales: {
+  //     y: {
+  //       ticks: {
+  //         font: {
+  //           size: 13,
+  //         },
+  //       },
+  //     },
+  //     x: {
+  //       ticks: {
+  //         font: {
+  //           size: 11,
+  //         },
+  //       },
+  //       labels: (ctx) => {
+  //         const labels = ctx.chart.data.labels;
+  //         return [labels[0], labels[labels.length - 1]];
+  //       },
+  //       callback: function (value, index, values) {
+  //         if (index === 0 || index === values.length - 1) {
+  //           return value;
+  //         }
+  //         return '';
+  //       },
+  //     },
+  //   },
+  // };  
+  
+  // const phChartOptions = {
+  //   plugins: {
+  //     legend: {
+  //       display: false,
+  //     },
+  //   },
+  //   scales: {
+  //     y: {
+  //       ticks: {
+  //         font: {
+  //           size: 13,
+  //         },
+  //       },
+  //     },
+  //     x: {
+  //       ticks: {
+  //         font: {
+  //           size: 11,
+  //         },
+  //         padding: 10,
+  //         maxRotation: 0,
+  //         minRotation: 0,
+  //       },
+  //       labels: (ctx) => {
+  //         const labels = ctx.chart.data.labels;
+  //         return [labels[0], '', '', '', '', '', '', '', '', labels[labels.length - 1]];
+  //       },
+  //       callback: function (value, index, values) {
+  //         if (index === 0 || index === values.length - 1) {
+  //           return value;
+  //         }
+  //         return '';
+  //       },
+  //     },
+  //   },
+  //   tooltips: {
+  //     mode: 'index',
+  //     intersect: false,
+  //     callbacks: {
+  //       label: function (context) {
+  //         var label = context.dataset.label || '';
+  //         if (context.parsed.y !== null) {
+  //           if (context.dataIndex === 0 || context.dataIndex === context.dataset.data.length - 1) {
+  //             return label + context.parsed.y;
+  //           }
+  //           return '';
+  //         } else {
+  //           return '';
+  //         }
+  //       },
+  //     },
+  //   },
+  // };  
+
+
   const phChartOptions = {
     plugins: {
       legend: {
@@ -52,10 +141,14 @@ export default function FarmEfficiency({
           font: {
             size: 11,
           },
+          padding: 10,
+          maxRotation: 0,
+          minRotation: 0,
         },
         labels: (ctx) => {
           const labels = ctx.chart.data.labels;
-          return [labels[0], labels[labels.length - 1]];
+          const lastIndex = labels.length - 1;
+          return [labels[0], '', '', '', '', '', '', '', '', '', labels[lastIndex]];
         },
         callback: function (value, index, values) {
           if (index === 0 || index === values.length - 1) {
@@ -65,8 +158,27 @@ export default function FarmEfficiency({
         },
       },
     },
+    tooltips: {
+      mode: 'index',
+      intersect: false,
+      callbacks: {
+        label: function (context) {
+          var label = context.dataset.label || '';
+          if (context.parsed.y !== null) {
+            if (context.dataIndex === 0 || context.dataIndex === context.dataset.data.length - 1) {
+              return label + context.parsed.y;
+            }
+            return '';
+          } else {
+            return '';
+          }
+        },
+      },
+    },
   };  
-  
+
+
+
   const convertDurationToHours = (duration) => {
     switch (duration) {
       case "4hr":
@@ -78,7 +190,7 @@ export default function FarmEfficiency({
       case "3d":
         return 24 * 3; 
       case "1w":
-        return 24 * 35; 
+        return 24 * 7; 
       default:
         return 0;
     }
@@ -213,7 +325,7 @@ useEffect(() => {
     <Card>
       <CardContent>
         <span className="input-label">PH</span>
-        <Line data={phData} options={phChartOptions} />
+        <Line className="chart-container" data={phData} options={phChartOptions} />
       </CardContent>
     </Card>
   </Grid>

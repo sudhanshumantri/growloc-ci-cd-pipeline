@@ -684,6 +684,7 @@ export default function FarmDashboard({
             exclusive
             onChange={handlePlatformChange}
             aria-label="Platform"
+            sx={{color:"balck"}}
           >
             {TOGGLE_DATA.map((platform) => (
               <ToggleButton
@@ -692,6 +693,7 @@ export default function FarmDashboard({
                 style={{
                   backgroundColor:
                     selectedPlatform === platform.value ? "green" : undefined,
+                    color: selectedPlatform === platform.value ? "white" : "black",
                 }}
               >
                 {platform.label}
