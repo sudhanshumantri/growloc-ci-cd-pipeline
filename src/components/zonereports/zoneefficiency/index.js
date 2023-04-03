@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import Loader from "../../shared/loader";
+
 export default function ZoneEfficiency({
   zoneReportsList,
   fetchZoneReports,
@@ -45,20 +46,260 @@ export default function ZoneEfficiency({
             size: 13,
           },
         },
+        title: {
+          display: true,
+          text: "pH Value",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
       },
       x: {
         ticks: {
           font: {
             size: 11,
           },
-          callback: function (value, index, values) {
-            if (index === 0) {
-              return [values[0], values.pop()];
-            } else if (index === values.length - 1) {
-              return [];
-            } else {
+          padding: 10,
+          maxRotation: 0,
+          minRotation: 0,
+          maxTicksLimit:500,
+        },
+        labels: function(ctx) {
+          const labels = ctx.chart.data.labels;
+          if (labels.length === 2) {
+            return labels;
+          }
+          const remainingLabels = (labels||[]).map((value, index)=> {
+            if (index === 0 || index === labels.length - 1) {
               return value;
             }
+            return '';
+          })
+          console.log(remainingLabels);
+          return remainingLabels;
+        },
+        callback: function (value, index, values) {
+          if (index === 0 || index === values.length - 1) {
+            return value;
+          }
+          return '';
+        },
+        title: {
+          display: true,
+          text: "Time (hours)",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
+      },
+    },
+  };
+
+  const waterTempChartOptions = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          font: {
+            size: 13,
+          },
+        },
+        title: {
+          display: true,
+          text: "Water temparature",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
+      },
+      x: {
+        ticks: {
+          font: {
+            size: 11,
+          },
+          padding: 10,
+          maxRotation: 0,
+          minRotation: 0,
+          maxTicksLimit:500,
+        },
+        labels: function(ctx) {
+          const labels = ctx.chart.data.labels;
+          if (labels.length === 2) {
+            return labels;
+          }
+          const remainingLabels = (labels||[]).map((value, index)=> {
+            if (index === 0 || index === labels.length - 1) {
+              return value;
+            }
+            return '';
+          })
+          console.log(remainingLabels);
+          return remainingLabels;
+        },
+        callback: function (value, index, values) {
+          if (index === 0 || index === values.length - 1) {
+            return value;
+          }
+          return '';
+        },
+        title: {
+          display: true,
+          text: "Time (hours)",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
+      },
+    },
+  };
+
+  const lightIntensityChartOptions = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          font: {
+            size: 13,
+          },
+        },
+        title: {
+          display: true,
+          text: "Light intensity",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
+      },
+      x: {
+        ticks: {
+          font: {
+            size: 11,
+          },
+          padding: 10,
+          maxRotation: 0,
+          minRotation: 0,
+          maxTicksLimit:500,
+        },
+        labels: function(ctx) {
+          const labels = ctx.chart.data.labels;
+          if (labels.length === 2) {
+            return labels;
+          }
+          const remainingLabels = (labels||[]).map((value, index)=> {
+            if (index === 0 || index === labels.length - 1) {
+              return value;
+            }
+            return '';
+          })
+          console.log(remainingLabels);
+          return remainingLabels;
+        },
+        callback: function (value, index, values) {
+          if (index === 0 || index === values.length - 1) {
+            return value;
+          }
+          return '';
+        },
+        title: {
+          display: true,
+          text: "Time (hours)",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
+      },
+    },
+
+  };
+
+  const humidityChartOptions = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          font: {
+            size: 13,
+          },
+        },
+        title: {
+          display: true,
+          text: "Humidity",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
+      },
+      x: {
+        ticks: {
+          font: {
+            size: 11,
+          },
+          padding: 10,
+          maxRotation: 0,
+          minRotation: 0,
+          maxTicksLimit:500,
+        },
+        labels: function(ctx) {
+          const labels = ctx.chart.data.labels;
+          if (labels.length === 2) {
+            return labels;
+          }
+          const remainingLabels = (labels||[]).map((value, index)=> {
+            if (index === 0 || index === labels.length - 1) {
+              return value;
+            }
+            return '';
+          })
+          console.log(remainingLabels);
+          return remainingLabels;
+        },
+        callback: function (value, index, values) {
+          if (index === 0 || index === values.length - 1) {
+            return value;
+          }
+          return '';
+        },
+        title: {
+          display: true,
+          text: "Time (hours)",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
           },
         },
       },
@@ -82,7 +323,6 @@ export default function ZoneEfficiency({
     }
   };
   
-
   const handleTimeFrameChange = (event) => {
     const { value } = event.target;
     setDuration(value);
@@ -205,7 +445,7 @@ export default function ZoneEfficiency({
               ))}
             </ToggleButtonGroup>
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardContent>
                 <span className="input-label">PH</span>
@@ -213,27 +453,27 @@ export default function ZoneEfficiency({
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardContent>
                 <span className="input-label">Water temp</span>
-                <Line data={waterTempData} options={phChartOptions} />
+                <Line data={waterTempData} options={waterTempChartOptions} />
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardContent>
                 <span className="input-label">Light intensity</span>
-                <Line data={lightIntensityData} options={phChartOptions} />
+                <Line data={lightIntensityData} options={lightIntensityChartOptions} />
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardContent>
                 <span className="input-label">Humidity</span>
-                <Line data={humidityData} options={phChartOptions} />
+                <Line data={humidityData} options={humidityChartOptions} />
               </CardContent>
             </Card>
           </Grid>

@@ -204,7 +204,6 @@ export default function FarmDashboard({
   };
 
   const renderMonthlyHarvestBreakup = () => {
-    const { cropBasedHarvestedData } = dashboardHarvestList;
     return (
       <Grid container spacing={2}>
         <Grid item xs={8} sm={10} md={10}>
@@ -235,12 +234,6 @@ export default function FarmDashboard({
             chartData={dashboardHarvestList || []}
             labelKey="name"
             valueKey="kgs"
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} sx={{ alignItems: "flex-end" }}>
-          <TableDynamicPagination
-            count={dashboardHarvestList.total}
-            handleChangePagination={handleChangeMonthlyHarvestBreakupPagination}
           />
         </Grid>
         <Grid container spacing={2}>

@@ -32,8 +32,6 @@ import Loader from '../shared/loader';
       setRegistrationData({ ...registrationData, [name]: value });
       validations[name] && setValidation({ ...validations, [name]: false });
     };
-  
-
 
   const registrationValidations = () => {
       let errors = { ...validations };
@@ -77,7 +75,7 @@ import Loader from '../shared/loader';
     }
     return (
       <>
-       {isLoading && <Loader title="Adding user" />}
+       {isLoading && <Loader title="Registering user" />}
         <Grid container component="main" 
          sx={{
           height: '100vh',
@@ -169,11 +167,18 @@ import Loader from '../shared/loader';
                       // name="phone"
                       // type="number"
                       // autoFocus
+                      onInput={(e) => {
+                        e.target.value = e.target.value.replace(/[^\d]/g, '').slice(0, 10)
+                      }}
                       name="phone"
                       value={registrationData.phone}
                       onChange={handleChange}
                       error={validations.phone}
                       helperText={validations.phone ? "Please provide valid phone number" : ""}
+                      inputProps={{
+                        step: 1,
+                        style: { appearance: "none", "-moz-appearance": "textfield" }
+                      }}
 
                     />
                   </Grid>

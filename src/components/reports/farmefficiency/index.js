@@ -33,94 +33,6 @@ export default function FarmEfficiency({
   const [duration, setDuration] = useState("4hr");
   const timeframes = ["4hr", "12hr", "24hr", "3d", "1w"];
 
-  // const phChartOptions = {
-  //   plugins: {
-  //     legend: {
-  //       display: false,
-  //     },
-  //   },
-  //   scales: {
-  //     y: {
-  //       ticks: {
-  //         font: {
-  //           size: 13,
-  //         },
-  //       },
-  //     },
-  //     x: {
-  //       ticks: {
-  //         font: {
-  //           size: 11,
-  //         },
-  //       },
-  //       labels: (ctx) => {
-  //         const labels = ctx.chart.data.labels;
-  //         return [labels[0], labels[labels.length - 1]];
-  //       },
-  //       callback: function (value, index, values) {
-  //         if (index === 0 || index === values.length - 1) {
-  //           return value;
-  //         }
-  //         return '';
-  //       },
-  //     },
-  //   },
-  // };  
-  
-  // const phChartOptions = {
-  //   plugins: {
-  //     legend: {
-  //       display: false,
-  //     },
-  //   },
-  //   scales: {
-  //     y: {
-  //       ticks: {
-  //         font: {
-  //           size: 13,
-  //         },
-  //       },
-  //     },
-  //     x: {
-  //       ticks: {
-  //         font: {
-  //           size: 11,
-  //         },
-  //         padding: 10,
-  //         maxRotation: 0,
-  //         minRotation: 0,
-  //       },
-  //       labels: (ctx) => {
-  //         const labels = ctx.chart.data.labels;
-  //         return [labels[0], '', '', '', '', '', '', '', '', labels[labels.length - 1]];
-  //       },
-  //       callback: function (value, index, values) {
-  //         if (index === 0 || index === values.length - 1) {
-  //           return value;
-  //         }
-  //         return '';
-  //       },
-  //     },
-  //   },
-  //   tooltips: {
-  //     mode: 'index',
-  //     intersect: false,
-  //     callbacks: {
-  //       label: function (context) {
-  //         var label = context.dataset.label || '';
-  //         if (context.parsed.y !== null) {
-  //           if (context.dataIndex === 0 || context.dataIndex === context.dataset.data.length - 1) {
-  //             return label + context.parsed.y;
-  //           }
-  //           return '';
-  //         } else {
-  //           return '';
-  //         }
-  //       },
-  //     },
-  //   },
-  // };  
-
 
   const phChartOptions = {
     plugins: {
@@ -135,6 +47,16 @@ export default function FarmEfficiency({
             size: 13,
           },
         },
+        title: {
+          display: true,
+          text: "pH Value",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
       },
       x: {
         ticks: {
@@ -144,11 +66,21 @@ export default function FarmEfficiency({
           padding: 10,
           maxRotation: 0,
           minRotation: 0,
+          maxTicksLimit:500,
         },
-        labels: (ctx) => {
+        labels: function(ctx) {
           const labels = ctx.chart.data.labels;
-          const lastIndex = labels.length - 1;
-          return [labels[0], '', '', '', '', '', '', '', '', '', labels[lastIndex]];
+          if (labels.length === 2) {
+            return labels;
+          }
+          const remainingLabels = (labels||[]).map((value, index)=> {
+            if (index === 0 || index === labels.length - 1) {
+              return value;
+            }
+            return '';
+          })
+          console.log(remainingLabels);
+          return remainingLabels;
         },
         callback: function (value, index, values) {
           if (index === 0 || index === values.length - 1) {
@@ -156,27 +88,230 @@ export default function FarmEfficiency({
           }
           return '';
         },
-      },
-    },
-    tooltips: {
-      mode: 'index',
-      intersect: false,
-      callbacks: {
-        label: function (context) {
-          var label = context.dataset.label || '';
-          if (context.parsed.y !== null) {
-            if (context.dataIndex === 0 || context.dataIndex === context.dataset.data.length - 1) {
-              return label + context.parsed.y;
-            }
-            return '';
-          } else {
-            return '';
-          }
+        title: {
+          display: true,
+          text: "Time (hours)",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
         },
       },
     },
-  };  
+  };
 
+
+
+  ////////
+  
+   
+  const waterTempChartOptions = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          font: {
+            size: 13,
+          },
+        },
+        title: {
+          display: true,
+          text: "Water temparature",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
+      },
+      x: {
+        ticks: {
+          font: {
+            size: 11,
+          },
+          padding: 10,
+          maxRotation: 0,
+          minRotation: 0,
+          maxTicksLimit:500,
+        },
+        labels: function(ctx) {
+          const labels = ctx.chart.data.labels;
+          if (labels.length === 2) {
+            return labels;
+          }
+          const remainingLabels = (labels||[]).map((value, index)=> {
+            if (index === 0 || index === labels.length - 1) {
+              return value;
+            }
+            return '';
+          })
+          console.log(remainingLabels);
+          return remainingLabels;
+        },
+        callback: function (value, index, values) {
+          if (index === 0 || index === values.length - 1) {
+            return value;
+          }
+          return '';
+        },
+        title: {
+          display: true,
+          text: "Time (hours)",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
+      },
+    },
+  };
+
+  const lightIntensityChartOptions = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          font: {
+            size: 13,
+          },
+        },
+        title: {
+          display: true,
+          text: "Light intensity",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
+      },
+      x: {
+        ticks: {
+          font: {
+            size: 11,
+          },
+          padding: 10,
+          maxRotation: 0,
+          minRotation: 0,
+          maxTicksLimit:500,
+        },
+        labels: function(ctx) {
+          const labels = ctx.chart.data.labels;
+          if (labels.length === 2) {
+            return labels;
+          }
+          const remainingLabels = (labels||[]).map((value, index)=> {
+            if (index === 0 || index === labels.length - 1) {
+              return value;
+            }
+            return '';
+          })
+          console.log(remainingLabels);
+          return remainingLabels;
+        },
+        callback: function (value, index, values) {
+          if (index === 0 || index === values.length - 1) {
+            return value;
+          }
+          return '';
+        },
+        title: {
+          display: true,
+          text: "Time (hours)",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
+      },
+    },
+
+  };
+
+  const humidityChartOptions = {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          font: {
+            size: 13,
+          },
+        },
+        title: {
+          display: true,
+          text: "Humidity",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
+      },
+      x: {
+        ticks: {
+          font: {
+            size: 11,
+          },
+          padding: 10,
+          maxRotation: 0,
+          minRotation: 0,
+          maxTicksLimit:500,
+        },
+        labels: function(ctx) {
+          const labels = ctx.chart.data.labels;
+          if (labels.length === 2) {
+            return labels;
+          }
+          const remainingLabels = (labels||[]).map((value, index)=> {
+            if (index === 0 || index === labels.length - 1) {
+              return value;
+            }
+            return '';
+          })
+          console.log(remainingLabels);
+          return remainingLabels;
+        },
+        callback: function (value, index, values) {
+          if (index === 0 || index === values.length - 1) {
+            return value;
+          }
+          return '';
+        },
+        title: {
+          display: true,
+          text: "Time (hours)",
+          font: {
+            size: 11,
+          },
+          padding: {
+            top: 5,
+          },
+        },
+      },
+    },
+
+  };
 
 
   const convertDurationToHours = (duration) => {
@@ -207,7 +342,6 @@ export default function FarmEfficiency({
   }, []);
 
 
-  console.log(waterTempData.labels,waterTempData);
 
 useEffect(() => {
     const labels = [];
@@ -333,7 +467,7 @@ useEffect(() => {
     <Card>
       <CardContent>
         <span className="input-label">Water temp</span>
-        <Line data={waterTempData} options={phChartOptions} />
+        <Line data={waterTempData} options={waterTempChartOptions} />
       </CardContent>
     </Card>
   </Grid>
@@ -341,7 +475,7 @@ useEffect(() => {
     <Card>
       <CardContent>
         <span className="input-label">Light intensity</span>
-        <Line data={lightIntensityData} options={phChartOptions} />
+        <Line data={lightIntensityData} options={lightIntensityChartOptions} />
       </CardContent>
     </Card>
   </Grid>
@@ -349,7 +483,7 @@ useEffect(() => {
     <Card>
       <CardContent>
         <span className="input-label">Humidity</span>
-        <Line data={humidityData} options={phChartOptions} />
+        <Line data={humidityData} options={humidityChartOptions} />
       </CardContent>
     </Card>
   </Grid>

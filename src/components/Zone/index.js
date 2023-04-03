@@ -484,9 +484,7 @@ const renderReportdDetails = () => {
     );
   };
 
-
   const renderAverageMortality = () => {
-    
     return (
       <>
       <Grid container spacing={2}>
@@ -505,7 +503,6 @@ const renderReportdDetails = () => {
       </Grid>
       </Grid>
       </>
-
     )
   }
   const renderTatTaskCategerios = () => {
