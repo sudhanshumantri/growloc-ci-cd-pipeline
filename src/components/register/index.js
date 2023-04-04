@@ -1,10 +1,9 @@
-import './styles.css'
 import React, { useState, useEffect } from "react";
+import './styles.css'
 import Avatar from '@mui/material/Avatar';
 import { Paper, CssBaseline,TextField,Link,Grid,Box,Typography} from '@mui/material/';
 import ButtonCustom from "../shared/button";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import growlocCover from '../../../public/assets/growlocCover.webp'
 import logo from '../../../public/assets/logo.png';
 import loginpage from '../../../public/assets/loginpage.png';
 import Loader from '../shared/loader';
@@ -81,7 +80,6 @@ import Loader from '../shared/loader';
           height: '100vh',
           backgroundImage: `url(${loginpage})`,
           backgroundRepeat: 'no-repeat',
-          //backgroundColor: '#517223',
           backgroundPosition: 'center',
           backgroundSize: '100% 100vh',
         }}
@@ -96,14 +94,6 @@ import Loader from '../shared/loader';
             flexDirection={'column'}
             alignItems={'center'}
             justifyContent='center'
-            // sx={{
-            //   backgroundColor: "F9F9F9",
-            //   //  backgroundImage: `url(${growlocCover})`,
-            //   backgroundRepeat: 'no-repeat',
-            //   backgroundColor: '#517223',
-            //   backgroundPosition: 'bottom',
-            //   backgroundSize: 'contain',
-            // }}
           >
             <img src={logo} />
           </Grid>
@@ -132,7 +122,6 @@ import Loader from '../shared/loader';
               <Typography component="h3" variant="h5">
                 Sign Up To Your Growloc Account
               </Typography>
-              {/* <Box component="form" onSubmit={handleRegistrationSave} sx={{ mt: 1 }}> */}
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={12} lg={12} >
                     <span className='custom-input-label'>Name</span>
@@ -141,10 +130,6 @@ import Loader from '../shared/loader';
                       className='custom-input-box'
                       size="small"
                       fullWidth
-                      // onChange={this.handleChange}
-                      // id="name"
-                      // name="name"
-                      // autoFocus
                       name="name"
                       value={registrationData.name}
                       onChange={handleChange}
@@ -159,14 +144,6 @@ import Loader from '../shared/loader';
                       className='custom-input-box'
                        size="small"
                       fullWidth
-                      // onInput={(e) => {
-                      //   e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
-                      // }}
-                      // onChange={this.handleChange}
-                      // id="phone"
-                      // name="phone"
-                      // type="number"
-                      // autoFocus
                       onInput={(e) => {
                         e.target.value = e.target.value.replace(/[^\d]/g, '').slice(0, 10)
                       }}
@@ -189,11 +166,6 @@ import Loader from '../shared/loader';
                       className='custom-input-box'
                      size="small"
                      fullWidth
-                      // onChange={this.handleChange}
-                      // id="email"
-                      // name="email"
-                      // type="email"
-                      // autoFocus
                       isWhite={true}
                       name="email"
                       value={registrationData.email}
@@ -208,10 +180,6 @@ import Loader from '../shared/loader';
                        className='custom-input-box'
                        size="small"
                        fullWidth
-                      // onChange={this.handleChange}
-                      // id="company"
-                      // name="company"
-                      // autoFocus
                       isWhite={true}
                       name="company"
                       value={registrationData.company}
@@ -225,10 +193,6 @@ import Loader from '../shared/loader';
                       className='custom-input-box'
                        size="small"
                        fullWidth
-                      // onChange={this.handleChange}
-                      // id="address"
-                      // name="address"
-                      // autoFocus
                       name="address"
                       value={registrationData.address}
                       onChange={handleChange}
@@ -243,11 +207,6 @@ import Loader from '../shared/loader';
                    size="small"
                    className='custom-input-box'
                     fullWidth
-                      // name="password"
-                      // type="password"
-                      // id="password"
-                      // onChange={this.handleChange}
-                      // autoComplete="current-password"
                       name="password"
                       value={registrationData.password}
                       onChange={handleChange}
@@ -270,7 +229,6 @@ import Loader from '../shared/loader';
                   </Grid>
                 </Grid>
               </Box>
-              {/* </Box> */}
           </Grid>
         </Grid>
       </>

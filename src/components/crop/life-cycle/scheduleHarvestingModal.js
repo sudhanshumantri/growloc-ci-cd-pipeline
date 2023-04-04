@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import {
   Dialog,
   DialogActions,
@@ -10,7 +9,6 @@ import {
 import ButtonCustom from "../../shared/button";
 import { WEEKDAYS } from "../../../config";
 export default function MoveCropLifeCycleModal({
-  title,
   open,
   handleSave,
   handleClose,

@@ -7,8 +7,10 @@ import {
   CardContent,
   ToggleButtonGroup,
   ToggleButton,
+  Box,
+  Tab
 } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams,useNavigate } from "react-router-dom";
 import PageHeader from "../../shared/page-header";
 import DataTable from "../../shared/dataTable";
 import PieChart from "../../shared/chart/pieChart";
@@ -21,7 +23,6 @@ import AddTaskModal from "../../shared/addtask/addtask";
 import AddFarmTaskComment from "../../shared/addfarmtaskcomment";
 import { HARVEST_MONTH_OPTIONS, SEVERITY_LEVEL,TOGGLE_DATA } from "../../../config";
 import SingleCustomSelect from "../../shared/select";
-import { useNavigate } from "react-router-dom";
 import AddZoneModal from "../addzone";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -31,8 +32,6 @@ import Noofzone from "../../../../public/assets/Noofzone.png";
 import Noofbatch from "../../../../public/assets/Noofbatch.png";
 import Totalharvest from "../../../../public/assets/Totalharvest.png";
 import Nooftask from "../../../../public/assets/Nooftask.png";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -40,12 +39,11 @@ import GridViewIcon from "@mui/icons-material/GridView";
 import ListIcon from "@mui/icons-material/List";
 import FarmEfficiency from "../../reports/farmefficiency";
 import TableDynamicPagination from "../../shared/tablepagination";
+import ToggleButtonReports from "../../shared/togglebutton";
+
 export default function FarmDashboard({
-  dashboardFarmList,
-  fetchFarmDashboard,
   fetchFarmDashboardHarvest,
   dashboardHarvestList,
-  isDashboardFarmListLoading,
   usersList,
   fetchUsers,
   addTaskScheduleTask,
@@ -248,7 +246,7 @@ export default function FarmDashboard({
     return (
       <>
         <Grid container spacing={2}>
-          <Grid item xs={8} sm={10} md={10}>
+          <Grid item xs={12} sm={12} md={12}>
             <span className="section-title">Average Mortality</span>
           </Grid>
           <Grid
@@ -273,7 +271,7 @@ export default function FarmDashboard({
     return (
       <>
         <Grid container spacing={2}>
-          <Grid item xs={8} sm={10} md={10}>
+          <Grid item xs={12} sm={12} md={12}>
             <span className="section-title">Tat Task Category</span>
           </Grid>
           <Grid
@@ -435,9 +433,6 @@ export default function FarmDashboard({
     fetchFarmDashboardFarmTask({ farmId: farmId, queryParams });
   };
 
-  const handleChangeMonthlyHarvestBreakupPagination = (queryParams) => {
-    fetchFarmDashboardHarvest({ farmId: farmId, month, queryParams });
-  };
 
   const TASK_HEADER = [
     {
@@ -668,6 +663,10 @@ export default function FarmDashboard({
     );
   };
 
+
+  const durationStyles = { backgroundColor: "green", color: "white" };
+
+
   const renderReportdDetails = () => {
     return (
       <>
@@ -693,8 +692,8 @@ export default function FarmDashboard({
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
-          </Grid>
 
+          </Grid>
           <Grid item xs={12} sm={12} md={12}>
             {renderPlatformComponent()}
           </Grid>
@@ -1192,13 +1191,6 @@ export default function FarmDashboard({
               <Grid container spacing={2}>
                 {renderReportdDetails()}
                 </Grid>
-
-                {/* {renderReportdDetails()} */}
-
-                {/* <Grid container spacing={2}>
-                  {renderFarmUtilization()}
-                  {renderCropsUtilization()}
-                </Grid> */}
               </TabPanel>
               <TabPanel value="5">{renderFarmInfo()}</TabPanel>
             </Grid>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { styled, alpha } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import {
   Box,
@@ -12,7 +12,6 @@ import {
   ListItemIcon,
   MenuItem,
   Divider,
-  Button,
   ListItemText,
   Container,
 } from "@mui/material/";
@@ -20,7 +19,6 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import PersonIcon from '@mui/icons-material/Person';
 import { Link, useNavigate } from "react-router-dom";
-
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -48,20 +46,24 @@ export default function TopHeader({
   logout,
 }) {
     
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [showMenu,setShowMenu] = React.useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [showMenu,setShowMenu] = useState(false);
     const navigate = useNavigate();
     const logoutHandler = () => {
       logout();
       handleToggleMenu()
       };
-     const  handleToggleMenu = (event) => {
-      setShowMenu(!showMenu)
-      setAnchorEl(event.currentTarget);
-    }
-
+  
+    const handleToggleMenu = (event) => {
+      if (event) {
+        setShowMenu(!showMenu);
+        setAnchorEl(event.currentTarget);
+      }
+    };
+    
     const handleAccountsNavigation = () => {
       navigate("profile")
+      setShowMenu(false);
       handleToggleMenu()
     }
 

@@ -1,6 +1,5 @@
 import { call, all, put, takeLatest } from "redux-saga/effects";
 import {
-  callFetchDashboardFarmList,
   callFetchDashboardHarvestList,
   callAddTaskScheduleTask,
   callAddFarmTaskComment,
@@ -17,8 +16,6 @@ import {
   callFetchDashboardFarmUtilizationStages,
 } from "../utils/api";
 import {
-  fetchDashboardFarmSuccess,
-  fetchDashboardFarmFailure,
   fetchDashboardHarvestSuccess,
   fetchDashboardHarvestFailure,
   addTaskSheduleTaskSuccess,
@@ -48,18 +45,6 @@ import {
   fetchFarmDashboardUtilizationStagesSuccess,
   fetchFarmDashboardUtilizationStagesFailure
 } from "../actions/dashboard";
-
-
-
-
-export function* fetchFarmDashboardList({ data }) {
-  let responseData = yield call(callFetchDashboardFarmList, data);
-  if (responseData?.status == 200 && responseData.data.status) {
-    yield put(fetchDashboardFarmSuccess(responseData.data.data));
-  } else {
-    yield put(fetchDashboardFarmFailure("Something went wrong"));
-  }
-}
 
 export function* fetchFarmDashboardHarvestList({ data }) {
   const {queryParams, ...remainingParams} = data;
@@ -201,7 +186,7 @@ export function* fetchFarmDashboardInfoList({ data }) {
   
 export function* farmDashboardSagas() {
   yield all([
-    takeLatest("FETCH_ALL_DASHBOARD_FARM_REQUEST", fetchFarmDashboardList),
+    // takeLatest("FETCH_ALL_DASHBOARD_FARM_REQUEST", fetchFarmDashboardList),
     takeLatest("FETCH_ALL_DASHBOARD_HARVEST_REQUEST", fetchFarmDashboardHarvestList),
     takeLatest("ADD_TASK_REQUEST", addTaskScheduleTask),
     takeLatest("ADD_FARM_TASKS_COMMENTS_REQUEST", addFarmTaskComment),

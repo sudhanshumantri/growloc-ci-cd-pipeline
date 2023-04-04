@@ -1,7 +1,5 @@
 import {
-  FETCH_ALL_DASHBOARD_FARM_REQUEST,
-  FETCH_ALL_DASHBOARD_FARM_SUCCESS,
-  FETCH_ALL_DASHBOARD_FARM_FAILURE,
+
   FETCH_ALL_DASHBOARD_HARVEST_REQUEST,
   FETCH_ALL_DASHBOARD_HARVEST_SUCCESS,
   FETCH_ALL_DASHBOARD_HARVEST_FAILURE,
@@ -44,31 +42,7 @@ import {
   FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_REQUEST,
   FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_SUCCESS,
   FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_FAILURE,
-
-
-
-
-
-
 } from "./actionTypes";
-export function fetchDashboardFarmRequest(data) {
-  return {
-    type: FETCH_ALL_DASHBOARD_FARM_REQUEST,
-    data,
-  };
-}
-export function fetchDashboardFarmSuccess(data) {
-  return {
-    type: FETCH_ALL_DASHBOARD_FARM_SUCCESS,
-    data,
-  };
-}
-export function fetchDashboardFarmFailure(data) {
-  return {
-    type: FETCH_ALL_DASHBOARD_FARM_FAILURE,
-    data,
-  };
-}
 
 export function fetchDashboardHarvestRequest(data) {
   return {

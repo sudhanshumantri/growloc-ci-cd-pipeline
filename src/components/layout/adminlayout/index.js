@@ -1,15 +1,10 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
+import {Box,CssBaseline} from "@mui/material/";
 import { Routes, Route } from "react-router-dom";
 import store from "../../../store";
 import { getAsyncInjectors } from "../../../utils/asyncInjectors";
-import loginReducer from "../../../reducers/login";
-import usersReducer from "../../../reducers/users";
-import loginSagas from "../../../sagas/login";
-import userSagas from "../../../sagas/users";
 import { selectToken } from "../../../selectors/login";
 import { loadAuthToken } from "../../../actions/login";
 import AdminDashboard from "../../../container/admin"
@@ -17,13 +12,8 @@ import adminSagas  from "../../../sagas/admin";
 import adminReducer from "../../../reducers/admin";
 import PrivateOutlet from "../../privateroute";
 import AdminSideBar from "../../admin/adminsidebar";
-
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
-injectReducer("login", loginReducer);
-//injectReducer("users", usersReducer);
 injectReducer("admin", adminReducer);
-//injectSagas(userSagas);
-// injectSagas(loginSagas);
 injectSagas(adminSagas);
 
 const drawerWidth = 240;

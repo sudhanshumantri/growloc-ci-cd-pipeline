@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useState} from "react";
 import { useParams } from "react-router-dom";
 import {FormControl,Dialog,DialogActions,DialogTitle,DialogContent,Grid,FormControlLabel,Checkbox,FormGroup} from "@mui/material/";
 import CustomButton from "../../shared/button";

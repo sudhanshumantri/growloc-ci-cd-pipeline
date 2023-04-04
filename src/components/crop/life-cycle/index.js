@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from "react";
 import { useParams,useNavigate } from "react-router-dom";
-import Pusher from 'pusher-js';
 import DataTable from "../../shared/dataTable";
 import PageHeader from "../../shared/page-header";
 import AddNewCropToLifeCycleModal from "./addCropToLifeCycleModal";

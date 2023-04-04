@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
 import { Card, Grid, CardContent, CardActions, Menu, MenuItem, IconButton, ListItemIcon, ListItemText, Divider } from "@mui/material";
-import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import ConfirmDialogBox from "../shared/dailog/ConfirmDialogBox";
@@ -162,7 +161,7 @@ export default function ManageFarm({
                       <Menu
                         id={elem.id}
                         anchorEl={anchorEl}
-                        open={showMenu[elem.id]}
+                        open={showMenu[elem.id] || false}
                         keepMounted
                         PaperProps={{
                           sx: {

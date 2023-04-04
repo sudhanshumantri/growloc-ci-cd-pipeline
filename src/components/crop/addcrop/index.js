@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
+import React, {useState,useEffect} from "react";
 import { useParams } from "react-router-dom";
 import {FormControl,Dialog,DialogTitle,DialogContent,DialogActions,Grid} from "@mui/material/";
 import CustomButton from "../../shared/button";
@@ -23,7 +22,7 @@ export default function AddCropModal({
   const [isCropError, setIsCropError] = useState(false);
   const [units, setUnits] = useState(1);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (open && cropDetails.name) {
       handleCropChange({ target: { value: cropDetails.name } }, true);
     }
@@ -157,7 +156,6 @@ export default function AddCropModal({
                   isWhite={true}
                   valueKey="index"
                   labelKey="type"
-                  // lable="Germination Method"
                   disabled={cropDetails.isEditMode}
                   options={selectedData.germinationMethod}
                   value={germinationMethod}

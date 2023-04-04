@@ -1,8 +1,5 @@
 import { fromJS } from "immutable";
 import {
-  // FETCH_ALL_DASHBOARD_FARM_REQUEST,
-  // FETCH_ALL_DASHBOARD_FARM_SUCCESS,
-  // FETCH_ALL_DASHBOARD_FARM_FAILURE,
   FETCH_ALL_DASHBOARD_HARVEST_REQUEST,
   FETCH_ALL_DASHBOARD_HARVEST_SUCCESS,
   FETCH_ALL_DASHBOARD_HARVEST_FAILURE,
@@ -45,13 +42,8 @@ import {
   FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_REQUEST,
   FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_SUCCESS,
   FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_FAILURE,
-
 } from "../actions/actionTypes";
-import login from "../sagas/login";
 const INITIAL_STATE = fromJS({
-  isDashboardFarmListLoading: false,
-  dashboardFarmList: {},
-  DashboardFarmListError: null,
   isDashboardHarvestListLoading: false,
   DashboardHarvestListError: null,
   dashboardHarvestList: [],
@@ -71,18 +63,15 @@ const INITIAL_STATE = fromJS({
   isZoneSensorLoading : false,
   allZoneSensorList: [],
   loadingAllZoneSensorError: null,
-// dashboard new reducers
   isDashboardFarmInfoListLoading: false,
   farmDashboardFarmInfoList: {},
   farmDashboardFarmInfoListError: null,
   isDashboardCropSchedulesListLoading: false,
   farmDashboardCropSchedulesList: [],
   farmDashboardCropSchedulesListError: null,
-  //
   isDashboardInfoListLoading: false,
   farmDashboardInfoList: {},
   farmDashboardInfoListError: null,
-  //
   isDashboardFarmTaskLoading: false,
   farmDashboardTaskList: {},
   farmDashboardTaskListError: null,
@@ -95,30 +84,11 @@ const INITIAL_STATE = fromJS({
 
 });
 export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
-  let dashboardFarmList = state.toJS()["dashboardFarmList"];
   let farmDashboardZoneList = state.toJS()["farmDashboardZoneList"]
   let farmDashboardTaskList = state.toJS()["farmDashboardTaskList"]
-  // const { tasks } = farmDashboardTaskList
-  const { farmdDetails } = dashboardFarmList;
   const AUTH_OBJECT = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
   
   switch (action.type) {
-    // case FETCH_ALL_DASHBOARD_FARM_REQUEST:
-    //   return state
-    //     .set("isDashboardFarmListLoading", true)
-    //     .set("dashboardFarmList", [])
-    //     .set("DashboardFarmListError", null);
-    // case FETCH_ALL_DASHBOARD_FARM_SUCCESS:
-    //   return state
-    //     .set("isDashboardFarmListLoading", false)
-    //     .set("dashboardFarmList", action.data)
-    //     .set("DashboardFarmListError", null);
-    // case FETCH_ALL_DASHBOARD_FARM_FAILURE:
-    //   return state
-    //     .set("isDashboardFarmListLoading", false)
-    //     .set("dashboardFarmList", [])
-    //     .set("DashboardFarmListError", action.error);
-    //
     case FETCH_ALL_DASHBOARD_HARVEST_REQUEST:
       return state
         .set("isDashboardHarvestListLoading", true)

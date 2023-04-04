@@ -60,6 +60,9 @@ export default function PageHeader({
   // onChange,
   handleChange,
 }) {
+
+  const {length} = options || "";
+
   return (
     <>
       <Grid container spacing={2} className="page-header-container ">
@@ -80,7 +83,8 @@ export default function PageHeader({
         <Grid item xs={6} sm={5} md={5} className="button-container">
           {headerDropwdown && (
             <Select
-              value={value}
+              // value={value} 
+              value={length ? value || "" : ""}
               size="small"
               onChange={handleChange}
             >

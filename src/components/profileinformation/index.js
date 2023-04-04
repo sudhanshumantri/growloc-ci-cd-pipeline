@@ -7,10 +7,8 @@ import TextBox from "../shared/text-box";
 import Loader from "../shared/loader";
 export default function ProfileInformation({
   updateUserProfile,
-  logout,
   updateUserPhone,
   isLoading,
-  isSuccess,
   updateNewPassword,
 }) {
   const navigate = useNavigate();
@@ -51,7 +49,6 @@ export default function ProfileInformation({
   const handlePasswordChange = (e) => {
      setPassword(e.target.value);
      setPhoneValidations(false)
-    // phoneValidations[e.target.value] && setPhoneValidations({ ...phoneValidations, [e.target.value]: false });
   };
   const handleBackButton = () => {
     navigate(-1);

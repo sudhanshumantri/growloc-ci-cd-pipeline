@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import {
-  fetchDashboardFarmRequest,
   fetchDashboardHarvestRequest,
   addTaskSheduleTaskRequest,
   addFarmTaskCommentRequest,
@@ -29,9 +28,6 @@ import {
 } from "../../actions/life-cycle";
 import FarmDashboard from "../../components/dashboard/farm";
 import {
-  selectFarmDashboardList,
-  selectIsFarmDashboardListLoading,
-  selectFarmDashboardListError,
   selectIsFarmDashboardHarvestListLoading,
   selectFarmDashboardHarvestListError,
   selectFarmDashboardHarvestList,
@@ -88,9 +84,6 @@ import {
 import { selectCropFarmList } from "../../selectors/crops";
 
 const mapStateToProps = createStructuredSelector({
-  dashboardFarmList: selectFarmDashboardList(),
-  isDashboardFarmListLoading: selectIsFarmDashboardListLoading(),
-  DashboardFarmListError: selectFarmDashboardListError(),
   isDashboardHarvestListLoading: selectIsFarmDashboardHarvestListLoading(),
   DashboardHarvestListError: selectFarmDashboardHarvestListError(),
   dashboardHarvestList: selectFarmDashboardHarvestList(),
@@ -152,7 +145,6 @@ const mapStateToProps = createStructuredSelector({
   farmReportsFarmTatTaskCategoriesListError: selectFarmReportsFarmTatTaskCategoriesListError(),
 });
 const mapDispatchToProps = {
-  fetchFarmDashboard: fetchDashboardFarmRequest,
   fetchFarmDashboardHarvest: fetchDashboardHarvestRequest,
   fetchUsers: fetchUsersRequest,
   addTaskScheduleTask: addTaskSheduleTaskRequest,

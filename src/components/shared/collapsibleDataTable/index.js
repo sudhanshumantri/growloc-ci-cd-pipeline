@@ -1,6 +1,5 @@
 import  React,{useState} from "react";
 import moment from "moment";
-// import Paper from "@mui/material/Paper";
 import {
   Box,
   Collapse,
@@ -96,7 +95,6 @@ function Row({ row, handleCommentModalToggle }) {
           </IconButton>
         </TableCell>
         <TableCell className="table-header" align="left">
-          {/* <Typography className="table-servity" style={{backgroundColor:((row.severity === 0 && "red" ) || (row.severity === 1 && "#EB955D")  )}}></Typography>  */}
           <Chip
             label={formatSerityLevel(row.severity)}
             style={{
