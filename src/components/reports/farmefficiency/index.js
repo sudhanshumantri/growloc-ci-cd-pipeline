@@ -120,7 +120,6 @@ export default function FarmEfficiency({
       humidityValues.push(humidityValue);
       labels.push(createdOn);
     });
-
     const phChartData = {
       labels,
       datasets: [
@@ -171,7 +170,6 @@ export default function FarmEfficiency({
     };
     setHumidityData(humidityData);
   }, [farmReportsList]);
-
 
   return (
     <>
