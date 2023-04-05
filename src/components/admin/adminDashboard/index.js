@@ -45,7 +45,7 @@ export const AdminDashboard = ({
   };
   const handleAdminZoneSensordSave = (data) => {
     if (data) {
-      addAdminZoneSensors({ ...data, zoneId: zoneData.zone_internal_id });
+      addAdminZoneSensors({ ...data, zoneId: parseInt(zoneData.id) });
     }
     handleZoneSensorsModalToggle();
   };
