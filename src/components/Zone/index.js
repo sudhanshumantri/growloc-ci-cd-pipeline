@@ -767,7 +767,7 @@ export default function ZoneDashboard({
                   <Tab label="Sensors" value="1" />
                   <Tab label="Crop Schedules" value="2" />
                   <Tab label="Task Schedules" value="3" />
-                  <Tab label="Graph" value="4" />
+                  <Tab label="Reports" value="4" />
                   <Tab label="Info" value="5"></Tab>
                 </TabList>
               </Box>
