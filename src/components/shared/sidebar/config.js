@@ -231,9 +231,9 @@ const farmMenuItems = [
     navigation: "users",
     link: "/users",
     icon: Account,
-    isAuthRequired: true,
-    from: "users",
-    action: "view",
+    // isAuthRequired: true,
+    // from: "users",
+    // action: "view",
     css: { borderBottom: "1px solid white" },
   },
   

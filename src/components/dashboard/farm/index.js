@@ -40,6 +40,8 @@ import ListIcon from "@mui/icons-material/List";
 import FarmEfficiency from "../../reports/farmefficiency";
 import TableDynamicPagination from "../../shared/tablepagination";
 import ToggleButtonReports from "../../shared/togglebutton";
+import AuthOutlet from "../../shared/authoutlet";
+
 
 export default function FarmDashboard({
   fetchFarmDashboardHarvest,
@@ -293,7 +295,7 @@ export default function FarmDashboard({
     );
   };
 
-  const zoneId = (farmDashboardCropSchedulesList || [])[0]?.zoneId;
+  const zoneId = (farmDashboardCropSchedulesList?.cropSchedules || [])[0]?.zoneId
   const headers = [
     {
       label: "Batch Number",
@@ -517,6 +519,9 @@ export default function FarmDashboard({
         {
           label: "Add a new Crop ",
           type: "icon",
+          isAuthRequired: true,
+          from: "farmItems",
+          action: "edit",
           handler: handleCropModalToggle,
           icon: <AddIcon sx={{ color: "#517223" }} />,
         },
@@ -558,6 +563,9 @@ export default function FarmDashboard({
     {
       label: "Create a new Zone",
       ICON: <AddIcon />,
+      isAuthRequired: true,
+      from: "farmItems",
+      action: "create",
       handler: handleZoneModalToggle,
     },
   ];
@@ -593,11 +601,17 @@ export default function FarmDashboard({
           <span className="section-title">Tasks</span>
         </Grid>
         <Grid item xs={6} sm={6} md={3} lg={3} sx={{ alignItems: "center" }}>
+        <AuthOutlet
+    isAuthRequired={true}
+     from="farmItems"
+    action="create"
+>
           <ButtonCustom
             title="Add New Task"
             ICON={<AddIcon />}
             handleButtonClick={handleModalToggle}
           />
+          </AuthOutlet>
         </Grid>
         <Grid className="card-outline-container " item xs={12} sm={12} md={12}>
           <CollapsibleTable

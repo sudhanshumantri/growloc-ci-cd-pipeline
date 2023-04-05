@@ -133,6 +133,14 @@ export default function AddUsersModal({
                   disabled={userData.isEditMode}
                   value={userData.phone}
                   onChange={handleChange}
+                  onInput={(e) => {
+                    e.target.value = e.target.value.replace(/[^\d]/g, '').slice(0, 10)
+                  }}
+                  inputProps={{
+                    step: 1,
+                    style: { appearance: "none", "-moz-appearance": "TextBox" }
+                  }}
+
                   error={validations.phone}
                   helperText={validations.phone ? "Please provide valid phone number" : ""}
 
