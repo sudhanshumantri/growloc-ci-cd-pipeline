@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect } from "react";
-import { useState } from "react";
+import React, { useState,useCallback, useEffect } from "react";
 import {
   FormControl,
   Dialog,
@@ -65,10 +64,7 @@ export default function AddTaskModal({
   useEffect(()=>{
     fetchFarmInventory(farmId);
          fetchUsers(farmId);
-       
   },[])
-
-
 
   const handleChange = (e) => {
     const { value, name } = e.target;

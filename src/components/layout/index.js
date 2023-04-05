@@ -11,7 +11,7 @@ const { injectReducer, injectSagas } = getAsyncInjectors(store);
 injectReducer("login", loginReducer);
 injectReducer("users", usersReducer);
 injectSagas(userSagas);
-injectSagas(loginSagas);
+// injectSagas(loginSagas);
 
 const Layout = () => {
   let loginObject = localStorage.getItem("AUTH_OBJECT");

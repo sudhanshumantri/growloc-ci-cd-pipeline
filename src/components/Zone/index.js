@@ -1,13 +1,22 @@
-import React, { useState, useCallback,useEffect } from "react";
-import { useParams,useNavigate} from "react-router-dom";
+import React, { useState, useCallback, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
-import { Grid, FormControl,Card ,CardContent,Box,Tab,ToggleButtonGroup,ToggleButton} from "@mui/material";
+import {
+  Grid,
+  FormControl,
+  Card,
+  CardContent,
+  Box,
+  Tab,
+  ToggleButtonGroup,
+  ToggleButton,
+} from "@mui/material";
 import DataTable from "../shared/dataTable";
 import SingleCustomSelect from "../shared/select";
 import BarChart from "../shared/chart/barChart";
 import PieChart from "../shared/chart/pieChart";
-import { HARVEST_MONTH_OPTIONS,TOGGLE_ZONE_DATA } from "../../config";
+import { HARVEST_MONTH_OPTIONS, TOGGLE_ZONE_DATA } from "../../config";
 import AddFarmTaskComment from "../shared/addfarmtaskcomment";
 import ButtonCustom from "../shared/button";
 import AddIcon from "@mui/icons-material/Add";
@@ -22,6 +31,7 @@ import Totalharvest from "../../../public/assets/Totalharvest.png";
 import Nooftask from "../../../public/assets/Nooftask.png";
 import TableDynamicPagination from "../shared/tablepagination";
 import ZoneEfficiency from "../zonereports/zoneefficiency";
+import ToggleButtonReports from "../shared/togglebutton";
 
 export default function ZoneDashboard({
   fetchFarmZone,
@@ -79,8 +89,6 @@ export default function ZoneDashboard({
   const [selectedPlatform, setSelectedPlatform] = useState("zoneEfficiency");
   const [selectedComponent, setSelectedComponent] = useState(null);
 
-
-
   React.useEffect(() => {
     if (zoneId) {
       fecthFarmDashboardZone({
@@ -94,15 +102,14 @@ export default function ZoneDashboard({
         queryParams: { skip: 0, take: 10 },
       });
     }
-    fetchZoneReports(zoneId)
+    fetchZoneReports(zoneId);
   }, [zoneId]);
 
-
   useEffect(() => {
-    handlePlatformChange(null, selectedPlatform);   
+    handlePlatformChange(null, selectedPlatform);
   }, []);
 
-  const handleZoneTabChange =  (event, newValue) => {
+  const handleZoneTabChange = (event, newValue) => {
     setValue(newValue);
     if (newValue === "1") {
       fetchZoneDashboardZoneSensors({
@@ -120,9 +127,7 @@ export default function ZoneDashboard({
         queryParams: { skip: 0, take: 10 },
       });
     } else if (newValue === "4") {
-      // fetchFarmDashboardHarvest({ zoneId: zoneId, month });
-      fetchZoneReports(zoneId)
-
+      fetchZoneReports(zoneId);
     } else if (newValue === "5") {
       fetchFarmZone(zoneId);
     }
@@ -147,8 +152,7 @@ export default function ZoneDashboard({
 
   let headerDropwdown = true;
 
-  const handleZoneSensorSave = (data) => {
-  };
+  const handleZoneSensorSave = (data) => {};
   const handleZoneTaskSave = (data) => {
     if (data) {
       data.createdBy = loginObject?.profile.userId;
@@ -165,7 +169,6 @@ export default function ZoneDashboard({
   const handleChangeZoneTaskSchedulePagination = (queryParams) => {
     fetchZoneDashboardZoneTaskSchedule({ zoneId: zoneId, queryParams });
   };
-
 
   const headers = [
     {
@@ -262,44 +265,12 @@ export default function ZoneDashboard({
     },
   ];
 
-
-
-
-//   const renderReportdDetails = () => {
-//     return (
-//       <>
-//       <Grid container spacing={2}>
-//        <ToggleButtonGroup
-//     value={selectedPlatform}
-//     exclusive
-//     onChange={handlePlatformChange}
-//     aria-label="Platform"
-//   >
-//     {TOGGLE_ZONE_DATA.map((platform) => (
-//       <ToggleButton key={platform.value} value={platform.value} style={{
-//         backgroundColor:
-//           selectedPlatform === platform.value ? "green" : undefined,
-//       }}
-// >
-//         {platform.label}
-        
-//       </ToggleButton>
-//     ))}
-//   </ToggleButtonGroup>
-//   <Grid item xs={12} sm={12} md={12} >
-//   {renderPlatformComponent()
-//   }       
-//    </Grid>
-//    </Grid>
-//       </>
-//     );
-//   };
-
-const renderReportdDetails = () => {
-  return (
-    <>
-      <Grid item xs={12} sm={12} md={12} >
-        <ToggleButtonGroup
+  const durationStyles = { backgroundColor: "green", color: "white" };
+  const renderReportdDetails = () => {
+    return (
+      <>
+        <Grid item xs={12} sm={12} md={12}>
+           <ToggleButtonGroup
           value={selectedPlatform}
           exclusive
           onChange={handlePlatformChange}
@@ -317,18 +288,14 @@ const renderReportdDetails = () => {
               {platform.label}
             </ToggleButton>
           ))}
-        </ToggleButtonGroup>
+        </ToggleButtonGroup> 
+        </Grid>
         <Grid item xs={12} sm={12} md={12}>
           {renderPlatformComponent()}
         </Grid>
-      </Grid>
-    </>
-  );
-};
-
-
-
-
+      </>
+    );
+  };
 
   const handleChange = (event) => {
     const { value } = event.target;
@@ -399,13 +366,15 @@ const renderReportdDetails = () => {
     );
   };
 
-
-
-
   const renderPlatformComponent = () => {
     if (selectedComponent === "zoneEfficiency") {
       return (
-<ZoneEfficiency  zoneReportsList={zoneReportsList} fetchZoneReports={fetchZoneReports} isZoneReportsListLoading={isZoneReportsListLoading}/>      );
+        <ZoneEfficiency
+          zoneReportsList={zoneReportsList}
+          fetchZoneReports={fetchZoneReports}
+          isZoneReportsListLoading={isZoneReportsListLoading}
+        />
+      );
     } else if (selectedComponent === "mortalityRate") {
       return renderAverageMortality();
     } else if (selectedComponent === "taskTat") {
@@ -417,7 +386,6 @@ const renderReportdDetails = () => {
     }
   };
 
-
   const handlePlatformChange = (event, newPlatform) => {
     setSelectedPlatform(newPlatform);
     switch (newPlatform) {
@@ -425,25 +393,24 @@ const renderReportdDetails = () => {
         setSelectedComponent("zoneEfficiency");
         break;
       case "mortalityRate":
-        fecthFarmReportsZoneAverageMortality(zoneId)
+        fecthFarmReportsZoneAverageMortality(zoneId);
         setSelectedComponent("mortalityRate");
         break;
       case "taskTat":
-        fetchFarmReportsZoneTatTaskRequest(zoneId)
+        fetchFarmReportsZoneTatTaskRequest(zoneId);
         setSelectedComponent("taskTat");
         break;
       case "CapacityEfficiency":
         fetchFarmDashboardHarvest({ zoneId: zoneId, month });
-        fetchZoneDashboardZoneUtilizationStages(zoneId)
+        fetchZoneDashboardZoneUtilizationStages(zoneId);
         fetchZoneDashboardZoneUtilizationCrops(zoneId),
-        setSelectedComponent("CapacityEfficiency");
+          setSelectedComponent("CapacityEfficiency");
         break;
       default:
         setSelectedComponent(null);
         break;
     }
   };
-
 
   const renderMonthlyHarvestBreakup = () => {
     return (
@@ -472,69 +439,68 @@ const renderReportdDetails = () => {
           lg={12}
           className="card-outline-container graph-container"
         >
-          <BarChart chartData={farmZoneDashboardHarvestList || []}  labelKey="name"
-              valueKey="kgs"/>
+          <BarChart
+            chartData={farmZoneDashboardHarvestList || []}
+            labelKey="name"
+            valueKey="kgs"
+          />
         </Grid>
-               <Grid container spacing={2}>
-               {renderFarmZoneUtilization()}
-                  {renderZoneCropsUtilization()}
-                </Grid>
-
+        <Grid container spacing={2}>
+          {renderFarmZoneUtilization()}
+          {renderZoneCropsUtilization()}
+        </Grid>
       </Grid>
     );
   };
 
-
   const renderAverageMortality = () => {
-    
     return (
       <>
-      <Grid container spacing={2}>
-      <Grid item xs={8} sm={10} md={10}>
-        <span className="section-title">Average Mortality</span>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        sm={12}
-        md={12}
-        lg={12}
-        className="card-outline-container graph-container"
-      >
-<BarChart chartData={farmReportsZoneAverageMortalityList || []} labelKey="stage" valueKey="avgMortalityRate" />
-      </Grid>
-      </Grid>
+        <Grid item xs={12} sm={12} md={12}>
+          <span className="section-title">Average Mortality</span>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          className="card-outline-container graph-container"
+        >
+          <BarChart
+            chartData={farmReportsZoneAverageMortalityList || []}
+            labelKey="stage"
+            valueKey="avgMortalityRate"
+          />
+        </Grid>
       </>
-
-    )
-  }
+    );
+  };
   const renderTatTaskCategerios = () => {
-    
     return (
       <>
-      <Grid container spacing={2}>
-      <Grid item xs={8} sm={10} md={10}>
-        <span className="section-title">Task Tat Category</span>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        sm={12}
-        md={12}
-        lg={12}
-        className="card-outline-container graph-container"
-      >
-<BarChart chartData={farmReportsZoneTatTaskCategoriesList || []} labelKey="category" valueKey="avgTAT" />
-      </Grid>
-      </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={8} sm={10} md={10}>
+            <span className="section-title">Task Tat Category</span>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            className="card-outline-container graph-container"
+          >
+            <BarChart
+              chartData={farmReportsZoneTatTaskCategoriesList || []}
+              labelKey="category"
+              valueKey="avgTAT"
+            />
+          </Grid>
+        </Grid>
       </>
-
-    )
-  }
-
-
-
-
+    );
+  };
 
   const renderFarmZoneUtilization = () => {
     return (
@@ -697,25 +663,25 @@ const renderReportdDetails = () => {
   };
 
   const renderZoneInfo = () => {
-    const { name , farmArea , systemType, zoneType} = farmZoneList;
+    const { name, farmArea, systemType, zoneType } = farmZoneList;
     return (
       <>
-      {name &&  farmArea && systemType && zoneType && ( 
-        <div>
-        <p className="section-title">
-          Zone Name : <span>{name}</span>
-        </p>
-        <p className="section-title">
-          Farm Area:
-          <span>{farmArea}</span>
-        </p>
-        <p className="section-title">
-          System Type :<span>{systemType}</span>
-        </p>
-        <p className="section-title">
-          Zone Type :<span>{zoneType}</span>
-        </p>
-        </div>
+        {name && farmArea && systemType && zoneType && (
+          <div>
+            <p className="section-title">
+              Zone Name : <span>{name}</span>
+            </p>
+            <p className="section-title">
+              Farm Area:
+              <span>{farmArea}</span>
+            </p>
+            <p className="section-title">
+              System Type :<span>{systemType}</span>
+            </p>
+            <p className="section-title">
+              Zone Type :<span>{zoneType}</span>
+            </p>
+          </div>
         )}
       </>
     );
@@ -735,30 +701,28 @@ const renderReportdDetails = () => {
         valuekey="value"
         handleChange={handleDropDowmChange}
       />
-      {/* {isFarmZoneLoading && isZoneDashboardZoneSensorLoading &&  <Loader title=" Feching Zone Details" />}
-      {isFarmDashboardZoneTaskLoading && <Loader title=" adding Task" />}
-      {isFarmDashboardZoneCommetLoading && <Loader title="Adding Comment" />}
 
-      {isZoneDashboardZoneCropSchedulesListLoading && (
-        <Loader title="Zone Crop Schedule Details" />
-      )}
-      {isZoneDashboardZoneTaskLoading && (
-        <Loader title="Zone Task Schedule Details" />
-      )}
-      {isFarmZoneDashboardHarvestListLoading && (
-        <Loader title="Feching Harvest Breakup details" />
-      )} */}
-      {isZoneDashboardZoneSensorLoading &&  (
+      {isZoneDashboardZoneSensorLoading && (
         <Loader title="Fetching Zone sensors details" />
       )}
-  {isZoneDashboardZoneCropSchedulesListLoading && <Loader title="Zone Crop Schedule Details "/>}
-  {isZoneDashboardZoneTaskLoading && <Loader title="Zone Task Schedule Details "/>}
-{isFarmReportsZoneAverageMortalityListLoading && <Loader title="Zone Average Mortality Detailas" />}
-{isFarmReportsZoneTatTaskCategoriesListLoading && <Loader title="Zone Average Tat Task Detailas" />}
-{isFarmZoneLoading && <Loader title="Zone information Details" />}
-{isFarmDashboardZoneTaskLoading && <Loader title=" adding Task" />}
-  {isFarmDashboardZoneCommetLoading && <Loader title="Adding Comment" />}
-  {isFarmZoneDashboardHarvestListLoading && <Loader title="Fetching Harvest details" />}
+      {isZoneDashboardZoneCropSchedulesListLoading && (
+        <Loader title="Zone Crop Schedule Details " />
+      )}
+      {isZoneDashboardZoneTaskLoading && (
+        <Loader title="Zone Task Schedule Details " />
+      )}
+      {isFarmReportsZoneAverageMortalityListLoading && (
+        <Loader title="Zone Average Mortality Detailas" />
+      )}
+      {isFarmReportsZoneTatTaskCategoriesListLoading && (
+        <Loader title="Zone Average Tat Task Detailas" />
+      )}
+      {isFarmZoneLoading && <Loader title="Zone information Details" />}
+      {isFarmDashboardZoneTaskLoading && <Loader title=" adding Task" />}
+      {isFarmDashboardZoneCommetLoading && <Loader title="Adding Comment" />}
+      {isFarmZoneDashboardHarvestListLoading && (
+        <Loader title="Fetching Harvest details" />
+      )}
 
       <div className="page-container">
         <Grid container spacing={2}>
@@ -782,13 +746,8 @@ const renderReportdDetails = () => {
               <TabPanel value="3">{renderZoneTaskSchedules()}</TabPanel>
               <TabPanel value="4">
                 <Grid container spacing={2}>
-                {renderReportdDetails()}
+                  {renderReportdDetails()}
                 </Grid>
-
-                {/* <Grid container spacing={2}>
-                  {renderFarmZoneUtilization()}
-                  {renderZoneCropsUtilization()}
-                </Grid> */}
               </TabPanel>
               <TabPanel value="5">{renderZoneInfo()}</TabPanel>
             </Grid>

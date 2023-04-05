@@ -1,14 +1,11 @@
 import React, { useEffect, useState, Fragment } from "react";
-import Pusher from "pusher-js";
 import { useParams,useNavigate } from "react-router-dom";
-import { sortBy } from "lodash";
 import PageHeader from "../../shared/page-header";
 import Loader from "../../shared/loader";
 import Divider from "@mui/material/Divider";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import {
-  Stack,
   Stepper,
   Step,
   StepLabel,
@@ -21,9 +18,7 @@ import {
   TableHead,
   Alert,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import moment from "moment";
-import style from "./style.css";
 import MoveCropLifeCycleModal from "./moveCropLifecycleModal";
 import ScheduleHarvestingModal from "./scheduleHarvestingModal";
 import BorderColorIcon from "@mui/icons-material/BorderColor";

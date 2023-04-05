@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, useParams } from "react-router-dom";
 import { ROLE_BASED_ACCESS } from "../../../config";
 
 const AuthOutlet = ({ children, isAuthRequired, from, action, defaultReturn }) => {

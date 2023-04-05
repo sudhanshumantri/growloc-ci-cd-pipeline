@@ -1,6 +1,5 @@
+import React, { useState} from "react";
 import "./styles.css";
-import * as React from "react";
-import { useState } from "react";
 import {
   Backdrop,
   CircularProgress,
@@ -16,7 +15,6 @@ import {
   CssBaseline,
 } from "@mui/material/";
 import ButtonCustom from "../shared/button";
-import growlocCover from "../../../public/assets/growlocCover.webp";
 import loginpage from "../../../public/assets/loginpage.png";
 import logo from "../../../public/assets/logo.png";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -24,8 +22,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [phoneError, setPhoneError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [phoneError, setPhoneError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const handleButtonClick = () => {
     const re = /^[0-10\b]{0,10}$/;
@@ -154,7 +152,7 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
                 name="password"
                 type="password"
                 id="password"
-                error={passwordError}
+                error={passwordError ?? ""}
                 helperText={passwordError ? "Please provide password" : ""}
                 value={password}
                 onChange={(e) => {

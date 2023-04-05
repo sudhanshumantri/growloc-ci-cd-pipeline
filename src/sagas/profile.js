@@ -31,12 +31,13 @@ export function* updateUserProfile({ data }) {
                         }
                     ))
           }
+          addNotification(" Updated Profile Successfully", 5000,true, "success");
          yield put(updateUserProfileSuccess(responseData.data.data));
-        addNotification(" Updated Profile Successfully", 5000,true, "success");
     } else {
         let errorMessage=responseData.data?.error?responseData.data?.error:'Something went wrong'
         addNotification(errorMessage, 5000,true, "danger");
         yield put(updateUserProfileFailure("Something went wrong"));
+
     }
 }
 

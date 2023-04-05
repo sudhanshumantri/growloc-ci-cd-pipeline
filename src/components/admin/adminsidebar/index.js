@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import {
   styled,
   useTheme,
@@ -7,24 +6,20 @@ import {
   List,
   ListItemText,
   CssBaseline,
-  Collapse,
   ListItem,
   ListItemIcon,
   Divider,
 } from "@mui/material/";
 import MuiDrawer from "@mui/material/Drawer";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Link } from "react-router-dom";
-// import TopHeader from "../../header/";
 import TopHeader from "../../shared/header";
 import "../../../../public/assets/Irrigation.png";
 import LogoutIcon from "@mui/icons-material/Logout";
-const ASSETS_URL = "../../../../public/assets/";
 import logo from "../../../../public/assets/logo.png";
 import { adminMenuItems } from "../../shared/sidebar/config";
 import Dashboard from "../../../../public/assets/Dashboard.png";
 import "./style.css";
+
 const drawerWidth = 300;
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -34,7 +29,6 @@ const openedMixin = (theme) => ({
   }),
   overflowX: "hidden",
   backgroundColor: "#517223",
-  // backgroundColor: '#e9e9e9',
 });
 
 const closedMixin = (theme) => ({
@@ -47,7 +41,6 @@ const closedMixin = (theme) => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(9)} + -13px)`,
     backgroundColor: "#517223",
-    // backgroundColor: '#e9e9e9',
   },
 });
 
@@ -88,22 +81,10 @@ export default function AdminSideBar({  logout, loginObject }) {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-//   const { location } = router;
-//   useEffect(() => {
-//     if (location?.pathname) {
-//       const route = location.pathname.split("/");
-//       if (location.pathname.indexOf("/login") > -1) {
-//         setItems(adminMenuItems)
-//       }
-//     }
-//   }, [location]);
   const handleClick = (id) => {
     toggleSubmenu((prevState) => ({ ...prevState, [id]: !prevState[id] }));
   };
 
-//   const logoutHandler = () => {
-//     logout();
-//   };
 
   return (
     <Box sx={{ display: "flex" }}>

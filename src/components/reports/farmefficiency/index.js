@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
-import PageHeader from "../../shared/page-header";
 import { Line } from "react-chartjs-2";
 import {
   Grid,
   Card,
   CardContent,
-  ToggleButton,
-  ToggleButtonGroup,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import Loader from "../../shared/loader";
+import { Time_Frames } from "../../../config";
+import convertDurationToHours from "../../shared/convertdaytohours";
+import ToggleButtonReports from "../../shared/togglebutton";
 
 export default function FarmEfficiency({
   fetchFarmReports,
   farmReportsList,
   isFarmReportsListLoading,
 }) {
-
   let { farmId } = useParams();
   const [phData, setPhData] = useState({ labels: [], datasets: [] });
   const [waterTempData, setWaterTempData] = useState({
@@ -32,60 +31,86 @@ export default function FarmEfficiency({
     datasets: [],
   });
   const [duration, setDuration] = useState("4hr");
-  const timeframes = ["4hr", "12hr", "24hr", "3d", "1w"];
 
-
-
-  const phChartOptions = {
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-    scales: {
-      y: {
-        ticks: {
-          font: {
-            size: 13,
-          },
+  function getChartOptions(xAxisLabel, yAxisLabel) {
+    return {
+      plugins: {
+        legend: {
+          display: false,
         },
       },
-      x: {
-        ticks: {
-          font: {
-            size: 11,
+      scales: {
+        y: {
+          ticks: {
+            font: {
+              size: 13,
+            },
+          },
+          title: {
+            display: true,
+            text: yAxisLabel,
+            font: {
+              size: 11,
+            },
+            padding: {
+              top: 5,
+            },
+          },
+        },
+        x: {
+          ticks: {
+            font: {
+              size: 11,
+            },
+            padding: 10,
+            maxRotation: 0,
+            minRotation: 0,
+            maxTicksLimit: 500,
+          },
+          labels: function (ctx) {
+            const labels = ctx.chart.data.labels;
+            if (labels.length === 2) {
+              return labels;
+            }
+            const remainingLabels = (labels || []).map((value, index) => {
+              if (index === 0 || index === labels.length - 1) {
+                return value;
+              }
+              return "";
+            });
+            console.log(remainingLabels);
+            return remainingLabels;
           },
           callback: function (value, index, values) {
-            if (index === 0) {
-              return [values[0], values.pop()];
-            } else if (index === values.length - 1) {
-              return [];
-            } else {
+            if (index === 0 || index === values.length - 1) {
               return value;
             }
+            return "";
+          },
+          title: {
+            display: true,
+            text: xAxisLabel,
+            font: {
+              size: 11,
+            },
+            padding: {
+              top: 5,
+            },
           },
         },
       },
-    },
-  };
-
-  const convertDurationToHours = (duration) => {
-    switch (duration) {
-      case "4hr":
-        return 4;
-      case "12hr":
-        return 12;
-      case "24hr":
-        return 24;
-      case "3d":
-        return 24 * 3; 
-      case "1w":
-        return 24 * 35; 
-      default:
-        return 0;
-    }
-  };
-  
+    };
+  }
+  const phChartOptions = getChartOptions("Time (hours)", "pH Value");
+  const waterTempChartOptions = getChartOptions(
+    "Time (hours)",
+    "Water Temperature"
+  );
+  const lightIntensityChartOptions = getChartOptions(
+    "Time (hours)",
+    "Light Intensity"
+  );
+  const humidityChartOptions = getChartOptions("Time (hours)", "Humidity");
 
   const handleTimeFrameChange = (event) => {
     const { value } = event.target;
@@ -93,9 +118,10 @@ export default function FarmEfficiency({
     const durationInHours = convertDurationToHours(value);
     fetchFarmReports({ id: farmId, duration: durationInHours });
   };
-    useEffect(() => {
+  useEffect(() => {
     fetchFarmReports({ farmId, duration });
   }, []);
+
   useEffect(() => {
     const labels = [];
     const phValues = [];
@@ -171,72 +197,66 @@ export default function FarmEfficiency({
     setHumidityData(humidityData);
   }, [farmReportsList]);
 
+  const durationStyles = { backgroundColor: "green", color: "white" };
+
   return (
     <>
       <div className="page-container">
         {isFarmReportsListLoading && (
           <Loader title="Fetching farm reports details" />
         )}
-
         <Grid container spacing={2}>
           <Grid
             item
             xs={12}
             sx={{ display: "flex", justifyContent: "flex-end" }}
           >
-            <ToggleButtonGroup
+            <ToggleButtonReports
               value={duration}
-              exclusive
+              options={Time_Frames.map((timeframe) => ({
+                value: timeframe,
+                label: timeframe,
+              }))}
+              styles={durationStyles}
               onChange={handleTimeFrameChange}
-            >
-              {timeframes.map((timeframe) => (
-                <ToggleButton
-                  key={timeframe}
-                  value={timeframe}
-                  size="small"
-                  aria-label="right"
-                  style={
-                    duration === timeframe
-                      ? { backgroundColor: "green", color: "white" }
-                      : duration === 4 && timeframe === "4hr"
-                      ? { backgroundColor: "green", color: "white" }
-                      : {}
-                  }
-                >
-                  {timeframe}
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup>
+            />
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardContent>
                 <span className="input-label">PH</span>
-                <Line data={phData} options={phChartOptions} />
+                <Line
+                  className="chart-container"
+                  data={phData}
+                  options={phChartOptions}
+                />
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardContent>
                 <span className="input-label">Water temp</span>
-                <Line data={waterTempData} options={phChartOptions} />
+                <Line data={waterTempData} options={waterTempChartOptions} />
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardContent>
                 <span className="input-label">Light intensity</span>
-                <Line data={lightIntensityData} options={phChartOptions} />
+                <Line
+                  data={lightIntensityData}
+                  options={lightIntensityChartOptions}
+                />
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardContent>
                 <span className="input-label">Humidity</span>
-                <Line data={humidityData} options={phChartOptions} />
+                <Line data={humidityData} options={humidityChartOptions} />
               </CardContent>
             </Card>
           </Grid>

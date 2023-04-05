@@ -1,6 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 import {
   FormControl,
   Dialog,
@@ -8,14 +6,10 @@ import {
   DialogContent,
   DialogActions,
   Grid,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
+  
 } from "@mui/material/";
 import CustomButton from "../../shared/button";
 import TextBox from "../../shared/text-box";
-import { GROWING_ZONE } from "../../../config";
-import SingleCustomSelect from "../../shared/select";
 
 export default function AddZoneSensorsModal({
   open,

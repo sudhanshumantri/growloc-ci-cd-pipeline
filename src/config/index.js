@@ -221,6 +221,13 @@ export const TOGGLE_ZONE_DATA = [
   { value: "CapacityEfficiency", label: "Capacity Efficiency" },
 ];
 
+export const Time_Frames = ["4hr", "12hr", "24hr", "3d", "1w"];
+
+
+
+
+
+
 
 
 

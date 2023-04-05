@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useState, } from "react";
 import { useParams } from "react-router-dom";
 import {
   MenuItem,
@@ -106,7 +105,6 @@ export default function AddCropModal({
                     isCropError && setIsCropError(false);
                     handleCropChange(e);
                   }}
-                  // input={<OutlinedInput label="crop" />}
                   MenuProps={MenuProps}
                 >
                   {(modalData || []).map((e, keyIndex) => (
