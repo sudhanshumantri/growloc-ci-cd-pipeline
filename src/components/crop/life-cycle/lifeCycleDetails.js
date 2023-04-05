@@ -25,6 +25,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import EditParameters from "./editParameter";
 import { WEEKDAYS } from "../../../config";
 import AddTaskModal from "../../shared/addtask/addtask";
+import style from "./style.css";
 
 export default function CropLifeCycleDetails({
   fetchCropsLifecycleDetails,
