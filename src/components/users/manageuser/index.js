@@ -127,6 +127,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
         };
         updateUser(payload);
       } else {
+        console.log("data=====",data);
         addUser(data);
       }
       handleModalToggle();

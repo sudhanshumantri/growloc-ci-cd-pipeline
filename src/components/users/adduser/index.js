@@ -71,7 +71,7 @@ export default function AddUsersModal({
       email:userData.email,
       phone: parseInt(userData.phone),
       //password: userData.password,
-      role: userData.role,
+      role: userData.role ? userData.role:"farmmanager",
     };
     if (handleUserValidation()) {
       handleSave(payload);

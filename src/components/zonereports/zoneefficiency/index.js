@@ -19,7 +19,7 @@ export default function ZoneEfficiency({
   fetchZoneReports,
   isZoneReportsListLoading,
 }) {
-  let { farmId } = useParams();
+  let { farmId, zoneId } = useParams();
   const [phData, setPhData] = useState({ labels: [], datasets: [] });
   const [waterTempData, setWaterTempData] = useState({
     labels: [],
@@ -120,11 +120,12 @@ export default function ZoneEfficiency({
     const { value } = event.target;
     setDuration(value);
     const durationInHours = convertDurationToHours(value);
-    fetchZoneReports({ id: farmId, duration: durationInHours });
+    fetchZoneReports({ id: zoneId, duration: durationInHours });
   };
 
   useEffect(() => {
-    fetchZoneReports({ farmId, duration });
+    let durationHours = parseInt(duration.substring(0,1));
+    fetchZoneReports({ id:zoneId,duration:durationHours  });
   }, []);
   useEffect(() => {
     const labels = [];
