@@ -63,7 +63,7 @@ export default function AddTaskModal({
 
   useEffect(()=>{
     fetchFarmInventory(farmId);
-         fetchUsers(farmId);
+         fetchUsers({farmId:farmId});
   },[])
 
   const handleChange = (e) => {

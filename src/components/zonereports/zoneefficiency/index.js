@@ -124,8 +124,7 @@ export default function ZoneEfficiency({
   };
 
   useEffect(() => {
-    let durationHours = parseInt(duration.substring(0,1));
-    fetchZoneReports({ id:zoneId,duration:durationHours  });
+    fetchZoneReports({ id:zoneId,duration });
   }, []);
   useEffect(() => {
     const labels = [];
