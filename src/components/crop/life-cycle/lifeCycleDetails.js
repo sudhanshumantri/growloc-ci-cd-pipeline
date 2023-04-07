@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment } from "react";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import PageHeader from "../../shared/page-header";
 import Loader from "../../shared/loader";
 import Divider from "@mui/material/Divider";
@@ -26,6 +26,7 @@ import EditParameters from "./editParameter";
 import { WEEKDAYS } from "../../../config";
 import AddTaskModal from "../../shared/addtask/addtask";
 import style from "./style.css";
+import AuthOutlet from "../../shared/authoutlet";
 
 export default function CropLifeCycleDetails({
   fetchCropsLifecycleDetails,
@@ -50,6 +51,8 @@ export default function CropLifeCycleDetails({
   isRecentZoneSensorDataLoading,
   recentZoneSensorDataLoadingError,
   fetchRecentZoneSensorData,
+  addFarmDashboardZoneTask,
+  isFarmDashboardZoneTaskLoading
 }) {
   let { farmId } = useParams();
   let { zoneId } = useParams();
@@ -114,14 +117,13 @@ export default function CropLifeCycleDetails({
     }
   }, [isLifecycleDetailsLoading]);
 
-
-
   const handleTaskLifeCycleSave = (data) => {
     if (data) {
       data.createdBy = loginObject?.profile.userId;
       data.cropLifeCycleId = parseInt(lifecycleId);
       data.farmId = farmId;
-      addTaskScheduleTask(data);
+      data.zoneId = zoneId;
+      addFarmDashboardZoneTask(data);
     }
     handleTaskModalToggle();
   };
@@ -225,6 +227,9 @@ export default function CropLifeCycleDetails({
     let buttonTaskLabel = "Add New Task";
     buttonArray.push({
       label: buttonTaskLabel,
+      isAuthRequired: true,
+      from: "lifeCycleDetails",
+      action: "create",
       ICON: <AddIcon />,
       handler: handleTaskModalToggle,
     });
@@ -238,6 +243,9 @@ export default function CropLifeCycleDetails({
         let buttonLable = "Move to " + nextStageInforamtion.stage;
         buttonArray.push({
           label: buttonLable,
+          isAuthRequired: true,
+          from: "lifeCycleDetails",
+          action: "create",
           handler: handleModalToggle,
         });
       } else {
@@ -250,6 +258,9 @@ export default function CropLifeCycleDetails({
           buttonArray.push({
             label: "Harvest",
             handler: handleModalToggle,
+            isAuthRequired: true,
+            from: "lifeCycleDetails",
+            action: "create",
           });
           let cropsSchedule =
             lifecycleDetails?.cropDetails?.FarmCropLifecycleSchedules.length >
@@ -257,12 +268,19 @@ export default function CropLifeCycleDetails({
           if (!cropsSchedule) {
             buttonArray.push({
               label: "Schedule",
+              isAuthRequired: true,
+              from: "lifeCycleDetails",
+              action: "create",
+
               handler: handleScheduleHarvestingModalToggle,
             });
           }
         } else {
           buttonArray.push({
             label: "Dispose",
+            isAuthRequired: true,
+            from: "lifeCycleDetails",
+            action: "create",
             handler: handleModalToggle,
           });
         }
@@ -428,10 +446,12 @@ export default function CropLifeCycleDetails({
     return (
       <Grid item xs={12} sm={12} md={12}>
         <p className="section-title">Sensors Information </p>
-        {data && <p>
-          Last Updated :{" "}
-          {moment(new Date(obj?.timestamp)).format("MMMM Do YYYY hh:mm:ss A")}
-        </p>}
+        {data && (
+          <p>
+            Last Updated :{" "}
+            {moment(new Date(obj?.timestamp)).format("MMMM Do YYYY hh:mm:ss A")}
+          </p>
+        )}
         <Paper className="life-cycle-details-card life-cycle-spacing ">
           <Table size="small" aria-label="a dense table">
             <TableHead className="table-header-row">
@@ -444,11 +464,17 @@ export default function CropLifeCycleDetails({
                 </TableCell>
                 <TableCell className="label-custom">
                   <b>Ideal Value</b>
-                  <EditOutlinedIcon
-                    className="icon"
-                    sx={{ color: "#517223", fontSize: "16px" }}
-                    onClick={handleParametersInformationEditToggle}
-                  />
+                  <AuthOutlet
+                    isAuthRequired={true}
+                    from="lifeCycleDetails"
+                    action="create"
+                  >
+                    <EditOutlinedIcon
+                      className="icon"
+                      sx={{ color: "#517223", fontSize: "16px" }}
+                      onClick={handleParametersInformationEditToggle}
+                    />
+                  </AuthOutlet>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -464,19 +490,20 @@ export default function CropLifeCycleDetails({
                       {param.name}
                     </TableCell>
                     <TableCell className="table-header" align="left">
-                      {data && (param.name === "pH Level"
-                        ? data["pH"]
-                        : param.name == "Electric Conductivity"
-                        ? data["conductivity"]
-                        : param.name == "Temperature"
-                        ? data["waterTemperature"]
-                        : param.name == "CO2 Level"
-                        ? data["cO2"]
-                        : param.name == "Light"
-                        ? data["lightIntensity"]
-                        : param.name == "Humidity"
-                        ? data["humidity"]
-                        : "")}{" "}
+                      {data &&
+                        (param.name === "pH Level"
+                          ? data["pH"]
+                          : param.name == "Electric Conductivity"
+                          ? data["conductivity"]
+                          : param.name == "Temperature"
+                          ? data["waterTemperature"]
+                          : param.name == "CO2 Level"
+                          ? data["cO2"]
+                          : param.name == "Light"
+                          ? data["lightIntensity"]
+                          : param.name == "Humidity"
+                          ? data["humidity"]
+                          : "")}{" "}
                       <b>{param.unit}</b>
                     </TableCell>
                     <TableCell className="table-header" align="left">
@@ -562,8 +589,7 @@ export default function CropLifeCycleDetails({
   return (
     <>
       {isLifecycleDetailsLoading && <Loader title="Fetching Details" />}
-      {/* {isTaskScheduleTaskLoading && <Loader title="Adding task" />} */}
-
+      {/* {isFarmDashboardZoneTaskLoading && <Loader title="Adding task" />}  */}
       {!isLifecycleDetailsLoading && (
         <>
           {renderHeader()}
@@ -580,7 +606,6 @@ export default function CropLifeCycleDetails({
                 farmInventoryList={farmInventoryList}
                 fetchFarmInventory={fetchFarmInventory}
                 fetchUsers={fetchUsers}
-
               />
             )}
             {open && (

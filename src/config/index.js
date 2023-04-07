@@ -89,6 +89,13 @@ export const ROLE_BASED_ACCESS = {
     ergonomists: ["view"],
     supervisor: [],
   },
+  lifeCycleDetails: {
+    farmowner: ["create", "edit", "delete", "view"],
+    farmmanager: ["create", "edit", "delete", "view"],
+    ergonomists: ["view"],
+    supervisor: [],
+  },
+
   reports: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],

@@ -593,6 +593,8 @@ export default function FarmDashboard({
       </Grid>
     );
   };
+
+  console.log("Check===========",farmDashboardTaskList);
   const renderTaskSchedules = () => {
     const { tasks } = farmDashboardTaskList;
     return (
@@ -954,7 +956,8 @@ export default function FarmDashboard({
 
 
   const renderFarmArea = () => {
-    const {name,farmArea} = farmDashboardInfoList
+    const {name,farmArea} = farmDashboardInfoList;
+    console.log(farmDashboardInfoList,"farmDashboardInfoList");
     return (
     <>
     {name && farmArea && (
