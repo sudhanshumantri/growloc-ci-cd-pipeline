@@ -91,10 +91,6 @@ export default function AddTaskModal({
       errors.taskName = true;
       isValid = false;
     }
-    if (!taskData.itemName) {
-      errors.itemName = true;
-      isValid = false;
-    }
     if (taskData.itemName) {
       if (!taskData.qty) {
         errors.qty = true;

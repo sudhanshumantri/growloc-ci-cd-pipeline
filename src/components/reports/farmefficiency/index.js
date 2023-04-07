@@ -119,7 +119,7 @@ export default function FarmEfficiency({
     fetchFarmReports({ id: farmId, duration: durationInHours });
   };
   useEffect(() => {
-    fetchFarmReports({ farmId, duration });
+    fetchFarmReports({ farmId, duration:parseInt(duration) });
   }, []);
 
   useEffect(() => {

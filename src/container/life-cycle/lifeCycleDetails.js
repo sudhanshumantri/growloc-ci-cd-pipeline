@@ -7,10 +7,11 @@ import { getRecentZoneSensorDataRequest } from "../../actions/zone";
 import LifecycleDetails from "../../components/crop/life-cycle/lifeCycleDetails";
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
-import { addTaskSheduleTaskRequest } from "../../actions/dashboard";
+import { addFarmDashboardZoneTaskRequest } from "../../actions/zone";
 import { selectPusherData } from "../../selectors/pucher";
 import { selectAllUserZoneSensor,selectIsTaskScheduleTaskLoading } from "../../selectors/dashboard";
-import { selectRecentZoneSensorData,selectRecentZoneSensorDataError,selectIsRecentZoneSensorDataLoading } from "../../selectors/zone";
+import { selectRecentZoneSensorData,selectRecentZoneSensorDataError,selectIsRecentZoneSensorDataLoading,  selectIsFarmDashboardZoneTaskLoading,
+} from "../../selectors/zone";
 import {
     selectLifecycleDetails,
     selectIsLifecycleDetailsLoading,
@@ -44,7 +45,7 @@ const mapStateToProps = createStructuredSelector({
     recentZoneSensorData : selectRecentZoneSensorData(),
     isRecentZoneSensorDataLoading : selectIsRecentZoneSensorDataLoading(),
     recentZoneSensorDataLoadingError : selectIsRecentZoneSensorDataLoading(),
-    isTaskScheduleTaskLoading: selectIsTaskScheduleTaskLoading(),
+    isFarmDashboardZoneTaskLoading: selectIsFarmDashboardZoneTaskLoading(),
 
 });
 const mapDispatchToProps = {
@@ -54,7 +55,7 @@ const mapDispatchToProps = {
     updateCropToLifecycleSchedule:updateCropToLifecycleScheduleRequest,
     fetchUsers: fetchUsersRequest,
     fetchFarmInventory: fetchFarmInventoryRequest,
-    addTaskScheduleTask: addTaskSheduleTaskRequest,
+    addFarmDashboardZoneTask: addFarmDashboardZoneTaskRequest,
     fetchRecentZoneSensorData : getRecentZoneSensorDataRequest,
 };
 export default

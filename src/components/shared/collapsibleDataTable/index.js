@@ -1,4 +1,4 @@
-import  React,{useState} from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import {
   Box,
@@ -13,7 +13,7 @@ import {
   Paper,
   Chip,
   Badge,
-  Modal
+  Modal,
 } from "@mui/material/";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -24,6 +24,8 @@ import "./style.css";
 function Row({ row, handleCommentModalToggle }) {
   const [open, setOpen] = useState(false);
   const [openImage, setOpenImage] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
+
   const formatSerityLevel = (value) => {
     const sLevel = SEVERITY_LEVEL.find((level) => level.value === value) || {};
     return sLevel.name || "-";
@@ -43,44 +45,85 @@ function Row({ row, handleCommentModalToggle }) {
   };
 
   const handleImageClick = (images) => {
-    setOpenImage(!openImage);
-  }
+    setSelectedImages(images);
+    setOpenImage(true);
+  };
+  
   const handleClose = () => {
     setOpenImage(false);
   };
+  
+  // const renderImageBadge = (historyRow) => {
+  //   console.log(historyRow,"historyRow");
+  //   return (
+  //     <>
+  //       <Badge
+  //         color="secondary"
+  //         badgeContent={historyRow.images.length || 0}
+  //         onClick={() => handleImageClick(historyRow.image)}
+  //       >
+  //         {historyRow.images.length === 0 ? (
+  //           ""
+  //         ) : (
+  //           <img src={historyRow.images[0].url} width="50" height="50" />
+  //         )}
+  //       </Badge>
+  //       <Modal open={openImage} onClick={handleClose}>
+  //         <div>
+  //           <Carousel autoPlay={false}>
+  //             {historyRow.images.map((image, index) => {
+  //               return (
+  //                 <img
+  //                   key={index}
+  //                   src={image.url}
+  //                   alt={image}
+  //                   className="carsole-image"
+  //                   width="30%"
+  //                 />
+  //               );
+  //             })}
+  //           </Carousel>
+  //         </div>
+  //       </Modal>
+  //     </>
+  //   );
+  // };
 
   const renderImageBadge = (historyRow) => {
-    
-
+    const images = historyRow.images;
     return (
-      <div >
+      <>
         <Badge
           color="secondary"
-          badgeContent={historyRow.images.length || 0}
-          onClick={()=>handleImageClick(historyRow.image)}
+          badgeContent={images.length || 0}
+          onClick={() => handleImageClick(images)}
         >
-          {historyRow.images.length === 0 ? "" : 
-            <img src={historyRow.images[0].url} width='50' height='50'/>
-          }
+          {images.length === 0 ? (
+            ""
+          ) : (
+            <img src={images[0].url} width="50" height="50" />
+          )}
         </Badge>
-         <Modal
-          open={openImage}
-          onClick={handleClose}
-        > 
-          <Carousel autoPlay={false}    
->
-          {
-            historyRow.images.map((image,index)=>{
-              return  <img key={index} src={image.url} alt={image} className="carsole-image"  width='30%' />
-            })
-          }
-          </Carousel>
-          </Modal>
-
-      </div>
+        <Modal open={openImage} onClick={handleClose}>
+          <div>
+            <Carousel autoPlay={false}>
+              {selectedImages.map((image, index) => {
+                return (
+                  <img
+                    key={index}
+                    src={image.url}
+                    alt={image}
+                    className="carsole-image"
+                    width="30%"
+                  />
+                );
+              })}
+            </Carousel>
+          </div>
+        </Modal>
+      </>
     );
-  }
-  
+  };
 
   return (
     <React.Fragment>
@@ -120,7 +163,7 @@ function Row({ row, handleCommentModalToggle }) {
           {row.createdByProfile.name}
         </TableCell>
         <TableCell className="table-header" align="left">
-        {row.itemName}
+          {row.itemName}
         </TableCell>
         <TableCell className="table-header" align="left">
           <Chip
@@ -129,7 +172,7 @@ function Row({ row, handleCommentModalToggle }) {
           />
         </TableCell>
         <TableCell className="table-header" align="left">
-        {row.status}
+          {row.status}
         </TableCell>
         <TableCell>
           <IconButton
@@ -138,7 +181,6 @@ function Row({ row, handleCommentModalToggle }) {
           >
             <AddCommentOutlinedIcon sx={{ color: "#517223" }} />,
           </IconButton>
-
         </TableCell>
       </TableRow>
       <TableRow>
@@ -167,9 +209,7 @@ function Row({ row, handleCommentModalToggle }) {
                       <TableCell component="th" scope="row">
                         {historyRow.comment}
                       </TableCell>
-                      <TableCell>
-                         {renderImageBadge(historyRow)}
-                      </TableCell>
+                      <TableCell>{renderImageBadge(historyRow)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
