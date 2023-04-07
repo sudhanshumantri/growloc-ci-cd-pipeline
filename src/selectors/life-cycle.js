@@ -34,4 +34,9 @@ export const selectIsLifecycleParametersLoading = () =>
   createSelector(selectCrop, (services) => services.toJS()["isAddLifecycleParametersLoading"]);
   export const selectLifecycleParametersError = () =>
   createSelector(selectCrop, (services) => services.toJS()["addLifecycleParameterError"]);
+///
 
+  export const selectIsUpdateLifeCycleDetailsLoading = () =>
+  createSelector(selectCrop, (services) => services.toJS()["isUpdateLifeCycleDetailsLoading"]);
+  export const selectIsUpdateLifeCycleDetailsError = () =>
+  createSelector(selectCrop, (services) => services.toJS()["isUpdateLifeCycleDetailsError"]);

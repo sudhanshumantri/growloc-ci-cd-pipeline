@@ -172,3 +172,20 @@ export const selectIsZoneTaskListLoading = () =>
 export const selectZoneTaskCommentError = () =>
   createSelector(selectZone, (services) => services.toJS()["zoneTaskCommentError"]);
 
+
+  export const selectFarmZoneSensorDataList = () =>
+  createSelector(
+    selectZone,
+    (services) => services.toJS()["farmZoneSensorDataList"]
+  );
+export const selectIsFarmZoneSensorDataLoading = () =>
+  createSelector(
+    selectZone,
+    (services) => services.toJS()["isFarmZoneSensorDataLoading"]
+  );
+
+  export const selectFarmZoneSensorDataListError = () =>
+  createSelector(
+    selectZone,
+    (services) => services.toJS()["farmZoneSensorDataListError"]
+  );

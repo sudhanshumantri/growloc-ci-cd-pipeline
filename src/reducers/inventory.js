@@ -67,7 +67,7 @@ export default function inventoryReducer(state = INITIAL_STATE, action = {}) {
         .set("isUpdateFarmInventoryLoading", true)
         .set("updateFarmInventoryError", null);
     case UPDATE_FARM_INVENTORY_SUCCESS:
-      const { data} = action.data;
+        const { data} = action.data;
       const index = FarmInventoryList.findIndex((item) => item.id === data.id);
       FarmInventoryList[index] = data;
       return state

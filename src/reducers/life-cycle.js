@@ -17,7 +17,11 @@ import {
   UPDATE_CROP_LIFECYCLE_PARAMETERS_FAILURE,
   UPDATE_CROP_LIFECYCLE_SCHEDULE_REQUEST,
   UPDATE_CROP_LIFECYCLE_SCHEDULE_SUCCESS,
-  UPDATE_CROP_LIFECYCLE_SCHEDULE_FAILURE
+  UPDATE_CROP_LIFECYCLE_SCHEDULE_FAILURE,
+  UPDATE_CROP_LIFECYCLE_DETAILS_REQUEST,
+  UPDATE_CROP_LIFECYCLE_DETAILS_SUCCESS,
+  UPDATE_CROP_LIFECYCLE_DETAILS_FAILURE
+
 } from "../actions/actionTypes";
 const INITIAL_STATE = fromJS({
   isCropLifeCycleListLoading: false,
@@ -31,8 +35,9 @@ const INITIAL_STATE = fromJS({
   isTransitionLoading: false,
   isAddLifecycleParametersLoading: false,
   addLifecycleParameterError: null,
-  isUpdateLifecycleStageScheduleRequested: false
-
+  isUpdateLifecycleStageScheduleRequested: false,
+  isUpdateLifeCycleDetailsLoading:false,
+  isUpdateLifeCycleDetailsError:false
 });
 export default function cropLifecycleReducer(
   state = INITIAL_STATE,
@@ -55,7 +60,6 @@ export default function cropLifecycleReducer(
         .set("isCropLifeCycleListLoading", false)
         .set("lifecycleCrops", [])
         .set("cropLifeCycleListError", action.error);
-
     case ADD_CROP_LIFECYCLE_REQUEST:
       return state
         .set("isAddLifecycleLoading", true)
@@ -128,6 +132,23 @@ export default function cropLifecycleReducer(
     case UPDATE_CROP_LIFECYCLE_SCHEDULE_FAILURE:
       return state
         .set("isUpdateLifecycleStageScheduleRequested", false)
+
+    case UPDATE_CROP_LIFECYCLE_DETAILS_REQUEST:
+      
+      return state
+        .set("isUpdateLifeCycleDetailsLoading", true)
+        .set("isUpdateLifeCycleDetailsError", null);
+    case UPDATE_CROP_LIFECYCLE_DETAILS_SUCCESS:
+
+      return state
+        .set("isUpdateLifeCycleDetailsLoading", false)
+        .set("lifecycleDetails", lifecycleDetails)
+        .set("isUpdateLifeCycleDetailsError", null);
+    case UPDATE_CROP_LIFECYCLE_DETAILS_FAILURE:
+      return state
+        .set("isUpdateLifeCycleDetailsLoading", false)
+        .set("isUpdateLifeCycleDetailsError", action.error);
+
     default:
       return state;
   }

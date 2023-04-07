@@ -42,6 +42,10 @@ import {
   ADD_ZONE_TASK_COMMENT_REQUEST,
   ADD_ZONE_TASK_COMMENT_SUCCESS,
   ADD_ZONE_TASK_COMMENT_FAILURE,
+  FETCH_FARM_ZONE_SENSOR_DATA_REQUEST,
+  FETCH_FARM_ZONE_SENSOR_DATA_SUCCESS,
+  FETCH_FARM_ZONE_SENSOR_DATA_FAILURE
+
 
 } from "../actions/actionTypes";
 
@@ -91,6 +95,10 @@ const INITIAL_STATE = fromJS({
   zoneTaskListError: null,
   isZoneTaskCommentLoading:false,
   zoneTaskCommentError:null,
+isFarmZoneSensorDataLoading:false,
+farmZoneSensorDataList:{},
+farmZoneSensorDataListError:false,
+
 });
 export default function zoneReducer(state = INITIAL_STATE, action = {}) {
   let zoneDashboardZoneTaskList = state.toJS()["zoneDashboardZoneTaskList"];
@@ -337,6 +345,23 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
                       return state
                         .set("isZoneTaskCommentLoading", false)
                         .set("zoneTaskCommentError", action.error);
+
+                        //
+    case FETCH_FARM_ZONE_SENSOR_DATA_REQUEST:
+      return state
+        .set("isFarmZoneSensorDataLoading", true)
+        .set("farmZoneSensorDataList", {})
+        .set("farmZoneSensorDataListError", null);
+    case FETCH_FARM_ZONE_SENSOR_DATA_SUCCESS:
+      return state
+        .set("isFarmZoneSensorDataLoading", false)
+        .set("farmZoneSensorDataList", action.data)
+        .set("farmZoneSensorDataListError", null);
+    case FETCH_FARM_ZONE_SENSOR_DATA_FAILURE:
+      return state
+        .set("isFarmZoneSensorDataLoading", false)
+        .set("farmZoneSensorDataList", {})
+        .set("farmZoneSensorDataListError", action.error);     
     default:
       return state;
   }
