@@ -11,7 +11,9 @@ import AdminDashboard from "../../../container/admin"
 import adminSagas  from "../../../sagas/admin";
 import adminReducer from "../../../reducers/admin";
 import PrivateOutlet from "../../privateroute";
-import AdminSideBar from "../../admin/adminsidebar";
+// import AdminSideBar from "../../admin/adminsidebar";
+import AdminSideBar from "../../../container/adminsidebar";
+
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
 injectReducer("admin", adminReducer);
 injectSagas(adminSagas);

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import {
   styled,
@@ -85,6 +86,9 @@ export default function AdminSideBar({  logout, loginObject }) {
     toggleSubmenu((prevState) => ({ ...prevState, [id]: !prevState[id] }));
   };
 
+  const logoutHandler = () => {
+    logout();
+    };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -113,16 +117,9 @@ export default function AdminSideBar({  logout, loginObject }) {
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItem> 
-          <Divider/>
-           <ListItem component={Link} >
-            <ListItemIcon className="darwer-icon">
-              <LogoutIcon />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItem> 
-
         </List>
       </Drawer>
     </Box>
   );
 }
+

@@ -32,6 +32,10 @@ import Nooftask from "../../../public/assets/Nooftask.png";
 import TableDynamicPagination from "../shared/tablepagination";
 import ZoneEfficiency from "../zonereports/zoneefficiency";
 import ToggleButtonReports from "../shared/togglebutton";
+import AuthOutlet from "../shared/authoutlet";
+
+
+
 
 export default function ZoneDashboard({
   fetchFarmZone,
@@ -270,7 +274,7 @@ export default function ZoneDashboard({
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
-           <ToggleButtonGroup
+           {/* <ToggleButtonGroup
           value={selectedPlatform}
           exclusive
           onChange={handlePlatformChange}
@@ -288,7 +292,31 @@ export default function ZoneDashboard({
               {platform.label}
             </ToggleButton>
           ))}
-        </ToggleButtonGroup> 
+        </ToggleButtonGroup>  */}
+
+
+<ToggleButtonGroup
+            value={selectedPlatform}
+            exclusive
+            onChange={handlePlatformChange}
+            aria-label="Platform"
+            sx={{color:"balck"}}
+          >
+            {TOGGLE_ZONE_DATA.map((platform) => (
+              <ToggleButton
+                key={platform.value}
+                value={platform.value}
+                style={{
+                  backgroundColor:
+                    selectedPlatform === platform.value ? "green" : undefined,
+                    color: selectedPlatform === platform.value ? "white" : "black",
+                }}
+              >
+                {platform.label}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           {renderPlatformComponent()}
@@ -563,11 +591,13 @@ export default function ZoneDashboard({
             <p className="section-title">Zone Tasks</p>
           </Grid>
           <Grid item xs={6} sm={6} md={3} lg={3} sx={{ alignItems: "center" }}>
+          <AuthOutlet isAuthRequired={true} from="dashboard" action="create">
             <ButtonCustom
               title="Add New Task"
               ICON={<AddIcon />}
               handleButtonClick={handleModalToggle}
             />
+           </AuthOutlet>
           </Grid>
           <Grid
             className="card-outline-container "
@@ -737,7 +767,7 @@ export default function ZoneDashboard({
                   <Tab label="Sensors" value="1" />
                   <Tab label="Crop Schedules" value="2" />
                   <Tab label="Task Schedules" value="3" />
-                  <Tab label="Graph" value="4" />
+                  <Tab label="Reports" value="4" />
                   <Tab label="Info" value="5"></Tab>
                 </TabList>
               </Box>
