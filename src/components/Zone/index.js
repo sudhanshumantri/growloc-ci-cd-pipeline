@@ -114,7 +114,7 @@ export default function ZoneDashboard({
         queryParams: { skip: 0, take: 10 },
       });
     }
-    // fetchZoneReports(zoneId);
+    fetchFarmZoneSensorDataRequest({ id:zoneId })
   }, [zoneId]);
 
   useEffect(() => {
