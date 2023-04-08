@@ -48,8 +48,8 @@ const mapStateToProps = createStructuredSelector({
     isRecentZoneSensorDataLoading : selectIsRecentZoneSensorDataLoading(),
     recentZoneSensorDataLoadingError : selectIsRecentZoneSensorDataLoading(),
     isFarmDashboardZoneTaskLoading: selectIsFarmDashboardZoneTaskLoading(),
-    isAddLifeCycleDetails:selectIsUpdateLifeCycleDetailsLoading(),
-    addLifeCycleDetailsError:selectIsUpdateLifeCycleDetailsError()
+    isUpdateLifeCycleDetailsLoading:selectIsUpdateLifeCycleDetailsLoading(),
+    isUpdateLifeCycleDetailsError:selectIsUpdateLifeCycleDetailsError()
   
 
 });

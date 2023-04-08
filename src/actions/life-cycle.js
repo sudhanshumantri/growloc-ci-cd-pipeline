@@ -145,16 +145,16 @@ export function updateCropToLifecycleDetailsRequest(data) {
     data,
   };
 }
-export function  updateCropToLifecycleDetailsSuccess(error) {
+export function  updateCropToLifecycleDetailsSuccess(data) {
   return {
     type: UPDATE_CROP_LIFECYCLE_DETAILS_SUCCESS,
-    error,
+    data,
   };
 }
 //
-export function  updateCropToLifecycleDetailsFailure(data) {
+export function  updateCropToLifecycleDetailsFailure(error) {
   return {
     type: UPDATE_CROP_LIFECYCLE_DETAILS_FAILURE,
-    data
+    error
   };
 }

@@ -53,7 +53,8 @@ export default function CropLifeCycleDetails({
   fetchRecentZoneSensorData,
   addFarmDashboardZoneTask,
   isFarmDashboardZoneTaskLoading,
-  updateCropToLifecycleDetails
+  updateCropToLifecycleDetails,
+  isUpdateLifeCycleDetailsLoading
 }) {
   let { farmId } = useParams();
   let { zoneId } = useParams();
@@ -234,8 +235,6 @@ export default function CropLifeCycleDetails({
       console.log(paylad);
       updateCropToLifecycleDetails(paylad)
     }
-
-
     const handleUndoCompleteLifeCycle = () => {
       let { cropDetails} = lifecycleDetails;
       console.log("cropDetails",cropDetails);
@@ -249,7 +248,6 @@ export default function CropLifeCycleDetails({
         updateCropToLifecycleDetails(paylad)
       }
   
-
 
   const handleActionButton = () => {
     let buttonArray = [];
@@ -267,7 +265,7 @@ export default function CropLifeCycleDetails({
       handler: handleTaskModalToggle,
     }); 
     buttonArray.push({
-      label: "CompleteLifeCycle",
+      label: "Complete LifeCycle",
       isAuthRequired: true,
       from: "lifeCycleDetails",
       action: "create",
@@ -692,6 +690,8 @@ export default function CropLifeCycleDetails({
   return (
     <>
       {isLifecycleDetailsLoading && <Loader title="Fetching Details" />}
+      {isUpdateLifeCycleDetailsLoading && <Loader title="Updating Crop LifeCycle Details" />}
+
       {/* {isFarmDashboardZoneTaskLoading && <Loader title="Adding task" />}  */}
       {!isLifecycleDetailsLoading && (
         <>

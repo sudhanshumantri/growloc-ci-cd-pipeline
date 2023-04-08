@@ -114,7 +114,7 @@ export default function ZoneDashboard({
         queryParams: { skip: 0, take: 10 },
       });
     }
-    fetchZoneReports(zoneId);
+    // fetchZoneReports(zoneId);
   }, [zoneId]);
 
   useEffect(() => {
@@ -743,53 +743,53 @@ export default function ZoneDashboard({
     const sensorData = data[0].payload;
 
     return (
-      <Grid item xs={12} sm={12} md={12}>
-        <p className="section-title">Sensors Information </p>
-        {sensorData && (
-          <p>
-            Last Updated :{" "}
-            {moment(new Date(farmZoneSensorDataList?.created_on
-)).format("MMMM Do YYYY hh:mm:ss A")}
-          </p>
-        )}
-        <Paper className="life-cycle-details-card life-cycle-spacing ">
-          <Table size="small" aria-label="a dense table">
-            <TableHead className="table-header-row">
-              <TableRow>
-                <TableCell className="label-custom">
-                  <b>Parameter</b>
-                </TableCell>
-                <TableCell className="label-custom">
-                  <b>Value</b>
-                </TableCell>
-                <TableCell className="label-custom">
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Object.entries(sensorData).map(([key, value]) => {
-                return (
-                  <TableRow
-                    key={key}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell className="label-custom" align="left">
-                      {key}
-                    </TableCell>
-                    <TableCell className="table-header" align="left">
-                      <b>{value}</b>
-                    </TableCell>
-                    <TableCell className="table-header" align="left">
-                      {value.value} <b>{value.unit}</b>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </Paper>
-      </Grid>
-    );
+        <Grid item xs={12} sm={12} md={12}>
+          <p className="section-title">Sensors Information </p>
+          {sensorData && (
+            <p>
+              Last Updated :{" "}
+              {moment(new Date(farmZoneSensorDataList?.created_on
+  )).format("MMMM Do YYYY hh:mm:ss A")}
+            </p>
+          )}
+          <Paper className="life-cycle-details-card life-cycle-spacing ">
+            <Table size="small" aria-label="a dense table">
+              <TableHead className="table-header-row">
+                <TableRow>
+                  <TableCell className="label-custom">
+                    <b>Parameter</b>
+                  </TableCell>
+                  <TableCell className="label-custom">
+                    <b>Value</b>
+                  </TableCell>
+                  <TableCell className="label-custom">
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {Object.entries(sensorData).map(([key, value]) => {
+                  return (
+                    <TableRow
+                      key={key}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell className="label-custom" align="left">
+                        {key}
+                      </TableCell>
+                      <TableCell className="table-header" align="left">
+                        <b>{value}</b>
+                      </TableCell>
+                      <TableCell className="table-header" align="left">
+                        {value.value} <b>{value.unit}</b>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </Paper>
+        </Grid>
+      );
   };
     let subtitle = `( Zone Area : ${zoneDashboardZoneInfoList?.farmArea || ""} )`;
   return (

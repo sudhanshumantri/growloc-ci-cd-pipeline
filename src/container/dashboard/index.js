@@ -15,7 +15,8 @@ import {
   fetchFarmDashboardInfoRequest,
   fetchFarmDashboardTaskRequest,
   fetchFarmDashboardUtilizationCropsRequest,
-  fetchFarmDashboardUtilizationStagesRequest
+  fetchFarmDashboardUtilizationStagesRequest,
+  fetchFarmDashboardZoneSensorRequest,
 } from "../../actions/dashboard";
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
@@ -61,6 +62,9 @@ import {
   selectFarmDashboardFarmUtilizationStagesList,
   selectIsFarmDashboardFarmUtilizationStagesLoading,
   selectFarmDashboardFarmUtilizationStagesError,
+  selectFarmDashboardZoneSensorList,
+  selectIsFarmDashboardZoneSensorLoading,
+  selectFarmDashboardZoneSensorListError,
 } from "../../selectors/dashboard";
 import { selectUsersList } from "../../selectors/users";
 import { selectFarmInventoryList } from "../../selectors/inventory";
@@ -143,6 +147,9 @@ const mapStateToProps = createStructuredSelector({
   isFarmReportsFarmTatTaskCategoriesListLoading: selectIsFarmReportsFarmTatTaskCategoriesListLoading(),
   farmReportsFarmTatTaskCategoriesList: selectFarmReportsFarmTatTaskCategoriesList(),
   farmReportsFarmTatTaskCategoriesListError: selectFarmReportsFarmTatTaskCategoriesListError(),
+  farmDashboardZoneSensorList:selectFarmDashboardZoneSensorList(),
+  isFarmDashboardZoneSensorLoading:selectIsFarmDashboardZoneSensorLoading(),
+  farmDashboardZoneSensorListError:selectFarmDashboardZoneSensorListError(),
 });
 const mapDispatchToProps = {
   fetchFarmDashboardHarvest: fetchDashboardHarvestRequest,
@@ -166,6 +173,8 @@ const mapDispatchToProps = {
   fetchFarmReports:fetchFarmReportsRequest,
   fetchFarmReportsFarmAverageMorality:fetchFarmReportsFarmAverageMortalityRequest,
   fetchFarmReportFarmTatTaskCategories:fetchFarmReportsFarmTatTaskCategoriesRequest,
+  fetchFarmDashboardZoneSensor:fetchFarmDashboardZoneSensorRequest
+
 
 };
 function withRouter(Component) {

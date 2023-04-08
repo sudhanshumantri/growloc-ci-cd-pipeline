@@ -77,7 +77,8 @@ const urls = {
     "fetch-farm-reports-farm-average-mortality":"farm/get-farm-average-mortality-rate/",
     "fetch-farm-reports-farm-tat-task-categories":"farm/get-farm-tat-for-task-categories/",
 "fetch-farm-reports-zone-tat-task-categories":"farm/get-zone-tat-for-task-categories/",
-"fetch-farm-zone-sensor-data":"farm/get-lattest-farm-sensor-data/"
+"fetch-farm-zone-sensor-data":"farm/get-lattest-farm-sensor-data/",
+"fetch-farm-Dashboard-zone-sensor-data":"farm/get-lattest-farm-sensor-data/"
 
 
   },
@@ -676,6 +677,14 @@ export function callFetchDashboardZoneTatTaskCategories(routeParams) {
 
 export function callfetchFarmZoneSensorDetails(queryParams) {
   return callApi(getEndpoint("fetch-farm-zone-sensor-data"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    queryParams
+   });
+}
+
+export function callfetchFarmDashboardZoneSensorDetails(queryParams) {
+  return callApi(getEndpoint("fetch-farm-Dashboard-zone-sensor-data"), {
     method: "GET",
     removeAuthorizationHeader: false,
     queryParams

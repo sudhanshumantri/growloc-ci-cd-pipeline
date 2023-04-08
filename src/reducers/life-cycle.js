@@ -21,7 +21,6 @@ import {
   UPDATE_CROP_LIFECYCLE_DETAILS_REQUEST,
   UPDATE_CROP_LIFECYCLE_DETAILS_SUCCESS,
   UPDATE_CROP_LIFECYCLE_DETAILS_FAILURE
-
 } from "../actions/actionTypes";
 const INITIAL_STATE = fromJS({
   isCropLifeCycleListLoading: false,
@@ -44,6 +43,7 @@ export default function cropLifecycleReducer(
   action = {}
 ) {
   let lifecycleDetails = state.toJS()["lifecycleDetails"];
+  console.log(lifecycleDetails,"lifecycleDetails");
   switch (action.type) {
 
     case FETCH_CROP_LIFECYCLE_REQUEST:
@@ -134,15 +134,16 @@ export default function cropLifecycleReducer(
         .set("isUpdateLifecycleStageScheduleRequested", false)
 
     case UPDATE_CROP_LIFECYCLE_DETAILS_REQUEST:
-      
       return state
         .set("isUpdateLifeCycleDetailsLoading", true)
         .set("isUpdateLifeCycleDetailsError", null);
     case UPDATE_CROP_LIFECYCLE_DETAILS_SUCCESS:
-
+      console.log(action.data,"action.data");
+      const { cropDetails } = lifecycleDetails;
+      const newCropDetails= { ...cropDetails, ...action.data };
       return state
         .set("isUpdateLifeCycleDetailsLoading", false)
-        .set("lifecycleDetails", lifecycleDetails)
+        .set("lifecycleDetails", {cropDetails:newCropDetails})
         .set("isUpdateLifeCycleDetailsError", null);
     case UPDATE_CROP_LIFECYCLE_DETAILS_FAILURE:
       return state
