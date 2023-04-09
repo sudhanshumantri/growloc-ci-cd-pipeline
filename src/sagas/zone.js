@@ -33,7 +33,6 @@ import {
     addZoneTaskCommentFailure,
     fetchFarmZoneSensorDataSuccess,
     fetchFarmZoneSensorDataFailure
-
   } from "../actions/zone";
 
 export function* fetchFarmZoneList({ data }) {

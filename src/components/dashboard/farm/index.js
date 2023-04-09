@@ -133,10 +133,33 @@ export default function FarmDashboard({
     handlePlatformChange(null, selectedPlatform);
   }, []);
 
+  React.useEffect(() => {
+    fecthFarmDashboardZone({
+      farmId: farmId,
+      queryParams: { skip: 0, take: 10 },
+    });
+    fetchAllCropsLifecycle(farmId);
+    fetchFarmDashboardInfo(farmId);
+  }, []);
+
+  const {zoneInformation} = farmDashboardZoneList;
+const {length:zoneInfoLength} = zoneInformation || [];
+
+  React.useEffect(() => {
+    if (zoneInfoLength) {
+      const zone_internal_id = zoneInformation[0].zone_internal_id;
+      fetchFarmDashboardZoneSensor({ id: zone_internal_id });
+    }
+  }, [zoneInfoLength]);
+
+
+
+
+
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
     if (newValue === "1") {
-      fetchFarmDashboardZoneSensor({id:farmId})
+      fetchFarmDashboardZoneSensor({id:zone_internal_id})
     } else if (newValue === "2") {
       fecthFarmDashboardZone({
         farmId: farmId,
@@ -159,21 +182,21 @@ export default function FarmDashboard({
     }
   };
 
+
+
+
+
+
+
+  
+
   const handleTabInfoChange = (event, newValue) => {
     setTabInfo(newValue);
   };
   const handleGridView = () => {
     setSelectView(seletedView == "grid" ? "list" : "grid");
   };
-  React.useEffect(() => {
-    fecthFarmDashboardZone({
-      farmId: farmId,
-      queryParams: { skip: 0, take: 10 },
-    });
-    fetchAllCropsLifecycle(farmId);
-    fetchFarmDashboardInfo(farmId);
-    fetchFarmDashboardZoneSensor({id:farmId})
-  }, []);
+
 
   const renderPlatformComponent = () => {
     if (selectedComponent === "farmEfficiency") {
@@ -225,9 +248,8 @@ export default function FarmDashboard({
     setSelectedSensorPlatform(newZonePlatform);
     setselectedSensorData(newZonePlatform)
     const selectedZone = zoneInformation?.find(zone => zone.name === newZonePlatform);
-    fetchFarmDashboardZoneSensor({ id: selectedZone.farmId });
+    fetchFarmDashboardZoneSensor({ id: selectedZone.zone_internal_id });
   };
-
 
   const renderMonthlyHarvestBreakup = () => {
     return (
@@ -620,7 +642,6 @@ export default function FarmDashboard({
     );
   };
 
-  console.log("Check===========",farmDashboardTaskList);
   const renderTaskSchedules = () => {
     const { tasks } = farmDashboardTaskList;
     return (
@@ -1163,8 +1184,7 @@ export default function FarmDashboard({
   };
 
   const renderFarmDashboardSensorData = () => {
-    const { data } = farmDashboardZoneSensorList;
-
+    const { data } = farmDashboardZoneSensorList || "";
     if (!data || !data[0] || !data[0].payload) {
       return null;
     }
