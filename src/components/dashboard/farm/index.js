@@ -1312,7 +1312,7 @@ useEffect(() => {
       {isTaskScheduleTaskLoading && <Loader title="Adding Tasks" />}
       {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
       {isDashboardHarvestListLoading && <Loader title="Fetching Harvest Details" />}
-      {isFarmDashboardZoneSensorLoading && <Loader title="Fetching Farm Sensor Data" />}
+      {/* {isFarmDashboardZoneSensorLoading && <Loader title="Fetching Farm Sensor Data" />} */}
 
 
       <div className="page-container">
