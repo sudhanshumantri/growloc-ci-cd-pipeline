@@ -49,8 +49,6 @@ import ToggleButtonReports from "../../shared/togglebutton";
 import AuthOutlet from "../../shared/authoutlet";
 import moment from "moment";
 
-
-
 export default function FarmDashboard({
   fetchFarmDashboardHarvest,
   dashboardHarvestList,
@@ -124,7 +122,7 @@ export default function FarmDashboard({
   const [value, setValue] = useState("1");
   const [selectedPlatform, setSelectedPlatform] = useState("farmEfficiency");
   const [selectedComponent, setSelectedComponent] = useState(null);
-  const [selectedSensorPlatform, setSelectedSensorPlatform] = useState("");
+  const [selectedSensorPlatform, setSelectedSensorPlatform] = useState("1");
   const [selectedSensorData, setselectedSensorData] = useState(null);
 
 
@@ -140,6 +138,7 @@ export default function FarmDashboard({
     });
     fetchAllCropsLifecycle(farmId);
     fetchFarmDashboardInfo(farmId);
+  
   }, []);
 
   const {zoneInformation} = farmDashboardZoneList;
@@ -151,9 +150,6 @@ const {length:zoneInfoLength} = zoneInformation || [];
       fetchFarmDashboardZoneSensor({ id: zone_internal_id });
     }
   }, [zoneInfoLength]);
-
-
-
 
 
   const handleTabChange = (event, newValue) => {
@@ -182,13 +178,9 @@ const {length:zoneInfoLength} = zoneInformation || [];
     }
   };
 
-
-
-
-
-
-
   
+
+
 
   const handleTabInfoChange = (event, newValue) => {
     setTabInfo(newValue);
@@ -1240,14 +1232,17 @@ const {length:zoneInfoLength} = zoneInformation || [];
 
   }
 
+  
+
 
 const renderFarmSensorData = () => {
 const {zoneInformation} = farmDashboardZoneList
+
 useEffect(() => {
   if (zoneInformation && zoneInformation.length > 0 && !selectedSensorPlatform) {
     setSelectedSensorPlatform(zoneInformation[0].name);
   }
-}, [zoneInformation,selectedSensorPlatform]);
+}, [zoneInformation, selectedSensorPlatform]);
 
     return (
       <>
