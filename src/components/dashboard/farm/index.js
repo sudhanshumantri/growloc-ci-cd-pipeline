@@ -137,10 +137,10 @@ export default function FarmDashboard({
     });
     fetchAllCropsLifecycle(farmId);
     fetchFarmDashboardInfo(farmId);
-  
+
   }, []);
 
-  const {zoneInformation} = farmDashboardZoneList;
+const {zoneInformation} = farmDashboardZoneList;
 const {length:zoneInfoLength} = zoneInformation || [];
 
   React.useEffect(() => {

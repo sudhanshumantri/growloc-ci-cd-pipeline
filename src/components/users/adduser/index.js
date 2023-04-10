@@ -166,6 +166,7 @@ export default function AddUsersModal({
                 <TextBox
                   isWhite={true}
                   name="password"
+                  type="password"
                   disabled={userData.isEditMode}
                   variant="outlined"
                   value={userData.password}
@@ -182,6 +183,7 @@ export default function AddUsersModal({
                 <TextBox
                   isWhite={true}
                   name="confirmpassword"
+                  type="password"
                   value={userData.confirmpassword}
                   onChange={handleChange}
                   error={validations.confirmpassword}
