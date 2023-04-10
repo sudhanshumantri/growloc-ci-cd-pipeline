@@ -126,7 +126,6 @@ export default function FarmDashboard({
   const [selectedSensorData, setselectedSensorData] = useState(null);
 
 
-
   useEffect(() => {
     handlePlatformChange(null, selectedPlatform);
   }, []);

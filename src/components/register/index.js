@@ -211,7 +211,7 @@ export default function Resgister({ registerRequest, isLoading }) {
                   <FormHelperText
                     sx={{ color: "red", backgroundColor: "#E5E4D7" }}
                   >
-                    "Please provide valid email
+                    Please provide valid email
                   </FormHelperText>
                 )}
               </Grid>
@@ -246,7 +246,7 @@ export default function Resgister({ registerRequest, isLoading }) {
                   <FormHelperText
                     sx={{ color: "red", backgroundColor: "#E5E4D7" }}
                   >
-                    "Please provide valid address
+                    Please provide valid address
                   </FormHelperText>
                 )}
               </Grid>
