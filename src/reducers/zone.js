@@ -81,7 +81,7 @@ const INITIAL_STATE = fromJS({
   // zoneDashboardZoneTaskList: {},
   // zoneDashboardZoneTaskListError: null,
   isZoneDashboardZoneSensorLoading: false,
-  zoneDashboardZoneSensorList: {},
+  zoneDashboardZoneSensorList: [],
   zoneDashboardZoneSensorError: null,
   isZoneDashboardZoneUtilizationCropsLoading: false,
   zoneDashboardZoneUtilizationCropsList: {},
@@ -263,7 +263,7 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
     case FETCH_ZONE_DASHBOARD_ZONE_SENSOR_REQUEST:
       return state
         .set("isZoneDashboardZoneSensorLoading", true)
-        .set("zoneDashboardZoneSensorList", {})
+        .set("zoneDashboardZoneSensorList", [])
         .set("zoneDashboardZoneSensorError", null);
     case FETCH_ZONE_DASHBOARD_ZONE_SENSOR_SUCCESS:
       return state

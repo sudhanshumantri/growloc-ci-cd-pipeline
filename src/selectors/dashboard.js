@@ -165,5 +165,19 @@ createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboard
 
 
 
+export const selectFarmDashboardZoneLattestSensorList = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardZoneLattestSensorList"]);
+export const selectIsFarmDashboardZoneLattestSensorLoading= () =>
+createSelector(
+  selectFarmDashboard,
+  (services) => services.toJS()["isFarmDashboardZoneLattestSensorLoading"]
+);
+export const selectFarmDashboardZoneLattestSensorListError = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardZoneLattestSensorListError"]);
+
+
+
+
+
 
 

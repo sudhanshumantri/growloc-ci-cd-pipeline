@@ -45,6 +45,9 @@ import {
   FETCH_FARM_DASHBOARD_ZONE_SENSOR_DATA_REQUEST,
   FETCH_FARM_DASHBOARD_ZONE_SENSOR_DATA_SUCCESS,
   FETCH_FARM_DASHBOARD_ZONE_SENSOR_DATA_FAILURE,
+  FETCH_FARM_DASHBOARD_ZONE_LATTEST_SENSOR_DATA_REQUEST,
+  FETCH_FARM_DASHBOARD_ZONE_LATTEST_SENSOR_DATA_SUCCESS,
+  FETCH_FARM_DASHBOARD_ZONE_LATTEST_SENSOR_DATA_FAILURE,
 
 } from "./actionTypes";
 
@@ -343,10 +346,33 @@ export function fetchFarmDashboardZoneSensorSuccess(data) {
     data,
   };
 }
-export function fetchFarmDashboardZoneSensorFailure(data) {
+export function fetchFarmDashboardZoneSensorFailure(error) {
   return {
     type: FETCH_FARM_DASHBOARD_ZONE_SENSOR_DATA_FAILURE,
-    data,
+    error,
   };
 }
+
+
+
+
+export function fetchDashboardFarmLattestSensorDataRequest(data) {
+return {
+  type: FETCH_FARM_DASHBOARD_ZONE_LATTEST_SENSOR_DATA_REQUEST,
+  data,
+};
+}
+export function fetchDashboardFarmLattestSensorDataSuccess(data) {
+return {
+  type: FETCH_FARM_DASHBOARD_ZONE_LATTEST_SENSOR_DATA_SUCCESS,
+  data,
+};
+}
+export function fetchDashboardFarmLattestSensorDataFailure(error) {
+return {
+  type: FETCH_FARM_DASHBOARD_ZONE_LATTEST_SENSOR_DATA_FAILURE,
+  error,
+};
+}
+
 

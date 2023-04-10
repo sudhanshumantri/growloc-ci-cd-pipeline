@@ -15,6 +15,7 @@ import {
   callFetchDashboardFarmUtilizationCrops,
   callFetchDashboardFarmUtilizationStages,
   callfetchFarmDashboardZoneSensorDetails,
+  callfetchFarmDashboardLattestZoneSensorDetails
 } from "../utils/api";
 import {
   fetchDashboardHarvestSuccess,
@@ -47,6 +48,8 @@ import {
   fetchFarmDashboardUtilizationStagesFailure,
   fetchFarmDashboardZoneSensorSuccess,
   fetchFarmDashboardZoneSensorFailure,
+  fetchDashboardFarmLattestSensorDataSuccess,
+  fetchDashboardFarmLattestSensorDataFailure
 } from "../actions/dashboard";
 
 export function* fetchFarmDashboardHarvestList({ data }) {
@@ -195,7 +198,16 @@ export function* fetchFarmDashboardInfoList({ data }) {
       yield put(fetchFarmDashboardZoneSensorFailure("Something went wrong"));
     }
   }
-  
+
+  export function* fetchFarmDashboardZoneLattestSensorDataList({ data }) {
+    let responseData = yield call(callfetchFarmDashboardLattestZoneSensorDetails, data);
+    if (responseData?.status == 200 && responseData.data.status) {
+      yield put(fetchDashboardFarmLattestSensorDataSuccess(responseData.data.data));
+    } else {
+      yield put(fetchDashboardFarmLattestSensorDataFailure("Something went wrong"));
+    }
+  }
+
   
 export function* farmDashboardSagas() {
   yield all([
@@ -215,6 +227,8 @@ export function* farmDashboardSagas() {
     takeLatest("FETCH_FARM_DASHBOARD_FARM_UTILIZATION_CROP_REQUEST", fetchFarmDashboardFarmUtlizationCropList),
     takeLatest("FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_REQUEST", fetchFarmDashboardFarmUtlizationStagesList),
     takeLatest("FETCH_FARM_DASHBOARD_ZONE_SENSOR_DATA_REQUEST", fetchFarmDashboardZoneSensorDataList),
+    takeLatest("FETCH_FARM_DASHBOARD_ZONE_LATTEST_SENSOR_DATA_REQUEST", fetchFarmDashboardZoneLattestSensorDataList),
+
 
   ]);
 }

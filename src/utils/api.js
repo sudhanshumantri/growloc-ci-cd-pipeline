@@ -77,10 +77,10 @@ const urls = {
     "fetch-farm-reports-farm-average-mortality":"farm/get-farm-average-mortality-rate/",
     "fetch-farm-reports-farm-tat-task-categories":"farm/get-farm-tat-for-task-categories/",
 "fetch-farm-reports-zone-tat-task-categories":"farm/get-zone-tat-for-task-categories/",
-"fetch-farm-zone-sensor-data":"farm/get-lattest-farm-sensor-data/",
-"fetch-farm-Dashboard-zone-sensor-data":"farm/get-lattest-zone-sensor-data?"
-
-  },
+"fetch-farm-zone-sensor-data":"farm/get-lattest-zone-sensor-data/",
+"fetch-farm-Dashboard-zone-sensor-data":"farm/get-lattest-zone-sensor-data/",
+"fetch-farm-Dashboard-zone-lattest-sensor-data":"farm/get-lattest-sensor-data-by-sensor-id/" 
+},
 };
 
 
@@ -602,12 +602,11 @@ export function callfetchZoneDashobardZoneTaskDetails(routeParams, queryParams) 
     queryParams,
   });
 }
-export function callfetchZoneDashobardZoneSensorsDetails(routeParams, queryParams) {
+export function callfetchZoneDashobardZoneSensorsDetails(routeParams) {
   return callApi(getEndpoint("fetch-zone-dashboard-zone-sensors"), {
     method: "GET",
     removeAuthorizationHeader: false,
     routeParams,
-    queryParams,
   });
 }
 
@@ -689,6 +688,16 @@ export function callfetchFarmDashboardZoneSensorDetails(queryParams) {
     queryParams
    });
 }
+
+export function callfetchFarmDashboardLattestZoneSensorDetails(routeParams) {
+  return callApi(getEndpoint("fetch-farm-Dashboard-zone-lattest-sensor-data"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams
+   });
+}
+
+
 
 
 

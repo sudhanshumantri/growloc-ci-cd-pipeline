@@ -89,7 +89,9 @@ export default function ZoneDashboard({
   fetchFarmReportsZoneTatTaskRequest,
   fetchFarmZoneSensorDataRequest,
   farmZoneSensorDataList,
-  isFarmZoneSensorDataLoading
+  isFarmZoneSensorDataLoading,
+  fetchDashboardLattestSensors,
+  farmDashboardZoneLattestSensorList,
 }) {
   const { farmId, zoneId } = useParams();
   const [month, setMonth] = useState(3);
@@ -100,6 +102,7 @@ export default function ZoneDashboard({
   const [value, setValue] = React.useState("1");
   const [selectedPlatform, setSelectedPlatform] = useState("zoneEfficiency");
   const [selectedComponent, setSelectedComponent] = useState(null);
+  const [selectedSensor, setSelectedSensor] = useState(null);
 
   React.useEffect(() => {
     if (zoneId) {
@@ -109,17 +112,26 @@ export default function ZoneDashboard({
       });
 
       fetchZoneDashoboardZoneInfo(zoneId);
-      fetchZoneDashboardZoneSensors({
-        zoneId: zoneId,
-        queryParams: { skip: 0, take: 10 },
-      });
     }
+    fetchZoneDashboardZoneSensors(zoneId);
     fetchFarmZoneSensorDataRequest({ id:zoneId })
   }, [zoneId]);
 
   useEffect(() => {
     handlePlatformChange(null, selectedPlatform);
   }, []);
+
+
+  const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
+
+  React.useEffect(() => {
+    if (zoneSensorLattestDataLength) {
+      const sensorId = zoneDashboardZoneSensorList[0].sensorId;
+      fetchDashboardLattestSensors(sensorId);
+      setSelectedSensor(sensorId);
+    }
+  }, [zoneSensorLattestDataLength]);
+
 
   const handleZoneTabChange = (event, newValue) => {
     setValue(newValue);
@@ -128,10 +140,7 @@ export default function ZoneDashboard({
       fetchFarmZoneSensorDataRequest({ id:zoneId })
     }
     else if (newValue === "2") {
-      fetchZoneDashboardZoneSensors({
-        zoneId: zoneId,
-        queryParams: { skip: 0, take: 10 },
-      });
+      fetchZoneDashboardZoneSensors(zoneId);
     } else if (newValue === "3") {
       fetchZoneDashboardZoneCropSchdule({
         zoneId: zoneId,
@@ -187,7 +196,12 @@ export default function ZoneDashboard({
   };
 
 
-  console.log(farmZoneSensorDataList,"farmZoneSensorDataList");
+  const handleSensorLattestDataChange = (event, newZonelattesPlatform) =>{
+    const zoneInterId = newZonelattesPlatform;
+    setSelectedSensor(newZonelattesPlatform);
+    fetchDashboardLattestSensors(zoneInterId);
+}
+
   const headers = [
     {
       label: "Batch Number",
@@ -283,33 +297,13 @@ export default function ZoneDashboard({
     },
   ];
 
+
   const durationStyles = { backgroundColor: "green", color: "white" };
   const renderReportdDetails = () => {
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
-           {/* <ToggleButtonGroup
-          value={selectedPlatform}
-          exclusive
-          onChange={handlePlatformChange}
-          aria-label="Platform"
-        >
-          {TOGGLE_ZONE_DATA.map((platform) => (
-            <ToggleButton
-              key={platform.value}
-              value={platform.value}
-              style={{
-                backgroundColor:
-                  selectedPlatform === platform.value ? "green" : undefined,
-              }}
-            >
-              {platform.label}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>  */}
-
-
-<ToggleButtonGroup
+        <ToggleButtonGroup
             value={selectedPlatform}
             exclusive
             onChange={handlePlatformChange}
@@ -373,7 +367,6 @@ export default function ZoneDashboard({
   }, [farmDashboardZoneList]);
 
   const renderZoneSencers = () => {
-    const { sensors } = zoneDashboardZoneSensorList;
     return (
       <>
         <Grid container spacing={2}>
@@ -381,7 +374,7 @@ export default function ZoneDashboard({
             <p className="section-title">Zone Sensors</p>
           </Grid>
           <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
-            <DataTable data={{ headers: ZONE_HEADERS, rows: sensors || [] }} />
+            {/* <DataTable data={{ headers: ZONE_HEADERS, rows: zoneDashboardZoneSensorList || [] }} /> */}
           </Grid>
         </Grid>
       </>
@@ -731,66 +724,152 @@ export default function ZoneDashboard({
     );
   };
 
-
-  const renderZoneSensorsData = () => {
-    const { data } = farmZoneSensorDataList;
-    console.log(data, "datatatata");
-  
+  const rendeLattestSensorDataByID = () => {
+    console.log(farmDashboardZoneLattestSensorList, "farmDashboardZoneLattestSensorList");
+    const { data } = farmDashboardZoneLattestSensorList || {};
     if (!data || !data[0] || !data[0].payload) {
       return null;
     }
-  
     const sensorData = data[0].payload;
-
     return (
-        <Grid item xs={12} sm={12} md={12}>
-          <p className="section-title">Sensors Information </p>
-          {sensorData && (
-            <p>
-              Last Updated :{" "}
-              {moment(new Date(farmZoneSensorDataList?.created_on
-  )).format("MMMM Do YYYY hh:mm:ss A")}
-            </p>
-          )}
-          <Paper className="life-cycle-details-card life-cycle-spacing ">
-            <Table size="small" aria-label="a dense table">
-              <TableHead className="table-header-row">
-                <TableRow>
-                  <TableCell className="label-custom">
-                    <b>Parameter</b>
+      <Grid item xs={12} sm={12} md={12}>
+      <p className="section-title"> Zone Senor Information </p>
+      {sensorData && (
+        <p>
+          Last Updated :{" "}
+          {moment(new Date(farmDashboardZoneLattestSensorList?.created_on
+)).format("MMMM Do YYYY hh:mm:ss A")}
+        </p>
+      )}
+      <Paper className="life-cycle-details-card life-cycle-spacing ">
+        <Table size="small" aria-label="a dense table">
+          <TableHead className="table-header-row">
+            <TableRow>
+              <TableCell className="label-custom">
+                <b>Parameter</b>
+              </TableCell>
+              <TableCell className="label-custom">
+                <b>Value</b>
+              </TableCell>
+              <TableCell className="label-custom">
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {Object.entries(sensorData).map(([key, value]) => {
+              return (
+                <TableRow
+                  key={key}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell className="label-custom" align="left">
+                    {key}
                   </TableCell>
-                  <TableCell className="label-custom">
-                    <b>Value</b>
+                  <TableCell className="table-header" align="left">
+                    <b>{value}</b>
                   </TableCell>
-                  <TableCell className="label-custom">
+                  <TableCell className="table-header" align="left">
+                    {value.value} <b>{value.unit}</b>
                   </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {Object.entries(sensorData).map(([key, value]) => {
-                  return (
-                    <TableRow
-                      key={key}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell className="label-custom" align="left">
-                        {key}
-                      </TableCell>
-                      <TableCell className="table-header" align="left">
-                        <b>{value}</b>
-                      </TableCell>
-                      <TableCell className="table-header" align="left">
-                        {value.value} <b>{value.unit}</b>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </Paper>
-        </Grid>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </Paper>
+    </Grid>
       );
-  };
+  }
+
+
+const renderZoneSensorData = () => {
+  return (
+    <>
+           <Grid item xs={12} sm={12} md={12}>
+            <ToggleButtonGroup
+              value={selectedSensor}
+              exclusive
+              onChange={handleSensorLattestDataChange}
+              aria-label="Platform"
+            >
+              {(zoneDashboardZoneSensorList || []).map((platform) => (
+                <ToggleButton
+                  key={platform.sensorId}
+                  value={platform.sensorId}
+                  style={{
+                    backgroundColor:
+                    selectedSensor === platform.sensorId ? "green" : undefined,
+                      color: selectedSensor === platform.sensorId ? "white" : "black",
+                  }}
+                >
+                  {platform.sensorId}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12}>
+              {selectedSensor  && rendeLattestSensorDataByID()}
+            </Grid>
+    </>
+  )
+}
+  // const renderZoneSensorsData = () => {
+  //   const { data } = farmZoneSensorDataList || "";
+  //   console.log(data, "datatatata");
+  //   if (!data || !data[0] || !data[0].payload) {
+  //     return null;
+  //   }
+  //   const sensorData = data[0].payload;
+
+  //   return (
+  //       <Grid item xs={12} sm={12} md={12}>
+  //         <p className="section-title">Sensors Information </p>
+  //         {sensorData && (
+  //           <p>
+  //             Last Updated :{" "}
+  //             {moment(new Date(farmZoneSensorDataList?.created_on
+  // )).format("MMMM Do YYYY hh:mm:ss A")}
+  //           </p>
+  //         )}
+  //         <Paper className="life-cycle-details-card life-cycle-spacing ">
+  //           <Table size="small" aria-label="a dense table">
+  //             <TableHead className="table-header-row">
+  //               <TableRow>
+  //                 <TableCell className="label-custom">
+  //                   <b>Parameter</b>
+  //                 </TableCell>
+  //                 <TableCell className="label-custom">
+  //                   <b>Value</b>
+  //                 </TableCell>
+  //                 <TableCell className="label-custom">
+  //                 </TableCell>
+  //               </TableRow>
+  //             </TableHead>
+  //             <TableBody>
+  //               {Object.entries(sensorData).map(([key, value]) => {
+  //                 return (
+  //                   <TableRow
+  //                     key={key}
+  //                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+  //                   >
+  //                     <TableCell className="label-custom" align="left">
+  //                       {key}
+  //                     </TableCell>
+  //                     <TableCell className="table-header" align="left">
+  //                       <b>{value}</b>
+  //                     </TableCell>
+  //                     <TableCell className="table-header" align="left">
+  //                       {value.value} <b>{value.unit}</b>
+  //                     </TableCell>
+  //                   </TableRow>
+  //                 );
+  //               })}
+  //             </TableBody>
+  //           </Table>
+  //         </Paper>
+  //       </Grid>
+  //     );
+  // };
     let subtitle = `( Zone Area : ${zoneDashboardZoneInfoList?.farmArea || ""} )`;
   return (
     <div>
@@ -805,7 +884,6 @@ export default function ZoneDashboard({
         valuekey="value"
         handleChange={handleDropDowmChange}
       />
-
       {isZoneDashboardZoneSensorLoading && (
         <Loader title="Fetching Zone sensors details" />
       )}
@@ -846,7 +924,7 @@ export default function ZoneDashboard({
                   <Tab label="Info" value="6"></Tab>
                 </TabList>
               </Box>
-              <TabPanel value="1"> {renderZoneSensorsData()}</TabPanel>
+              <TabPanel value="1"> {renderZoneSensorData()}</TabPanel>
               <TabPanel value="2"> {renderZoneSencers()}</TabPanel>
               <TabPanel value="3">{renderZoneCropSchedules()}</TabPanel>
               <TabPanel value="4">{renderZoneTaskSchedules()}</TabPanel>

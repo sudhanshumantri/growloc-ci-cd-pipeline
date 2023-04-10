@@ -23,7 +23,7 @@ import {
   fetchFarmReportsZoneAverageMortalityRequest,
   fetchFarmReportsZoneTatTaskCategoriesRequest,
 } from "../../actions/zonereports";
-import { fetchFarmDashboardZoneRequest } from "../../actions/dashboard";
+import { fetchFarmDashboardZoneRequest,fetchDashboardFarmLattestSensorDataRequest } from "../../actions/dashboard";
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
 import { selectFarmInventoryList } from "../../selectors/inventory";
@@ -79,6 +79,12 @@ import {
   selectIsFarmReportsZoneTatTaskCategoriesListLoading,
   selectFarmReportsZoneTatTaskCategoriesError,
 } from "../../selectors/zonereports";
+
+import {
+  selectIsFarmDashboardZoneLattestSensorLoading,
+selectFarmDashboardZoneLattestSensorList,
+selectFarmDashboardZoneLattestSensorListError
+} from "../../selectors/dashboard"
 
 const mapStateToProps = createStructuredSelector({
   farmZoneList: selectFarmZoneList(),
@@ -137,7 +143,11 @@ farmReportsZoneTatTaskCategoriesError:
 selectFarmReportsZoneTatTaskCategoriesError(),
 isFarmZoneSensorDataLoading:selectIsFarmZoneSensorDataLoading(),
   farmZoneSensorDataList:selectFarmZoneSensorDataList(),
-  farmZoneSensorDataListError:selectFarmZoneSensorDataListError()
+  farmZoneSensorDataListError:selectFarmZoneSensorDataListError(),
+  isFarmDashboardZoneLattestSensorLoading:selectIsFarmDashboardZoneLattestSensorLoading(),
+farmDashboardZoneLattestSensorList:selectFarmDashboardZoneLattestSensorList(),
+farmDashboardZoneLattestSensorListError:selectFarmDashboardZoneLattestSensorListError(),
+
 
 });
 const mapDispatchToProps = {
@@ -159,6 +169,7 @@ const mapDispatchToProps = {
   fecthFarmReportsZoneAverageMortality:fetchFarmReportsZoneAverageMortalityRequest,
   fetchFarmReportsZoneTatTaskRequest:fetchFarmReportsZoneTatTaskCategoriesRequest,
   fetchFarmZoneSensorDataRequest:fetchFarmZoneSensorDataRequest,
+  fetchDashboardLattestSensors:fetchDashboardFarmLattestSensorDataRequest,
 
 };
 function withRouter(Component) {

@@ -17,12 +17,13 @@ import {
   fetchFarmDashboardUtilizationCropsRequest,
   fetchFarmDashboardUtilizationStagesRequest,
   fetchFarmDashboardZoneSensorRequest,
+  fetchDashboardFarmLattestSensorDataRequest,
 } from "../../actions/dashboard";
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
 import { fetchFarmCropsRequest } from "../../actions/crops";
 import { fetchFarmReportsRequest,fetchFarmReportsFarmAverageMortalityRequest, fetchFarmReportsFarmTatTaskCategoriesRequest} from "../../actions/reports";
-
+import {fetchZoneDashboardZoneSensorRequest} from "../../actions/zone"
 import {
   addCropToLifecycleRequest,
   fetchAllCropsLifecycleRequest,
@@ -65,9 +66,18 @@ import {
   selectFarmDashboardZoneSensorList,
   selectIsFarmDashboardZoneSensorLoading,
   selectFarmDashboardZoneSensorListError,
+selectIsFarmDashboardZoneLattestSensorLoading,
+selectFarmDashboardZoneLattestSensorList,
+selectFarmDashboardZoneLattestSensorListError,
+
 } from "../../selectors/dashboard";
 import { selectUsersList } from "../../selectors/users";
 import { selectFarmInventoryList } from "../../selectors/inventory";
+import {
+  selectIsZoneDashboardZoneSensorLoading,
+  selectZoneDashboardZoneSensorList,
+  selectZoneDashboardZoneSensorError,
+} from "../../selectors/zone"
 import {
   selectFarmReportsList,
   selectIsFarmReportsListLoading,
@@ -150,6 +160,14 @@ const mapStateToProps = createStructuredSelector({
   farmDashboardZoneSensorList:selectFarmDashboardZoneSensorList(),
   isFarmDashboardZoneSensorLoading:selectIsFarmDashboardZoneSensorLoading(),
   farmDashboardZoneSensorListError:selectFarmDashboardZoneSensorListError(),
+  isZoneDashboardZoneSensorLoading: selectIsZoneDashboardZoneSensorLoading(),
+  zoneDashboardZoneSensorList: selectZoneDashboardZoneSensorList(),
+  zoneDashboardZoneSensorError: selectZoneDashboardZoneSensorError(),
+  isZoneDashboardZoneSensorLoading: selectIsZoneDashboardZoneSensorLoading(),
+isFarmDashboardZoneLattestSensorLoading:selectIsFarmDashboardZoneLattestSensorLoading(),
+farmDashboardZoneLattestSensorList:selectFarmDashboardZoneLattestSensorList(),
+farmDashboardZoneLattestSensorListError:selectFarmDashboardZoneLattestSensorListError(),
+
 });
 const mapDispatchToProps = {
   fetchFarmDashboardHarvest: fetchDashboardHarvestRequest,
@@ -173,8 +191,9 @@ const mapDispatchToProps = {
   fetchFarmReports:fetchFarmReportsRequest,
   fetchFarmReportsFarmAverageMorality:fetchFarmReportsFarmAverageMortalityRequest,
   fetchFarmReportFarmTatTaskCategories:fetchFarmReportsFarmTatTaskCategoriesRequest,
-  fetchFarmDashboardZoneSensor:fetchFarmDashboardZoneSensorRequest
-
+  fetchFarmDashboardZoneSensor:fetchFarmDashboardZoneSensorRequest,
+  fetchZoneDashboardZoneSensors:fetchZoneDashboardZoneSensorRequest,
+  fetchDashboardLattestSensors:fetchDashboardFarmLattestSensorDataRequest,
 
 };
 function withRouter(Component) {

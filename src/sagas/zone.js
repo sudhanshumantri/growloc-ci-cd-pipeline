@@ -117,8 +117,7 @@ export function* fetchZoneDashboardZoneTaskScheduleList({ data }) {
 }
 
 export function* fetchZoneDashboardZoneSensorScheduleList({ data }) {
-  const {zoneId, queryParams} = data;
-  let responseData = yield call(callfetchZoneDashobardZoneSensorsDetails, zoneId, queryParams);
+  let responseData = yield call(callfetchZoneDashobardZoneSensorsDetails,data);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(fetchZoneDashboardZoneSensorSuccess(responseData.data.data));
   } else {
@@ -165,16 +164,14 @@ export function* addZoneTaskComment( {data} ) {
 
 //
 export function* fetchFarmZoneSensorDataList({ data }) {
-  const {zoneId} = data;
-  let responseData = yield call(callfetchFarmZoneSensorDetails, zoneId);
+  const {...remaingData} = data;
+  let responseData = yield call(callfetchFarmZoneSensorDetails, remaingData);
   if (responseData?.status == 200 && responseData.data.status) {
     yield put(fetchFarmZoneSensorDataSuccess(responseData.data.data));
   } else {
     yield put(fetchFarmZoneSensorDataFailure("Something went wrong"));
   }
 }
-
-
 export function* zoneSagas() {
   yield all([
     takeLatest("FETCH_ALL_FARM_ZONE_REQUEST", fetchFarmZoneList),
