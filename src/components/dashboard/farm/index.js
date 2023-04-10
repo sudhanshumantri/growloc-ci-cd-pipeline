@@ -122,7 +122,7 @@ export default function FarmDashboard({
   const [value, setValue] = useState("1");
   const [selectedPlatform, setSelectedPlatform] = useState("farmEfficiency");
   const [selectedComponent, setSelectedComponent] = useState(null);
-  const [selectedSensorPlatform, setSelectedSensorPlatform] = useState("1");
+  const [selectedSensorPlatform, setSelectedSensorPlatform] = useState("");
   const [selectedSensorData, setselectedSensorData] = useState(null);
 
 
@@ -178,9 +178,6 @@ const {length:zoneInfoLength} = zoneInformation || [];
   };
 
   
-
-
-
   const handleTabInfoChange = (event, newValue) => {
     setTabInfo(newValue);
   };
@@ -1294,7 +1291,7 @@ useEffect(() => {
       {isFarmDashboardZoneListLoading && (
         <Loader title="Fetching Zone Details" />
       )}
-            {isFarmDashboardZoneLoading && <Loader title="adding Zone" />}
+      {isFarmDashboardZoneLoading && <Loader title="adding Zone" />}
       {isUpdateFarmDashboardZoneLoading && <Loader title="Updating Zone" />}
 
       {isDeleteFarmDashboardZoneLoading && <Loader title="Deleting Zone" />}

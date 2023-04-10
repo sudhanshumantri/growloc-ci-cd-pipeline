@@ -25,6 +25,7 @@ export default function Resgister({ registerRequest, isLoading }) {
     company: "",
     address: "",
     password: "",
+    confirmpassword: "",
   });
 
   const [validations, setValidation] = useState({
@@ -34,6 +35,7 @@ export default function Resgister({ registerRequest, isLoading }) {
     company: false,
     address: false,
     password: false,
+    confirmpassword: false,
   });
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -67,6 +69,12 @@ export default function Resgister({ registerRequest, isLoading }) {
       errors.password = true;
       isValid = false;
     }
+
+    if (registrationData.password !== registrationData.confirmpassword) {
+      errors.confirmpassword = true;
+      isValid = false
+ }
+
     setValidation(errors);
     return isValid;
   };
@@ -258,6 +266,7 @@ export default function Resgister({ registerRequest, isLoading }) {
                   className="custom-input-box"
                   fullWidth
                   name="password"
+                  type="password"
                   value={registrationData.password}
                   onChange={handleChange}
                   error={validations.password}
@@ -271,10 +280,38 @@ export default function Resgister({ registerRequest, isLoading }) {
                   <FormHelperText
                     sx={{ color: "red", backgroundColor: "#E5E4D7" }}
                   >
-                    please provide password atleast 6 characters
+                    Please provide password atleast 6 characters
                   </FormHelperText>
                 )}
               </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
+                <span className="custom-input-label">Confirm Password</span>
+                <span className="label-light">*</span>
+                <TextField
+                  size="small"
+                  className="custom-input-box"
+                  fullWidth
+                  name="confirmpassword"
+                  type="password"
+                  value={registrationData.confirmpassword}
+                  onChange={handleChange}
+                  error={validations.confirmpassword}
+
+                  // helperText={
+                  //   validations.password
+                  //     ? "please provide password atleast 6 characters "
+                  //     : ""
+                  // }
+                />
+                {validations.confirmpassword && (
+                  <FormHelperText
+                    sx={{ color: "red", backgroundColor: "#E5E4D7" }}
+                  >
+                    Password did not match
+                  </FormHelperText>
+                )}
+              </Grid>
+
               <Grid item xs={12} sm={12} md={12} lg={12}>
                 <ButtonCustom
                   isFullWidth={true}
