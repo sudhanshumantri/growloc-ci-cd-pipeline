@@ -17,6 +17,10 @@ import {
   UPDATE_CROP_LIFECYCLE_SCHEDULE_REQUEST,
   UPDATE_CROP_LIFECYCLE_SCHEDULE_SUCCESS,
   UPDATE_CROP_LIFECYCLE_SCHEDULE_FAILURE,
+  UPDATE_CROP_LIFECYCLE_DETAILS_REQUEST,
+  UPDATE_CROP_LIFECYCLE_DETAILS_SUCCESS,
+  UPDATE_CROP_LIFECYCLE_DETAILS_FAILURE
+
 } from "./actionTypes";
 
 export function fetchAllCropsLifecycleRequest(data) {
@@ -130,5 +134,27 @@ export function updateCropToLifecycleScheduleFailure(error) {
   return {
     type: UPDATE_CROP_LIFECYCLE_SCHEDULE_FAILURE,
     error,
+  };
+}
+
+//
+
+export function updateCropToLifecycleDetailsRequest(data) {
+  return {
+    type: UPDATE_CROP_LIFECYCLE_DETAILS_REQUEST,
+    data,
+  };
+}
+export function  updateCropToLifecycleDetailsSuccess(data) {
+  return {
+    type: UPDATE_CROP_LIFECYCLE_DETAILS_SUCCESS,
+    data,
+  };
+}
+//
+export function  updateCropToLifecycleDetailsFailure(error) {
+  return {
+    type: UPDATE_CROP_LIFECYCLE_DETAILS_FAILURE,
+    error
   };
 }

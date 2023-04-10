@@ -52,7 +52,9 @@ export default function CropLifeCycleDetails({
   recentZoneSensorDataLoadingError,
   fetchRecentZoneSensorData,
   addFarmDashboardZoneTask,
-  isFarmDashboardZoneTaskLoading
+  isFarmDashboardZoneTaskLoading,
+  updateCropToLifecycleDetails,
+  isUpdateLifeCycleDetailsLoading
 }) {
   let { farmId } = useParams();
   let { zoneId } = useParams();
@@ -73,10 +75,10 @@ export default function CropLifeCycleDetails({
   useEffect(() => {
     fetchRecentZoneSensorData({ id: zoneId });
     fetchCropsLifecycleDetails(parseInt(lifecycleId));
-    fetchFarmInventory(farmId);
-    if (usersList.length <= 0) {
-      fetchUsers({ farmId });
-    }
+    // fetchFarmInventory(farmId);
+    // if (usersList.length <= 0) {
+    //   fetchUsers({ farmId });
+    // }
   }, []);
 
   useEffect(() => {
@@ -189,7 +191,6 @@ export default function CropLifeCycleDetails({
       setHarvestStage(false);
     }
   };
-
   const handleCropTransationModalSave = (units, kgs, isComplete) => {
     let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
     let selectedStageInformation = FarmCropLifecycleStages[activeStep];
@@ -221,9 +222,39 @@ export default function CropLifeCycleDetails({
     addCropToLifecycleParameters(paylad);
     handleParametersInformationEditToggle();
   };
+
+  const handleCompleteLifeCycle = () => {
+    let { cropDetails} = lifecycleDetails;
+    console.log("cropDetails",cropDetails);
+    let {id} = cropDetails;
+    console.log(id,"id");
+      const paylad = {
+        cropLifeCycleId: id,
+        isComplete: true,
+      }
+      console.log(paylad);
+      updateCropToLifecycleDetails(paylad)
+    }
+    const handleUndoCompleteLifeCycle = () => {
+      let { cropDetails} = lifecycleDetails;
+      console.log("cropDetails",cropDetails);
+      let {id} = cropDetails;
+      console.log(id,"id");
+        const paylad = {
+          cropLifeCycleId: id,
+          isComplete: false,
+        }
+        console.log(paylad);
+        updateCropToLifecycleDetails(paylad)
+      }
+  
+
   const handleActionButton = () => {
     let buttonArray = [];
-
+    let { cropDetails } = lifecycleDetails;
+    let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
+    let selectedStageInformation = FarmCropLifecycleStages[activeStep];
+    if (!cropDetails.isComplete) {
     let buttonTaskLabel = "Add New Task";
     buttonArray.push({
       label: buttonTaskLabel,
@@ -232,11 +263,24 @@ export default function CropLifeCycleDetails({
       action: "create",
       ICON: <AddIcon />,
       handler: handleTaskModalToggle,
-    });
-
-    let { cropDetails } = lifecycleDetails;
-    let { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
-    let selectedStageInformation = FarmCropLifecycleStages[activeStep];
+    }); 
+    buttonArray.push({
+      label: "Complete LifeCycle",
+      isAuthRequired: true,
+      from: "lifeCycleDetails",
+      action: "create",
+      handler: handleCompleteLifeCycle,
+    }); 
+  } else {
+    buttonArray.push({
+      label: "Undo",
+      isAuthRequired: true,
+      from: "lifeCycleDetails",
+      action: "create",
+      handler: handleUndoCompleteLifeCycle,
+    }); 
+  }
+  if (!cropDetails.isComplete) {
     if (selectedStageInformation.qty > 0) {
       if (activeStep + 1 < FarmCropLifecycleStages.length) {
         let nextStageInforamtion = FarmCropLifecycleStages[activeStep + 1];
@@ -249,8 +293,6 @@ export default function CropLifeCycleDetails({
           handler: handleModalToggle,
         });
       } else {
-        //this is the last step and it is harvesting
-
         if (
           cropDetails.crop.crop.variety == "Vine" ||
           cropDetails.crop.crop.variety == "Herb"
@@ -271,11 +313,15 @@ export default function CropLifeCycleDetails({
               isAuthRequired: true,
               from: "lifeCycleDetails",
               action: "create",
-
               handler: handleScheduleHarvestingModalToggle,
             });
           }
         } else {
+          const completedDate = new Date(cropDetails.completed_date);
+          const currentDate = new Date();
+          const timeDiff = currentDate.getTime() - completedDate.getTime();
+          const hoursDiff = timeDiff / (1000 * 3600);
+          if(!cropDetails.completed_date || hoursDiff < 24) {
           buttonArray.push({
             label: "Dispose",
             isAuthRequired: true,
@@ -284,10 +330,65 @@ export default function CropLifeCycleDetails({
             handler: handleModalToggle,
           });
         }
+        }
       }
     }
+  } 
+
     return buttonArray;
   };
+
+  //   if (selectedStageInformation.qty > 0 ) {
+  //     if ( activeStep + 1 < FarmCropLifecycleStages.length) {
+  //       let nextStageInforamtion = FarmCropLifecycleStages[activeStep + 1];
+  //       let buttonLable = "Move to " + nextStageInforamtion.stage;
+  //       buttonArray.push({
+  //         label: buttonLable,
+  //         isAuthRequired: true,
+  //         from: "lifeCycleDetails",
+  //         action: "create",
+  //         handler: handleModalToggle,
+  //       });
+  //     } else {
+  //       //this is the last step and it is harvesting
+
+  //       if (
+  //         cropDetails.crop.crop.variety == "Vine" ||
+  //         cropDetails.crop.crop.variety == "Herb"
+  //       ) {
+  //         buttonArray.push({
+  //           label: "Harvest",
+  //           handler: handleModalToggle,
+  //           isAuthRequired: true,
+  //           from: "lifeCycleDetails",
+  //           action: "create",
+  //         });
+  //         let cropsSchedule =
+  //           lifecycleDetails?.cropDetails?.FarmCropLifecycleSchedules.length >
+  //           0;
+  //         if (!cropsSchedule) {
+  //           buttonArray.push({
+  //             label: "Schedule",
+  //             isAuthRequired: true,
+  //             from: "lifeCycleDetails",
+  //             action: "create",
+
+  //             handler: handleScheduleHarvestingModalToggle,
+  //           });
+  //         }
+  //       } else {
+  //         buttonArray.push({
+  //           label: "Dispose",
+  //           isAuthRequired: true,
+  //           from: "lifeCycleDetails",
+  //           action: "create",
+  //           handler: handleModalToggle,
+  //         });
+  //       }
+  //     }
+    
+  // }
+  
   const renderHeader = () => {
     let { cropDetails } = lifecycleDetails;
     let title = cropDetails.batchNo + " " + cropDetails.crop.crop.name;
@@ -589,6 +690,8 @@ export default function CropLifeCycleDetails({
   return (
     <>
       {isLifecycleDetailsLoading && <Loader title="Fetching Details" />}
+      {isUpdateLifeCycleDetailsLoading && <Loader title="Updating Crop LifeCycle Details" />}
+
       {/* {isFarmDashboardZoneTaskLoading && <Loader title="Adding task" />}  */}
       {!isLifecycleDetailsLoading && (
         <>

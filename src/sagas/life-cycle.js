@@ -1,6 +1,6 @@
 import { call, all, put, takeLatest } from "redux-saga/effects";
 import {
-    callAddCropToLifecycle, callCropLifecycleTransition, callfetchAllCropsLifecycle, callfetchCropsLifecycleDetails, callUpdateCropCycleParameters, callUpdateCropToLifecycleSchedule
+    callAddCropToLifecycle, callCropLifecycleTransition, callfetchAllCropsLifecycle, callfetchCropsLifecycleDetails, callUpdateCropCycleParameters, callUpdateCropCycleDetails,callUpdateCropToLifecycleSchedule
 } from "../utils/api";
 
 import { addNotification } from "../components/shared/notification";
@@ -18,7 +18,9 @@ import {
     updateCropToLifecycleParametersSuccess,
     updateCropToLifecycleParametersFailure,
     updateCropToLifecycleScheduleSuccess,
-    updateCropToLifecycleScheduleFailure
+    updateCropToLifecycleScheduleFailure,
+    updateCropToLifecycleDetailsSuccess,
+    updateCropToLifecycleDetailsFailure,
 } from "../actions/life-cycle";
 
 export function* fetchAllCropsLifecycle({ data }) {
@@ -77,6 +79,17 @@ export function* updateCropToLifecycleSchedule({ data }) {
     }
 }
 
+export function* updateCropToLifecycleDetails({ data }) {
+    console.log("check=====saga",data);
+    let responseData = yield call(callUpdateCropCycleDetails, data);
+    if (responseData?.status == 200 && responseData.data.status) {
+        yield put(updateCropToLifecycleDetailsSuccess(responseData.data.data));
+
+    } else {
+        yield put(updateCropToLifecycleDetailsFailure("Something went wrong"));
+    }
+}
+
 export function* cropLifeCycleSagas() {
     yield all([
         takeLatest("ADD_CROP_LIFECYCLE_REQUEST", addCropToLifecycle),
@@ -85,6 +98,8 @@ export function* cropLifeCycleSagas() {
         takeLatest("CROP_LIFECYCLE_TRANSITION_REQUEST", cropLifecycleTransition),
         takeLatest("UPDATE_CROP_LIFECYCLE_PARAMETERS_REQUEST", updateCropToLifecycleParameters),
         takeLatest("UPDATE_CROP_LIFECYCLE_SCHEDULE_REQUEST", updateCropToLifecycleSchedule),
+        takeLatest("UPDATE_CROP_LIFECYCLE_DETAILS_REQUEST", updateCropToLifecycleDetails),
+
 
     ]);
 }

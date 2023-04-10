@@ -151,8 +151,15 @@ export const selectFarmDashboardFarmUtilizationStagesError = () =>
 createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardFarmUtilizationStagesError"]);
 
 
-
-
+export const selectFarmDashboardZoneSensorList = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardZoneSensorList"]);
+export const selectIsFarmDashboardZoneSensorLoading= () =>
+createSelector(
+  selectFarmDashboard,
+  (services) => services.toJS()["isFarmDashboardZoneSensorLoading"]
+);
+export const selectFarmDashboardZoneSensorListError = () =>
+createSelector(selectFarmDashboard, (services) => services.toJS()["farmDashboardZoneSensorListError"]);
 
 
 

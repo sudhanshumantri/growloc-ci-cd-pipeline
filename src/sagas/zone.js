@@ -1,5 +1,5 @@
 import { call, all, put, takeLatest } from "redux-saga/effects";
-import { callfetchFarmZoneDetails,callFetchDashboardFarmZoneList,callFetchFarmDashboardZoneHarvestList,callAddFarmDashboardZoneTask,callAddFarmDashboardZoneTaskComment,callfetchRecenzoneSensorData,callFetchZoneDashboardZoneInfoList,callfetchZoneDashobardZoneCropSchedulekDetails,callfetchZoneDashobardZoneTaskDetails,callfetchZoneDashobardZoneSensorsDetails,callFetchDashboardFarmZoneUtilizationCrops,callFetchDashboardFarmZoneUtilizationStages,callfetchZoneTaskDetails,callAddZoneTaskComment
+import { callfetchFarmZoneDetails,callFetchDashboardFarmZoneList,callFetchFarmDashboardZoneHarvestList,callAddFarmDashboardZoneTask,callAddFarmDashboardZoneTaskComment,callfetchRecenzoneSensorData,callFetchZoneDashboardZoneInfoList,callfetchZoneDashobardZoneCropSchedulekDetails,callfetchZoneDashobardZoneTaskDetails,callfetchZoneDashobardZoneSensorsDetails,callFetchDashboardFarmZoneUtilizationCrops,callFetchDashboardFarmZoneUtilizationStages,callfetchZoneTaskDetails,callAddZoneTaskComment,callfetchFarmZoneSensorDetails
 } from "../utils/api";
 import {
     fetchFarmZoneSuccess,
@@ -31,7 +31,8 @@ import {
     fetchZoneTaskFailure,
     addZoneTaskCommentSuccess,
     addZoneTaskCommentFailure,
-
+    fetchFarmZoneSensorDataSuccess,
+    fetchFarmZoneSensorDataFailure
   } from "../actions/zone";
 
 export function* fetchFarmZoneList({ data }) {
@@ -162,6 +163,18 @@ export function* addZoneTaskComment( {data} ) {
   }
 }
 
+//
+export function* fetchFarmZoneSensorDataList({ data }) {
+  const {zoneId} = data;
+  let responseData = yield call(callfetchFarmZoneSensorDetails, zoneId);
+  if (responseData?.status == 200 && responseData.data.status) {
+    yield put(fetchFarmZoneSensorDataSuccess(responseData.data.data));
+  } else {
+    yield put(fetchFarmZoneSensorDataFailure("Something went wrong"));
+  }
+}
+
+
 export function* zoneSagas() {
   yield all([
     takeLatest("FETCH_ALL_FARM_ZONE_REQUEST", fetchFarmZoneList),
@@ -178,6 +191,8 @@ export function* zoneSagas() {
     takeLatest("FETCH_ZONE_DASHBOARD_ZONE_UTILIZATION_STAGES_REQUEST", fetchZoneDashboardZoneUtilizationStagesList),
     takeLatest("FETCH_ALL_ZONE_TASKS_REQUEST", fetchZoneTaskList),
     takeLatest("ADD_ZONE_TASK_COMMENT_REQUEST", addZoneTaskComment),
+    takeLatest("FETCH_FARM_ZONE_SENSOR_DATA_REQUEST", fetchFarmZoneSensorDataList),
+
  ]);
 }
 export default [zoneSagas];

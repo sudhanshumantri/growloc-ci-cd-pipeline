@@ -41,7 +41,12 @@ import {
     ADD_ZONE_TASK_COMMENT_REQUEST,
     ADD_ZONE_TASK_COMMENT_SUCCESS,
     ADD_ZONE_TASK_COMMENT_FAILURE,
-  
+    //
+    FETCH_FARM_ZONE_SENSOR_DATA_REQUEST,
+    FETCH_FARM_ZONE_SENSOR_DATA_SUCCESS,
+    FETCH_FARM_ZONE_SENSOR_DATA_FAILURE
+
+
  } from "./actionTypes";
   
   export function fetchFarmZoneRequest(data) {
@@ -324,6 +329,28 @@ export function addZoneTaskCommentSuccess(data) {
 export function addZoneTaskCommentFailure(error) {
   return {
     type: ADD_ZONE_TASK_COMMENT_FAILURE,
+    error,
+  };
+}
+
+
+//
+
+export function fetchFarmZoneSensorDataRequest(data) {
+  return {
+    type: FETCH_FARM_ZONE_SENSOR_DATA_REQUEST,
+    data,
+  };
+}
+export function fetchFarmZoneSensorDataSuccess(data) {
+  return {
+    type: FETCH_FARM_ZONE_SENSOR_DATA_SUCCESS,
+    data,
+  };
+}
+export function fetchFarmZoneSensorDataFailure(error) {
+  return {
+    type: FETCH_FARM_ZONE_SENSOR_DATA_FAILURE,
     error,
   };
 }

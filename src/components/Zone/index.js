@@ -11,6 +11,12 @@ import {
   Tab,
   ToggleButtonGroup,
   ToggleButton,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody
 } from "@mui/material";
 import DataTable from "../shared/dataTable";
 import SingleCustomSelect from "../shared/select";
@@ -33,8 +39,7 @@ import TableDynamicPagination from "../shared/tablepagination";
 import ZoneEfficiency from "../zonereports/zoneefficiency";
 import ToggleButtonReports from "../shared/togglebutton";
 import AuthOutlet from "../shared/authoutlet";
-
-
+import moment from "moment";
 
 
 export default function ZoneDashboard({
@@ -82,6 +87,9 @@ export default function ZoneDashboard({
   isFarmReportsZoneTatTaskCategoriesListLoading,
   farmReportsZoneTatTaskCategoriesList,
   fetchFarmReportsZoneTatTaskRequest,
+  fetchFarmZoneSensorDataRequest,
+  farmZoneSensorDataList,
+  isFarmZoneSensorDataLoading
 }) {
   const { farmId, zoneId } = useParams();
   const [month, setMonth] = useState(3);
@@ -106,7 +114,7 @@ export default function ZoneDashboard({
         queryParams: { skip: 0, take: 10 },
       });
     }
-    fetchZoneReports(zoneId);
+    fetchFarmZoneSensorDataRequest({ id:zoneId })
   }, [zoneId]);
 
   useEffect(() => {
@@ -115,24 +123,28 @@ export default function ZoneDashboard({
 
   const handleZoneTabChange = (event, newValue) => {
     setValue(newValue);
+
     if (newValue === "1") {
+      fetchFarmZoneSensorDataRequest({ id:zoneId })
+    }
+    else if (newValue === "2") {
       fetchZoneDashboardZoneSensors({
         zoneId: zoneId,
         queryParams: { skip: 0, take: 10 },
       });
-    } else if (newValue === "2") {
+    } else if (newValue === "3") {
       fetchZoneDashboardZoneCropSchdule({
         zoneId: zoneId,
         queryParams: { skip: 0, take: 10 },
       });
-    } else if (newValue === "3") {
+    } else if (newValue === "4") {
       fetchZoneDashboardZoneTaskSchedule({
         zoneId: zoneId,
         queryParams: { skip: 0, take: 10 },
       });
-    } else if (newValue === "4") {
-      fetchZoneReports(zoneId);
     } else if (newValue === "5") {
+      fetchZoneReports(zoneId);
+    } else if (newValue === "6") {
       fetchFarmZone(zoneId);
     }
   };
@@ -174,6 +186,8 @@ export default function ZoneDashboard({
     fetchZoneDashboardZoneTaskSchedule({ zoneId: zoneId, queryParams });
   };
 
+
+  console.log(farmZoneSensorDataList,"farmZoneSensorDataList");
   const headers = [
     {
       label: "Batch Number",
@@ -717,7 +731,67 @@ export default function ZoneDashboard({
     );
   };
 
-  let subtitle = `( Zone Area : ${zoneDashboardZoneInfoList?.farmArea || ""} )`;
+
+  const renderZoneSensorsData = () => {
+    const { data } = farmZoneSensorDataList;
+    console.log(data, "datatatata");
+  
+    if (!data || !data[0] || !data[0].payload) {
+      return null;
+    }
+  
+    const sensorData = data[0].payload;
+
+    return (
+        <Grid item xs={12} sm={12} md={12}>
+          <p className="section-title">Sensors Information </p>
+          {sensorData && (
+            <p>
+              Last Updated :{" "}
+              {moment(new Date(farmZoneSensorDataList?.created_on
+  )).format("MMMM Do YYYY hh:mm:ss A")}
+            </p>
+          )}
+          <Paper className="life-cycle-details-card life-cycle-spacing ">
+            <Table size="small" aria-label="a dense table">
+              <TableHead className="table-header-row">
+                <TableRow>
+                  <TableCell className="label-custom">
+                    <b>Parameter</b>
+                  </TableCell>
+                  <TableCell className="label-custom">
+                    <b>Value</b>
+                  </TableCell>
+                  <TableCell className="label-custom">
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {Object.entries(sensorData).map(([key, value]) => {
+                  return (
+                    <TableRow
+                      key={key}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell className="label-custom" align="left">
+                        {key}
+                      </TableCell>
+                      <TableCell className="table-header" align="left">
+                        <b>{value}</b>
+                      </TableCell>
+                      <TableCell className="table-header" align="left">
+                        {value.value} <b>{value.unit}</b>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </Paper>
+        </Grid>
+      );
+  };
+    let subtitle = `( Zone Area : ${zoneDashboardZoneInfoList?.farmArea || ""} )`;
   return (
     <div>
       <PageHeader
@@ -764,22 +838,24 @@ export default function ZoneDashboard({
                   onChange={handleZoneTabChange}
                   aria-label="lab API tabs example"
                 >
-                  <Tab label="Sensors" value="1" />
-                  <Tab label="Crop Schedules" value="2" />
-                  <Tab label="Task Schedules" value="3" />
-                  <Tab label="Reports" value="4" />
-                  <Tab label="Info" value="5"></Tab>
+                <Tab label="Zone Sensors Data" value="1" />
+                  <Tab label="Sensors" value="2" />
+                  <Tab label="Crop Schedules" value="3" />
+                  <Tab label="Task Schedules" value="4" />
+                  <Tab label="Reports" value="5" />
+                  <Tab label="Info" value="6"></Tab>
                 </TabList>
               </Box>
-              <TabPanel value="1"> {renderZoneSencers()}</TabPanel>
-              <TabPanel value="2">{renderZoneCropSchedules()}</TabPanel>
-              <TabPanel value="3">{renderZoneTaskSchedules()}</TabPanel>
-              <TabPanel value="4">
+              <TabPanel value="1"> {renderZoneSensorsData()}</TabPanel>
+              <TabPanel value="2"> {renderZoneSencers()}</TabPanel>
+              <TabPanel value="3">{renderZoneCropSchedules()}</TabPanel>
+              <TabPanel value="4">{renderZoneTaskSchedules()}</TabPanel>
+              <TabPanel value="5">
                 <Grid container spacing={2}>
                   {renderReportdDetails()}
                 </Grid>
               </TabPanel>
-              <TabPanel value="5">{renderZoneInfo()}</TabPanel>
+              <TabPanel value="6">{renderZoneInfo()}</TabPanel>
             </Grid>
           </TabContext>
         </Grid>

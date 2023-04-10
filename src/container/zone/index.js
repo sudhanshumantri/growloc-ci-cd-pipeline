@@ -16,6 +16,7 @@ import {
   fetchZoneDashboardZoneUtilizationStagesRequest,
   fetchZoneTaskRequest,
   addZoneTaskCommentRequest,
+  fetchFarmZoneSensorDataRequest,
 } from "../../actions/zone";
 import {
   fetchZoneReportsRequest,
@@ -62,6 +63,10 @@ import {
  selectIsZoneDashboardZoneUtilizationStagesLoading,
  selectZoneDashboardZoneUtilizationStagesList,
  selectZoneDashboardZoneUtilizationStagesError,
+ selectIsFarmZoneSensorDataLoading,
+  selectFarmZoneSensorDataList,
+selectFarmZoneSensorDataListError,
+
 } from "../../selectors/zone";
 import {
   selectZoneReportsList,
@@ -130,6 +135,9 @@ farmReportsZoneTatTaskCategoriesList:
 selectFarmReportsZoneTatTaskCategoriesList(),
 farmReportsZoneTatTaskCategoriesError:
 selectFarmReportsZoneTatTaskCategoriesError(),
+isFarmZoneSensorDataLoading:selectIsFarmZoneSensorDataLoading(),
+  farmZoneSensorDataList:selectFarmZoneSensorDataList(),
+  farmZoneSensorDataListError:selectFarmZoneSensorDataListError()
 
 });
 const mapDispatchToProps = {
@@ -150,6 +158,7 @@ const mapDispatchToProps = {
   fetchZoneReports: fetchZoneReportsRequest,
   fecthFarmReportsZoneAverageMortality:fetchFarmReportsZoneAverageMortalityRequest,
   fetchFarmReportsZoneTatTaskRequest:fetchFarmReportsZoneTatTaskCategoriesRequest,
+  fetchFarmZoneSensorDataRequest:fetchFarmZoneSensorDataRequest,
 
 };
 function withRouter(Component) {

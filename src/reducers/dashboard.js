@@ -42,6 +42,9 @@ import {
   FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_REQUEST,
   FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_SUCCESS,
   FETCH_FARM_DASHBOARD_FARM_UTILIZATION_STAGES_FAILURE,
+  FETCH_FARM_DASHBOARD_ZONE_SENSOR_DATA_REQUEST,
+  FETCH_FARM_DASHBOARD_ZONE_SENSOR_DATA_SUCCESS,
+  FETCH_FARM_DASHBOARD_ZONE_SENSOR_DATA_FAILURE
 } from "../actions/actionTypes";
 const INITIAL_STATE = fromJS({
   isDashboardHarvestListLoading: false,
@@ -81,7 +84,9 @@ const INITIAL_STATE = fromJS({
   isFarmDashboardFarmUtilizationStagesLoading: false,
   farmDashboardFarmUtilizationStagesList: [],
   farmDashboardFarmUtilizationStagesError: null,
-
+  isFarmDashboardZoneSensorLoading:false,
+  farmDashboardZoneSensorList:{},
+  farmDashboardZoneSensorListError:false
 });
 export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
   let farmDashboardZoneList = state.toJS()["farmDashboardZoneList"]
@@ -314,6 +319,25 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
                     .set("isFarmDashboardFarmUtilizationStagesLoading", false)
                     .set("farmDashboardFarmUtilizationStagesList", [])
                     .set("farmDashboardFarmUtilizationStagesError", action.error);
+              //
+
+            
+
+  case FETCH_FARM_DASHBOARD_ZONE_SENSOR_DATA_REQUEST:
+    return state
+      .set("isFarmDashboardZoneSensorLoading", true)
+      .set("farmDashboardZoneSensorList", {})
+      .set("farmDashboardZoneSensorListError", null);
+  case FETCH_FARM_DASHBOARD_ZONE_SENSOR_DATA_SUCCESS:
+    return state
+      .set("isFarmDashboardZoneSensorLoading", false)
+      .set("farmDashboardZoneSensorList", action.data)
+      .set("farmDashboardZoneSensorListError", null);
+  case FETCH_FARM_DASHBOARD_ZONE_SENSOR_DATA_FAILURE:
+    return state
+      .set("isFarmDashboardZoneSensorLoading", false)
+      .set("farmDashboardZoneSensorList", [])
+      .set("farmDashboardZoneSensorListError", action.error);
     
     //
   

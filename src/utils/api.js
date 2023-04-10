@@ -16,6 +16,7 @@ const urls = {
     "fetch-crop-lifecycle-details": "farm/crop/life-cycle-details/",
     "update-crop-lifecycle-parameters":
       "farm/crop/update-life-cycle-stage-parameters",
+      "update-crop-lifecycle-Details": "farm/crop/complete-undo-lifecycle/",
     "update-crop-lifecycle-schedule": "farm//crop/schedule-lifecycle/",
     "fetch-users": "farm/get-all-farm-users",
     "add-user": "farm/add-new-user-to-farm",
@@ -75,7 +76,10 @@ const urls = {
     "fetch-zone-reports-zone-average-mortality":"farm/get-zone-average-mortality-rate/",
     "fetch-farm-reports-farm-average-mortality":"farm/get-farm-average-mortality-rate/",
     "fetch-farm-reports-farm-tat-task-categories":"farm/get-farm-tat-for-task-categories/",
-"fetch-farm-reports-zone-tat-task-categories":"farm/get-zone-tat-for-task-categories/"
+"fetch-farm-reports-zone-tat-task-categories":"farm/get-zone-tat-for-task-categories/",
+"fetch-farm-zone-sensor-data":"farm/get-lattest-farm-sensor-data/",
+"fetch-farm-Dashboard-zone-sensor-data":"farm/get-lattest-zone-sensor-data?"
+
   },
 };
 
@@ -173,6 +177,15 @@ export function callUpdateCropCycleParameters(data) {
     data,
   });
 }
+
+export function callUpdateCropCycleDetails(data) {
+  return callApi(getEndpoint("update-crop-lifecycle-Details"), {
+    method: "POST",
+    removeAuthorizationHeader: false,
+    data,
+  });
+}
+
 
 export function callUpdateCropToLifecycleSchedule(data) {
   return callApi(getEndpoint("update-crop-lifecycle-schedule"), {
@@ -659,5 +672,23 @@ export function callFetchDashboardZoneTatTaskCategories(routeParams) {
     routeParams,
   });
 }
+
+
+export function callfetchFarmZoneSensorDetails(queryParams) {
+  return callApi(getEndpoint("fetch-farm-zone-sensor-data"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    queryParams
+   });
+}
+
+export function callfetchFarmDashboardZoneSensorDetails(queryParams) {
+  return callApi(getEndpoint("fetch-farm-Dashboard-zone-sensor-data"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    queryParams
+   });
+}
+
 
 
