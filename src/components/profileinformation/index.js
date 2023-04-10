@@ -14,7 +14,7 @@ export default function ProfileInformation({
   const navigate = useNavigate();
   let loginObject = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
   const { profile } = loginObject || "";
-  const [profileData, setProfileData] = useState(profile);
+  const [profileData, setProfileData] = useState({...profile,password:""});
   const [password, setPassword] = useState("");
   const [confirmPasswordError, setconfirmPasswordError] = useState(false);
 
@@ -39,7 +39,9 @@ export default function ProfileInformation({
     const { value, name } = e.target;
     setProfileData({ ...profileData, [name]: value });
     validation[name] && setValidation({ ...validation, [name]: false });
+    setPhoneValidations({...phoneValidations,[name]:false});
   };
+  
   const handleNewPasswordChange = (e) => {
     const { value, name } = e.target;
     setUpdatePassword({ ...updatePassword, [name]: value });
@@ -111,12 +113,20 @@ export default function ProfileInformation({
   const handlePhoneValidations = () => {
     let errors = { ...phoneValidations };
     let isValid = true;
-    // if(!profileData.phone) {
-    //   errors.phone = true;
-    //   isValid = false;
-    // }
-    if (!password || password.length < 6) {
+    if (!profileData.phone) {
+      errors.phone = true;
+      isValid = false;
+    }
+    if (!profileData.password) {
       errors.password = true;
+      isValid = false;
+    }
+    if (profileData.password && profileData.password.length < 6) {
+      errors.password = true;
+      isValid = false;
+    }
+    if (profileData.phone && profileData.phone.length !==10) {
+      errors.phone = true;
       isValid = false;
     }
     setPhoneValidations(errors);
@@ -126,7 +136,7 @@ export default function ProfileInformation({
   const handlePhoneNumberChange = () => {
     const payload = {
       phone: profileData.phone,
-      password: password,
+      password: profileData.password,
     };
     if (handlePhoneValidations()) {
       updateUserPhone(payload);
@@ -229,7 +239,7 @@ export default function ProfileInformation({
               onChange={handleChange}
               error={phoneValidations.phone}
               helperText={
-                phoneValidations.phone ? "Please provide phone Number" : ""
+                phoneValidations.phone ? "Please provide correct phone Number" : ""
               }
             />
           </Grid>
@@ -238,8 +248,8 @@ export default function ProfileInformation({
             <TextBox
               fullWidth
               name="password"
-              value={password}
-              onChange={handlePasswordChange}
+              value={profileData.password}
+              onChange={handleChange}
               error={phoneValidations.password}
               helperText={
                 phoneValidations.password
