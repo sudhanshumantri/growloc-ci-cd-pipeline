@@ -150,7 +150,7 @@ const {length:zoneInfoLength} = zoneInformation || [];
   React.useEffect(() => {
     if (zoneInfoLength) {
       const zone_internal_id = zoneInformation[0].zone_internal_id;
-      fetchFarmDashboardZoneSensor({ id: zone_internal_id });
+      // fetchFarmDashboardZoneSensor({ id: zone_internal_id });
       fetchZoneDashboardZoneSensors(zone_internal_id)
       // fetchDashboardLattestSensors(zone_internal_id)
     }
@@ -174,11 +174,15 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
   }, [zoneInformation]);
   
 
-
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
     if (newValue === "1") {
-      fetchFarmDashboardZoneSensor({id:zone_internal_id})
+      // fetchFarmDashboardZoneSensor({id:zone_internal_id});
+      fecthFarmDashboardZone({
+        farmId: farmId,
+        queryParams: { skip: 0, take: 10 },
+      });
+
     } else if (newValue === "2") {
       fecthFarmDashboardZone({
         farmId: farmId,
@@ -260,7 +264,7 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     setSelectedSensorPlatform(newZonePlatform);
     const selectedZone = zoneInformation?.find(zone => zone.name === newZonePlatform);
     const zoneInterId = selectedZone.zone_internal_id ;
-    fetchFarmDashboardZoneSensor({ id: selectedZone.zone_internal_id });
+    // fetchFarmDashboardZoneSensor({ id: selectedZone.zone_internal_id });
     fetchZoneDashboardZoneSensors(zoneInterId)
   };
 
@@ -1254,7 +1258,6 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
   }
 
   const rendeLattestSensorDataByID = () => {
-    console.log(farmDashboardZoneLattestSensorList, "farmDashboardZoneLattestSensorList");
     const { data } = farmDashboardZoneLattestSensorList || {};
     if (!data || !data[0] || !data[0].payload) {
       return null;
@@ -1266,7 +1269,7 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
       {sensorData && (
         <p>
           Last Updated :{" "}
-          {moment(new Date(farmDashboardZoneSensorList?.created_on
+          {moment(new Date(farmDashboardZoneLattestSensorList?.created_on
 )).format("MMMM Do YYYY hh:mm:ss A")}
         </p>
       )}
@@ -1377,7 +1380,6 @@ const renderFarmSensorData = () => {
   farmDashboardZoneList?.zoneInformation?.forEach(function (zone) {
     totalFarmArea += parseInt(zone.farmArea);
   });
-
   const reamingArea = farmDashboardFarmInfoList?.farmArea - totalFarmArea;
   let subtitle = `(Total Farm Area : ${
     farmDashboardFarmInfoList?.farmArea || ""
@@ -1415,9 +1417,9 @@ const renderFarmSensorData = () => {
       {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
       {isDashboardHarvestListLoading && <Loader title="Fetching Harvest Details" />}
       {/* {isFarmDashboardZoneSensorLoading && <Loader title="Fetching Farm Sensor Data" />} */}
-      {isFarmDashboardZoneLattestSensorLoading && <Loader title="Fetching Sensors data" />}
+      {isZoneDashboardZoneSensorLoading && <Loader title="Fetching Sensor Data" />}
+      {isFarmDashboardZoneLattestSensorLoading && <Loader title="Fetching Sensors Information" />}
       
-
       <div className="page-container">
         <Grid container spacing={2}>
           {renderFarmSummaryInfo()}

@@ -142,9 +142,9 @@ selectFarmReportsZoneTatTaskCategoriesList(),
 farmReportsZoneTatTaskCategoriesError:
 selectFarmReportsZoneTatTaskCategoriesError(),
 isFarmZoneSensorDataLoading:selectIsFarmZoneSensorDataLoading(),
-  farmZoneSensorDataList:selectFarmZoneSensorDataList(),
-  farmZoneSensorDataListError:selectFarmZoneSensorDataListError(),
-  isFarmDashboardZoneLattestSensorLoading:selectIsFarmDashboardZoneLattestSensorLoading(),
+farmZoneSensorDataList:selectFarmZoneSensorDataList(),
+farmZoneSensorDataListError:selectFarmZoneSensorDataListError(),
+isFarmDashboardZoneLattestSensorLoading:selectIsFarmDashboardZoneLattestSensorLoading(),
 farmDashboardZoneLattestSensorList:selectFarmDashboardZoneLattestSensorList(),
 farmDashboardZoneLattestSensorListError:selectFarmDashboardZoneLattestSensorListError(),
 

@@ -92,6 +92,8 @@ export default function ZoneDashboard({
   isFarmZoneSensorDataLoading,
   fetchDashboardLattestSensors,
   farmDashboardZoneLattestSensorList,
+  isFarmDashboardZoneLattestSensorLoading,
+
 }) {
   const { farmId, zoneId } = useParams();
   const [month, setMonth] = useState(3);
@@ -374,13 +376,12 @@ export default function ZoneDashboard({
             <p className="section-title">Zone Sensors</p>
           </Grid>
           <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
-            {/* <DataTable data={{ headers: ZONE_HEADERS, rows: zoneDashboardZoneSensorList || [] }} /> */}
+            <DataTable data={{ headers: ZONE_HEADERS, rows: zoneDashboardZoneSensorList || [] }} />
           </Grid>
         </Grid>
       </>
     );
   };
-
   const renderZoneCropSchedules = () => {
     const { cropSchedules } = zoneDashboardZoneCropSchedulesList;
     return (
@@ -733,10 +734,10 @@ export default function ZoneDashboard({
     const sensorData = data[0].payload;
     return (
       <Grid item xs={12} sm={12} md={12}>
-      <p className="section-title"> Zone Senor Information </p>
+      <p className="section-title">  Senor Information </p>
       {sensorData && (
         <p>
-          Last Updated :{" "}
+          Last Updated :
           {moment(new Date(farmDashboardZoneLattestSensorList?.created_on
 )).format("MMMM Do YYYY hh:mm:ss A")}
         </p>
@@ -905,6 +906,7 @@ const renderZoneSensorData = () => {
       {isFarmZoneDashboardHarvestListLoading && (
         <Loader title="Fetching Harvest details" />
       )}
+    {isFarmDashboardZoneLattestSensorLoading && <Loader title="Zone information Details" />}
 
       <div className="page-container">
         <Grid container spacing={2}>

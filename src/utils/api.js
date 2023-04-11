@@ -79,7 +79,8 @@ const urls = {
 "fetch-farm-reports-zone-tat-task-categories":"farm/get-zone-tat-for-task-categories/",
 "fetch-farm-zone-sensor-data":"farm/get-lattest-zone-sensor-data/",
 "fetch-farm-Dashboard-zone-sensor-data":"farm/get-lattest-zone-sensor-data/",
-"fetch-farm-Dashboard-zone-lattest-sensor-data":"farm/get-lattest-sensor-data-by-sensor-id/" 
+"fetch-farm-Dashboard-zone-lattest-sensor-data":"farm/get-lattest-sensor-data-by-sensor-id/",
+"fetch-farm-Dashboard-all-zone-details":""
 },
 };
 
@@ -696,6 +697,17 @@ export function callfetchFarmDashboardLattestZoneSensorDetails(routeParams) {
     routeParams
    });
 }
+
+export function callfetchFarmDashboardAllZoneSensorDetails(routeParams) {
+  return callApi(getEndpoint("fetch-farm-Dashboard-all-zone-details"), {
+    method: "GET",
+    removeAuthorizationHeader: false,
+    routeParams
+   });
+}
+
+
+
 
 
 

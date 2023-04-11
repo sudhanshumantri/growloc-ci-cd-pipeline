@@ -48,6 +48,12 @@ import {
   FETCH_FARM_DASHBOARD_ZONE_LATTEST_SENSOR_DATA_REQUEST,
   FETCH_FARM_DASHBOARD_ZONE_LATTEST_SENSOR_DATA_SUCCESS,
   FETCH_FARM_DASHBOARD_ZONE_LATTEST_SENSOR_DATA_FAILURE,
+  FETCH_FARM_DASHBOARD_ALL_ZONE_DETAILS_REQUEST,
+  FETCH_FARM_DASHBOARD_ALL_ZONE_DETAILS_SUCCESS,
+  FETCH_FARM_DASHBOARD_ALL_ZONE_DETAILS_FAILURE
+
+
+
 
 } from "./actionTypes";
 
@@ -375,4 +381,22 @@ return {
 };
 }
 
-
+  export function fetchDashboardAllZoneDetailsRequest(data) {
+    return {
+      type: FETCH_FARM_DASHBOARD_ALL_ZONE_DETAILS_REQUEST,
+      data,
+    };
+    }
+    export function fetchDashboardAllZoneDetailsSuccess(data) {
+    return {
+      type: FETCH_FARM_DASHBOARD_ALL_ZONE_DETAILS_SUCCESS,
+      data,
+    };
+    }
+    export function fetchDashboardAllZoneDetailsFailure(error) {
+    return {
+      type: FETCH_FARM_DASHBOARD_ALL_ZONE_DETAILS_FAILURE,
+      error,
+    };
+    }
+    
