@@ -18,6 +18,7 @@ import {
   fetchFarmDashboardUtilizationStagesRequest,
   fetchFarmDashboardZoneSensorRequest,
   fetchDashboardFarmLattestSensorDataRequest,
+  fetchDashboardAllZoneDetailsRequest,
 } from "../../actions/dashboard";
 import { fetchUsersRequest } from "../../actions/users";
 import { fetchFarmInventoryRequest } from "../../actions/inventory";
@@ -218,6 +219,7 @@ const mapDispatchToProps = {
   fetchFarmDashboardZoneSensor: fetchFarmDashboardZoneSensorRequest,
   fetchZoneDashboardZoneSensors: fetchZoneDashboardZoneSensorRequest,
   fetchDashboardLattestSensors: fetchDashboardFarmLattestSensorDataRequest,
+  fetchDashboardAllZoneDetails : fetchDashboardAllZoneDetailsRequest,
 };
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {

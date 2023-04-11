@@ -111,6 +111,10 @@ export default function FarmDashboard({
   fetchDashboardLattestSensors,
   farmDashboardZoneLattestSensorList,
   isFarmDashboardZoneLattestSensorLoading,
+  isFarmDashboardAllZoneDetailsLoading,
+  farmDashboardAllZoneDetailsList,
+  fetchDashboardAllZoneDetails,
+
 }) {
   const navigate = useNavigate();
   const { farmId } = useParams();
@@ -135,10 +139,11 @@ export default function FarmDashboard({
   }, []);
 
   React.useEffect(() => {
-    fecthFarmDashboardZone({
-      farmId: farmId,
-      queryParams: { skip: 0, take: 10 },
-    });
+    // fecthFarmDashboardZone({
+    //   farmId: farmId,
+    //   queryParams: { skip: 0, take: 10 },
+    // });
+    fetchDashboardAllZoneDetails(farmId)
     fetchAllCropsLifecycle(farmId);
   }, []);
 
@@ -146,8 +151,10 @@ export default function FarmDashboard({
     fetchFarmDashboardInfo(farmId);
   },[isFarmDashboardZoneLoading,isTaskScheduleTaskLoading])
 
-const {zoneInformation} = farmDashboardZoneList;
-const {length:zoneInfoLength} = zoneInformation || [];
+// const {zoneInformation} = farmDashboardZoneList;
+// const {length:zoneInfoLength} = zoneInformation || [];
+const zoneInformation = farmDashboardAllZoneDetailsList;
+ const zoneInfoLength = zoneInformation.length;
 
   React.useEffect(() => {
     if (zoneInfoLength) {
@@ -159,6 +166,8 @@ const {length:zoneInfoLength} = zoneInformation || [];
   }, [zoneInfoLength]);
 
 const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
+
+
 
   React.useEffect(() => {
     if (zoneSensorLattestDataLength) {
@@ -180,10 +189,11 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     setValue(newValue);
     if (newValue === "1") {
       // fetchFarmDashboardZoneSensor({id:zone_internal_id});
-      fecthFarmDashboardZone({
-        farmId: farmId,
-        queryParams: { skip: 0, take: 10 },
-      });
+      // fecthFarmDashboardZone({
+      //   farmId: farmId,
+      //   queryParams: { skip: 0, take: 10 },
+      // });
+      fetchDashboardAllZoneDetails(farmId);
 
     } else if (newValue === "2") {
       fecthFarmDashboardZone({
@@ -262,8 +272,8 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     }
   };
   const handleSensorPlatformChange = (event, newZonePlatform) => {
-    const {zoneInformation} = farmDashboardZoneList;
-    setSelectedSensorPlatform(newZonePlatform);
+    const zoneInformation = farmDashboardAllZoneDetailsList;
+      setSelectedSensorPlatform(newZonePlatform);
     setSelectedSensor({});
     const selectedZone = zoneInformation?.find(zone => zone.name === newZonePlatform);
     const zoneInterId = selectedZone.zone_internal_id ;
@@ -1323,9 +1333,10 @@ const handleSensorLattestDataChange = (event, newZonelattesPlatform) =>{
 }
 
 const renderFarmSensorData = () => {
-  const {zoneInformation} = farmDashboardZoneList ||"";
-  
-      return (
+  const zoneInformation = farmDashboardAllZoneDetailsList ||"";    
+  console.log(zoneDashboardZoneSensorList,"zoneDashboardZoneSensorList");
+
+  return (
         <>
         <Grid container spacing={2}>
    <Grid item xs={12} sm={12} md={12}>
@@ -1373,7 +1384,7 @@ const renderFarmSensorData = () => {
             </ToggleButtonGroup>
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
-              {selectedSensor  && rendeLattestSensorDataByID()}
+              {(selectedSensor  && zoneDashboardZoneSensorList && zoneDashboardZoneSensorList.length > 0) && rendeLattestSensorDataByID()}
             </Grid>
             </Grid>
         </>
@@ -1422,7 +1433,7 @@ const renderFarmSensorData = () => {
       {/* {isFarmDashboardZoneSensorLoading && <Loader title="Fetching Farm Sensor Data" />} */}
       {isZoneDashboardZoneSensorLoading && <Loader title="Fetching Sensor Data" />}
       {isFarmDashboardZoneLattestSensorLoading && <Loader title="Fetching Sensors Information" />}
-      
+      {isFarmDashboardAllZoneDetailsLoading && <Loader title="Fetching Zone Details" />}
       <div className="page-container">
         <Grid container spacing={2}>
           {renderFarmSummaryInfo()}

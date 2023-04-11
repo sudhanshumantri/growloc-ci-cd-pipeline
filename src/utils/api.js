@@ -80,7 +80,7 @@ const urls = {
 "fetch-farm-zone-sensor-data":"farm/get-lattest-zone-sensor-data/",
 "fetch-farm-Dashboard-zone-sensor-data":"farm/get-lattest-zone-sensor-data/",
 "fetch-farm-Dashboard-zone-lattest-sensor-data":"farm/get-lattest-sensor-data-by-sensor-id/",
-"fetch-farm-Dashboard-all-zone-details":""
+"fetch-farm-Dashboard-all-zone-details":"farm/get-all-farm-zones/"
 },
 };
 

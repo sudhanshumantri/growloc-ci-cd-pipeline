@@ -374,7 +374,6 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
         .set("farmDashboardZoneLattestSensorList", {})
         .set("farmDashboardZoneLattestSensorListError", null);
     case FETCH_FARM_DASHBOARD_ZONE_LATTEST_SENSOR_DATA_SUCCESS:
-      console.log(action.data, "farmDashboardZoneLattestSensorLista");
       return state
         .set("isFarmDashboardZoneLattestSensorLoading", false)
         .set("farmDashboardZoneLattestSensorList", action.data)
@@ -391,7 +390,6 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
             .set("farmDashboardAllZoneDetailsList", [])
             .set("farmDashboardAllZoneDetailsListError", null);
         case FETCH_FARM_DASHBOARD_ALL_ZONE_DETAILS_SUCCESS:
-          console.log(action.data, "farmDashboardZoneLattestSensorLista");
           return state
             .set("isFarmDashboardAllZoneDetailsLoading", false)
             .set("farmDashboardAllZoneDetailsList", action.data)

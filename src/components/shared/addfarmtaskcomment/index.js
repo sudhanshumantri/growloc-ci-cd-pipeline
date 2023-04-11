@@ -15,9 +15,11 @@ import "./style.css";
 export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
   const [taskComment, setTaskComments] = useState("");
   const [images, setImages] = useState([]);
+  const [commentError, setCommentError] = useState(false)
 
   const handleChange = (e) => {
     setTaskComments(e.target.value);
+    setCommentError(false)
   };
 
   const handleRemoveImage = (index) => {
@@ -40,12 +42,16 @@ export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
   };
 
   const handleSaveComment = () => {
+
+    if (!taskComment) {
+      setCommentError(true);
+      return;
+    }
     let payload = {
       comment: taskComment,
       images: images,
     };
     handleSave(payload);
-    console.log(payload,"payload");
   };
 
   const renderImages = () => {
@@ -95,6 +101,9 @@ export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
                   name="taskComment"
                   value={taskComment}
                   onChange={handleChange}
+                  error={commentError}
+                  helperText={commentError? "Please provide comment" : ""}
+
                 />
               </FormControl>
             </Grid>
