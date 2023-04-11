@@ -128,7 +128,6 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
       return state
         .set("isFarmDashboardZoneListLoading", true)
         .set("farmDashboardZoneList", [])
-        .set("farmDashboardZoneLattestSensorList", [])
         .set("farmDashboardZoneListError", null);
     case FETCH_ALL_FARM_DASHBOARD_ZONE_SUCCESS:
       return state

@@ -113,7 +113,7 @@ export default function ZoneDashboard({
         queryParams: { skip: 0, take: 10 },
       });
 
-      fetchZoneDashoboardZoneInfo(zoneId);
+      // fetchZoneDashoboardZoneInfo(zoneId);
     }
     fetchZoneDashboardZoneSensors(zoneId);
     fetchFarmZoneSensorDataRequest({ id:zoneId })
@@ -122,6 +122,10 @@ export default function ZoneDashboard({
   useEffect(() => {
     handlePlatformChange(null, selectedPlatform);
   }, []);
+
+  useEffect(()=> {
+    fetchZoneDashoboardZoneInfo(zoneId)
+  },[isFarmDashboardZoneTaskLoading,isZoneDashboardZoneSensorLoading])
 
 
   const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
@@ -173,6 +177,7 @@ export default function ZoneDashboard({
   const handleDropDowmChange = ({ target }) => {
     navigate(`/farm/${farmId}/zone/${target.value}/`);
   };
+
   const handleModalToggle = () => {
     setOpen(!open);
   };
@@ -180,6 +185,7 @@ export default function ZoneDashboard({
   let headerDropwdown = true;
 
   const handleZoneSensorSave = (data) => {};
+
   const handleZoneTaskSave = (data) => {
     if (data) {
       data.createdBy = loginObject?.profile.userId;
@@ -301,6 +307,7 @@ export default function ZoneDashboard({
 
 
   const durationStyles = { backgroundColor: "green", color: "white" };
+
   const renderReportdDetails = () => {
     return (
       <>
@@ -653,6 +660,7 @@ export default function ZoneDashboard({
             </Card>
           </Card>
         </Grid>
+        
         <Grid item xs={4} sm={4} md={4}>
           <Card>
             <CardContent>
@@ -692,6 +700,7 @@ export default function ZoneDashboard({
                     src={Totalharvest}
                   />
                 </Grid>
+                
               </Grid>
             </CardContent>
           </Card>
