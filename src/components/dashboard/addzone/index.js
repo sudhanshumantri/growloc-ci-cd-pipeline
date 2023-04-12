@@ -102,7 +102,9 @@ export default function AddZoneModal({
   };
   return (
     <div>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose}   
+  
+>
         <DialogTitle className="dialog-title-container">
           {zoneDetails.id ? "Update Zone" : "Add a new zone"}
         </DialogTitle>

@@ -14,7 +14,7 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  TableBody
+  TableBody,
 } from "@mui/material";
 import { Link, useParams,useNavigate } from "react-router-dom";
 import PageHeader from "../../shared/page-header";
@@ -401,7 +401,9 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     },
   ];
 
-  const handleModalToggle = () => {
+  const handleModalToggle = (event, reason) => {
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
     setOpen(!open);
   };
 
@@ -447,7 +449,8 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     handleZoneModalToggle();
   };
 
-  const handleCommentModalToggle = (rowData) => {
+  const handleCommentModalToggle = (rowData,) => {
+
     setRowData(rowData);
     setCommetTask(!openCommetTask);
   };
@@ -463,10 +466,14 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     handleCommentModalToggle();
   };
 
-  const handleZoneModalToggle = () => {
+  const handleZoneModalToggle = (event, reason) => {
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+        return;
     setOpenZone(!openZone);
     setZoneData({});
   };
+
+
 
   const handleEdit = (zoneEdit) => {
     const { zone_internal_id, name, farmArea, zoneType, systemType } = zoneEdit;
@@ -913,12 +920,14 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
   const getWidth = (farmArea) => {
     return (100 / farmdDetails?.farmArea) * parseInt(farmArea) + "%";
   };
+
+
   const renderFarmZoneGridView = () => {
-    let totalFarmArea = parseInt(farmDashboardFarmInfoList?.farmArea);
+    let totalFarmArea = parseInt(farmDashboardFarmInfoList?.farmArea || {});
     let zoneAreas = farmDashboardZoneList?.zoneInformation?.map((zone) =>
       parseInt(zone.farmArea)
     );
-    let totalZoneArea = zoneAreas.reduce((a, b) => a + b);
+    let totalZoneArea = (zoneAreas && zoneAreas.length) ? zoneAreas.reduce((a, b) => a + b):0;    
     let newZoneData = [...farmDashboardZoneList.zoneInformation];
     newZoneData.push({
       name: "Empty Zone",
@@ -1032,7 +1041,6 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
 
   const renderFarmArea = () => {
     const {name,farmArea} = farmDashboardInfoList;
-    console.log(farmDashboardInfoList,"farmDashboardInfoList");
     return (
     <>
     {name && farmArea && (
@@ -1332,9 +1340,10 @@ const handleSensorLattestDataChange = (event, newZonelattesPlatform) =>{
     fetchDashboardLattestSensors(zoneInterId);
 }
 
+
+
 const renderFarmSensorData = () => {
   const zoneInformation = farmDashboardAllZoneDetailsList ||"";    
-  console.log(zoneDashboardZoneSensorList,"zoneDashboardZoneSensorList");
 
   return (
         <>
@@ -1498,7 +1507,10 @@ const renderFarmSensorData = () => {
             zoneDetails={zoneData}
             data={farmDashboardZoneList}
             farmData={farmDashboardFarmInfoList}
-          />
+            backdrop="static"
+            keyboard={false}
+            onBackdropClick={null}
+                    />
         )}
         {isDeleteModelOpen && (
           <ConfirmDialogBox

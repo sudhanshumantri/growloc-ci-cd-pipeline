@@ -78,7 +78,6 @@ export default function FarmEfficiency({
               }
               return "";
             });
-            console.log(remainingLabels);
             return remainingLabels;
           },
           callback: function (value, index, values) {

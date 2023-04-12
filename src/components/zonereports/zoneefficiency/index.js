@@ -81,7 +81,6 @@ export default function ZoneEfficiency({
               }
               return "";
             });
-            console.log(remainingLabels);
             return remainingLabels;
           },
           callback: function (value, index, values) {

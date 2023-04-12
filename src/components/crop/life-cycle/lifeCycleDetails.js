@@ -129,14 +129,18 @@ export default function CropLifeCycleDetails({
     }
     handleTaskModalToggle();
   };
-  const handleModalToggle = () => {
+  const handleModalToggle = (event,reason) => {
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
     setOpen(!open);
   };
-  const handleTaskModalToggle = () => {
+  const handleTaskModalToggle = (event,reason) => {
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
     setTaskModal(!openTaskModal);
   };
 
-  const handleScheduleHarvestingModalToggle = () => {
+  const handleScheduleHarvestingModalToggle = (event,reason) => {
     if (!openScheduleHarvestingModal) {
       setHarvestingSchedules(
         lifecycleDetails.cropDetails.FarmCropLifecycleSchedules &&
@@ -145,6 +149,8 @@ export default function CropLifeCycleDetails({
           : []
       );
     }
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
     setScheduleHarvestingModal(!openScheduleHarvestingModal);
   };
   const handleScheduleHarvestChange = (value) => {
@@ -177,7 +183,9 @@ export default function CropLifeCycleDetails({
     updateCropToLifecycleSchedule(scheduleHarvestingData);
     handleScheduleHarvestingModalToggle();
   };
-  const handleParametersInformationEditToggle = () => {
+  const handleParametersInformationEditToggle = (event,reason) => {
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
     setIsStageEditOpen(!isStageEditOpen);
   };
   const handleActiveStep = (id) => {
@@ -225,26 +233,20 @@ export default function CropLifeCycleDetails({
 
   const handleCompleteLifeCycle = () => {
     let { cropDetails} = lifecycleDetails;
-    console.log("cropDetails",cropDetails);
     let {id} = cropDetails;
-    console.log(id,"id");
       const paylad = {
         cropLifeCycleId: id,
         isComplete: true,
       }
-      console.log(paylad);
       updateCropToLifecycleDetails(paylad)
     }
     const handleUndoCompleteLifeCycle = () => {
       let { cropDetails} = lifecycleDetails;
-      console.log("cropDetails",cropDetails);
       let {id} = cropDetails;
-      console.log(id,"id");
         const paylad = {
           cropLifeCycleId: id,
           isComplete: false,
         }
-        console.log(paylad);
         updateCropToLifecycleDetails(paylad)
       }
   

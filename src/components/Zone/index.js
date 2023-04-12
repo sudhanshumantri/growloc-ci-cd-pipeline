@@ -224,7 +224,9 @@ export default function ZoneDashboard({
     }
   };
 
-  const handleModalToggle = () => {
+  const handleModalToggle = (event,reason) => {
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
     setOpen(!open);
   };
 
@@ -789,7 +791,6 @@ export default function ZoneDashboard({
   };
 
   const rendeLattestSensorDataByID = () => {
-    console.log(farmDashboardZoneLattestSensorList, "farmDashboardZoneLattestSensorList");
     const { data } = farmDashboardZoneLattestSensorList || {};
     if (!data || !data[0] || !data[0].payload) {
       return null;
@@ -844,7 +845,6 @@ export default function ZoneDashboard({
       </Grid>
     );
   }
-
 
   const renderZoneSensorData = () => {
     return (

@@ -174,7 +174,6 @@ export function* fetchFarmDashboardInfoList({ data }) {
   }
 
   export function* fetchFarmDashboardFarmUtlizationCropList({ data }) {
-    console.log(data,"farmDashboardFarmUtilizationCropsList sagas");
     let responseData = yield call(callFetchDashboardFarmUtilizationCrops, data);
     if (responseData?.status == 200 && responseData.data.status) {
       yield put(fetchFarmDashboardUtilizationCropsSuccess(responseData.data.data));

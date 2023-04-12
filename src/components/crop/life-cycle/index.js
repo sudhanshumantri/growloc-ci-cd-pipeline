@@ -71,7 +71,9 @@ export default function CropLifeCycle({
     fetchAllCropsLifecycle({ farmId: farmId });
   }, []);
   const [open, setOpen] = useState(false);
-  const handleModalToggle = () => {
+  const handleModalToggle = (event,reason) => {
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
     setOpen(!open);
   };
   const handleCropSave = (lifecycleData) => {

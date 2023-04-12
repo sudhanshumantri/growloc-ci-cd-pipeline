@@ -39,7 +39,9 @@ export default function ManageCrop({
     }
     handleModalToggle();
   };
-  const handleModalToggle = () => {
+  const handleModalToggle = (event,reason) => {
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
     setOpen(!open);
     setCropInfo({});
   };
