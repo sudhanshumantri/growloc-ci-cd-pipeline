@@ -106,6 +106,7 @@ const UserLayout = ({ loadAuthToken,fetchAllUserZoneSensor,fetchPusherData }) =>
     loginObject,
   });
   useEffect(() => {
+   if(token && loginObject){
     fetchAllUserZoneSensor()
     const pusher = new Pusher('74168d0c587988b1d7a3', {
       cluster: 'ap2',
@@ -115,6 +116,7 @@ const UserLayout = ({ loadAuthToken,fetchAllUserZoneSensor,fetchPusherData }) =>
     channel.bind("sensor-event", data => {
       fetchPusherData(data.data);
     });
+   }
   }, []);
   return (
     <Box sx={{ display: "flex" }}>
