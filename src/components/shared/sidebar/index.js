@@ -129,7 +129,7 @@ export default function SideBar({ router, logout, loginObject }) {
         >
           {items.map((each, index) => {
             return (
-              <React.Fragment key={index}>
+              <React.Fragment key={each.id + index}>
                 {each.subMenu && each.subMenu.length ? (
                   <>
                     <AuthOutlet

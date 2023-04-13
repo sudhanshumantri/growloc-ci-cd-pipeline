@@ -16,7 +16,7 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
-import { Link, useParams,useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import PageHeader from "../../shared/page-header";
 import DataTable from "../../shared/dataTable";
 import PieChart from "../../shared/chart/pieChart";
@@ -27,7 +27,11 @@ import AddIcon from "@mui/icons-material/Add";
 import ButtonCustom from "../../shared/button";
 import AddTaskModal from "../../shared/addtask/addtask";
 import AddFarmTaskComment from "../../shared/addfarmtaskcomment";
-import { HARVEST_MONTH_OPTIONS, SEVERITY_LEVEL,TOGGLE_DATA } from "../../../config";
+import {
+  HARVEST_MONTH_OPTIONS,
+  SEVERITY_LEVEL,
+  TOGGLE_DATA,
+} from "../../../config";
 import SingleCustomSelect from "../../shared/select";
 import AddZoneModal from "../addzone";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
@@ -114,9 +118,11 @@ export default function FarmDashboard({
   isFarmDashboardAllZoneDetailsLoading,
   farmDashboardAllZoneDetailsList,
   fetchDashboardAllZoneDetails,
-
+  history,
 }) {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { farmId } = useParams();
   const [month, setMonth] = useState(3);
   const [open, setOpen] = useState(false);
@@ -134,6 +140,7 @@ export default function FarmDashboard({
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [selectedSensorPlatform, setSelectedSensorPlatform] = useState(null);
   const [selectedSensor, setSelectedSensor] = useState(null);
+
   useEffect(() => {
     handlePlatformChange(null, selectedPlatform);
   }, []);
@@ -143,31 +150,30 @@ export default function FarmDashboard({
     //   farmId: farmId,
     //   queryParams: { skip: 0, take: 10 },
     // });
-    fetchDashboardAllZoneDetails(farmId)
+    fetchDashboardAllZoneDetails(farmId);
     fetchAllCropsLifecycle(farmId);
   }, []);
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     fetchFarmDashboardInfo(farmId);
-  },[isFarmDashboardZoneLoading,isTaskScheduleTaskLoading])
+  }, [isFarmDashboardZoneLoading, isTaskScheduleTaskLoading]);
 
-// const {zoneInformation} = farmDashboardZoneList;
-// const {length:zoneInfoLength} = zoneInformation || [];
-const zoneInformation = farmDashboardAllZoneDetailsList;
- const zoneInfoLength = zoneInformation.length;
+  // const {zoneInformation} = farmDashboardZoneList;
+  // const {length:zoneInfoLength} = zoneInformation || [];
+  const zoneInformation = farmDashboardAllZoneDetailsList;
+  const zoneInfoLength = zoneInformation.length;
 
   React.useEffect(() => {
     if (zoneInfoLength) {
       const zone_internal_id = zoneInformation[0].zone_internal_id;
       // fetchFarmDashboardZoneSensor({ id: zone_internal_id });
-      fetchZoneDashboardZoneSensors(zone_internal_id)
+      fetchZoneDashboardZoneSensors(zone_internal_id);
       // fetchDashboardLattestSensors(zone_internal_id)
     }
   }, [zoneInfoLength]);
 
-const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
-
-
+  const { length: zoneSensorLattestDataLength } =
+    zoneDashboardZoneSensorList || [];
 
   React.useEffect(() => {
     if (zoneSensorLattestDataLength) {
@@ -177,13 +183,11 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     }
   }, [zoneSensorLattestDataLength]);
 
-
   useEffect(() => {
     if (zoneInformation && zoneInformation.length > 0) {
       setSelectedSensorPlatform(zoneInformation[0].name);
     }
   }, [zoneInfoLength]);
-  
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -194,7 +198,6 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
       //   queryParams: { skip: 0, take: 10 },
       // });
       fetchDashboardAllZoneDetails(farmId);
-
     } else if (newValue === "2") {
       fecthFarmDashboardZone({
         farmId: farmId,
@@ -217,14 +220,12 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     }
   };
 
-  
   const handleTabInfoChange = (event, newValue) => {
     setTabInfo(newValue);
   };
   const handleGridView = () => {
     setSelectView(seletedView == "grid" ? "list" : "grid");
   };
-
 
   const renderPlatformComponent = () => {
     if (selectedComponent === "farmEfficiency") {
@@ -273,14 +274,15 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
   };
   const handleSensorPlatformChange = (event, newZonePlatform) => {
     const zoneInformation = farmDashboardAllZoneDetailsList;
-      setSelectedSensorPlatform(newZonePlatform);
+    setSelectedSensorPlatform(newZonePlatform);
     setSelectedSensor({});
-    const selectedZone = zoneInformation?.find(zone => zone.name === newZonePlatform);
-    const zoneInterId = selectedZone.zone_internal_id ;
+    const selectedZone = zoneInformation?.find(
+      (zone) => zone.name === newZonePlatform
+    );
+    const zoneInterId = selectedZone.zone_internal_id;
     // fetchFarmDashboardZoneSensor({ id: selectedZone.zone_internal_id });
-    fetchZoneDashboardZoneSensors(zoneInterId)
+    fetchZoneDashboardZoneSensors(zoneInterId);
   };
-
 
   const renderMonthlyHarvestBreakup = () => {
     return (
@@ -374,7 +376,8 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     );
   };
 
-  const zoneId = (farmDashboardCropSchedulesList?.cropSchedules || [])[0]?.zoneId
+  const zoneId = (farmDashboardCropSchedulesList?.cropSchedules || [])[0]
+    ?.zoneId;
   const headers = [
     {
       label: "Batch Number",
@@ -402,8 +405,7 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
   ];
 
   const handleModalToggle = (event, reason) => {
-    if (reason && reason == "backdropClick" && "escapeKeyDown") 
-    return;
+    if (reason && reason == "backdropClick" && "escapeKeyDown") return;
     setOpen(!open);
   };
 
@@ -449,8 +451,7 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     handleZoneModalToggle();
   };
 
-  const handleCommentModalToggle = (rowData,) => {
-
+  const handleCommentModalToggle = (rowData) => {
     setRowData(rowData);
     setCommetTask(!openCommetTask);
   };
@@ -467,13 +468,10 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
   };
 
   const handleZoneModalToggle = (event, reason) => {
-    if (reason && reason == "backdropClick" && "escapeKeyDown") 
-        return;
+    if (reason && reason == "backdropClick" && "escapeKeyDown") return;
     setOpenZone(!openZone);
     setZoneData({});
   };
-
-
 
   const handleEdit = (zoneEdit) => {
     const { zone_internal_id, name, farmArea, zoneType, systemType } = zoneEdit;
@@ -505,7 +503,10 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
 
   const handleZoneCropLifeCycleSave = (lifecycleData) => {
     if (lifecycleData) {
-      addCropToLifecycle({ ...lifecycleData, zoneId: (cropData.zone_internal_id)});
+      addCropToLifecycle({
+        ...lifecycleData,
+        zoneId: cropData.zone_internal_id,
+      });
     }
     handleCropModalToggle();
   };
@@ -520,7 +521,6 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
   const handleChangeTaskPagination = (queryParams) => {
     fetchFarmDashboardFarmTask({ farmId: farmId, queryParams });
   };
-
 
   const TASK_HEADER = [
     {
@@ -688,16 +688,12 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
           <span className="section-title">Tasks</span>
         </Grid>
         <Grid item xs={6} sm={6} md={3} lg={3} sx={{ alignItems: "center" }}>
-        <AuthOutlet
-    isAuthRequired={true}
-     from="farmItems"
-    action="create"
->
-          <ButtonCustom
-            title="Add New Task"
-            ICON={<AddIcon />}
-            handleButtonClick={handleModalToggle}
-          />
+          <AuthOutlet isAuthRequired={true} from="farmItems" action="create">
+            <ButtonCustom
+              title="Add New Task"
+              ICON={<AddIcon />}
+              handleButtonClick={handleModalToggle}
+            />
           </AuthOutlet>
         </Grid>
         <Grid className="card-outline-container " item xs={12} sm={12} md={12}>
@@ -764,20 +760,18 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     );
   };
 
-
   const durationStyles = { backgroundColor: "green", color: "white" };
-
 
   const renderReportdDetails = () => {
     return (
       <>
-           <Grid item xs={12} sm={12} md={12}>
+        <Grid item xs={12} sm={12} md={12}>
           <ToggleButtonGroup
             value={selectedPlatform}
             exclusive
             onChange={handlePlatformChange}
             aria-label="Platform"
-            sx={{color:"balck"}}
+            sx={{ color: "balck" }}
           >
             {TOGGLE_DATA.map((platform) => (
               <ToggleButton
@@ -786,17 +780,18 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
                 style={{
                   backgroundColor:
                     selectedPlatform === platform.value ? "green" : undefined,
-                    color: selectedPlatform === platform.value ? "white" : "black",
+                  color:
+                    selectedPlatform === platform.value ? "white" : "black",
                 }}
               >
                 {platform.label}
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            {renderPlatformComponent()}
-          </Grid>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12}>
+          {renderPlatformComponent()}
+        </Grid>
       </>
     );
   };
@@ -921,13 +916,13 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     return (100 / farmdDetails?.farmArea) * parseInt(farmArea) + "%";
   };
 
-
   const renderFarmZoneGridView = () => {
     let totalFarmArea = parseInt(farmDashboardFarmInfoList?.farmArea || {});
     let zoneAreas = farmDashboardZoneList?.zoneInformation?.map((zone) =>
       parseInt(zone.farmArea)
     );
-    let totalZoneArea = (zoneAreas && zoneAreas.length) ? zoneAreas.reduce((a, b) => a + b):0;    
+    let totalZoneArea =
+      zoneAreas && zoneAreas.length ? zoneAreas.reduce((a, b) => a + b) : 0;
     let newZoneData = [...farmDashboardZoneList.zoneInformation];
     newZoneData.push({
       name: "Empty Zone",
@@ -992,7 +987,9 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
                     <p className="label-white">Area: {zone.farmArea} sqft.</p>
                   </>
                 ) : (
-                  <Link to={"/farm/" + farmId + "/zone/" + zone.zone_internal_id}>
+                  <Link
+                    to={"/farm/" + farmId + "/zone/" + zone.zone_internal_id}
+                  >
                     <p className="zone-gridview-cars-header">{zone.name}</p>
                     <p className="label-white">Area: {zone.farmArea} sqft.</p>
                   </Link>
@@ -1038,22 +1035,21 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     );
   };
 
-
   const renderFarmArea = () => {
-    const {name,farmArea} = farmDashboardInfoList;
+    const { name, farmArea } = farmDashboardInfoList;
     return (
-    <>
-    {name && farmArea && (
-      <div>
-    <p className="section-title">
-        Farm Name : <span>{name}</span>
-      </p> 
-      <p className="section-title">
-        Farm Area: <span>{farmArea}</span>
-      </p>
-      </div>
-    )}
-    </>
+      <>
+        {name && farmArea && (
+          <div>
+            <p className="section-title">
+              Farm Name : <span>{name}</span>
+            </p>
+            <p className="section-title">
+              Farm Area: <span>{farmArea}</span>
+            </p>
+          </div>
+        )}
+      </>
     );
   };
 
@@ -1159,8 +1155,7 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
           <span>{farmDashboardInfoList?.nutrientdilutionRatio}</span>
         </p>
         <p className="section-title">
-          Type Of Nutrients :
-          <span>{farmDashboardInfoList?.nutrientsType}</span>
+          Type Of Nutrients :<span>{farmDashboardInfoList?.nutrientsType}</span>
         </p>
       </>
     );
@@ -1220,63 +1215,63 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     );
   };
 
-//   const renderFarmDashboardSensorData = () => {
-//     console.log("farmDashboardZoneSensorList", farmDashboardZoneSensorList);
-//     const { data } = farmDashboardZoneSensorList || {};
-//     if (!data || !data[0] || !data[0].payload) {
-//       return null;
-//     }
-//     const sensorData = data[0].payload;
-//     return (
-//       <Grid item xs={12} sm={12} md={12}>
-//       <p className="section-title">Sensors Information </p>
-//       {sensorData && (
-//         <p>
-//           Last Updated :{" "}
-//           {moment(new Date(farmDashboardZoneSensorList?.created_on
-// )).format("MMMM Do YYYY hh:mm:ss A")}
-//         </p>
-//       )}
-//       <Paper className="life-cycle-details-card life-cycle-spacing ">
-//         <Table size="small" aria-label="a dense table">
-//           <TableHead className="table-header-row">
-//             <TableRow>
-//               <TableCell className="label-custom">
-//                 <b>Parameter</b>
-//               </TableCell>
-//               <TableCell className="label-custom">
-//                 <b>Value</b>
-//               </TableCell>
-//               <TableCell className="label-custom">
-//               </TableCell>
-//             </TableRow>
-//           </TableHead>
-//           <TableBody>
-//             {Object.entries(sensorData).map(([key, value]) => {
-//               return (
-//                 <TableRow
-//                   key={key}
-//                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-//                 >
-//                   <TableCell className="label-custom" align="left">
-//                     {key}
-//                   </TableCell>
-//                   <TableCell className="table-header" align="left">
-//                     <b>{value}</b>
-//                   </TableCell>
-//                   <TableCell className="table-header" align="left">
-//                     {value.value} <b>{value.unit}</b>
-//                   </TableCell>
-//                 </TableRow>
-//               );
-//             })}
-//           </TableBody>
-//         </Table>
-//       </Paper>
-//     </Grid>
-//       );
+  //   const renderFarmDashboardSensorData = () => {
+  //     console.log("farmDashboardZoneSensorList", farmDashboardZoneSensorList);
+  //     const { data } = farmDashboardZoneSensorList || {};
+  //     if (!data || !data[0] || !data[0].payload) {
+  //       return null;
+  //     }
+  //     const sensorData = data[0].payload;
+  //     return (
+  //       <Grid item xs={12} sm={12} md={12}>
+  //       <p className="section-title">Sensors Information </p>
+  //       {sensorData && (
+  //         <p>
+  //           Last Updated :{" "}
+  //           {moment(new Date(farmDashboardZoneSensorList?.created_on
+  // )).format("MMMM Do YYYY hh:mm:ss A")}
+  //         </p>
+  //       )}
+  //       <Paper className="life-cycle-details-card life-cycle-spacing ">
+  //         <Table size="small" aria-label="a dense table">
+  //           <TableHead className="table-header-row">
+  //             <TableRow>
+  //               <TableCell className="label-custom">
+  //                 <b>Parameter</b>
+  //               </TableCell>
+  //               <TableCell className="label-custom">
+  //                 <b>Value</b>
+  //               </TableCell>
+  //               <TableCell className="label-custom">
+  //               </TableCell>
+  //             </TableRow>
+  //           </TableHead>
+  //           <TableBody>
+  //             {Object.entries(sensorData).map(([key, value]) => {
+  //               return (
+  //                 <TableRow
+  //                   key={key}
+  //                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+  //                 >
+  //                   <TableCell className="label-custom" align="left">
+  //                     {key}
+  //                   </TableCell>
+  //                   <TableCell className="table-header" align="left">
+  //                     <b>{value}</b>
+  //                   </TableCell>
+  //                   <TableCell className="table-header" align="left">
+  //                     {value.value} <b>{value.unit}</b>
+  //                   </TableCell>
+  //                 </TableRow>
+  //               );
+  //             })}
+  //           </TableBody>
+  //         </Table>
+  //       </Paper>
+  //     </Grid>
+  //       );
 
-//   }
+  //   }
 
   const rendeLattestSensorDataByID = () => {
     const { data } = farmDashboardZoneLattestSensorList || {};
@@ -1286,69 +1281,67 @@ const {length:zoneSensorLattestDataLength} = zoneDashboardZoneSensorList || [];
     const sensorData = data[0].payload;
     return (
       <Grid item xs={12} sm={12} md={12}>
-      <p className="section-title">  Senor Information </p>
-      {sensorData && (
-        <p>
-          Last Updated :{" "}
-          {moment(new Date(farmDashboardZoneLattestSensorList?.created_on
-)).format("MMMM Do YYYY hh:mm:ss A")}
-        </p>
-      )}
-      <Paper className="life-cycle-details-card life-cycle-spacing ">
-        <Table size="small" aria-label="a dense table">
-          <TableHead className="table-header-row">
-            <TableRow>
-              <TableCell className="label-custom">
-                <b>Parameter</b>
-              </TableCell>
-              <TableCell className="label-custom">
-                <b>Value</b>
-              </TableCell>
-              <TableCell className="label-custom">
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {Object.entries(sensorData).map(([key, value]) => {
-              return (
-                <TableRow
-                  key={key}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell className="label-custom" align="left">
-                    {key}
-                  </TableCell>
-                  <TableCell className="table-header" align="left">
-                    <b>{value}</b>
-                  </TableCell>
-                  <TableCell className="table-header" align="left">
-                    {value.value} <b>{value.unit}</b>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </Paper>
-    </Grid>
-      );
-  }
+        <p className="section-title"> Senor Information </p>
+        {sensorData && (
+          <p>
+            Last Updated :{" "}
+            {moment(
+              new Date(farmDashboardZoneLattestSensorList?.created_on)
+            ).format("MMMM Do YYYY hh:mm:ss A")}
+          </p>
+        )}
+        <Paper className="life-cycle-details-card life-cycle-spacing ">
+          <Table size="small" aria-label="a dense table">
+            <TableHead className="table-header-row">
+              <TableRow>
+                <TableCell className="label-custom">
+                  <b>Parameter</b>
+                </TableCell>
+                <TableCell className="label-custom">
+                  <b>Value</b>
+                </TableCell>
+                <TableCell className="label-custom"></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {Object.entries(sensorData).map(([key, value]) => {
+                return (
+                  <TableRow
+                    key={key}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell className="label-custom" align="left">
+                      {key}
+                    </TableCell>
+                    <TableCell className="table-header" align="left">
+                      <b>{value}</b>
+                    </TableCell>
+                    <TableCell className="table-header" align="left">
+                      {value.value} <b>{value.unit}</b>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </Paper>
+      </Grid>
+    );
+  };
 
-const handleSensorLattestDataChange = (event, newZonelattesPlatform) =>{
+  const handleSensorLattestDataChange = (event, newZonelattesPlatform) => {
     const zoneInterId = newZonelattesPlatform;
     setSelectedSensor(newZonelattesPlatform);
     fetchDashboardLattestSensors(zoneInterId);
-}
+  };
 
+  const renderFarmSensorData = () => {
+    const zoneInformation = farmDashboardAllZoneDetailsList || "";
 
-
-const renderFarmSensorData = () => {
-  const zoneInformation = farmDashboardAllZoneDetailsList ||"";    
-
-  return (
-        <>
+    return (
+      <>
         <Grid container spacing={2}>
-   <Grid item xs={12} sm={12} md={12}>
+          <Grid item xs={12} sm={12} md={12}>
             <ToggleButtonGroup
               value={selectedSensorPlatform}
               exclusive
@@ -1361,16 +1354,21 @@ const renderFarmSensorData = () => {
                   value={platform.name}
                   style={{
                     backgroundColor:
-                    selectedSensorPlatform === platform.name ? "green" : undefined,
-                      color: selectedSensorPlatform === platform.name ? "white" : "black",
+                      selectedSensorPlatform === platform.name
+                        ? "green"
+                        : undefined,
+                    color:
+                      selectedSensorPlatform === platform.name
+                        ? "white"
+                        : "black",
                   }}
                 >
                   {platform.name}
                 </ToggleButton>
               ))}
             </ToggleButtonGroup>
-            </Grid>
-            <Grid item xs={12} sm={12} md={12}>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
             <ToggleButtonGroup
               value={selectedSensor}
               exclusive
@@ -1383,22 +1381,28 @@ const renderFarmSensorData = () => {
                   value={platform.sensorId}
                   style={{
                     backgroundColor:
-                    selectedSensor === platform.sensorId ? "green" : undefined,
-                      color: selectedSensor === platform.sensorId ? "white" : "black",
+                      selectedSensor === platform.sensorId
+                        ? "green"
+                        : undefined,
+                    color:
+                      selectedSensor === platform.sensorId ? "white" : "black",
                   }}
                 >
                   {platform.sensorId}
                 </ToggleButton>
               ))}
             </ToggleButtonGroup>
-            </Grid>
-            <Grid item xs={12} sm={12} md={12}>
-              {(selectedSensor  && zoneDashboardZoneSensorList && zoneDashboardZoneSensorList.length > 0) && rendeLattestSensorDataByID()}
-            </Grid>
-            </Grid>
-        </>
-      )
-    }
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            {selectedSensor &&
+              zoneDashboardZoneSensorList &&
+              zoneDashboardZoneSensorList.length > 0 &&
+              rendeLattestSensorDataByID()}
+          </Grid>
+        </Grid>
+      </>
+    );
+  };
   let totalFarmArea = 0;
   farmDashboardZoneList?.zoneInformation?.forEach(function (zone) {
     totalFarmArea += parseInt(zone.farmArea);
@@ -1438,11 +1442,19 @@ const renderFarmSensorData = () => {
       {isDashboardInfoListLoading && <Loader title=" Fecting Farm details" />}
       {isTaskScheduleTaskLoading && <Loader title="Adding Tasks" />}
       {isFarmTaskCommentLoading && <Loader title="Adding Comment" />}
-      {isDashboardHarvestListLoading && <Loader title="Fetching Harvest Details" />}
+      {isDashboardHarvestListLoading && (
+        <Loader title="Fetching Harvest Details" />
+      )}
       {/* {isFarmDashboardZoneSensorLoading && <Loader title="Fetching Farm Sensor Data" />} */}
-      {isZoneDashboardZoneSensorLoading && <Loader title="Fetching Sensor Data" />}
-      {isFarmDashboardZoneLattestSensorLoading && <Loader title="Fetching Sensors Information" />}
-      {isFarmDashboardAllZoneDetailsLoading && <Loader title="Fetching Zone Details" />}
+      {isZoneDashboardZoneSensorLoading && (
+        <Loader title="Fetching Sensor Data" />
+      )}
+      {isFarmDashboardZoneLattestSensorLoading && (
+        <Loader title="Fetching Sensors Information" />
+      )}
+      {isFarmDashboardAllZoneDetailsLoading && (
+        <Loader title="Fetching Zone Details" />
+      )}
       <div className="page-container">
         <Grid container spacing={2}>
           {renderFarmSummaryInfo()}
@@ -1453,7 +1465,7 @@ const renderFarmSensorData = () => {
                   onChange={handleTabChange}
                   aria-label="lab API tabs example"
                 >
-                <Tab label="Sensor Data " value="1" />
+                  <Tab label="Sensor Data " value="1" />
                   <Tab label="Zone" value="2" />
                   <Tab label="Crop Schedules" value="3" />
                   <Tab label="Task Schedules" value="4" />
@@ -1472,12 +1484,11 @@ const renderFarmSensorData = () => {
               <TabPanel value="3">{renderCropSchedules()}</TabPanel>
               <TabPanel value="4">{renderTaskSchedules()}</TabPanel>
               <TabPanel value="5">
-              <Grid container spacing={2}>
-                {renderReportdDetails()}
+                <Grid container spacing={2}>
+                  {renderReportdDetails()}
                 </Grid>
-                </TabPanel>
+              </TabPanel>
               <TabPanel value="6">{renderFarmInfo()}</TabPanel>
-
             </Grid>
           </TabContext>
         </Grid>
@@ -1510,7 +1521,7 @@ const renderFarmSensorData = () => {
             backdrop="static"
             keyboard={false}
             onBackdropClick={null}
-                    />
+          />
         )}
         {isDeleteModelOpen && (
           <ConfirmDialogBox

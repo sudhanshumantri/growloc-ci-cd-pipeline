@@ -251,6 +251,7 @@ const zoneMenuItems = [
     from: "crops",
     action: "view",
   },
+  
 
   // {
   //   title: "Crop",
@@ -288,7 +289,7 @@ const zoneMenuItems = [
     icon: CropsLifecycle,
     isChildToFarmId: true,
     navigation: "/lifecycle",
-      link: "/lifecycle",
+    link: "/lifecycle",
     css: { borderBottom: "1px solid white" },
     isAuthRequired: true,
     from: "crops",
@@ -321,6 +322,7 @@ const zoneMenuItems = [
     icon: Tasks,
     link: "/task",
     css: { borderBottom: "1px solid white" },
+    
   },
   {
     title: "Water Management",

@@ -168,9 +168,8 @@ export default function ZoneDashboard({
     }
   };
   const navigate = useNavigate();
-
   const handleBackButton = () => {
-    navigate(-1);
+    navigate(`/farm/${farmId}/dashboard`);
   };
   let showBackButton = [
     {
