@@ -141,6 +141,8 @@ export default function FarmDashboard({
   const [selectedSensorPlatform, setSelectedSensorPlatform] = useState(null);
   const [selectedSensor, setSelectedSensor] = useState(null);
 
+  const [activeStep, setActiveStep] = useState(0);
+
   useEffect(() => {
     handlePlatformChange(null, selectedPlatform);
   }, []);
@@ -185,7 +187,7 @@ export default function FarmDashboard({
 
   useEffect(() => {
     if (zoneInformation && zoneInformation.length > 0) {
-      setSelectedSensorPlatform(zoneInformation[0].name);
+      setActiveStep(zoneInformation[0].name);
     }
   }, [zoneInfoLength]);
 
@@ -271,17 +273,6 @@ export default function FarmDashboard({
         setSelectedComponent(null);
         break;
     }
-  };
-  const handleSensorPlatformChange = (event, newZonePlatform) => {
-    const zoneInformation = farmDashboardAllZoneDetailsList;
-    setSelectedSensorPlatform(newZonePlatform);
-    setSelectedSensor({});
-    const selectedZone = zoneInformation?.find(
-      (zone) => zone.name === newZonePlatform
-    );
-    const zoneInterId = selectedZone.zone_internal_id;
-    // fetchFarmDashboardZoneSensor({ id: selectedZone.zone_internal_id });
-    fetchZoneDashboardZoneSensors(zoneInterId);
   };
 
   const renderMonthlyHarvestBreakup = () => {
@@ -766,28 +757,27 @@ export default function FarmDashboard({
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
-          <ToggleButtonGroup
-            value={selectedPlatform}
-            exclusive
-            onChange={handlePlatformChange}
-            aria-label="Platform"
-            sx={{ color: "balck" }}
-          >
-            {TOGGLE_DATA.map((platform) => (
-              <ToggleButton
-                key={platform.value}
-                value={platform.value}
-                style={{
-                  backgroundColor:
-                    selectedPlatform === platform.value ? "green" : undefined,
-                  color:
-                    selectedPlatform === platform.value ? "white" : "black",
-                }}
-              >
-                {platform.label}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
+          <TabContext value={selectedPlatform}>
+            <TabList
+              onChange={handlePlatformChange}
+              sx={{
+                ".Mui-selected": {
+                  color: "green !important",
+                },
+                "& .MuiTabs-indicator": {
+                  backgroundColor: "green",
+                },
+              }}
+            >
+              {(TOGGLE_DATA || []).map((platform, index) => (
+                <Tab
+                  key={platform.value}
+                  label={platform.value}
+                  value={platform.value}
+                />
+              ))}
+            </TabList>
+          </TabContext>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           {renderPlatformComponent()}
@@ -1215,63 +1205,6 @@ export default function FarmDashboard({
     );
   };
 
-  //   const renderFarmDashboardSensorData = () => {
-  //     console.log("farmDashboardZoneSensorList", farmDashboardZoneSensorList);
-  //     const { data } = farmDashboardZoneSensorList || {};
-  //     if (!data || !data[0] || !data[0].payload) {
-  //       return null;
-  //     }
-  //     const sensorData = data[0].payload;
-  //     return (
-  //       <Grid item xs={12} sm={12} md={12}>
-  //       <p className="section-title">Sensors Information </p>
-  //       {sensorData && (
-  //         <p>
-  //           Last Updated :{" "}
-  //           {moment(new Date(farmDashboardZoneSensorList?.created_on
-  // )).format("MMMM Do YYYY hh:mm:ss A")}
-  //         </p>
-  //       )}
-  //       <Paper className="life-cycle-details-card life-cycle-spacing ">
-  //         <Table size="small" aria-label="a dense table">
-  //           <TableHead className="table-header-row">
-  //             <TableRow>
-  //               <TableCell className="label-custom">
-  //                 <b>Parameter</b>
-  //               </TableCell>
-  //               <TableCell className="label-custom">
-  //                 <b>Value</b>
-  //               </TableCell>
-  //               <TableCell className="label-custom">
-  //               </TableCell>
-  //             </TableRow>
-  //           </TableHead>
-  //           <TableBody>
-  //             {Object.entries(sensorData).map(([key, value]) => {
-  //               return (
-  //                 <TableRow
-  //                   key={key}
-  //                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-  //                 >
-  //                   <TableCell className="label-custom" align="left">
-  //                     {key}
-  //                   </TableCell>
-  //                   <TableCell className="table-header" align="left">
-  //                     <b>{value}</b>
-  //                   </TableCell>
-  //                   <TableCell className="table-header" align="left">
-  //                     {value.value} <b>{value.unit}</b>
-  //                   </TableCell>
-  //                 </TableRow>
-  //               );
-  //             })}
-  //           </TableBody>
-  //         </Table>
-  //       </Paper>
-  //     </Grid>
-  //       );
-
-  //   }
 
   const rendeLattestSensorDataByID = () => {
     const { data } = farmDashboardZoneLattestSensorList || {};
@@ -1329,10 +1262,25 @@ export default function FarmDashboard({
     );
   };
 
-  const handleSensorLattestDataChange = (event, newZonelattesPlatform) => {
-    const zoneInterId = newZonelattesPlatform;
-    setSelectedSensor(newZonelattesPlatform);
+  const handleSensorLattestDataChange = (event, newValue) => {
+    console.log("Selected sensor:", newValue);
+    const zoneInterId = newValue;
+    setSelectedSensor(newValue);
     fetchDashboardLattestSensors(zoneInterId);
+  };
+
+  const handleZoneNAmeTabChange = (event, newValue) => {
+    setActiveStep(newValue);
+    const zoneInformation = farmDashboardAllZoneDetailsList;
+    console.log(zoneInformation, "zoneInformation");
+    setSelectedSensorPlatform(newValue);
+    // setSelectedSensor({});
+    const selectedZone = zoneInformation?.find(
+      (zone) => zone.name === newValue
+    );
+    console.log(selectedZone, "selectedZone");
+    const zoneInterId = selectedZone.zone_internal_id;
+    fetchZoneDashboardZoneSensors(zoneInterId);
   };
 
   const renderFarmSensorData = () => {
@@ -1342,34 +1290,66 @@ export default function FarmDashboard({
       <>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={12}>
-            <ToggleButtonGroup
-              value={selectedSensorPlatform}
-              exclusive
-              onChange={handleSensorPlatformChange}
-              aria-label="Platform"
-            >
-              {zoneInformation?.map((platform) => (
-                <ToggleButton
-                  key={platform.name}
-                  value={platform.name}
-                  style={{
-                    backgroundColor:
-                      selectedSensorPlatform === platform.name
-                        ? "green"
-                        : undefined,
-                    color:
-                      selectedSensorPlatform === platform.name
-                        ? "white"
-                        : "black",
-                  }}
-                >
-                  {platform.name}
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup>
+            
+            <TabContext value={activeStep}>
+              <TabList
+                onChange={handleZoneNAmeTabChange}
+                sx={{
+                  ".Mui-selected": {
+                    color: "green !important",
+                  },
+                  "& .MuiTabs-indicator": {
+                    backgroundColor: "green",
+                  },
+                }}
+              >
+                {zoneInformation?.map((platform, index) => (
+                  <Tab
+                    key={platform.name}
+                    label={platform.name}
+                    value={platform.name}
+                  />
+                ))}
+              </TabList>
+            </TabContext>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
-            <ToggleButtonGroup
+            <TabContext
+              value={selectedSensor}
+              //
+              aria-label="Sensor"
+              variant="scrollable"
+              scrollButtons="auto"
+            >
+              <TabList
+                onChange={handleSensorLattestDataChange}
+                sx={{
+                  ".Mui-selected": {
+                    color: "green !important",
+                  },
+                  "& .MuiTabs-indicator": {
+                    backgroundColor: "green",
+                  },
+                }}
+              >
+                {(zoneDashboardZoneSensorList || []).map((sensor) => (
+                  <Tab
+                    key={sensor.sensorId}
+                    value={sensor.sensorId}
+                    label={sensor.sensorId}
+                  />
+                ))}
+              </TabList>
+            </TabContext>
+          </Grid>
+          <Grid item xs={12}>
+            {selectedSensor &&
+              zoneDashboardZoneSensorList &&
+              zoneDashboardZoneSensorList.length > 0 &&
+              rendeLattestSensorDataByID()}
+          </Grid>
+
+          {/* <ToggleButtonGroup
               value={selectedSensor}
               exclusive
               onChange={handleSensorLattestDataChange}
@@ -1391,14 +1371,14 @@ export default function FarmDashboard({
                   {platform.sensorId}
                 </ToggleButton>
               ))}
-            </ToggleButtonGroup>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
+            </ToggleButtonGroup> */}
+          {/* </Grid> */}
+          {/* <Grid item xs={12} sm={12} md={12}>
             {selectedSensor &&
               zoneDashboardZoneSensorList &&
               zoneDashboardZoneSensorList.length > 0 &&
               rendeLattestSensorDataByID()}
-          </Grid>
+          </Grid> */}
         </Grid>
       </>
     );
@@ -1464,6 +1444,14 @@ export default function FarmDashboard({
                 <TabList
                   onChange={handleTabChange}
                   aria-label="lab API tabs example"
+                  sx={{
+                    ".Mui-selected": {
+                      color: "green !important",
+                    },
+                    "& .MuiTabs-indicator": {
+                      backgroundColor: "green",
+                    },
+                  }}
                 >
                   <Tab label="Sensor Data " value="1" />
                   <Tab label="Zone" value="2" />
