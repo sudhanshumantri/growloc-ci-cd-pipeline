@@ -94,7 +94,8 @@ export default function CropLifeCycleDetails({
   }, [pusherData]);
 
   const handleBackButton = () => {
-    navigate(-1);
+    // navigate(-1);
+    navigate(`/farm/${farmId}/zone/${zoneId}/lifecycle`)
   };
 
   let showBackButton = [
@@ -318,12 +319,7 @@ export default function CropLifeCycleDetails({
               handler: handleScheduleHarvestingModalToggle,
             });
           }
-        } else {
-          const completedDate = new Date(cropDetails.completed_date);
-          const currentDate = new Date();
-          const timeDiff = currentDate.getTime() - completedDate.getTime();
-          const hoursDiff = timeDiff / (1000 * 3600);
-          if(!cropDetails.completed_date || hoursDiff < 24) {
+        } else if (!cropDetails.completed_date || (new Date() - new Date(cropDetails.completed_date)) / (1000 * 3600) < 24) {
           buttonArray.push({
             label: "Dispose",
             isAuthRequired: true,
@@ -332,7 +328,22 @@ export default function CropLifeCycleDetails({
             handler: handleModalToggle,
           });
         }
-        }
+
+        // else {
+        //   const completedDate = new Date(cropDetails.completed_date);
+        //   const currentDate = new Date();
+        //   const timeDiff = currentDate.getTime() - completedDate.getTime();
+        //   const hoursDiff = timeDiff / (1000 * 3600);
+        //   if(!cropDetails.completed_date || hoursDiff < 24) {
+        //   buttonArray.push({
+        //     label: "Dispose",
+        //     isAuthRequired: true,
+        //     from: "lifeCycleDetails",
+        //     action: "create",
+        //     handler: handleModalToggle,
+        //   });
+        // }
+        // }
       }
     }
   } 
