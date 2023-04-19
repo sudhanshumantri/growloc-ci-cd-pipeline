@@ -1,7 +1,6 @@
-
 import  React, {useState} from "react";
 import { styled, alpha } from "@mui/material/styles";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import MuiAppBar, { AppBarProps as MuiAppBarProps, } from "@mui/material/AppBar";
 import {
   Box,
   Toolbar,
@@ -22,6 +21,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Link, useNavigate } from "react-router-dom";
 import { zoneMenuItems } from "../sidebar/config";
+import MenuIcon from '@mui/icons-material/Menu';
+
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open, drawerwidth }) => ({
@@ -39,12 +40,18 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
+  // [theme.breakpoints.down("sm")]: {
+  //   width: "100% !important",
+  //   marginLeft:"0 important"
+  // },
 }));
+
 export default function TopHeader({
   open,
   drawerWidth,
   loginObject,
   logout,
+  toggleDrawer
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
@@ -152,6 +159,18 @@ export default function TopHeader({
         <Container maxWidth="xl">
           <Toolbar>
             {/* <ChevronRightIcon sx={{ mr: 1, display: {sm: 'none'} }} onClick={() => toggleDrawer()} /> */}
+            {/* <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={()=>toggleDrawer()}
+            sx={{
+              marginRight: 5,
+              ...(open && { display: 'none' }),
+            }}
+          >
+            <MenuIcon />
+          </IconButton> */}
             <Box
               sx={{
                 flex: 1,
@@ -208,4 +227,3 @@ export default function TopHeader({
     );
   }
 }
-

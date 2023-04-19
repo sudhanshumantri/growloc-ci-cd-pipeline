@@ -26,3 +26,11 @@
 .error-message {
     color: red;
 }
+/* @media (min-width: 600px){
+    .css-1qti2qw-MuiPaper-root-MuiGrid-root{
+        max-width: 100%!important;
+        flex-basis: 100%!important;
+    }
+}  */
+    
+

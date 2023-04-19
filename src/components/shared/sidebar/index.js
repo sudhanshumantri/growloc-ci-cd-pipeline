@@ -10,6 +10,7 @@ import {
   Collapse,
   ListItem,
   ListItemIcon,
+  IconButton
 } from "@mui/material/";
 import MuiDrawer from "@mui/material/Drawer";
 import ExpandLess from "@mui/icons-material/ExpandLess";
@@ -23,6 +24,8 @@ const ASSETS_URL = "../../../../public/assets/";
 import logo from "../../../../public/assets/logo.png";
 import "./style.css";
 import AuthOutlet from "../authoutlet";
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 const drawerWidth = 300;
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -32,7 +35,6 @@ const openedMixin = (theme) => ({
   }),
   overflowX: "hidden",
   backgroundColor: "#517223",
-  // backgroundColor: '#e9e9e9',
 });
 
 const closedMixin = (theme) => ({
@@ -45,7 +47,6 @@ const closedMixin = (theme) => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(9)} + -13px)`,
     backgroundColor: "#517223",
-    // backgroundColor: '#e9e9e9',
   },
 });
 
@@ -86,6 +87,10 @@ export default function SideBar({ router, logout, loginObject }) {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   const { location } = router;
   useEffect(() => {
     if (location?.pathname) {
@@ -103,9 +108,6 @@ export default function SideBar({ router, logout, loginObject }) {
     toggleSubmenu((prevState) => ({ ...prevState, [id]: !prevState[id] }));
   };
 
-  const logoutHandler = () => {
-    logout();
-  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -115,11 +117,30 @@ export default function SideBar({ router, logout, loginObject }) {
         drawerWidth={drawerWidth}
         loginObject={loginObject}
         logout ={logout}
+        toggleDrawer={toggleDrawer}
       />
       <Drawer variant="permanent" open={open} sx={{ zIndex: 1 }}>
-        <DrawerHeader sx={{ background: "#517223" }}>
+        <DrawerHeader sx={{ background: "#517223", 
+ }}>
           <div className="drawer-header-logo">
             <img src={logo} onClick={() => this.props.router.navigate("/")} />
+            <IconButton onClick={toggleDrawer} sx={{
+      display: {
+        lg: "none",
+        md: "none",
+        xs: "block",
+      },
+      "@media (min-width: 600px)": {
+        width:"100%"
+      },
+    }}
+
+>
+{/* {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />} */}
+
+    {/* {open && <ChevronLeftIcon /> } */}
+  </IconButton>
+
           </div>
         </DrawerHeader>
         <List
@@ -199,12 +220,7 @@ export default function SideBar({ router, logout, loginObject }) {
               </React.Fragment>
             );
           })}
-          {/* <ListItem component={Link} onClick={() => logoutHandler()}>
-            <ListItemIcon className="darwer-icon">
-              <LogoutIcon />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItem> */}
+          
         </List>
       </Drawer>
     </Box>

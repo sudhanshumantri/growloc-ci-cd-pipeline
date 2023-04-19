@@ -1,3 +1,5 @@
+
+
 import React, { useState} from "react";
 import "./styles.css";
 import {
@@ -64,6 +66,10 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "100% 100vh",
+        '@media (max-width: 960px)': {
+           backgroundImage: 'none',
+          backgroundColor: "#E5E4D7",
+        }
       }}
     >
       <CssBaseline />
@@ -72,7 +78,7 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
         xs={false}
         sm={4}
         md={6}
-        display="flex"
+        display={{ xs: "none", sm: "none", md: "flex" }}
         alignItems={"center"}
         justifyContent="center"
       >
@@ -81,16 +87,21 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
       <Grid
         item
         xs={12}
-        sm={8}
+        sm={12}
         md={5}
         component={Paper}
         elevation={0}
         square
+        justifyContent="center"
+        alignItems="center"
         sx={{
           backgroundColor: "#E5E4D7",
           height: "75%",
           marginTop: "80px",
           borderRadius: "10px",
+          justifyContent: "center",
+          alignItems: "center",
+        
         }}
       >
         <Box
@@ -100,6 +111,10 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            '@media (max-width: 960px)': {
+              maxWidth:"100% !important"
+     }
+  
           }}
         >
           <Avatar sx={{ bgcolor: "#517223" }}>
