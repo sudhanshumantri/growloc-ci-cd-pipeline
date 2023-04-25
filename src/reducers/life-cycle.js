@@ -43,7 +43,6 @@ export default function cropLifecycleReducer(
   action = {}
 ) {
   let lifecycleDetails = state.toJS()["lifecycleDetails"];
-  console.log(lifecycleDetails,"lifecycleDetails");
   switch (action.type) {
 
     case FETCH_CROP_LIFECYCLE_REQUEST:
@@ -138,7 +137,6 @@ export default function cropLifecycleReducer(
         .set("isUpdateLifeCycleDetailsLoading", true)
         .set("isUpdateLifeCycleDetailsError", null);
     case UPDATE_CROP_LIFECYCLE_DETAILS_SUCCESS:
-      console.log(action.data,"action.data");
       const { cropDetails } = lifecycleDetails;
       const newCropDetails= { ...cropDetails, ...action.data };
       return state

@@ -127,12 +127,13 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
         };
         updateUser(payload);
       } else {
-        console.log("data=====",data);
         addUser(data);
       }
       handleModalToggle();
     };
-    const handleModalToggle = () => {
+    const handleModalToggle = (event,reason) => {
+      if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
       setOpen(!open);
       setUserInfo({});
     };

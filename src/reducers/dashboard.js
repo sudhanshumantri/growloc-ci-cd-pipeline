@@ -356,7 +356,6 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
         .set("farmDashboardZoneSensorList", {})
         .set("farmDashboardZoneSensorListError", null);
     case FETCH_FARM_DASHBOARD_ZONE_SENSOR_DATA_SUCCESS:
-      console.log("FETCH_FARM_DASHBOARD_ZONE_SENSOR_DATA_SUCCESS", action.data);
       return state
         .set("isFarmDashboardZoneSensorLoading", false)
         .set("farmDashboardZoneSensorList", action.data)

@@ -65,6 +65,7 @@ import { ErrorPage } from "../../errorpage";
 import { ForgotPassword } from "../../forgotpassword";
 import CapacityEfficiency from "../../reports/capacityefficiency";
 import Energyfficiency from "../../reports/energyefficiency";
+
 const { injectReducer, injectSagas } = getAsyncInjectors(store);
 injectReducer("crops", cropsReducer);
 injectReducer("login", loginReducer);

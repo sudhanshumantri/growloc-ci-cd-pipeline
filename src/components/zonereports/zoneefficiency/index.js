@@ -81,7 +81,6 @@ export default function ZoneEfficiency({
               }
               return "";
             });
-            console.log(remainingLabels);
             return remainingLabels;
           },
           callback: function (value, index, values) {
@@ -124,7 +123,7 @@ export default function ZoneEfficiency({
   };
 
   useEffect(() => {
-    fetchZoneReports({ id:zoneId,duration });
+    fetchZoneReports({ id:zoneId,duration:parseInt(duration) });
   }, []);
   useEffect(() => {
     const labels = [];

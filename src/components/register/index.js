@@ -104,6 +104,10 @@ export default function Resgister({ registerRequest, isLoading }) {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           backgroundSize: "100% 100vh",
+          '@media (max-width: 960px)': {
+            backgroundImage: 'none',
+           backgroundColor: "#E5E4D7",
+         }
         }}
       >
         <CssBaseline />
@@ -112,17 +116,18 @@ export default function Resgister({ registerRequest, isLoading }) {
           xs={false}
           sm={4}
           md={7}
-          display="flex"
+          // display="flex"
           flexDirection={"column"}
           alignItems={"center"}
           justifyContent="center"
+          display={{ xs: "none", sm: "none", md: "flex" }}
         >
           <img src={logo} />
         </Grid>
         <Grid
           item
           xs={12}
-          sm={8}
+          sm={12}
           md={4}
           component={Paper}
           elevation={6}
@@ -133,6 +138,8 @@ export default function Resgister({ registerRequest, isLoading }) {
             marginTop: "80px",
             borderRadius: "10px",
             overflowY: "scroll",
+            boxShadow: "none",
+
           }}
         >
           <Box

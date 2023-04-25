@@ -94,7 +94,8 @@ export default function CropLifeCycleDetails({
   }, [pusherData]);
 
   const handleBackButton = () => {
-    navigate(-1);
+    // navigate(-1);
+    navigate(`/farm/${farmId}/zone/${zoneId}/lifecycle`)
   };
 
   let showBackButton = [
@@ -129,14 +130,18 @@ export default function CropLifeCycleDetails({
     }
     handleTaskModalToggle();
   };
-  const handleModalToggle = () => {
+  const handleModalToggle = (event,reason) => {
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
     setOpen(!open);
   };
-  const handleTaskModalToggle = () => {
+  const handleTaskModalToggle = (event,reason) => {
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
     setTaskModal(!openTaskModal);
   };
 
-  const handleScheduleHarvestingModalToggle = () => {
+  const handleScheduleHarvestingModalToggle = (event,reason) => {
     if (!openScheduleHarvestingModal) {
       setHarvestingSchedules(
         lifecycleDetails.cropDetails.FarmCropLifecycleSchedules &&
@@ -145,6 +150,8 @@ export default function CropLifeCycleDetails({
           : []
       );
     }
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
     setScheduleHarvestingModal(!openScheduleHarvestingModal);
   };
   const handleScheduleHarvestChange = (value) => {
@@ -177,7 +184,9 @@ export default function CropLifeCycleDetails({
     updateCropToLifecycleSchedule(scheduleHarvestingData);
     handleScheduleHarvestingModalToggle();
   };
-  const handleParametersInformationEditToggle = () => {
+  const handleParametersInformationEditToggle = (event,reason) => {
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
     setIsStageEditOpen(!isStageEditOpen);
   };
   const handleActiveStep = (id) => {
@@ -225,26 +234,20 @@ export default function CropLifeCycleDetails({
 
   const handleCompleteLifeCycle = () => {
     let { cropDetails} = lifecycleDetails;
-    console.log("cropDetails",cropDetails);
     let {id} = cropDetails;
-    console.log(id,"id");
       const paylad = {
         cropLifeCycleId: id,
         isComplete: true,
       }
-      console.log(paylad);
       updateCropToLifecycleDetails(paylad)
     }
     const handleUndoCompleteLifeCycle = () => {
       let { cropDetails} = lifecycleDetails;
-      console.log("cropDetails",cropDetails);
       let {id} = cropDetails;
-      console.log(id,"id");
         const paylad = {
           cropLifeCycleId: id,
           isComplete: false,
         }
-        console.log(paylad);
         updateCropToLifecycleDetails(paylad)
       }
   
@@ -316,12 +319,7 @@ export default function CropLifeCycleDetails({
               handler: handleScheduleHarvestingModalToggle,
             });
           }
-        } else {
-          const completedDate = new Date(cropDetails.completed_date);
-          const currentDate = new Date();
-          const timeDiff = currentDate.getTime() - completedDate.getTime();
-          const hoursDiff = timeDiff / (1000 * 3600);
-          if(!cropDetails.completed_date || hoursDiff < 24) {
+        } else if (!cropDetails.completed_date || (new Date() - new Date(cropDetails.completed_date)) / (1000 * 3600) < 24) {
           buttonArray.push({
             label: "Dispose",
             isAuthRequired: true,
@@ -330,7 +328,22 @@ export default function CropLifeCycleDetails({
             handler: handleModalToggle,
           });
         }
-        }
+
+        // else {
+        //   const completedDate = new Date(cropDetails.completed_date);
+        //   const currentDate = new Date();
+        //   const timeDiff = currentDate.getTime() - completedDate.getTime();
+        //   const hoursDiff = timeDiff / (1000 * 3600);
+        //   if(!cropDetails.completed_date || hoursDiff < 24) {
+        //   buttonArray.push({
+        //     label: "Dispose",
+        //     isAuthRequired: true,
+        //     from: "lifeCycleDetails",
+        //     action: "create",
+        //     handler: handleModalToggle,
+        //   });
+        // }
+        // }
       }
     }
   } 

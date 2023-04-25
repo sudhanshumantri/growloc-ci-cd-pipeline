@@ -80,7 +80,6 @@ export function* updateCropToLifecycleSchedule({ data }) {
 }
 
 export function* updateCropToLifecycleDetails({ data }) {
-    console.log("check=====saga",data);
     let responseData = yield call(callUpdateCropCycleDetails, data);
     if (responseData?.status == 200 && responseData.data.status) {
         yield put(updateCropToLifecycleDetailsSuccess(responseData.data.data));

@@ -29,7 +29,9 @@ export default function ManageItem({
   const [itemInfo, setItemInfo] = useState({});
   const navigate = useNavigate();
 
-  const handleModalToggle = () => {
+  const handleModalToggle = (event,reason) => {
+    if (reason && reason == "backdropClick" && "escapeKeyDown") 
+    return;
     setOpen(!open);
     setItemInfo({});
   };

@@ -353,7 +353,6 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
         .set("farmZoneSensorDataList", {})
         .set("farmZoneSensorDataListError", null);
     case FETCH_FARM_ZONE_SENSOR_DATA_SUCCESS:
-      console.log( action.data," action.data");
       return state
         .set("isFarmZoneSensorDataLoading", false)
         .set("farmZoneSensorDataList", action.data)

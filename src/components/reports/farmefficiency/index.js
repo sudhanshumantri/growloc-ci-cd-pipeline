@@ -78,7 +78,6 @@ export default function FarmEfficiency({
               }
               return "";
             });
-            console.log(remainingLabels);
             return remainingLabels;
           },
           callback: function (value, index, values) {
@@ -146,7 +145,6 @@ export default function FarmEfficiency({
       humidityValues.push(humidityValue);
       labels.push(createdOn);
     });
-
     const phChartData = {
       labels,
       datasets: [
