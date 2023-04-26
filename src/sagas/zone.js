@@ -34,6 +34,7 @@ import {
     fetchFarmZoneSensorDataSuccess,
     fetchFarmZoneSensorDataFailure
   } from "../actions/zone";
+import { addNotification } from "../components/shared/notification";
 
 export function* fetchFarmZoneList({ data }) {
   let responseData = yield call(callfetchFarmZoneDetails, data);
@@ -65,8 +66,10 @@ export function* fetchFarmZoneDashboardHarvestList({ data }) {
 export function* addFarmDashboardZoneTask({ data }) {
   let responseData = yield call(callAddFarmDashboardZoneTask, data);
   if (responseData?.status == 200 && responseData.data.status) {
+    addNotification("Task sucessfully created", 5000,true, "success");
     yield put(addFarmDashboardZoneTaskSuccess(responseData.data.data));
   } else {
+    addNotification("Something went wrong", 5000,true, "danger");
     yield put(addFarmDashboardZoneTaskFailure("Something went wrong"));
   }
 }

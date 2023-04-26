@@ -174,6 +174,7 @@ export default function dashboardReducer(state = INITIAL_STATE, action = {}) {
         user,
         comments: [],
       });
+      farmDashboardTaskList.tasks[taskRow].status = "In review";
       return state
         .set("isFarmTaskCommentLoading", false)
         .set("farmDashboardTaskList", farmDashboardTaskList)

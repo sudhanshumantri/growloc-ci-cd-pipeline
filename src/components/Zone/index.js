@@ -542,7 +542,9 @@ export default function ZoneDashboard({
   const rendeLattestSensorDataByID = () => {
     const { data } = farmDashboardZoneLattestSensorList || {};
     if (!data || !data[0] || !data[0].payload) {
-      return null;
+      return (
+        <span>No sensor data available</span>
+      )
     }
     const sensorData = data[0].payload;
     return (
@@ -599,33 +601,34 @@ export default function ZoneDashboard({
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
+         {(zoneDashboardZoneSensorList && zoneDashboardZoneSensorList.length)?
           <TabContext
-            value={
-              selectedSensor
-                ? selectedSensor.toString()
-                : zoneDashboardZoneSensorList[0]?.sensorId || ""
-            }
+          value={
+            selectedSensor
+              ? selectedSensor.toString()
+              : zoneDashboardZoneSensorList[0]?.sensorId || ""
+          }
+        >
+          <TabList
+            onChange={handleSensorLattestDataChange}
+            sx={{
+              ".Mui-selected": {
+                color: "green !important",
+              },
+              "& .MuiTabs-indicator": {
+                backgroundColor: "green",
+              },
+            }}
           >
-            <TabList
-              onChange={handleSensorLattestDataChange}
-              sx={{
-                ".Mui-selected": {
-                  color: "green !important",
-                },
-                "& .MuiTabs-indicator": {
-                  backgroundColor: "green",
-                },
-              }}
-            >
-              {(zoneDashboardZoneSensorList || []).map((platform, index) => (
-                <Tab
-                  key={platform.sensorId}
-                  label={platform.sensorId}
-                  value={platform.sensorId ? platform.sensorId : ""}
-                />
-              ))}
-            </TabList>
-          </TabContext>
+            {(zoneDashboardZoneSensorList || []).map((platform, index) => (
+              <Tab
+                key={platform.sensorId}
+                label={platform.sensorId}
+                value={platform.sensorId ? platform.sensorId : ""}
+              />
+            ))}
+          </TabList>
+        </TabContext>:<span>No sensor available</span>}
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           {selectedSensor && rendeLattestSensorDataByID()}
@@ -672,6 +675,7 @@ export default function ZoneDashboard({
       {isFarmDashboardZoneLattestSensorLoading && (
         <Loader title="Zone information Details" />
       )}
+      {isZoneDashboardZoneInfoLoading && <Loader title="Loading zone Info" />}
       <div className="page-container">
         <Grid container spacing={2}>
           {<ZoneHeaderInformation zoneDashboardZoneInfoList={zoneDashboardZoneInfoList}/>}
