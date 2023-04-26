@@ -71,7 +71,7 @@ export default function PageHeader({
             showBackButton.length > 0 &&
             renderBackButtonArray(showBackButton)}
         </div>
-        <Grid item xs={6} sm={6} md={6}>
+        <Grid item xs={6} sm={6} md={3}>
           <p className="page-section-title">
             {title}
             {subtitle && <span className="label-light">{subtitle}</span>}
@@ -80,7 +80,7 @@ export default function PageHeader({
         {/* <Grid item xs={1} sm={2} md={2} >
           
         </Grid> */}
-        <Grid item xs={6} sm={5} md={5} className="button-container">
+        <Grid item xs={6} sm={5} md={9} className="button-container">
           {headerDropwdown && (
             <Select
               // value={value} 

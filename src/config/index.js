@@ -2,8 +2,8 @@ import * as React from "react";
 
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 export const api = {
-host: 'https://growlock-backend.onrender.com/api/'
-      //  host: "http://localhost:4000/api/",
+//host: 'https://growlock-backend.onrender.com/api/'
+        host: "http://localhost:4000/api/",
 };
 export const WEEKDAYS = [
   { label: "S", value: "7" },
@@ -55,75 +55,75 @@ export const ROLE_BASED_ACCESS = {
     // key: role, value: access
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["view"],
-    ergonomists: ["view"],
+    agronomist: ["view"],
     supervisor: ["view"],
   },
 
   crops: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
-    ergonomists: ["view"],
+    agronomist: ["view"],
     supervisor: [],
   },
   lifeCycle: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
-    ergonomists: ["view"],
+    agronomist: ["view"],
     supervisor: [],
   },
   users: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create"],
-    ergonomists: ["view"],
+    agronomist: ["view"],
     supervisor: [],
   },
   farmItems: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
-    ergonomists: ["view"],
+    agronomist: ["view"],
     supervisor: [],
   },
   dashboard: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
-    ergonomists: ["view"],
+    agronomist: ["view"],
     supervisor: [],
   },
   lifeCycleDetails: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
-    ergonomists: ["view"],
+    agronomist: ["view"],
     supervisor: [],
   },
 
   reports: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
-    ergonomists: ["view"],
+    agronomist: ["view"],
     supervisor: [],
   },
   inventory: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
-    ergonomists: ["view"],
+    agronomist: ["view"],
     supervisor: [],
   },
   monitors: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
-    ergonomists: ["view"],
+    agronomist: ["view"],
     supervisor: [],
   },
   waterManagement: {
     farmowner: ["create", "edit", "delete", "view"],
     farmmanager: ["create", "edit", "delete", "view"],
-    ergonomists: ["view"],
+    agronomist: ["view"],
     supervisor: [],
   },
   task: {
     farmowner: [],
     farmmanager: [],
-    ergonomists: [],
+    agronomist: [],
     supervisor: ["view"],
   },
 

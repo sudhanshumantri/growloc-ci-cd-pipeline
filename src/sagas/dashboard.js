@@ -54,6 +54,7 @@ import {
   fetchDashboardAllZoneDetailsSuccess,
   fetchDashboardAllZoneDetailsFailure
 } from "../actions/dashboard";
+import { addNotification } from "../components/shared/notification";
 
 export function* fetchFarmDashboardHarvestList({ data }) {
   const {queryParams, ...remainingParams} = data;
@@ -68,8 +69,10 @@ export function* fetchFarmDashboardHarvestList({ data }) {
 export function* addTaskScheduleTask({ data }) {
   let responseData = yield call(callAddTaskScheduleTask, data);
   if (responseData?.status == 200 && responseData.data.status) {
+    addNotification("Task sucessfully created", 5000,true, "success");
     yield put(addTaskSheduleTaskSuccess(responseData.data.data));
   } else {
+    addNotification("Something went wrong", 5000,true, "danger");
     yield put(addTaskSheduleTaskFailure("Something went wrong"));
   }
 }

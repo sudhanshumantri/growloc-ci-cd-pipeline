@@ -216,6 +216,7 @@ export default function CropLifeCycleDetails({
         nextStageId: nextStageInforamtion ? nextStageInforamtion.id : null,
         isDispose: isHarvestStage ? true : false,
         isCompleted: isHarvestStage ? isComplete : false,
+        start_date: new Date(),
       };
       cropsLifecycleTransition(requestData);
       handleModalToggle();
@@ -688,8 +689,8 @@ export default function CropLifeCycleDetails({
             </p>
             <Divider />
             <p className="label-light">
-              <span className="label-custom">Duration: </span>
-              {selectedStageInformation.duration}
+              <span className="label-custom">Expected stage period: </span>
+              {selectedStageInformation.duration} days
             </p>
             <Divider />
           </div>

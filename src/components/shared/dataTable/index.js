@@ -62,7 +62,7 @@ function DataTable({ data }) {
         <TableHead className="table-header-row">
           <TableRow>
             {headers.map((header, index) => (
-              <TableCell key={index} className="table-header" align="left">
+              <TableCell key={index} className="table-header" align={header.align?header.align:"left"}>
                 {header.label}
               </TableCell>
             ))}
@@ -109,6 +109,7 @@ function DataTable({ data }) {
                             display: "flex",
                             flexDirection: "row",
                             alignItems: "center",
+                            justifyContent:"center"
                           }}
                         >
                           {renderButtonArray(header.buttonArray, row)}

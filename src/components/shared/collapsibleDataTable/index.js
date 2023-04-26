@@ -14,10 +14,12 @@ import {
   Chip,
   Badge,
   Modal,
+  Grid
 } from "@mui/material/";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { SEVERITY_LEVEL } from "../../../config";
 import Carousel from "react-material-ui-carousel";
 import "./style.css";
@@ -174,13 +176,25 @@ function Row({ row, handleCommentModalToggle }) {
         <TableCell className="table-header" align="left">
           {row.status}
         </TableCell>
-        <TableCell>
+        <TableCell align="center"sx={{width:"15%",paddingLeft:"0px",paddingRight:"0px"}}>
+         <Grid container sx={{display:"flex",justifyContent:"center",}}>
+          <Grid item>
+          <IconButton
+            title="Edit Task"
+            onClick={() => handleCommentModalToggle(row)}
+          >
+            <EditOutlinedIcon sx={{ color: "#517223" }} />,
+          </IconButton>
+          </Grid>
+          <Grid item>
           <IconButton
             title="Add New"
             onClick={() => handleCommentModalToggle(row)}
           >
             <AddCommentOutlinedIcon sx={{ color: "#517223" }} />,
           </IconButton>
+          </Grid>
+         </Grid>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -236,7 +250,7 @@ export default function CollapsibleTable({ data, handleCommentModalToggle }) {
                 {header.label}
               </TableCell>
             ))}
-            <TableCell>Comment</TableCell>
+            <TableCell align="left">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

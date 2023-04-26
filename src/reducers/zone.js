@@ -187,6 +187,7 @@ export default function zoneReducer(state = INITIAL_STATE, action = {}) {
         user,
         comments:[]
       });
+      zoneDashboardZoneTaskList.tasks[zoneTaskRow].status = "In review";
       return state
         .set("isFarmDashboardZoneCommetLoading", false)
         .set("zoneDashboardZoneTaskList", zoneDashboardZoneTaskList)

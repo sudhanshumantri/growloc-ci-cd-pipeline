@@ -211,14 +211,14 @@ export default function AddUsersModal({
                 <FormControlLabel
                   control={
                     <Checkbox
-                      value="ergonomists"
+                      value="agronomist"
                       name="role"
-                      checked={isButtonSelected("ergonomists")}
+                      checked={isButtonSelected("agronomist")}
                       onChange={handleChange}
 
                     />
                   }
-                  label={<p className="input-label">Ergonomists</p>}
+                  label={<p className="input-label">Agronomist</p>}
                 />
                 <FormControlLabel
                   control={

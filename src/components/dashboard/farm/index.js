@@ -13,6 +13,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Typography,
 } from "@mui/material";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import PageHeader from "../../shared/page-header";
@@ -465,6 +466,7 @@ export default function FarmDashboard({
     {
       label: "Actons",
       isButton: true,
+      align:"center",
       buttonArray: [
         {
           label: "Add a new Crop ",
@@ -770,8 +772,15 @@ export default function FarmDashboard({
 
   const rendeLattestSensorDataByID = () => {
     const { data } = farmDashboardZoneLattestSensorList || {};
-    if (!data || !data[0] || !data[0].payload) {
-      return null;
+    if (!data || !data[0] || !data[0].payload ) {
+      if(!isFarmDashboardZoneLattestSensorLoading){
+        return (
+          <Typography>No live data available</Typography>
+        )
+      }else{
+        return null;
+      }
+     
     }
     const sensorData = data[0].payload;
     return (
@@ -842,7 +851,7 @@ export default function FarmDashboard({
 
   const renderFarmSensorData = () => {
     const zoneInformation = farmDashboardAllZoneDetailsList || "";
-    console.log(zoneInformation[0]?.name);
+    //console.log(zoneInformation[0]?.name);
     return (
       <>
         <Grid container spacing={2}>
@@ -870,7 +879,7 @@ export default function FarmDashboard({
             </TabContext>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
-            <TabContext
+           {(zoneDashboardZoneSensorList && zoneDashboardZoneSensorList.length) ? <TabContext
               value={selectedSensor ? selectedSensor.toString() : zoneDashboardZoneSensorList[0]?.sensorId || ""}
               aria-label="Sensor"
               variant="scrollable"
@@ -896,6 +905,8 @@ export default function FarmDashboard({
                 ))}
               </TabList>
             </TabContext>
+            : !isZoneDashboardZoneSensorLoading ?<Typography>No live sensor available</Typography>:""
+            }
           </Grid>
           <Grid item xs={12}>
             {selectedSensor &&
@@ -959,6 +970,7 @@ export default function FarmDashboard({
       {isFarmDashboardAllZoneDetailsLoading && (
         <Loader title="Fetching Zone Details" />
       )}
+      {isDashboardFarmInfoListLoading && <Loader title="Fetching Farm Info" />}
       <div className="page-container">
         <Grid container spacing={2}>
           {<FarmDashboardFarmInfo farmInfo={farmDashboardFarmInfoList} />}
