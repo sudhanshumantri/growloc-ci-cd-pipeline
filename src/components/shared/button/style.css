@@ -6,7 +6,7 @@
     font-weight: 500 !important;
     font-size: 14px !important;
     height: 40px;
-    min-width: 200px !important;
+    /* min-width: 200px !important; */
 }
 
 .button-custom-light {
@@ -17,5 +17,5 @@
     font-weight: 500 !important;
     font-size: 14px !important;
     height: 40px;
-    min-width: 200px !important;
+    /* min-width: 200px !important; */
 }
