@@ -28,6 +28,7 @@ const AppBar = styled(MuiAppBar, {
 })(({ theme, open, drawerwidth }) => ({
   zIndex: theme.zIndex.drawer + 1,
   backgroundColor: "rgb(81,114,35)",
+  position: "fixed", // Add this property to fix the AppBar at the top of the screen
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -40,10 +41,6 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
-  // [theme.breakpoints.down("sm")]: {
-  //   width: "100% !important",
-  //   marginLeft:"0 important"
-  // },
 }));
 
 export default function TopHeader({
@@ -158,19 +155,15 @@ export default function TopHeader({
       >
         <Container maxWidth="xl">
           <Toolbar>
-            {/* <ChevronRightIcon sx={{ mr: 1, display: {sm: 'none'} }} onClick={() => toggleDrawer()} /> */}
-            {/* <IconButton
+            <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={()=>toggleDrawer()}
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
+            sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
             <MenuIcon />
-          </IconButton> */}
+          </IconButton>
             <Box
               sx={{
                 flex: 1,

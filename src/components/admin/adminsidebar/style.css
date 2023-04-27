@@ -14,4 +14,8 @@
     cursor: pointer;
     padding-left: 17px;
     width: 350px !important;
+    display: flex;
+}
+.MuiButtonBase-root{
+    text-align: left !important;
 }

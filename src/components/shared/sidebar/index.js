@@ -108,7 +108,6 @@ export default function SideBar({ router, logout, loginObject }) {
     toggleSubmenu((prevState) => ({ ...prevState, [id]: !prevState[id] }));
   };
 
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -119,7 +118,8 @@ export default function SideBar({ router, logout, loginObject }) {
         logout ={logout}
         toggleDrawer={toggleDrawer}
       />
-      <Drawer variant="permanent" open={open} sx={{ zIndex: 1 }}>
+      <Drawer variant="permanent" open={open} >
+      {/* sx={{ display: { xs: 'none', sm: 'none', md: 'block', lg: 'block' } }} */}
         <DrawerHeader sx={{ background: "#517223", 
  }}>
           <div className="drawer-header-logo">
@@ -130,17 +130,18 @@ export default function SideBar({ router, logout, loginObject }) {
         md: "none",
         xs: "block",
       },
+      color:"white",
+      textAlignt:"left",
       "@media (min-width: 600px)": {
         width:"100%"
       },
     }}
 
 >
-{/* {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />} */}
+{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
 
     {/* {open && <ChevronLeftIcon /> } */}
   </IconButton>
-
           </div>
         </DrawerHeader>
         <List
