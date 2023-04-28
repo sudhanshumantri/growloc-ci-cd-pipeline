@@ -1019,6 +1019,7 @@ export default function FarmDashboard({
                     fetchFarmDashboardFarmTask={fetchFarmDashboardFarmTask}
                     farmId={farmId}
                     addFarmTaskComment={addFarmTaskComment}
+                    isFarmTaskCommentLoading = {isFarmTaskCommentLoading}
                   />
                 }
               </TabPanel>

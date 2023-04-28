@@ -12,7 +12,7 @@ const ZoneDashboardTask = ({usersList,fetchUsers,farmInventoryList,fetchFarmInve
     const [open, setOpen] = useState(false);
     const [openCommetTask, setCommetTask] = useState(false);
     const [rowdata, setRowData] = useState({});
-
+    const [isTaskStatusChange,setIsTaskStatusChange] = useState(false);
     const handleModalToggle = (event, reason) => {
         if (reason && reason == "backdropClick" && "escapeKeyDown") return;
         setOpen(!open);
@@ -21,8 +21,14 @@ const ZoneDashboardTask = ({usersList,fetchUsers,farmInventoryList,fetchFarmInve
       const handleCommentModalToggle = (rowData) => {
         setRowData(rowData);
         setCommetTask(!openCommetTask);
+        setIsTaskStatusChange(false);
       };
-    
+      const handleTaskStatusModal = (rowData) => {
+        setRowData(rowData);
+        setCommetTask(!openCommetTask);
+        setIsTaskStatusChange(true);
+        
+      };
     const handleZoneTaskSave = (data) => {
         if (data) {
           data.createdBy = loginObject?.profile.userId;
@@ -33,13 +39,38 @@ const ZoneDashboardTask = ({usersList,fetchUsers,farmInventoryList,fetchFarmInve
         handleModalToggle();
       };
       const handleZoneTaskCommentSave = (data) => {
-        if (data) {
-          addFarmDashboardZoneTaskComment({
-            ...data,
-            taskId: parseInt(rowdata.id),
-            userId: rowdata.createdByProfile.userId,
-          });
+        let loginObject = localStorage.getItem("AUTH_OBJECT");
+        if (loginObject) {
+          loginObject = JSON.parse(loginObject);
         }
+        let payload = {
+          ...data,
+          taskId: parseInt(rowdata.id),
+          userId: loginObject.profile.userId,
+          isStatusChange:true,
+        };
+        if (isTaskStatusChange) {
+          addFarmDashboardZoneTaskComment(payload);
+          let tmpPayload = {...payload};
+          tmpPayload.comment = `Task status changed from ${data.prevStatus} to ${data.status} by ${loginObject.profile.name}`;
+          tmpPayload.isStatusChange = false;
+          addFarmDashboardZoneTaskComment(tmpPayload);
+        } else {
+          addFarmDashboardZoneTaskComment(payload);
+          let tmpPayload = {...payload};
+          tmpPayload.comment = `Task status changed from ${data.prevStatus} to In review by ${loginObject.profile.name}`;
+          tmpPayload.isStatusChange = false;
+          addFarmDashboardZoneTaskComment(tmpPayload);
+        }
+        // if (data) {
+        //   addFarmDashboardZoneTaskComment({
+        //     ...data,
+        //     taskId: parseInt(rowdata.id),
+        //     userId: loginObject.profile.userId,
+        //     statusChangeComment:`Task status changed from ${data.prevStatus} to ${data.status?data.status:"In review"} by ${loginObject.profile.name}`
+        //   });
+        // }
+        setIsTaskStatusChange(false);
         handleCommentModalToggle();
       };
       const handleChangeZoneTaskSchedulePagination = (queryParams) => {
@@ -129,6 +160,7 @@ const ZoneDashboardTask = ({usersList,fetchUsers,farmInventoryList,fetchFarmInve
                 <CollapsibleTable
                   data={{ headers: TASK_HEADER, rows: tasks || [] }}
                   handleCommentModalToggle={handleCommentModalToggle}
+                  handleTaskStatusModal ={handleTaskStatusModal}
                 />
                 <TableDynamicPagination
                   count={zoneDashboardZoneTaskList.total}
@@ -162,6 +194,8 @@ const ZoneDashboardTask = ({usersList,fetchUsers,farmInventoryList,fetchFarmInve
           open={openCommetTask}
           handleSave={handleZoneTaskCommentSave}
           handleClose={handleCommentModalToggle}
+          isTaskStatusChange={isTaskStatusChange}
+          taskStatus={rowdata.status}
         />
       )}
         </>

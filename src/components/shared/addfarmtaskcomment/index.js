@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormControl,
   Dialog,
@@ -6,22 +6,33 @@ import {
   DialogTitle,
   DialogContent,
   Grid,
+  Select,
+  MenuItem
 } from "@mui/material/";
+import TextareaAutosize from '@mui/base/TextareaAutosize';
+import FormHelperText from '@mui/material/FormHelperText'
 import TextBox from "../text-box";
 import CustomButton from "../button";
 import CloseIcon from "@mui/icons-material/Close";
 import "./style.css";
 
-export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
+export default function AddFarmTaskComment({ open, handleSave, handleClose, isTaskStatusChange,taskStatus }) {
   const [taskComment, setTaskComments] = useState("");
   const [images, setImages] = useState([]);
   const [commentError, setCommentError] = useState(false)
+  const [status,setStatus] = useState("");
+
+  useEffect(()=>{
+    setStatus(taskStatus);
+  },[])
 
   const handleChange = (e) => {
     setTaskComments(e.target.value);
     setCommentError(false)
   };
-
+const handleStatusChange =(e)=>{
+  setStatus(e.target.value);
+}
   const handleRemoveImage = (index) => {
     const newImages = [...images];
     newImages.splice(index, 1);
@@ -42,7 +53,6 @@ export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
   };
 
   const handleSaveComment = () => {
-
     if (!taskComment) {
       setCommentError(true);
       return;
@@ -50,7 +60,11 @@ export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
     let payload = {
       comment: taskComment,
       images: images,
+      prevStatus:taskStatus
     };
+    if(isTaskStatusChange){
+      payload.status = status;
+    }
     handleSave(payload);
   };
 
@@ -88,15 +102,28 @@ export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">
-          Add a Comment
+          {isTaskStatusChange ? "Task Statuse Change" : "Add a Comment"}
         </DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>
+            {isTaskStatusChange && <Grid item xs={12} sm={12} md={12}>
+              <span className="input-label">Status</span>
+              <FormControl fullWidth>
+                <Select
+                  value={status}
+                  onChange={handleStatusChange}
+                >
+                  <MenuItem value={"Open"}>Open</MenuItem>
+                  <MenuItem value={"In review"}>In review</MenuItem>
+                  <MenuItem value={"Close"}>Close</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>}
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">Comment</span>
               <br />
               <FormControl fullWidth>
-                <TextBox
+                {/* <TextBox
                   isWhite={true}
                   name="taskComment"
                   value={taskComment}
@@ -104,7 +131,20 @@ export default function AddFarmTaskComment({ open, handleSave, handleClose }) {
                   error={commentError}
                   helperText={commentError? "Please provide comment" : ""}
 
+                /> */}
+                <TextareaAutosize
+                  aria-label="minimum height"
+                  minRows={3}
+                  //placeholder="Minimum 3 rows"
+                  //isWhite={true}
+                  name="taskComment"
+                  value={taskComment}
+                  onChange={handleChange}
+                  //error={commentError}
+                  //helperText={commentError? "Please provide comment" : ""}
+                  style={{ width: "100%" }}
                 />
+                {commentError && <FormHelperText sx={{ color: "red" }}>Please provide comment</FormHelperText>}
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={12} md={12}>

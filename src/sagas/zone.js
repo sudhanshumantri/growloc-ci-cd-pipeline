@@ -77,6 +77,7 @@ export function* addFarmDashboardZoneTask({ data }) {
 export function* addFarmDashboardZoneComment( {data} ) {
   let responseData = yield call(callAddFarmDashboardZoneTaskComment, data);
   if (responseData?.status == 200 && responseData.data.status) {
+    responseData.data.data.status = data.status?data.status:"In review";
     yield put(addFarmDashboardZoneTaskCommentSuccess(responseData.data.data));
   } else {
     yield put(addFarmDashboardZoneTaskCommentFailure("Something went wrong"));

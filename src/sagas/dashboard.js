@@ -80,6 +80,7 @@ export function* addTaskScheduleTask({ data }) {
 export function* addFarmTaskComment( {data} ) {
   let responseData = yield call(callAddFarmTaskComment, data);
   if (responseData?.status == 200 && responseData.data.status) {
+    responseData.data.data.status = data.status?data.status:"In review";
     yield put(addFarmTaskCommentSuccess(responseData.data.data));
   } else {
     yield put(addFarmTaskCommentFailure("Something went wrong"));

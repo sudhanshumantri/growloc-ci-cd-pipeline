@@ -18,11 +18,13 @@ const FarmDashbaordTaskList = ({
   loginObject,
   addTaskScheduleTask,
   farmId,
-  addFarmTaskComment
+  addFarmTaskComment,
+  isFarmTaskCommentLoading
 }) => {
   const [open, setOpen] = useState(false);
   const [rowdata, setRowData] = useState({});
   const [openCommetTask, setCommetTask] = useState(false);
+  const [isTaskStatusChange, setIsTaskStatusChange] = useState(false);
 
   const handleModalToggle = (event, reason) => {
     if (reason && reason == "backdropClick" && "escapeKeyDown") return;
@@ -32,6 +34,12 @@ const FarmDashbaordTaskList = ({
   const handleCommentModalToggle = (rowData) => {
     setRowData(rowData);
     setCommetTask(!openCommetTask);
+    setIsTaskStatusChange(false);
+  };
+  const handleTaskStatusModal = (rowData) => {
+    setRowData(rowData);
+    setCommetTask(!openCommetTask);
+    setIsTaskStatusChange(true);
   };
   const handleTaskSave = (data) => {
     if (data) {
@@ -42,13 +50,38 @@ const FarmDashbaordTaskList = ({
     handleModalToggle();
   };
   const handleTaskCommentSave = (data) => {
-    if (data) {
-      addFarmTaskComment({
-        ...data,
-        taskId: parseInt(rowdata.id),
-        userId: rowdata.createdByProfile.userId,
-      });
+    let loginObject = localStorage.getItem("AUTH_OBJECT");
+    if (loginObject) {
+      loginObject = JSON.parse(loginObject);
     }
+    let payload = {
+      ...data,
+      taskId: parseInt(rowdata.id),
+      userId: loginObject.profile.userId,
+      isStatusChange:true,
+    };
+    if (isTaskStatusChange) {
+      addFarmTaskComment(payload);
+      let tmpPayload = {...payload};
+      tmpPayload.comment = `Task status changed from ${data.prevStatus} to ${data.status} by ${loginObject.profile.name}`;
+      tmpPayload.isStatusChange = false;
+      addFarmTaskComment(tmpPayload);
+    } else {
+      addFarmTaskComment(payload);
+      let tmpPayload = {...payload};
+      tmpPayload.comment = `Task status changed from ${data.prevStatus} to In review by ${loginObject.profile.name}`;
+      tmpPayload.isStatusChange = false;
+      addFarmTaskComment(tmpPayload);
+    }
+    // if (data) {
+    //   addFarmTaskComment({
+    //     ...data,
+    //     taskId: parseInt(rowdata.id),
+    //     userId: loginObject.profile.userId,
+    //     statusChangeComment:`Task status changed from ${data.prevStatus} to ${data.status?data.status:"In review"} by ${loginObject.profile.name}`
+    //   });
+    // }
+    setIsTaskStatusChange(false);
     handleCommentModalToggle();
   };
   const handleChangeTaskPagination = (queryParams) => {
@@ -138,6 +171,7 @@ const FarmDashbaordTaskList = ({
             <CollapsibleTable
               data={{ headers: TASK_HEADER, rows: tasks || [] }}
               handleCommentModalToggle={handleCommentModalToggle}
+              handleTaskStatusModal={handleTaskStatusModal}
             />
             <TableDynamicPagination
               count={farmDashboardTaskList.total}
@@ -169,6 +203,8 @@ const FarmDashbaordTaskList = ({
           open={openCommetTask}
           handleSave={handleTaskCommentSave}
           handleClose={handleCommentModalToggle}
+          isTaskStatusChange={isTaskStatusChange}
+          taskStatus={rowdata.status}
         />
       )}
     </>

@@ -23,11 +23,14 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { SEVERITY_LEVEL } from "../../../config";
 import Carousel from "react-material-ui-carousel";
 import "./style.css";
-function Row({ row, handleCommentModalToggle }) {
+function Row({ row, handleCommentModalToggle,handleTaskStatusModal }) {
   const [open, setOpen] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
-
+  let loginObject = localStorage.getItem("AUTH_OBJECT");
+    if (loginObject) {
+      loginObject = JSON.parse(loginObject);
+    }
   const formatSerityLevel = (value) => {
     const sLevel = SEVERITY_LEVEL.find((level) => level.value === value) || {};
     return sLevel.name || "-";
@@ -178,14 +181,15 @@ function Row({ row, handleCommentModalToggle }) {
         </TableCell>
         <TableCell align="center"sx={{width:"15%",paddingLeft:"0px",paddingRight:"0px"}}>
          <Grid container sx={{display:"flex",justifyContent:"center",}}>
+          {(loginObject.profile.role=="farmowner"||loginObject.profile.role=="farmmanager"||loginObject.profile.role=="agronomist")?
           <Grid item>
           <IconButton
             title="Edit Task"
-            onClick={() => handleCommentModalToggle(row)}
+            onClick={() => handleTaskStatusModal(row)}
           >
             <EditOutlinedIcon sx={{ color: "#517223" }} />,
           </IconButton>
-          </Grid>
+          </Grid>:""}
           <Grid item>
           <IconButton
             title="Add New"
@@ -236,7 +240,7 @@ function Row({ row, handleCommentModalToggle }) {
   );
 }
 
-export default function CollapsibleTable({ data, handleCommentModalToggle }) {
+export default function CollapsibleTable({ data, handleCommentModalToggle,handleTaskStatusModal }) {
   const { headers, rows } = data;
 
   return (
@@ -259,6 +263,7 @@ export default function CollapsibleTable({ data, handleCommentModalToggle }) {
               key={row.id}
               row={row}
               handleCommentModalToggle={handleCommentModalToggle}
+              handleTaskStatusModal={handleTaskStatusModal}
             />
           ))}
         </TableBody>
