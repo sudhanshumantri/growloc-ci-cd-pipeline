@@ -22,6 +22,9 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Link, useNavigate } from "react-router-dom";
 import { zoneMenuItems } from "../sidebar/config";
 import MenuIcon from '@mui/icons-material/Menu';
+import { useMediaQuery } from "@mui/material";
+
+
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -53,6 +56,9 @@ export default function TopHeader({
   const [anchorEl, setAnchorEl] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
+  const isMobile = useMediaQuery('(max-width:600px)');
+
+
   const logoutHandler = () => {
     logout();
     handleToggleMenu();
@@ -152,6 +158,12 @@ export default function TopHeader({
       elevation={1}
         open={open}
         drawerwidth={drawerWidth}
+        sx={{
+          ...(isMobile && {
+            left: '0 !important',
+            right: '0 !important',
+          }),
+        }}
       >
         <Container maxWidth="xl">
           <Toolbar>
