@@ -208,7 +208,6 @@ h6 {
 
 .zone-second {
   height: 436px;
-
 }
 
 .zone-height {
@@ -235,3 +234,12 @@ top: 8% !important;
   text-align: center !important;
 }
 
+.card-section{
+  color: #000000;
+  font-size: 15px;
+  margin-top: -14px;
+  font-weight: 600;
+}
+.css-10l0axr-MuiDrawer-docked .MuiDrawer-paper{
+  background-color:rgb(81,114,35);
+}

@@ -149,10 +149,10 @@ const FarmDashbaordTaskList = ({
     return (
       <>
         <Grid container spacing={2}>
-          <Grid item xs={6} sm={6} md={9} lg={9}>
+          <Grid item xs={10} sm={10} md={10} lg={10}>
             <span className="section-title">Tasks</span>
           </Grid>
-          <Grid item xs={6} sm={6} md={3} lg={3} sx={{ alignItems: "center" }}>
+          <Grid item xs={2} sm={2} md={2} lg={2} style={{ textAlign: 'right' }} >
             <AuthOutlet isAuthRequired={true} from="farmItems" action="create">
               <ButtonCustom
                 title="Add New Task"

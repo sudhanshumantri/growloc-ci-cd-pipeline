@@ -109,9 +109,9 @@ export default function ManageFarm({
               item
               component={Link}
               to={`/farm/${elem.farm.farm_internal_id}/dashboard`}
-              xs={4}
-              sm={4}
-              md={4}
+              xs={12}
+              sm={6}
+              md={6}
               key={elem.id}
             >
               <Card className="farm-list-card-holder" variant="outlined">

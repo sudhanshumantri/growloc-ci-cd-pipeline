@@ -104,7 +104,7 @@ export default function ManageUsers({
                 <Grid container spacing={2}>
                     <Grid className="card-outline-container" item xs={12} sm={12} md={12}>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={12} md={6} lg={6}>
+                            <Grid item xs={12} sm={6} md={6} lg={6}>
                                 <span className="input-label">Main reservoir capacity</span>
                                 <span className="label-light">*</span>
 
@@ -124,7 +124,7 @@ export default function ManageUsers({
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={12} sm={12} md={6} lg={6}>
+                            <Grid item xs={12} sm={6} md={6} lg={6}>
                                 <span className="input-label">
                                     Nutrient water reservoir capacity
                                 </span>

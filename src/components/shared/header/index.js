@@ -22,12 +22,16 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Link, useNavigate } from "react-router-dom";
 import { zoneMenuItems } from "../sidebar/config";
 import MenuIcon from '@mui/icons-material/Menu';
+import { useMediaQuery } from "@mui/material";
+
+
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open, drawerwidth }) => ({
   zIndex: theme.zIndex.drawer + 1,
   backgroundColor: "rgb(81,114,35)",
+  position: "fixed", // Add this property to fix the AppBar at the top of the screen
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -40,10 +44,6 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
-  // [theme.breakpoints.down("sm")]: {
-  //   width: "100% !important",
-  //   marginLeft:"0 important"
-  // },
 }));
 
 export default function TopHeader({
@@ -56,6 +56,9 @@ export default function TopHeader({
   const [anchorEl, setAnchorEl] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
+  const isMobile = useMediaQuery('(max-width:600px)');
+
+
   const logoutHandler = () => {
     logout();
     handleToggleMenu();
@@ -155,22 +158,24 @@ export default function TopHeader({
       elevation={1}
         open={open}
         drawerwidth={drawerWidth}
+        sx={{
+          ...(isMobile && {
+            left: '0 !important',
+            right: '0 !important',
+          }),
+        }}
       >
         <Container maxWidth="xl">
           <Toolbar>
-            {/* <ChevronRightIcon sx={{ mr: 1, display: {sm: 'none'} }} onClick={() => toggleDrawer()} /> */}
-            {/* <IconButton
+            <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={()=>toggleDrawer()}
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
+            sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
             <MenuIcon />
-          </IconButton> */}
+          </IconButton>
             <Box
               sx={{
                 flex: 1,
