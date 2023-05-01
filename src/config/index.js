@@ -215,17 +215,17 @@ export const SEVERITY_LEVEL = [
 
 
 export const TOGGLE_DATA = [
-  { value: "farmEfficiency", label: "Farm Efficiency" },
-  { value: "mortalityRate", label: "Mortality Rate" },
-  { value: "taskTat", label: "TASK TAT" },
-  { value: "CapacityEfficiency", label: "Capacity Efficiency" },
+  { value: "farm Efficiency", label: "Farm Efficiency" },
+  { value: "mortality Rate", label: "Mortality Rate" },
+  { value: "task Tat", label: "TASK TAT" },
+  { value: "Capacity Efficiency", label: "Capacity Efficiency" },
 ];
 
 export const TOGGLE_ZONE_DATA = [
-  { value: "zoneEfficiency", label: "Zone Efficiency" },
-  { value: "mortalityRate", label: "Mortality Rate" },
-  { value: "taskTat", label: "TASK TAT" },
-  { value: "CapacityEfficiency", label: "Capacity Efficiency" },
+  { value: "zone Efficiency", label: "Zone Efficiency" },
+  { value: "mortality Rate", label: "Mortality Rate" },
+  { value: "task Tat", label: "TASK TAT" },
+  { value: "Capacity Efficiency", label: "Capacity Efficiency" },
 ];
 
 export const Time_Frames = ["4hr", "12hr", "24hr", "3d", "1w"];
