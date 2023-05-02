@@ -110,7 +110,7 @@ export default function ManageFarm({
               component={Link}
               to={`/farm/${elem.farm.farm_internal_id}/dashboard`}
               xs={12}
-              sm={6}
+              sm={12}
               md={6}
               key={elem.id}
             >

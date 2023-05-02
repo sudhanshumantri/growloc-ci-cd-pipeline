@@ -280,7 +280,7 @@ export default function ZoneDashboard({
               {(TOGGLE_ZONE_DATA || []).map((platform, index) => (
                 <Tab
                   key={platform.value}
-                  label={platform.value}
+                  label={platform.label}
                   value={platform.value}
                 />
               ))}

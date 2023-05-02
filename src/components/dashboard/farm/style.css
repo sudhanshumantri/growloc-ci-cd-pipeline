@@ -25,5 +25,11 @@
     text-transform: uppercase;
     color: black;
 }
+/* .css-p033sf-MuiButtonBase-root-MuiTab-root{
+    padding: 12px 4px !important;
+} */
+.css-p033sf-MuiButtonBase-root-MuiTab-root{
+    padding: 12px 11px !important;
+}
 
 

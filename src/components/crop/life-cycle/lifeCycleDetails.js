@@ -451,7 +451,7 @@ export default function CropLifeCycleDetails({
             {info.length - 1 != index && <>, </>}
           </span>
         ))}
-        <Stepper alternativeLabel nonLinear activeStep={activeStep}>
+       <Stepper alternativeLabel nonLinear activeStep={activeStep}>
           {FarmCropLifecycleStages.map((data, index) => (
             <Step key={index}>
               <StepLabel

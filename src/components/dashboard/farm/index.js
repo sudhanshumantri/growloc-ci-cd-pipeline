@@ -618,7 +618,7 @@ export default function FarmDashboard({
               {(TOGGLE_DATA || []).map((platform, index) => (
                 <Tab
                   key={platform.value}
-                  label={platform.value}
+                  label={platform.label}
                   value={platform.value}
                 />
               ))}

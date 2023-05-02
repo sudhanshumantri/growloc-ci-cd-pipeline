@@ -11,6 +11,7 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./style.css";
 import AuthOutlet from "../authoutlet";
+import { display } from "@mui/system";
 function renderButtonArray(buttonArray) {
   return buttonArray.map((item, index) => {
     return (
@@ -174,16 +175,17 @@ export default function PageHeader({
       <Divider /> */}
       {showBackButton && showBackButton.length > 0 ? (
     <Grid container spacing={2} className="page-header-container ">
-      <Grid item xs={1} sm={1} md={1}>
+      {/* <Grid item xs={1} sm={1} md={1}>
         {renderBackButtonArray(showBackButton)}
-      </Grid>
-      <Grid item xs={5} sm={5} md={3}>
+      </Grid> */}
+      <Grid item xs={4} sm={4} md={4} sx={{display:"flex"}}>
+      {renderBackButtonArray(showBackButton)}
         <p className="page-section-title">
           {title}
           {subtitle && <span className="label-light">{subtitle}</span>}
         </p>
       </Grid>
-      <Grid item xs={6} sm={6} md={8} className="button-container">
+      <Grid item xs={8} sm={8} md={8} className="button-container">
         {headerDropwdown && (
           <Select
             value={length ? value || "" : ""}

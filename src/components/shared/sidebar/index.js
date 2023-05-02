@@ -10,7 +10,8 @@ import {
   Collapse,
   ListItem,
   ListItemIcon,
-  IconButton
+  IconButton,
+  useMediaQuery, Grid
 } from "@mui/material/";
 import MuiDrawer from "@mui/material/Drawer";
 import ExpandLess from "@mui/icons-material/ExpandLess";
@@ -90,6 +91,8 @@ export default function SideBar({ router, logout, loginObject }) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  
+
 
   const { location } = router;
   useEffect(() => {
@@ -118,7 +121,8 @@ export default function SideBar({ router, logout, loginObject }) {
         logout ={logout}
         toggleDrawer={toggleDrawer}
       />
-      <Drawer variant="permanent" open={open} >
+      <Drawer variant="permanent" open={open}  
+  >
       {/* sx={{ display: { xs: 'none', sm: 'none', md: 'block', lg: 'block' } }} */}
         <DrawerHeader sx={{ background: "#517223", 
  }}>
