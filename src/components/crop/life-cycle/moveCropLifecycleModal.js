@@ -61,11 +61,30 @@ export default function MoveCropLifeCycleModal({
     }
   };
 
+  const renderActionButtons = () => {
+    return (
+      <>
+        <div className="flex-row-justify-center-container">
+        <DialogActions>
+        <ButtonCustom
+            isLight={true}
+            title="Cancel"
+            handleButtonClick={handleClose}
+          />
+          <ButtonCustom title="Ok" handleButtonClick={handleModalInfoSave} />
+        </DialogActions>
+        </div>
+      </>
+    );
+  };
+
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className="dialog-title-container">{title}</DialogTitle>
         <DialogContent>
+          <br/>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">No of plants</span>
@@ -111,14 +130,7 @@ export default function MoveCropLifeCycleModal({
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions>
-          <ButtonCustom
-            isLight={true}
-            title="Cancel"
-            handleButtonClick={handleClose}
-          />
-          <ButtonCustom title="Ok" handleButtonClick={handleModalInfoSave} />
-        </DialogActions>
+        {renderActionButtons()}
       </Dialog>
     </div>
   );

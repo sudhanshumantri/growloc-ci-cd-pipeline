@@ -81,6 +81,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
       {
         label: "Actons",
         isButton: true,
+        align:"center",
         buttonArray: [
           {
             label: "Edit",

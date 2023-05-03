@@ -25,13 +25,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useMediaQuery } from "@mui/material";
 
 
-
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open, drawerwidth }) => ({
   zIndex: theme.zIndex.drawer + 1,
   backgroundColor: "rgb(81,114,35)",
-  position: "fixed", // Add this property to fix the AppBar at the top of the screen
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -56,9 +54,6 @@ export default function TopHeader({
   const [anchorEl, setAnchorEl] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
-  const isMobile = useMediaQuery('(max-width:600px)');
-
-
   const logoutHandler = () => {
     logout();
     handleToggleMenu();
@@ -71,6 +66,8 @@ export default function TopHeader({
     navigate("profile");
     handleToggleMenu();
   };
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
   const renderAdminHeader = () => {
     return (
       <>
@@ -158,12 +155,6 @@ export default function TopHeader({
       elevation={1}
         open={open}
         drawerwidth={drawerWidth}
-        sx={{
-          ...(isMobile && {
-            left: '0 !important',
-            right: '0 !important',
-          }),
-        }}
       >
         <Container maxWidth="xl">
           <Toolbar>

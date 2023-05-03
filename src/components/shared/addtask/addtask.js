@@ -52,7 +52,8 @@ export default function AddTaskModal({
     qty: false,
     severity: false,
     itemName:false,
-    units:false
+    units:false,
+    description:false,
   });
   const cleanObject = (obj) => {
     Object.keys(obj).forEach(
@@ -91,6 +92,11 @@ export default function AddTaskModal({
       errors.taskName = true;
       isValid = false;
     }
+    if (!taskData.description) {
+      errors.description = true;
+      isValid = false;
+    }
+
     if (taskData.itemName) {
       if (!taskData.qty) {
         errors.qty = true;
@@ -255,6 +261,9 @@ export default function AddTaskModal({
                   name="description"
                   value={taskData.description}
                   onChange={handleChange}
+                  error={validation.description}
+                  helperText={validation.description ? "Please provide description" : ""}
+
                 />
               </FormControl>
             </Grid>

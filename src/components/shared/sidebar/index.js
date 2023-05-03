@@ -84,16 +84,12 @@ export default function SideBar({ router, logout, loginObject }) {
   const [open, setOpen] = useState(true);
   const [openSubmenu, toggleSubmenu] = useState(false);
   const [items, setItems] = useState(menuItems);
-
   const toggleDrawer = () => {
     setOpen(!open);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
-
-
   const { location } = router;
   useEffect(() => {
     if (location?.pathname) {
@@ -110,7 +106,6 @@ export default function SideBar({ router, logout, loginObject }) {
   const handleClick = (id) => {
     toggleSubmenu((prevState) => ({ ...prevState, [id]: !prevState[id] }));
   };
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -127,7 +122,7 @@ export default function SideBar({ router, logout, loginObject }) {
         <DrawerHeader sx={{ background: "#517223", 
  }}>
           <div className="drawer-header-logo">
-            <img src={logo} onClick={() => this.props.router.navigate("/")} />
+            <img src={logo} />
             <IconButton onClick={toggleDrawer} sx={{
       display: {
         lg: "none",
@@ -140,11 +135,9 @@ export default function SideBar({ router, logout, loginObject }) {
         width:"100%"
       },
     }}
-
 >
-{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-
-    {/* {open && <ChevronLeftIcon /> } */}
+{/* {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />} */}
+    {open && <ChevronLeftIcon /> }
   </IconButton>
           </div>
         </DrawerHeader>

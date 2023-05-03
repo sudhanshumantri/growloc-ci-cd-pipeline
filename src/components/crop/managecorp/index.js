@@ -124,6 +124,7 @@ export default function ManageCrop({
     {
       label: "Actons",
       isButton: true,
+      align:"center",
       buttonArray: [
         {
           label: "Edit",

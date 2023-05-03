@@ -82,6 +82,25 @@ export default function AddCropModal({
       handleSave(requestData);
     }
   };
+
+  const renderActionButtons = () => {
+    return (
+      <>
+        <div className="flex-row-justify-center-container">
+        <DialogActions>
+          <CustomButton
+            isLight={true}
+            handleButtonClick={handleClose}
+            title="Cancel"
+          />
+          <CustomButton handleButtonClick={handleSaveCrop} title="Save" />
+        </DialogActions>
+
+        </div>
+      </>
+    );
+  };
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -137,14 +156,7 @@ export default function AddCropModal({
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions>
-          <CustomButton
-            isLight={true}
-            handleButtonClick={handleClose}
-            title="Cancel"
-          />
-          <CustomButton handleButtonClick={handleSaveCrop} title="Save" />
-        </DialogActions>
+        {renderActionButtons()}
       </Dialog>
     </div>
   );

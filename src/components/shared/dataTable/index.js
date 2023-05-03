@@ -106,10 +106,10 @@ function DataTable({ data }) {
                       {header.isButton ? (
                         <div
                           style={{
-                            display: "flex",
+                            display:"flex",
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent:"center"
+                             justifyContent:"center"
                           }}
                         >
                           {renderButtonArray(header.buttonArray, row)}

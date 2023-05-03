@@ -7,19 +7,18 @@ import {
   import Noofbatch from "../../../../public/assets/Noofbatch.png";
   import Totalharvest from "../../../../public/assets/Totalharvest.png";
   import Nooftask from "../../../../public/assets/Nooftask.png";
-
 const ZoneHeaderInformation = ({zoneDashboardZoneInfoList}) => {
     const { noOfTasks, batchCount, totalHarvested } = zoneDashboardZoneInfoList;
     return (
         <>
-        <Grid item xs={4} sm={4} md={4}>
+        <Grid item xs={4} sm={4} md={4} lg={4}>
           <Card>
             <Card>
               <CardContent>
                 <Grid container spacing={2}>
                   <Grid item xs={6} sm={9} md={9}>
                     <h4 className="section-details">{batchCount || 0}</h4>
-                    <p className="farm-card">No of Batches</p>
+                    <p className="card-section">No of Batches</p>
                   </Grid>
                   <Grid item xs={6} sm={3} md={3}>
                     <img
@@ -34,14 +33,13 @@ const ZoneHeaderInformation = ({zoneDashboardZoneInfoList}) => {
             </Card>
           </Card>
         </Grid>
-
-        <Grid item xs={4} sm={4} md={4}>
+        <Grid item xs={4} sm={4} md={4} lg={4}>
           <Card>
             <CardContent>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={9} md={9}>
                   <h4 className="section-details">{noOfTasks || 0}</h4>
-                  <p className="farm-card">Total Tasks</p>
+                  <p className="card-section">Total Tasks</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
                   <img
@@ -55,16 +53,16 @@ const ZoneHeaderInformation = ({zoneDashboardZoneInfoList}) => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={4} sm={4} md={4}>
+        <Grid item xs={4} sm={4} md={4} lg={4}>
           <Card>
             <CardContent>
               <Grid container spacing={2}>
-                <Grid item xs={6} sm={9} md={9}>
+                <Grid item xs={6} sm={9} md={9} >
                   <h4 className="section-details">
                     {totalHarvested?.kgs || 0}(kgs) /{totalHarvested?.qty || 0}
                     (qty)
                   </h4>
-                  <p className="farm-card">Total Harvest</p>
+                  <p className="card-section">Total Harvest</p>
                 </Grid>
                 <Grid item xs={6} sm={3} md={3}>
                   <img

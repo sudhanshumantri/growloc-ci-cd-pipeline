@@ -180,7 +180,7 @@ function Row({ row, handleCommentModalToggle,handleTaskStatusModal }) {
           {row.status}
         </TableCell>
         <TableCell align="center"sx={{width:"15%",paddingLeft:"0px",paddingRight:"0px"}}>
-         <Grid container sx={{display:"flex",justifyContent:"center",}}>
+         <Grid container sx={{display:"flex",justifyContent:"flex-start"}}>
           {(loginObject.profile.role=="farmowner"||loginObject.profile.role=="farmmanager"||loginObject.profile.role=="agronomist")?
           <Grid item>
           <IconButton

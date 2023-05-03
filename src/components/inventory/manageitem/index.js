@@ -87,6 +87,7 @@ export default function ManageItem({
     {
       label: "Actons",
       isButton: true,
+      align:"center",
       buttonArray: [
         {
           label: "Edit",

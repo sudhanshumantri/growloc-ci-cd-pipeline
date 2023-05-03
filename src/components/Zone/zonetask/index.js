@@ -131,17 +131,15 @@ const ZoneDashboardTask = ({usersList,fetchUsers,farmInventoryList,fetchFarmInve
         },
       ];
     
-
-
       const renderZoneTaskSchedules = () => {
         const { tasks } = zoneDashboardZoneTaskList;
         return (
           <>
             <Grid container spacing={2}>
-              <Grid item xs={6} sm={6} md={9} lg={9}>
+            <Grid item xs={10} sm={7} md={7} lg={10}>
                 <p className="section-title">Zone Tasks</p>
               </Grid>
-              <Grid item xs={6} sm={6} md={3} lg={3} sx={{ alignItems: "center" }}>
+              <Grid item xs={2} sm={5} md={5} lg={2} style={{ textAlign: 'right' }} >
                 <AuthOutlet isAuthRequired={true} from="dashboard" action="create">
                   <ButtonCustom
                     title="Add New Task"

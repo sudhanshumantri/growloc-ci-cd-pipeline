@@ -29,6 +29,32 @@
 .button-container>* {
   margin-left: 5px !important;
 }
+@media (max-width: 800px){
+  .css-vok43g-MuiGrid-root{
+    padding-left: 0px!important;
+  }
+}
+@media (max-width: 600px){
+  .button-custom{
+    border-radius: 5px !important;
+    font-size: 10px !important;
+    height: 32px!important;
+
+  }
+  .css-1d6wzja-MuiButton-startIcon{
+    margin-right: 2px!important;
+  }
+  .css-6tnbud-MuiButtonBase-root-MuiButton-root{padding: 5px 10px!important;}
+  .css-1d6wzja-MuiButton-startIcon>*:nth-of-type(1) {
+    font-size: 16px!important;
+}
+.page-section-title{font-size: 16px;}
+/* .MuiStepConnector-root{
+    left: calc(-52% + -11px) !important;
+    right: calc(50% + 22px) !important;
+} */
+}
+
 
 /* .page-header-top-row{
   display: none;
