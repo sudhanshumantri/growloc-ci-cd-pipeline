@@ -89,7 +89,6 @@ export default function MoveCropLifeCycleModal({
             <Grid item xs={12} sm={12} md={12}>
               <span className="input-label">No of plants</span>
               <span className="label-light">*</span>
-              <br />
               <FormControl fullWidth>
                 <TextBox
                   isWhite={true}
