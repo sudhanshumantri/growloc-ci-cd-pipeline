@@ -2,7 +2,8 @@ import * as React from "react";
 
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 export const api = {
-host: 'https://growlock-backend.onrender.com/api/'
+// host: 'https://growlock-backend.onrender.com/api/'
+host: 'https://api.growloc.farm.com/api/'
         // host: "http://localhost:4000/api/",
 };
 
@@ -10,7 +11,7 @@ export const WEEKDAYS = [
   { label: "S", value: "7" },
   { label: "M", value: "1" },
   { label: "T", value: "2" },
-  { label: "W", value: "3" },
+  { label: "W", value: "3" }, 
   { label: "Th", value: "4" },
   { label: "F", value: "5" },
   { label: "Sa", value: "6" },
@@ -219,7 +220,7 @@ export const TOGGLE_DATA = [
   { value: "farmEfficiency", label: "Farm Efficiency" },
   { value: "mortalityRate", label: "Mortality Rate" },
   { value: "taskTat", label: "TASK TAT" },
-  { value: "CapacityEfficiency", label: "Capacity Efficiency" },
+  { value: "Capacity Efficiency", label: "Capacity Efficiency" },
 ];
 
 export const TOGGLE_ZONE_DATA = [
