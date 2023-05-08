@@ -10,6 +10,7 @@ import {
   ListItem,
   ListItemIcon,
   Divider,
+  IconButton
 } from "@mui/material/";
 import MuiDrawer from "@mui/material/Drawer";
 import { Link } from "react-router-dom";
@@ -19,6 +20,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import logo from "../../../../public/assets/logo.png";
 import { adminMenuItems } from "../../shared/sidebar/config";
 import Dashboard from "../../../../public/assets/Dashboard.png";
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+
 import "./style.css";
 
 const drawerWidth = 300;
@@ -98,11 +101,29 @@ export default function AdminSideBar({  logout, loginObject }) {
         drawerWidth={drawerWidth}
         loginObject={loginObject}
         logout ={logout}
+        toggleDrawer={toggleDrawer}
       />
       <Drawer variant="permanent" open={open} sx={{ zIndex: 1 }}>
         <DrawerHeader sx={{ background: "#517223" }}>
           <div className="drawer-header-logo">
             <img src={logo} onClick={() => this.props.router.navigate("/")} />
+            <IconButton onClick={toggleDrawer} sx={{
+      display: {
+        lg: "none",
+        md: "none",
+        xs: "block",
+      },
+      color:"white",
+      textAlignt:"left",
+      "@media (min-width: 600px)": {
+        width:"100%"
+      },
+    }}
+>
+{/* {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />} */}
+    {open && <ChevronLeftIcon /> }
+  </IconButton>
+
           </div>
         </DrawerHeader>
         <List

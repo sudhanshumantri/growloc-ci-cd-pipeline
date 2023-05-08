@@ -61,13 +61,7 @@ export default function Resgister({ registerRequest, isLoading }) {
       errors.email = true;
       isValid = false;
     }
-    // if (
-    //   !registrationData.email ||
-    //   !registrationData.email.includes("@gmail.com")
-    // ) {
-    //   errors.email = true;
-    //   isValid = false;
-    // }
+   
     if (!registrationData.address) {
       errors.address = true;
       isValid = false;

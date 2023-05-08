@@ -25,6 +25,7 @@ export default function AddUsersModal({
     password:false,
     phone:false,
     confirmpassword:false,
+    email:false,
   });
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -50,6 +51,13 @@ export default function AddUsersModal({
         errors.confirmpassword = true;
         isValid = false
    }
+   if (userData.email && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userData.email)) {
+    errors.email = true;
+    isValid = false;
+  }
+
+
+
     setValidation(errors);
     return isValid;
   };
@@ -156,6 +164,8 @@ export default function AddUsersModal({
                   disabled={userData.isEditMode}
                   value={userData.email}
                   onChange={handleChange}
+                  error={validations.email}
+                  helperText={validations.email ?"Please provide valid email" : ""}
                 />
               </FormControl>
             </Grid>

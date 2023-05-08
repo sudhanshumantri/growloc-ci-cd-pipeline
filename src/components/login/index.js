@@ -1,6 +1,4 @@
-
-
-import React, { useState} from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import {
   Backdrop,
@@ -15,33 +13,26 @@ import {
   Checkbox,
   FormControlLabel,
   CssBaseline,
+  FormHelperText,
 } from "@mui/material/";
 import ButtonCustom from "../shared/button";
 import loginpage from "../../../public/assets/loginpage.png";
 import logo from "../../../public/assets/logo.png";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useForm } from "react-hook-form";
 
 function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [phoneError, setPhoneError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleButtonClick = () => {
-    const re = /^[0-10\b]{0,10}$/;
-    let isError = false;
-    if (phone.length !== 10 || re.test(phone)) {
-      isError = true;
-      setPhoneError(true);
-    }
-    if (password == "") {
-      setPasswordError(true);
-      isError = true;
-    }
-
-    if (!isError) {
-      loginRequest({ phone: parseInt(phone), password });
-    }
+  const handleButtonClick = (data) => {
+    loginRequest({
+      phone: parseInt(data.phone),
+      password: data.password,
+    });
   };
   const renderLoader = () => {
     return (
@@ -66,10 +57,10 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "100% 100vh",
-        '@media (max-width: 960px)': {
-           backgroundImage: 'none',
+        "@media (max-width: 960px)": {
+          backgroundImage: "none",
           backgroundColor: "#E5E4D7",
-        }
+        },
       }}
     >
       <CssBaseline />
@@ -101,7 +92,6 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
           borderRadius: "10px",
           justifyContent: "center",
           alignItems: "center",
-        
         }}
       >
         <Box
@@ -111,10 +101,9 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            '@media (max-width: 960px)': {
-              maxWidth:"100% !important"
-     }
-  
+            "@media (max-width: 960px)": {
+              maxWidth: "100% !important",
+            },
           }}
         >
           <Avatar sx={{ bgcolor: "#517223" }}>
@@ -129,52 +118,49 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
               <span className="input-label">Phone number</span>
               <span className="label-light">*</span>
               <TextField
-                required
-                fullWidth
-                id="phone"
-                size="small"
                 className="custom-input-box"
-                // label="Phone number"
-                type="number"
-                name="phone"
-                value={phone}
-                helperText={
-                  phoneError ? "Please provide Vaild Phone Number" : ""
-                }
-                error={phoneError}
-                maxLength={10}
-                onInput={(e) => {
-                  e.target.value = Math.max(0, parseInt(e.target.value))
-                    .toString()
-                    .slice(0, 10);
+                fullWidth
+                type="tel"
+                {...register("phone", {
+                  required: true,
+                  maxLength: 10,
+                  pattern: /^\d{10}$/,
+                })}
+                error={!!errors.phone}
+                inputProps={{
+                  maxLength: 10,
+                  onKeyPress: (event) => {
+                    if (!/[0-9]/.test(event.key)) {
+                      event.preventDefault();
+                    }
+                  },
                 }}
-                onChange={(event) => {
-                  const { value } = event.target;
-                  setPhone(value);
-                  setPhoneError(false);
-                }}
-                autoFocus
               />
+              {errors.phone && (
+                <FormHelperText
+                  sx={{ color: "red", backgroundColor: "#E5E4D7" }}
+                >
+                  Please provide a valid phone number
+                </FormHelperText>
+              )}
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12}>
               <span className="input-label">Password</span>
               <span className="label-light">*</span>
               <TextField
-                required
-                fullWidth
-                size="small"
-                className="custom-input-box"
-                name="password"
                 type="password"
-                id="password"
-                error={passwordError ?? ""}
-                helperText={passwordError ? "Please provide password" : ""}
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setPasswordError(false);
-                }}
+                className="custom-input-box"
+                fullWidth
+                {...register("password", { required: true })}
+                error={!!errors.password}
               />
+              {errors.password && (
+                <FormHelperText
+                  sx={{ color: "red", backgroundColor: "#E5E4D7" }}
+                >
+                  Please provide password
+                </FormHelperText>
+              )}
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12}>
               <FormControlLabel label="Remember me" control={<Checkbox />} />
@@ -182,7 +168,8 @@ function Login({ loginRequest, isLoginRequested, isLoginError, token }) {
             <Grid item xs={12} sm={12} md={12} lg={12}>
               <ButtonCustom
                 isFullWidth={true}
-                handleButtonClick={handleButtonClick}
+                // handleButtonClick={handleButtonClick}
+                handleButtonClick={handleSubmit(handleButtonClick)}
                 title="SIGN IN"
               />
             </Grid>
