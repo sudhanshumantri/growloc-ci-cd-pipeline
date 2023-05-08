@@ -28,7 +28,7 @@ function makeAPICall(originalConfig) {
         localStorage.removeItem("AUTH_TOKEN");
         localStorage.removeItem("AUTH_OBJECT");
       } else {
-        addNotification(error, 5000,true, "danger");
+        addNotification(error.message ? error.message : 'Server issue', 5000, true, "danger");
         return error;
       }
     });

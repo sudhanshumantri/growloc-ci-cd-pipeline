@@ -56,11 +56,18 @@ export default function Resgister({ registerRequest, isLoading }) {
     }
     if (
       !registrationData.email ||
-      !registrationData.email.includes("@gmail.com")
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(registrationData.email)
     ) {
       errors.email = true;
       isValid = false;
     }
+    // if (
+    //   !registrationData.email ||
+    //   !registrationData.email.includes("@gmail.com")
+    // ) {
+    //   errors.email = true;
+    //   isValid = false;
+    // }
     if (!registrationData.address) {
       errors.address = true;
       isValid = false;
@@ -73,7 +80,7 @@ export default function Resgister({ registerRequest, isLoading }) {
     if (registrationData.password !== registrationData.confirmpassword) {
       errors.confirmpassword = true;
       isValid = false
- }
+    }
 
     setValidation(errors);
     return isValid;
@@ -106,8 +113,8 @@ export default function Resgister({ registerRequest, isLoading }) {
           backgroundSize: "100% 100vh",
           '@media (max-width: 960px)': {
             backgroundImage: 'none',
-           backgroundColor: "#E5E4D7",
-         }
+            backgroundColor: "#E5E4D7",
+          }
         }}
       >
         <CssBaseline />
@@ -194,9 +201,9 @@ export default function Resgister({ registerRequest, isLoading }) {
                   value={registrationData.phone}
                   onChange={handleChange}
                   error={validations.phone}
-                  // helperText={
-                  //   validations.phone ? "Please provide valid phone number" : ""
-                  // }
+                // helperText={
+                //   validations.phone ? "Please provide valid phone number" : ""
+                // }
                 />
                 {validations.phone && (
                   <FormHelperText
@@ -218,9 +225,9 @@ export default function Resgister({ registerRequest, isLoading }) {
                   value={registrationData.email}
                   onChange={handleChange}
                   error={validations.email}
-                  // helperText={
-                  //   validations.email ? "Please provide valid email " : ""
-                  // }
+                // helperText={
+                //   validations.email ? "Please provide valid email " : ""
+                // }
                 />
                 {validations.email && (
                   <FormHelperText
@@ -253,9 +260,9 @@ export default function Resgister({ registerRequest, isLoading }) {
                   value={registrationData.address}
                   onChange={handleChange}
                   error={validations.address}
-                  // helperText={
-                  //   validations.address ? "Please provide valid email " : ""
-                  // }
+                // helperText={
+                //   validations.address ? "Please provide valid email " : ""
+                // }
                 />
                 {validations.address && (
                   <FormHelperText
@@ -277,11 +284,11 @@ export default function Resgister({ registerRequest, isLoading }) {
                   value={registrationData.password}
                   onChange={handleChange}
                   error={validations.password}
-                  // helperText={
-                  //   validations.password
-                  //     ? "please provide password atleast 6 characters "
-                  //     : ""
-                  // }
+                // helperText={
+                //   validations.password
+                //     ? "please provide password atleast 6 characters "
+                //     : ""
+                // }
                 />
                 {validations.password && (
                   <FormHelperText
@@ -304,11 +311,11 @@ export default function Resgister({ registerRequest, isLoading }) {
                   onChange={handleChange}
                   error={validations.confirmpassword}
 
-                  // helperText={
-                  //   validations.password
-                  //     ? "please provide password atleast 6 characters "
-                  //     : ""
-                  // }
+                // helperText={
+                //   validations.password
+                //     ? "please provide password atleast 6 characters "
+                //     : ""
+                // }
                 />
                 {validations.confirmpassword && (
                   <FormHelperText

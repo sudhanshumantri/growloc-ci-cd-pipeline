@@ -21,6 +21,7 @@ export function* loginHandler({ data }) {
     localStorage.setItem("AUTH_TOKEN", responseData.data.token);
     localStorage.setItem("AUTH_OBJECT", JSON.stringify(responseData.data.data));
   } else {
+    console.log('came here man');
     yield put(loginFailure("Invalid Credentials"));
   }
 }
