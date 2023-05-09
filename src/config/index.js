@@ -5,7 +5,11 @@ export const api = {
   // host: 'https://growlock-backend.onrender.com/api/'
   host: 'https://api.growloc.farm/api/'
   //https://api.growloc.farm/health
+<<<<<<< HEAD
   //  host: "http://localhost:4000/api/",
+=======
+  // host: "http://localhost:4000/api/",
+>>>>>>> origin/kamal_current_2
 };
 
 export const WEEKDAYS = [
