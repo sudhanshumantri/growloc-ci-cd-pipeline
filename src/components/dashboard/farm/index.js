@@ -109,6 +109,8 @@ export default function FarmDashboard({
   farmDashboardAllZoneDetailsList,
   fetchDashboardAllZoneDetails,
   history,
+  pusherData,
+  allllZoneSensorOfUser,
 }) {
   const navigate = useNavigate();
   const { farmId } = useParams();
@@ -125,6 +127,7 @@ export default function FarmDashboard({
   const [selectedSensorPlatform, setSelectedSensorPlatform] = useState(null);
   const [selectedSensor, setSelectedSensor] = useState(null);
   const [activeStep, setActiveStep] = useState("");
+  const [lattestDataByPusher,setLatestDataByPusher] = useState([]);
 
   useEffect(() => {
     handlePlatformChange(null, selectedPlatform);
@@ -147,7 +150,15 @@ export default function FarmDashboard({
 
   const { length: zoneSensorLattestDataLength } =
     zoneDashboardZoneSensorList || [];
-
+useEffect(()=>{
+  if(pusherData && pusherData.length){
+    const sensorId = selectedSensor?selectedSensor:zoneDashboardZoneSensorList[0]?.sensorId;
+  let sensorDataFilter = pusherData.filter(item=>item.device_id == sensorId);
+      sensorDataFilter.sort((a,b)=>parseInt(b.iot_timestamp) - parseInt(a.iot_timestamp));
+      let tmpData = [...sensorDataFilter];
+      setLatestDataByPusher([{...tmpData[0]}]);
+  }
+},[selectedSensor,pusherData]);
   useEffect(() => {
     if (zoneSensorLattestDataLength) {
       const sensorId = zoneDashboardZoneSensorList[0].sensorId;
@@ -783,7 +794,38 @@ export default function FarmDashboard({
       }
      
     }
-    const sensorData = data[0].payload;
+    let rows = [
+      {
+        name:"Temperature",
+        label:"temp"
+      },
+      {
+        name:"Humidity",
+        label:"humidity"
+      },
+      {
+        name:"CO2",
+        label:"co2",
+      },
+      {
+        name:"Light",
+        label:"lightIntensity"
+      }
+    ]
+    let sensorData ;
+    let sensorDataReceivedTime ;
+    if(
+      lattestDataByPusher && 
+      lattestDataByPusher.length && 
+      lattestDataByPusher[0].data && 
+      lattestDataByPusher[0].data.length
+      ){
+      sensorData = lattestDataByPusher[0].data[0].payload;
+      sensorDataReceivedTime = parseInt(lattestDataByPusher[0].iot_timestamp);
+    }else{
+      sensorData = data[0].payload;
+      sensorDataReceivedTime = farmDashboardZoneLattestSensorList?.created_on
+    }
     return (
       <Grid item xs={12} sm={12} md={12}>
         <p className="section-title"> Senor Information </p>
@@ -791,7 +833,7 @@ export default function FarmDashboard({
           <p>
             Last Updated :{" "}
             {moment(
-              new Date(farmDashboardZoneLattestSensorList?.created_on)
+              new Date(sensorDataReceivedTime)
             ).format("MMMM Do YYYY hh:mm:ss A")}
           </p>
         )}
@@ -809,21 +851,21 @@ export default function FarmDashboard({
               </TableRow>
             </TableHead>
             <TableBody>
-              {Object.entries(sensorData).map(([key, value]) => {
+              {rows.map((item,idx) => {
                 return (
                   <TableRow
-                    key={key}
+                    key={item.name}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell className="label-custom" align="left">
-                      {key}
+                      {item.name}
                     </TableCell>
                     <TableCell className="table-header" align="left">
-                      <b>{value}</b>
+                      <b>{sensorData[item.label]}</b>
                     </TableCell>
-                    <TableCell className="table-header" align="left">
-                      {value.value} <b>{value.unit}</b>
-                    </TableCell>
+                    {/* <TableCell className="table-header" align="left">
+                      unit
+                    </TableCell> */}
                   </TableRow>
                 );
               })}

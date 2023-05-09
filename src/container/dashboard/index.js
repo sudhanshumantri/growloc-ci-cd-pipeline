@@ -76,8 +76,10 @@ import {
   selectFarmDashboardZoneLattestSensorListError,
   selectIsFarmDashboardAllZoneDetailsLoading,
   selectFarmDashboardAllZoneDetailsList,
-  selectFarmDashboardAllZoneDetailsListError
+  selectFarmDashboardAllZoneDetailsListError,
+  selectAllUserZoneSensor,
 } from "../../selectors/dashboard";
+import { selectPusherData } from "../../selectors/pucher";
 import { selectUsersList } from "../../selectors/users";
 import { selectFarmInventoryList } from "../../selectors/inventory";
 import {
@@ -189,6 +191,8 @@ const mapStateToProps = createStructuredSelector({
   farmDashboardAllZoneDetailsList: selectFarmDashboardAllZoneDetailsList(),
   farmDashboardAllZoneDetailsListError:
     selectFarmDashboardAllZoneDetailsListError(),
+  allllZoneSensorOfUser : selectAllUserZoneSensor(),
+  pusherData : selectPusherData(),
 });
 const mapDispatchToProps = {
   fetchFarmDashboardHarvest: fetchDashboardHarvestRequest,

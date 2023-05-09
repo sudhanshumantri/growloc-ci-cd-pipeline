@@ -69,6 +69,7 @@ import {
 selectFarmZoneSensorDataListError,
 
 } from "../../selectors/zone";
+import { selectPusherData } from "../../selectors/pucher";
 import {
   selectZoneReportsList,
   selectIsZoneReportsListLoading,
@@ -151,7 +152,8 @@ isFarmDashboardZoneLattestSensorLoading:selectIsFarmDashboardZoneLattestSensorLo
 farmDashboardZoneLattestSensorList:selectFarmDashboardZoneLattestSensorList(),
 farmDashboardZoneLattestSensorListError:selectFarmDashboardZoneLattestSensorListError(),
 allFarmZones:selectFarmDashboardAllZoneDetailsList(),
-isAllFarmZonesLoading:selectIsFarmDashboardAllZoneDetailsLoading()
+isAllFarmZonesLoading:selectIsFarmDashboardAllZoneDetailsLoading(),
+pusherData : selectPusherData()
 
 });
 const mapDispatchToProps = {

@@ -84,6 +84,7 @@ export default function ZoneDashboard({
   fetchAllFarmZones,
   isAllFarmZonesLoading,
   allFarmZones,
+  pusherData,
 }) {
   const { farmId, zoneId } = useParams();
   const [month, setMonth] = useState(3);
@@ -92,7 +93,18 @@ export default function ZoneDashboard({
   const [selectedPlatform, setSelectedPlatform] = useState("zoneEfficiency");
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [selectedSensor, setSelectedSensor] = useState(null);
+  const [lattestDataByPusher, setLatestDataByPusher] = useState([]);
+  useEffect(() => {
+    if (pusherData && pusherData.length) {
+      const sensorId = selectedSensor ? selectedSensor : zoneDashboardZoneSensorList[0]?.sensorId;
+      let sensorDataFilter = pusherData.filter(item => item.device_id == sensorId);
+      sensorDataFilter.sort((a, b) => parseInt(b.iot_timestamp) - parseInt(a.iot_timestamp));
+      let tmpData = [...sensorDataFilter];
+      setLatestDataByPusher([{ ...tmpData[0] }]);
+      console.log("check======", tmpData);
+    }
 
+  }, [pusherData,selectedSensor]);
   useEffect(() => {
     if (zoneId) {
       fecthFarmDashboardZone({
@@ -238,7 +250,7 @@ export default function ZoneDashboard({
     },
   ];
 
-  
+
   const ZONE_HEADERS = [
     {
       label: "Type",
@@ -546,7 +558,38 @@ export default function ZoneDashboard({
         <span>No sensor data available</span>
       )
     }
-    const sensorData = data[0].payload;
+    let rows = [
+      {
+        name:"Temperature",
+        label:"temp"
+      },
+      {
+        name:"Humidity",
+        label:"humidity"
+      },
+      {
+        name:"CO2",
+        label:"co2",
+      },
+      {
+        name:"Light",
+        label:"lightIntensity"
+      }
+    ]
+    let sensorData ;
+    let sensorDataReceivedTime ;
+    if(
+      lattestDataByPusher && 
+      lattestDataByPusher.length && 
+      lattestDataByPusher[0].data && 
+      lattestDataByPusher[0].data.length
+      ){
+      sensorData = lattestDataByPusher[0].data[0].payload;
+      sensorDataReceivedTime = parseInt(lattestDataByPusher[0].iot_timestamp);
+    }else{
+      sensorData = data[0].payload;
+      sensorDataReceivedTime = farmDashboardZoneLattestSensorList?.created_on
+    }
     return (
       <Grid item xs={12} sm={12} md={12}>
         <p className="section-title"> Senor Information </p>
@@ -554,7 +597,7 @@ export default function ZoneDashboard({
           <p>
             Last Updated :
             {moment(
-              new Date(farmDashboardZoneLattestSensorList?.created_on)
+              new Date(sensorDataReceivedTime)
             ).format("MMMM Do YYYY hh:mm:ss A")}
           </p>
         )}
@@ -572,21 +615,21 @@ export default function ZoneDashboard({
               </TableRow>
             </TableHead>
             <TableBody>
-              {Object.entries(sensorData).map(([key, value]) => {
+              {rows.map((item,idx) => {
                 return (
                   <TableRow
-                    key={key}
+                    key={item.name}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell className="label-custom" align="left">
-                      {key}
+                      {item.name}
                     </TableCell>
                     <TableCell className="table-header" align="left">
-                      <b>{value}</b>
+                      <b>{sensorData[item.label]}</b>
                     </TableCell>
-                    <TableCell className="table-header" align="left">
-                      {value.value} <b>{value.unit}</b>
-                    </TableCell>
+                    {/* <TableCell className="table-header" align="left">
+                      unit
+                    </TableCell> */}
                   </TableRow>
                 );
               })}
@@ -601,34 +644,34 @@ export default function ZoneDashboard({
     return (
       <>
         <Grid item xs={12} sm={12} md={12}>
-         {(zoneDashboardZoneSensorList && zoneDashboardZoneSensorList.length)?
-          <TabContext
-          value={
-            selectedSensor
-              ? selectedSensor.toString()
-              : zoneDashboardZoneSensorList[0]?.sensorId || ""
-          }
-        >
-          <TabList
-            onChange={handleSensorLattestDataChange}
-            sx={{
-              ".Mui-selected": {
-                color: "green !important",
-              },
-              "& .MuiTabs-indicator": {
-                backgroundColor: "green",
-              },
-            }}
-          >
-            {(zoneDashboardZoneSensorList || []).map((platform, index) => (
-              <Tab
-                key={platform.sensorId}
-                label={platform.sensorId}
-                value={platform.sensorId ? platform.sensorId : ""}
-              />
-            ))}
-          </TabList>
-        </TabContext>:<span>No sensor available</span>}
+          {(zoneDashboardZoneSensorList && zoneDashboardZoneSensorList.length) ?
+            <TabContext
+              value={
+                selectedSensor
+                  ? selectedSensor.toString()
+                  : zoneDashboardZoneSensorList[0]?.sensorId || ""
+              }
+            >
+              <TabList
+                onChange={handleSensorLattestDataChange}
+                sx={{
+                  ".Mui-selected": {
+                    color: "green !important",
+                  },
+                  "& .MuiTabs-indicator": {
+                    backgroundColor: "green",
+                  },
+                }}
+              >
+                {(zoneDashboardZoneSensorList || []).map((platform, index) => (
+                  <Tab
+                    key={platform.sensorId}
+                    label={platform.sensorId}
+                    value={platform.sensorId ? platform.sensorId : ""}
+                  />
+                ))}
+              </TabList>
+            </TabContext> : <span>No sensor available</span>}
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           {selectedSensor && rendeLattestSensorDataByID()}
@@ -678,7 +721,7 @@ export default function ZoneDashboard({
       {isZoneDashboardZoneInfoLoading && <Loader title="Loading zone Info" />}
       <div className="page-container">
         <Grid container spacing={2}>
-          {<ZoneHeaderInformation zoneDashboardZoneInfoList={zoneDashboardZoneInfoList}/>}
+          {<ZoneHeaderInformation zoneDashboardZoneInfoList={zoneDashboardZoneInfoList} />}
           <TabContext value={value}>
             <Grid item xs={12} sm={12} md={12}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -687,7 +730,7 @@ export default function ZoneDashboard({
                   aria-label="lab API tabs example"
                 >
                   <Tab label="Zone Sensors Data" value="1" />
-                  <Tab label="Sensors" value="2" />
+                  {/* <Tab label="Sensors" value="2" /> */}
                   <Tab label="Crop Schedules" value="3" />
                   <Tab label="Task Schedules" value="4" />
                   <Tab label="Reports" value="5" />
@@ -695,7 +738,7 @@ export default function ZoneDashboard({
                 </TabList>
               </Box>
               <TabPanel value="1"> {renderZoneSensorData()}</TabPanel>
-              <TabPanel value="2"> {renderZoneSencers()}</TabPanel>
+              {/* <TabPanel value="2"> {renderZoneSencers()}</TabPanel> */}
               <TabPanel value="3">{renderZoneCropSchedules()}</TabPanel>
               {/* <TabPanel value="4">{renderZoneTaskSchedules()}</TabPanel> */}
               <TabPanel value="4">
@@ -723,7 +766,7 @@ export default function ZoneDashboard({
                   {renderReportdDetails()}
                 </Grid>
               </TabPanel>
-              <TabPanel value="6">{<ZoneInformation farmZoneList={farmZoneList}/>}</TabPanel>
+              <TabPanel value="6">{<ZoneInformation farmZoneList={farmZoneList} />}</TabPanel>
             </Grid>
           </TabContext>
         </Grid>
