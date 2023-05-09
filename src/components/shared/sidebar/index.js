@@ -84,12 +84,15 @@ export default function SideBar({ router, logout, loginObject }) {
   const [open, setOpen] = useState(true);
   const [openSubmenu, toggleSubmenu] = useState(false);
   const [items, setItems] = useState(menuItems);
+
+   
   const toggleDrawer = () => {
     setOpen(!open);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
   const { location } = router;
   useEffect(() => {
     if (location?.pathname) {
