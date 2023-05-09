@@ -28,6 +28,7 @@ import "./style.css";
 import AuthOutlet from "../authoutlet";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
 const drawerWidth = 300;
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -85,18 +86,35 @@ export default function SideBar({ router, logout, loginObject }) {
   const [open, setOpen] = useState(true);
   const [openSubmenu, toggleSubmenu] = useState(false);
   const [items, setItems] = useState(menuItems);
-  const windowSize = useRef([window.innerWidth, window.innerHeight]);
-  useEffect(()=>{
-    if(windowSize.current[0]<780){
-      setOpen(false);
-    }
-  },[]);
+  // const [windowSize, setWindowSize] = useState({
+  //   width: window.innerWidth,
+  //   height: window.innerHeight,
+  // });
+
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setWindowSize({
+  //       width: window.innerWidth,
+  //       height: window.innerHeight,
+  //     });
+  //   };
+  //   window.addEventListener('resize', handleResize);
+  //   return () => window.removeEventListener('resize', handleResize);
+  // }, []);
+  // useEffect(() => {
+  //   console.log(windowSize.width,"windowSize.width");
+  //   if (windowSize.width < 800) {
+  //     setOpen(false);
+  //   }
+  // }, [windowSize]);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  
 
   const { location } = router;
   useEffect(() => {
@@ -111,6 +129,7 @@ export default function SideBar({ router, logout, loginObject }) {
       }
     }
   }, [location]);
+  
   const handleClick = (id) => {
     toggleSubmenu((prevState) => ({ ...prevState, [id]: !prevState[id] }));
   };
