@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRef } from 'react';
 import { useParams } from "react-router-dom";
 import {
   styled,
@@ -84,6 +85,12 @@ export default function SideBar({ router, logout, loginObject }) {
   const [open, setOpen] = useState(true);
   const [openSubmenu, toggleSubmenu] = useState(false);
   const [items, setItems] = useState(menuItems);
+  const windowSize = useRef([window.innerWidth, window.innerHeight]);
+  useEffect(()=>{
+    if(windowSize.current[0]<780){
+      setOpen(false);
+    }
+  },[]);
   const toggleDrawer = () => {
     setOpen(!open);
   };
