@@ -24,11 +24,12 @@ import "../../../../public/assets/Irrigation.png";
 import LogoutIcon from "@mui/icons-material/Logout";
 const ASSETS_URL = "../../../../public/assets/";
 import logo from "../../../../public/assets/logo.png";
+import logo_dark from "../../../../public/assets/logo_white_resized.png";
 import "./style.css";
 import AuthOutlet from "../authoutlet";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
+import { isMobile } from 'react-device-detect';
 const drawerWidth = 300;
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -86,6 +87,11 @@ export default function SideBar({ router, logout, loginObject }) {
   const [open, setOpen] = useState(true);
   const [openSubmenu, toggleSubmenu] = useState(false);
   const [items, setItems] = useState(menuItems);
+  useEffect(() => {
+    if (isMobile) {
+      setOpen(false)
+    }
+  }, []);
   // const [windowSize, setWindowSize] = useState({
   //   width: window.innerWidth,
   //   height: window.innerHeight,
@@ -114,8 +120,6 @@ export default function SideBar({ router, logout, loginObject }) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
-
   const { location } = router;
   useEffect(() => {
     if (location?.pathname) {
@@ -129,7 +133,7 @@ export default function SideBar({ router, logout, loginObject }) {
       }
     }
   }, [location]);
-  
+
   const handleClick = (id) => {
     toggleSubmenu((prevState) => ({ ...prevState, [id]: !prevState[id] }));
   };
@@ -140,32 +144,34 @@ export default function SideBar({ router, logout, loginObject }) {
         open={open}
         drawerWidth={drawerWidth}
         loginObject={loginObject}
-        logout ={logout}
+        logout={logout}
         toggleDrawer={toggleDrawer}
       />
-      <Drawer variant="permanent" open={open}  
-  >
-      {/* sx={{ display: { xs: 'none', sm: 'none', md: 'block', lg: 'block' } }} */}
-        <DrawerHeader sx={{ background: "#517223", 
- }}>
+      <Drawer variant="permanent" open={open}
+      >
+        {/* sx={{ display: { xs: 'none', sm: 'none', md: 'block', lg: 'block' } }} */}
+        <DrawerHeader sx={{
+          background: "#517223",
+        }}>
           <div className="drawer-header-logo">
-            <img src={logo} />
+            <img src={logo_dark} width='285px' height={'73px'} />
             <IconButton onClick={toggleDrawer} sx={{
-      display: {
-        lg: "none",
-        md: "none",
-        xs: "block",
-      },
-      color:"white",
-      textAlignt:"left",
-      "@media (min-width: 600px)": {
-        width:"100%"
-      },
-    }}
->
-{/* {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />} */}
-    {open && <ChevronLeftIcon /> }
-  </IconButton>
+              display: {
+                lg: "none",
+                md: "none",
+                xs: "block",
+                sm: "block"
+              },
+              color: "white",
+              textAlignt: "left",
+              "@media (min-width: 600px)": {
+                width: "100%"
+              },
+            }}
+            >
+              {/* {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />} */}
+              {open && <ChevronLeftIcon />}
+            </IconButton>
           </div>
         </DrawerHeader>
         <List
@@ -245,7 +251,7 @@ export default function SideBar({ router, logout, loginObject }) {
               </React.Fragment>
             );
           })}
-          
+
         </List>
       </Drawer>
     </Box>
