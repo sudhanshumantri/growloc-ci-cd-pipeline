@@ -207,6 +207,7 @@ export default function CropLifeCycleDetails({
       let nextStageInforamtion = null;
       if (activeStep + 1 < FarmCropLifecycleStages.length) {
         nextStageInforamtion = FarmCropLifecycleStages[activeStep + 1];
+        setActiveStep((prevStep) => prevStep + 1);
       }
       let requestData = {
         cropLifeCycleId: parseInt(lifecycleId),
@@ -220,7 +221,6 @@ export default function CropLifeCycleDetails({
       };
       cropsLifecycleTransition(requestData);
       handleModalToggle();
-      activeStep < 4 && setActiveStep((prevStep) => prevStep + 1);
     }
   };
   const handleParametersSave = (data) => {
