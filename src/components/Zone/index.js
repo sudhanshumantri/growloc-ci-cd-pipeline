@@ -679,8 +679,10 @@ export default function ZoneDashboard({
       </>
     );
   };
-
-  let subtitle = `( Zone Area : ${zoneDashboardZoneInfoList?.farmArea || ""} )`;
+  let subtitle;
+  if(zoneDashboardZoneInfoList?.farmArea) {
+   subtitle = `( Zone Area : ${zoneDashboardZoneInfoList?.farmArea || ""} )`;
+  }
   return (
     <div>
       <PageHeader

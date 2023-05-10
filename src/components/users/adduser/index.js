@@ -55,9 +55,6 @@ export default function AddUsersModal({
     errors.email = true;
     isValid = false;
   }
-
-
-
     setValidation(errors);
     return isValid;
   };

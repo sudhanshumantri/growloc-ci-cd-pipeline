@@ -7,7 +7,7 @@ export default function Loader({ title, }) {
             sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={true}
         >
-            <CircularProgress sx={{ color: '#517223' }} />
+            <CircularProgress sx={{ color: '#517223',}} />
             {title && (
                 <>
                     <br />

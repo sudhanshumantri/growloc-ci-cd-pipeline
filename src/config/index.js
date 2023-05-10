@@ -219,7 +219,7 @@ export const TOGGLE_DATA = [
   { value: "farmEfficiency", label: "Farm Efficiency" },
   { value: "mortalityRate", label: "Mortality Rate" },
   { value: "taskTat", label: "TASK TAT" },
-  { value: "Capacity Efficiency", label: "Capacity Efficiency" },
+  { value: "CapacityEfficiency", label: "Capacity Efficiency" },
 ];
 
 export const TOGGLE_ZONE_DATA = [

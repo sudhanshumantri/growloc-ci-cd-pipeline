@@ -81,7 +81,7 @@ export default function CropLifeCycle({
     handleModalToggle();
   };
   const handleBackButton = () => {
-    navigate(-1)
+    navigate(`/farm/${farmId}/zone/${zoneId}/dashboard`)
   }
 
   let buttonArray = [

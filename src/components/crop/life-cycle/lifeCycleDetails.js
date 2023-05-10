@@ -94,16 +94,13 @@ export default function CropLifeCycleDetails({
   }, [pusherData]);
 
   const handleBackButton = () => {
-    // navigate(-1);
     navigate(`/farm/${farmId}/zone/${zoneId}/lifecycle`)
   };
-
   let showBackButton = [
     {
       handler: handleBackButton,
     },
   ];
-
   useEffect(() => {
     if (!isLifecycleDetailsLoading) {
       const { cropDetails } = lifecycleDetails;

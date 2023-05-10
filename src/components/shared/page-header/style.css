@@ -3,8 +3,6 @@
   margin-top: 50px !important;
   /* min-height: 48px; */
 }
-
-
 .page-section-title {
   font-weight: 600;
   font-size: 20px;
@@ -13,19 +11,56 @@
   margin-block-end: 5px;
   display: block;
 }
-
 .page-header-subtitle {
   font-size: 14px;
   color: grey;
   margin-left: 7px;
 }
 
+/* .page-section-title {
+  font-weight: 600;
+  font-size: 20px;
+  color: #000000;
+  margin-block-start: 5px;
+  margin-block-end: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 40%;
+  overflow: hidden;
+  white-space: nowrap;
+} */
+
+/* .page-section-title {
+  font-weight: 600;
+  font-size: 20px;
+  color: #000000;
+  margin-block-start: 5px;
+  margin-block-end: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 40%;
+} */
+/* .page-section-title .title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} */
+ /* .subtitle {
+  display: inline-block;
+  max-width: calc(100% - 10px); /* subtracting 10px margin from title */
+
+/* .page-header-subtitle {
+  font-size: 14px;
+  color: grey;
+  margin-left: 7px;
+} */
 .button-container {
   flex: 1 !important;
   display: flex;
   justify-content: flex-end
 }
-
 .button-container>* {
   margin-left: 5px !important;
 }

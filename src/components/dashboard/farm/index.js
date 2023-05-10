@@ -150,6 +150,7 @@ export default function FarmDashboard({
 
   const { length: zoneSensorLattestDataLength } =
     zoneDashboardZoneSensorList || [];
+
 useEffect(()=>{
   if(pusherData && pusherData.length){
     const sensorId = selectedSensor?selectedSensor:zoneDashboardZoneSensorList[0]?.sensorId;
@@ -792,7 +793,6 @@ useEffect(()=>{
       }else{
         return null;
       }
-     
     }
     let rows = [
       {
@@ -812,8 +812,8 @@ useEffect(()=>{
         label:"lightIntensity"
       }
     ]
-    let sensorData ;
-    let sensorDataReceivedTime ;
+    let sensorData = null ;
+    let sensorDataReceivedTime = null;
     if(
       lattestDataByPusher && 
       lattestDataByPusher.length && 
@@ -966,9 +966,12 @@ useEffect(()=>{
     totalFarmArea += parseInt(zone.farmArea);
   });
   const reamingArea = farmDashboardFarmInfoList?.farmArea - totalFarmArea;
-  let subtitle = `(Total Farm Area : ${
-    farmDashboardFarmInfoList?.farmArea || ""
-  }  Available Farm Area : ${reamingArea ?? ""} )`;
+  let subtitle;
+  if(farmDashboardFarmInfoList?.farmArea) {
+     subtitle = `(Total Farm Area : ${
+      farmDashboardFarmInfoList?.farmArea || ""
+    }  Available Farm Area : ${reamingArea ?? ""} )`;
+  }
   return (
     <div>
       <PageHeader
@@ -1013,7 +1016,7 @@ useEffect(()=>{
       {isFarmDashboardAllZoneDetailsLoading && (
         <Loader title="Fetching Zone Details" />
       )}
-      {isDashboardFarmInfoListLoading && <Loader title="Fetching Farm Info" />}
+      {/* {isDashboardFarmInfoListLoading && <Loader title="Fetching Farm Info" />} */}
       <div className="page-container">
         <Grid container spacing={2}>
           {<FarmDashboardFarmInfo farmInfo={farmDashboardFarmInfoList} />}

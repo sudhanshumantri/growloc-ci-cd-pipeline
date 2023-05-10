@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useRef,useEffect}from "react";
 import Button from "../button";
 import {
   Grid,
@@ -7,11 +7,18 @@ import {
   IconButton,
   Select,
   MenuItem,
+  Menu,
+  Card,
+  CardContent,
+  Typography,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./style.css";
 import AuthOutlet from "../authoutlet";
 import { display } from "@mui/system";
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import Tooltip from '@mui/material/Tooltip';
+
 function renderButtonArray(buttonArray) {
   return buttonArray.map((item, index) => {
     return (
@@ -33,33 +40,6 @@ function renderButtonArray(buttonArray) {
   });
 
 }
-// function renderButtonArray(buttonArray) {
-//   const gridItemSizes = {
-//     xs: 12,
-//     sm: 6,
-//     md: 4,
-//     lg: 3,
-//     xl: 2
-//   };
-
-//   return buttonArray.map((item, index) => (
-//         <Grid item {...gridItemSizes} key={index} >
-//           <AuthOutlet
-//             isAuthRequired={item.isAuthRequired}
-//             from={item.from}
-//             action={item.action}
-//           >
-//             <Button
-//               ICON={item.ICON}
-//               isLight={item.isLight ? item.isLight : false}
-//               title={item.label}
-//               handleButtonClick={item.handler}
-//             />
-//           </AuthOutlet>
-//         </Grid>
-//       ))}
-  
-
 function renderSelectBox() {
   return <Select />;
 }
@@ -95,6 +75,18 @@ export default function PageHeader({
   handleChange,
 }) {
   const { length } = options || "";
+// useEffect(() => {
+//   const handleResize = () => {
+//     if (textRef.current) {
+//       const containerWidth = textRef.current.offsetWidth;
+//       const textWidth = textRef.current.scrollWidth;
+//       setShowFullText(textWidth > containerWidth * 0.4);
+//     }
+//   };
+//   handleResize();
+//   window.addEventListener("resize", handleResize);
+//   return () => window.removeEventListener("resize", handleResize);
+// }, [title, subtitle]);
 
   return (
     <>
@@ -105,7 +97,7 @@ export default function PageHeader({
       </Grid> */}
       <Grid item xs={4} sm={4} md={4} sx={{display:"flex"}}>
       {renderBackButtonArray(showBackButton)}
-        <p className="page-section-title">
+      <p className="page-section-title">
           {title}
           {subtitle && <span className="label-light">{subtitle}</span>}
         </p>
