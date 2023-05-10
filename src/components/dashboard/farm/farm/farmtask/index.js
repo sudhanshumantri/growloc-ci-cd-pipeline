@@ -54,24 +54,38 @@ const FarmDashbaordTaskList = ({
     if (loginObject) {
       loginObject = JSON.parse(loginObject);
     }
+    console.log("check=====", rowdata, data);
     let payload = {
       ...data,
       taskId: parseInt(rowdata.id),
       userId: loginObject.profile.userId,
-      isStatusChange:true,
+      isStatusChange: true,
     };
     if (isTaskStatusChange) {
-      addFarmTaskComment(payload);
-      let tmpPayload = {...payload};
-      tmpPayload.comment = `Task status changed from ${data.prevStatus} to ${data.status} by ${loginObject.profile.name}`;
-      tmpPayload.isStatusChange = false;
-      addFarmTaskComment(tmpPayload);
+      if (data.prevStatus == data.status) {
+        payload.isStatusChange = false;
+        addFarmTaskComment(payload);
+      } else {
+        addFarmTaskComment(payload);
+        let tmpPayload = { ...payload };
+        tmpPayload.comment = `Task status changed from ${data.prevStatus} to ${data.status} by ${loginObject.profile.name}`;
+        tmpPayload.isStatusChange = false;
+        addFarmTaskComment(tmpPayload);
+      }
+
     } else {
-      addFarmTaskComment(payload);
-      let tmpPayload = {...payload};
-      tmpPayload.comment = `Task status changed from ${data.prevStatus} to In review by ${loginObject.profile.name}`;
-      tmpPayload.isStatusChange = false;
-      addFarmTaskComment(tmpPayload);
+      if (loginObject.profile.userId === rowdata.createdFor) {
+        addFarmTaskComment(payload);
+        let tmpPayload = { ...payload };
+        tmpPayload.comment = `Task status changed from ${data.prevStatus} to In review by ${loginObject.profile.name}`;
+        tmpPayload.isStatusChange = false;
+        addFarmTaskComment(tmpPayload);
+      } else {
+        payload.isStatusChange = false;
+        addFarmTaskComment(payload);
+      }
+
+
     }
     // if (data) {
     //   addFarmTaskComment({
