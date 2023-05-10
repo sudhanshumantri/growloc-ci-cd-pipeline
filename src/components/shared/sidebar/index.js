@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useRef } from 'react';
 import { useParams } from "react-router-dom";
 import {
   styled,
@@ -85,15 +84,6 @@ export default function SideBar({ router, logout, loginObject }) {
   const [open, setOpen] = useState(true);
   const [openSubmenu, toggleSubmenu] = useState(false);
   const [items, setItems] = useState(menuItems);
-  const windowSize = useRef([window.innerWidth, window.innerHeight]);
-  useEffect(()=>{
-    if(windowSize.current[0]<780){
-      setOpen(false);
-    }
-  },[]);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -120,32 +110,33 @@ export default function SideBar({ router, logout, loginObject }) {
         open={open}
         drawerWidth={drawerWidth}
         loginObject={loginObject}
-        logout ={logout}
+        logout={logout}
         toggleDrawer={toggleDrawer}
       />
-      <Drawer variant="permanent" open={open}  
-  >
-      {/* sx={{ display: { xs: 'none', sm: 'none', md: 'block', lg: 'block' } }} */}
-        <DrawerHeader sx={{ background: "#517223", 
- }}>
+      <Drawer variant="permanent" open={open}
+      >
+        {/* sx={{ display: { xs: 'none', sm: 'none', md: 'block', lg: 'block' } }} */}
+        <DrawerHeader sx={{
+          background: "#517223",
+        }}>
           <div className="drawer-header-logo">
             <img src={logo} />
             <IconButton onClick={toggleDrawer} sx={{
-      display: {
-        lg: "none",
-        md: "none",
-        xs: "block",
-      },
-      color:"white",
-      textAlignt:"left",
-      "@media (min-width: 600px)": {
-        width:"100%"
-      },
-    }}
->
-{/* {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />} */}
-    {open && <ChevronLeftIcon /> }
-  </IconButton>
+              display: {
+                lg: "none",
+                md: "none",
+                xs: "block",
+              },
+              color: "white",
+              textAlignt: "left",
+              "@media (min-width: 600px)": {
+                width: "100%"
+              },
+            }}
+            >
+              {/* {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />} */}
+              {open && <ChevronLeftIcon />}
+            </IconButton>
           </div>
         </DrawerHeader>
         <List
@@ -225,7 +216,7 @@ export default function SideBar({ router, logout, loginObject }) {
               </React.Fragment>
             );
           })}
-          
+
         </List>
       </Drawer>
     </Box>
