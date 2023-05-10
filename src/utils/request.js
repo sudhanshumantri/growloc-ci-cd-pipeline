@@ -3,7 +3,7 @@ import { call, all, put, takeLatest } from "redux-saga/effects";
 import { browserHistory } from "../store";
 import { isEmpty, toNumber } from "lodash";
 import { addNotification } from "../components/shared/notification";
-const TOKEN = localStorage.getItem("AUTH_TOKEN");
+// const TOKEN = localStorage.getItem("AUTH_TOKEN");
 function queryParams(params) {
   return Object.keys(params)
     .map(
@@ -83,6 +83,7 @@ export default function callApi(url, options = {}) {
   }
 
   if (!removeAuthorizationHeader) {
+    const TOKEN = localStorage.getItem("AUTH_TOKEN");
     originalConfig.headers = {
       Authorization: "Bearer " + TOKEN,
     };
