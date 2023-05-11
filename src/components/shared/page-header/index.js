@@ -11,13 +11,12 @@ import {
   Card,
   CardContent,
   Typography,
+  Tooltip
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./style.css";
 import AuthOutlet from "../authoutlet";
-import { display } from "@mui/system";
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import Tooltip from '@mui/material/Tooltip';
+import InfoIcon from '@mui/icons-material/Info';
 
 function renderButtonArray(buttonArray) {
   return buttonArray.map((item, index) => {
@@ -95,14 +94,24 @@ export default function PageHeader({
       {/* <Grid item xs={1} sm={1} md={1}>
         {renderBackButtonArray(showBackButton)}
       </Grid> */}
-      <Grid item xs={4} sm={4} md={4} sx={{display:"flex"}}>
+      <Grid item xs={5} sm={5} md={5} sx={{display:"flex",maxWidth:"40"}}>
       {renderBackButtonArray(showBackButton)}
       <p className="page-section-title">
           {title}
           {subtitle && <span className="label-light">{subtitle}</span>}
         </p>
+    {/* <div className="page-section-title">
+    <Tooltip title={title}>
+      <div className="title">
+        {title}
+        </div>
+    </Tooltip>
+    {/* <div className="title">{title}</div> */}
+    {/* {subtitle && <div className="subtitle">{subtitle}</div>} */}
+  {/* </div> */} 
+
       </Grid>
-      <Grid item xs={8} sm={8} md={8} className="button-container">
+      <Grid item xs={7} sm={7} md={7} className="button-container">
         {headerDropwdown && (
           <Select
             value={length ? value || "" : ""}
@@ -144,7 +153,7 @@ export default function PageHeader({
   ) : (
     <Grid container spacing={2} className="page-header-container ">
       <Grid item xs={6} sm={6} md={3}>
-        <p className="page-section-title">
+        <p className="page-section-name">
           {title}
           {subtitle && <span className="label-light">{subtitle}</span>}
         </p>

@@ -456,7 +456,7 @@ useEffect(()=>{
   const ZONE_HEADER = [
     {
       label: "Name",
-      key: "name",
+      key: 'name',
       redirection: true,
       redirectionKey: "zone_internal_id",
       baseEndPoint: `#/farm/${farmId}/zone/`,

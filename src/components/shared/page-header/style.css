@@ -3,6 +3,7 @@
   margin-top: 50px !important;
   /* min-height: 48px; */
 }
+
 .page-section-title {
   font-weight: 600;
   font-size: 20px;
@@ -13,48 +14,38 @@
 }
 .page-header-subtitle {
   font-size: 14px;
-  color: grey;
+  color: #808080;
   margin-left: 7px;
 }
 
 /* .page-section-title {
-  font-weight: 600;
-  font-size: 20px;
-  color: #000000;
-  margin-block-start: 5px;
-  margin-block-end: 5px;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  max-width: 40%;
-  overflow: hidden;
-  white-space: nowrap;
-} */
-
-/* .page-section-title {
-  font-weight: 600;
-  font-size: 20px;
-  color: #000000;
-  margin-block-start: 5px;
-  margin-block-end: 5px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  max-width: 40%;
+  flex-wrap: wrap;
 } */
 /* .page-section-title .title {
+  font-weight: 600;
+  font-size: 20px;
+  color: #000000;
+  margin-block-start: 5px;
+  margin-block-end: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-} */
- /* .subtitle {
-  display: inline-block;
-  max-width: calc(100% - 10px); /* subtracting 10px margin from title */
-
-/* .page-header-subtitle {
+  max-width: 40%;
+}
+.page-section-title .subtitle {
   font-size: 14px;
-  color: grey;
-  margin-left: 7px;
+  color: #808080;
+}
+
+.page-section-name{
+  font-weight: 600;
+  font-size: 20px;
+  color: #000000;
+  margin-block-start: 5px;
+  margin-block-end: 5px;
+  display: block;
 } */
 .button-container {
   flex: 1 !important;
@@ -88,6 +79,17 @@
     left: calc(-52% + -11px) !important;
     right: calc(50% + 22px) !important;
 } */
+}
+
+.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root {
+  width: 35px;
+  height: 35px;
+  margin: 15px 5px 0px 0px!important;
+}
+.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root:hover{
+  width: 35px;
+  height: 35px;
+  margin: 15px 5px 0px 0px;
 }
 
 

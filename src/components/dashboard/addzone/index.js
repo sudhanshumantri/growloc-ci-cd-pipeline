@@ -72,7 +72,7 @@ export default function AddZoneModal({
 
   const handleFarmDashboardZoneSave = () => {
     let requestFarmDashBoardZoneData = {
-      name: zoneData.name,
+      name: zoneData.name.toUpperCase(),
       farmArea: zoneData.farmArea,
       zoneType: zoneData.zoneType,
       systemType: zoneData.systemType,
