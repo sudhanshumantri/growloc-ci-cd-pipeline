@@ -153,7 +153,7 @@ export default function PageHeader({
   ) : (
     <Grid container spacing={2} className="page-header-container ">
       <Grid item xs={6} sm={6} md={3}>
-        <p className="page-section-name">
+        <p className="page-section-title">
           {title}
           {subtitle && <span className="label-light">{subtitle}</span>}
         </p>
