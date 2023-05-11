@@ -147,12 +147,12 @@ export default function SideBar({ router, logout, loginObject }) {
         logout={logout}
         toggleDrawer={toggleDrawer}
       />
-      <Drawer variant="permanent" open={open}
+      <Drawer variant="permanent" open={open} 
       >
         {/* sx={{ display: { xs: 'none', sm: 'none', md: 'block', lg: 'block' } }} */}
         <DrawerHeader sx={{
-          background: "#517223",
-        }}>
+          background: "#517223", height:"100hv",
+        }} className="drawer-heade-section">
           <div className="drawer-header-logo">
             <img src={logo_dark} width='285px' height={'73px'} />
             <IconButton onClick={toggleDrawer} sx={{

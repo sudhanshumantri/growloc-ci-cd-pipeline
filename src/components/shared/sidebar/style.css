@@ -18,7 +18,11 @@
 /* .css-10l0axr-MuiDrawer-docked .MuiDrawer-paper{
     background-color:rgb(81,114,35) !important;
   } */
-  .css-12i7wg6-MuiPaper-root-MuiDrawer-paper{
+  /* .css-12i7wg6-MuiPaper-root-MuiDrawer-paper{
     background-color:rgb(81,114,35) !important;
+  } */
+
+  .MuiDrawer-docked div{
+    background-color: rgb(81 114 34)!important; 
   }
   
