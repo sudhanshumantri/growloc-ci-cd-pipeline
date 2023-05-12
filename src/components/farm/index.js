@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate,Link } from "react-router-dom";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
-import { Card, Grid, CardContent, CardActions, Menu, MenuItem, IconButton, ListItemIcon, ListItemText, Divider } from "@mui/material";
+import { Card, Grid, CardContent, CardActions, Menu, MenuItem, IconButton, ListItemIcon, ListItemText, Divider,Tooltip} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import ConfirmDialogBox from "../shared/dailog/ConfirmDialogBox";
@@ -25,6 +25,8 @@ export default function ManageFarm({
   const [expanded, setExpanded] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [showMenu, setShowMenu] = useState(false)
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [tooltipTitle, setTooltipTitle] = useState("");
 
   const handleOpenMoreOptions = (event, id) => {
     event.preventDefault();
@@ -34,7 +36,6 @@ export default function ManageFarm({
   const handleCloseMoreOptions = () => {
     setAnchorEl(null);
   };
-
   const handleEdit = (e, elem) => {
     e.preventDefault();
     const { farm } = elem;
@@ -93,6 +94,16 @@ export default function ManageFarm({
     e.preventDefault();
     setExpanded(!expanded);
   };
+  const handleTitleClick = (e, name) => {
+    e.preventDefault();
+    setTooltipOpen(true);
+    setTooltipTitle(name);
+  };
+  const handleTooltipClose = () => {
+    setTooltipOpen(false);
+    setTooltipTitle("");
+  };
+
 
 
   return (
@@ -137,7 +148,15 @@ export default function ManageFarm({
                 >
                   <Grid container spacing={2} alignItems="center">
                     <Grid item xs={10} sm={10} md={10}>
-                      <p className="farm-card-title" >{elem.farm.name}</p>
+                      {/* <p className="farm-card-title" >{elem.farm.name}</p> */}
+                      <Tooltip
+                    title={tooltipTitle}
+                    open={tooltipOpen}
+                    onClose={handleTooltipClose}
+                    enterDelay={500}
+                  >
+                <p className="farm-card-title" onClick={(e) => handleTitleClick(e, elem.farm.name)}>{elem.farm.name}</p>
+                   </Tooltip>
                     </Grid>
                     <Grid item xs={2} sm={2} md={2}>
                       <AuthOutlet

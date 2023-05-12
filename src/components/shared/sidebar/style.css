@@ -25,4 +25,11 @@
   .MuiDrawer-docked div{
     background-color: rgb(81 114 34)!important; 
   }
+  @media (max-width: 800px){
+    .drawer-header-logo img{
+        width: 245px !important;   
+     }
+    }
+
+
   

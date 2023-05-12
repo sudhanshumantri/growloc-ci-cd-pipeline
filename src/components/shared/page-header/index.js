@@ -74,19 +74,21 @@ export default function PageHeader({
   handleChange,
 }) {
   const { length } = options || "";
-// useEffect(() => {
-//   const handleResize = () => {
-//     if (textRef.current) {
-//       const containerWidth = textRef.current.offsetWidth;
-//       const textWidth = textRef.current.scrollWidth;
-//       setShowFullText(textWidth > containerWidth * 0.4);
-//     }
-//   };
-//   handleResize();
-//   window.addEventListener("resize", handleResize);
-//   return () => window.removeEventListener("resize", handleResize);
-// }, [title, subtitle]);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [tooltipTitle, setTooltipTitle] = useState("");
 
+  const handleTitleClick = (e, name) => {
+    setTooltipOpen(true);
+    setTooltipTitle(name);
+  };
+  const handleTooltipClose = () => {
+    setTooltipOpen(false);
+    setTooltipTitle("");
+  };
+  const handleTitleMouseOver = (e, name) => {
+    setTooltipOpen(true);
+    setTooltipTitle(name);
+  };
   return (
     <>
       {showBackButton && showBackButton.length > 0 ? (
@@ -96,19 +98,29 @@ export default function PageHeader({
       </Grid> */}
       <Grid item xs={5} sm={5} md={5} sx={{display:"flex",maxWidth:"40"}}>
       {renderBackButtonArray(showBackButton)}
-      <p className="page-section-title">
+      {/* <p className="page-section-title">
           {title}
           {subtitle && <span className="label-light">{subtitle}</span>}
-        </p>
-    {/* <div className="page-section-title">
-    <Tooltip title={title}>
-      <div className="title">
-        {title}
-        </div>
-    </Tooltip>
-    {/* <div className="title">{title}</div> */}
-    {/* {subtitle && <div className="subtitle">{subtitle}</div>} */}
-  {/* </div> */} 
+        </p> */}
+             <Tooltip
+              title={tooltipTitle}
+              open={tooltipOpen}
+              onClose={handleTooltipClose}
+              enterDelay={500}
+            >
+              <div className="page-section-title">
+                <div
+                className="title"
+                onClick={(e) => handleTitleClick(e,title)}
+                onMouseOver={(e) => handleTitleMouseOver(e, title)}
+                onMouseLeave={handleTooltipClose}
+
+                >
+                  {title}
+                </div>
+                {subtitle && <div className="subtitle">{subtitle}</div>}
+              </div>
+            </Tooltip>
 
       </Grid>
       <Grid item xs={7} sm={7} md={7} className="button-container">
@@ -153,7 +165,7 @@ export default function PageHeader({
   ) : (
     <Grid container spacing={2} className="page-header-container ">
       <Grid item xs={6} sm={6} md={3}>
-        <p className="page-section-title">
+        <p className="page-section-name">
           {title}
           {subtitle && <span className="label-light">{subtitle}</span>}
         </p>

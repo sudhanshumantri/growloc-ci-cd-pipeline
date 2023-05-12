@@ -55,7 +55,7 @@ export default function ConfirmDialogBox({
               {subHeading}
             </DialogContentText>
           </DialogContent>
-          <DialogActions>{renderButtons()}</DialogActions>
+          <DialogActions sx={{justifyContent:"center"}}>{renderButtons()}</DialogActions>
         </form>
       </Dialog>
     </>
