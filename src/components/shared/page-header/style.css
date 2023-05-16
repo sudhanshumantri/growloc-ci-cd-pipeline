@@ -3,42 +3,35 @@
   margin-top: 50px !important;
   /* min-height: 48px; */
 }
- /* .page-section-title {
-  font-weight: 600;
-  font-size: 20px;
-  color: #000000;
+.page-section-title-container {
   margin-block-start: 5px;
   margin-block-end: 5px;
-  display: block;
-} */
-.page-section-title {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
 }
-.page-section-title .title {
+ .page-section-title {
   font-weight: 600;
   font-size: 20px;
   color: #000000;
   margin-block-start: 5px;
   margin-block-end: 5px;
+  /* text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 40%;
-}
-.page-section-title .subtitle {
-  font-size: 14px;
-  color: #808080;
-} 
-.page-section-name{
-  font-weight: 600;
-  font-size: 20px;
-  color: #000000;
-  margin-block-start: 5px;
-  margin-block-end: 5px;
+  text-align: left; */
   display: block;
-} 
+}
+/* .page-section-title-name {
+max-width: 40%!important;
+} */
+.label-light-header {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  color: #606a72;
+  margin: auto;
+  letter-spacing: 0.01em;
+  display: flex;
+}
 .button-container {
   flex: 1 !important;
   display: flex;

@@ -10,6 +10,9 @@ import AddIcon from "@mui/icons-material/Add";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import "./style.css";
 import AuthOutlet from "../shared/authoutlet";
+import { isMobile } from 'react-device-detect';
+
+
 export default function ManageFarm({
   fetchFarm,
   farmList,
@@ -28,6 +31,9 @@ export default function ManageFarm({
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [tooltipTitle, setTooltipTitle] = useState("");
 
+  useEffect(() => {
+    fetchFarm();
+  }, []);
   const handleOpenMoreOptions = (event, id) => {
     event.preventDefault();
     setShowMenu({ [id]: true })
@@ -64,10 +70,6 @@ export default function ManageFarm({
   const handleDeleteDialogueToggle = () => {
     setIsDeleteModelOpen(!isDeleteModelOpen);
   };
-  React.useEffect(() => {
-    fetchFarm();
-    
-  }, []);
 
   let buttonArray = [
     {
@@ -95,10 +97,13 @@ export default function ManageFarm({
     setExpanded(!expanded);
   };
   const handleTitleClick = (e, name) => {
+    if(isMobile) {
     e.preventDefault();
     setTooltipOpen(true);
     setTooltipTitle(name);
+    }
   };
+
   const handleTooltipClose = () => {
     setTooltipOpen(false);
     setTooltipTitle("");
@@ -157,6 +162,7 @@ export default function ManageFarm({
                   >
                 <p className="farm-card-title" onClick={(e) => handleTitleClick(e, elem.farm.name)}>{elem.farm.name}</p>
                    </Tooltip>
+                   
                     </Grid>
                     <Grid item xs={2} sm={2} md={2}>
                       <AuthOutlet

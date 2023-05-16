@@ -101,7 +101,6 @@ export default function ZoneDashboard({
       sensorDataFilter.sort((a, b) => parseInt(b.iot_timestamp) - parseInt(a.iot_timestamp));
       let tmpData = [...sensorDataFilter];
       setLatestDataByPusher([{ ...tmpData[0] }]);
-      console.log("check======", tmpData);
     }
 
   }, [pusherData,selectedSensor]);
@@ -141,6 +140,7 @@ export default function ZoneDashboard({
   }, [zoneSensorLattestDataLength, zoneId]);
 
   const handleZoneTabChange = (event, newValue) => {
+    console.log(newValue,"newValue");
     setValue(newValue);
     if (newValue === "1") {
       fetchFarmZoneSensorDataRequest({ id: zoneId });
@@ -718,9 +718,10 @@ export default function ZoneDashboard({
         <Loader title="Fetching Harvest details" />
       )}
       {isFarmDashboardZoneLattestSensorLoading && (
-        <Loader title="Zone information Details" />
+        <Loader title="Zone Sensor details" />
       )}
-      {isZoneDashboardZoneInfoLoading && <Loader title="Loading zone Info" />}
+      {/* {isZoneDashboardZoneInfoLoading && <Loader title="Loading zone Info" />} */}
+      {isFarmZoneSensorDataLoading && <Loader title ="Fetching Zone sensors Data"/>}
       <div className="page-container">
         <Grid container spacing={2}>
           {<ZoneHeaderInformation zoneDashboardZoneInfoList={zoneDashboardZoneInfoList} />}
@@ -730,6 +731,21 @@ export default function ZoneDashboard({
                 <TabList
                   onChange={handleZoneTabChange}
                   aria-label="lab API tabs example"
+                  sx={{
+                    ".Mui-selected": {
+                      color: "green !important",
+                    },
+                    "& .MuiTabs-indicator": {
+                      backgroundColor: "green",
+                    },
+                    "@media (max-width: 960px)": {
+                      ".MuiButtonBase-root.MuiTab-root": {
+                        padding: "12px 3px !important",
+                        fontSize: "0.8rem !important",
+                      },
+                    },
+          
+                  }}
                 >
                   <Tab label="Zone Sensors Data" value="1" />
                   {/* <Tab label="Sensors" value="2" /> */}
@@ -762,7 +778,6 @@ export default function ZoneDashboard({
                   />
                 }
               </TabPanel>
-
               <TabPanel value="5">
                 <Grid container spacing={2}>
                   {renderReportdDetails()}

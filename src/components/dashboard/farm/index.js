@@ -1033,6 +1033,13 @@ useEffect(()=>{
                     "& .MuiTabs-indicator": {
                       backgroundColor: "green",
                     },
+                    "@media (max-width: 800px)": {
+                      "&&.MuiButtonBase-root.MuiTab-root": {
+                        padding: "12px 4px !important",
+                        fontSize: "0.8rem !important",
+                      },
+                    },
+
                   }}
                 >
                   <Tab label="Sensor Data " value="1" />

@@ -74,21 +74,6 @@ export default function PageHeader({
   handleChange,
 }) {
   const { length } = options || "";
-  const [tooltipOpen, setTooltipOpen] = useState(false);
-  const [tooltipTitle, setTooltipTitle] = useState("");
-
-  const handleTitleClick = (e, name) => {
-    setTooltipOpen(true);
-    setTooltipTitle(name);
-  };
-  const handleTooltipClose = () => {
-    setTooltipOpen(false);
-    setTooltipTitle("");
-  };
-  const handleTitleMouseOver = (e, name) => {
-    setTooltipOpen(true);
-    setTooltipTitle(name);
-  };
   return (
     <>
       {showBackButton && showBackButton.length > 0 ? (
@@ -96,32 +81,12 @@ export default function PageHeader({
       {/* <Grid item xs={1} sm={1} md={1}>
         {renderBackButtonArray(showBackButton)}
       </Grid> */}
-      <Grid item xs={5} sm={5} md={5} sx={{display:"flex",maxWidth:"40"}}>
+      <Grid item xs={5} sm={5} md={5} sx={{display:"flex",}}>
       {renderBackButtonArray(showBackButton)}
-      {/* <p className="page-section-title">
-          {title}
-          {subtitle && <span className="label-light">{subtitle}</span>}
-        </p> */}
-             <Tooltip
-              title={tooltipTitle}
-              open={tooltipOpen}
-              onClose={handleTooltipClose}
-              enterDelay={500}
-            >
-              <div className="page-section-title">
-                <div
-                className="title"
-                onClick={(e) => handleTitleClick(e,title)}
-                onMouseOver={(e) => handleTitleMouseOver(e, title)}
-                onMouseLeave={handleTooltipClose}
-
-                >
-                  {title}
-                </div>
-                {subtitle && <div className="subtitle">{subtitle}</div>}
-              </div>
-            </Tooltip>
-
+      <p className="page-section-title">
+          <span>{title}</span>
+          {subtitle && <span className="label-light-header">{subtitle}</span>}
+        </p>
       </Grid>
       <Grid item xs={7} sm={7} md={7} className="button-container">
         {headerDropwdown && (
@@ -165,7 +130,7 @@ export default function PageHeader({
   ) : (
     <Grid container spacing={2} className="page-header-container ">
       <Grid item xs={6} sm={6} md={3}>
-        <p className="page-section-name">
+        <p className="page-section-title">
           {title}
           {subtitle && <span className="label-light">{subtitle}</span>}
         </p>

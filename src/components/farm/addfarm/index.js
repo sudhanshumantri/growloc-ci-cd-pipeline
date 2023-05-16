@@ -765,7 +765,6 @@ export default function AddFarm({
           <Grid item xs={12} sm={6} md={6}>
             <span className="input-label">Polyhouse plastic expected life</span>
             <span className="label-light">*</span>
-
             <FormControl fullWidth>
               <TextBox
                 isWhite={true}
@@ -803,7 +802,6 @@ export default function AddFarm({
       </>
     );
   };
-
   return (
     <div>
       <PageHeader
