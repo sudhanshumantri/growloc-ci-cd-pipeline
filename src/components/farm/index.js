@@ -97,11 +97,9 @@ export default function ManageFarm({
     setExpanded(!expanded);
   };
   const handleTitleClick = (e, name) => {
-    if(isMobile) {
     e.preventDefault();
     setTooltipOpen(true);
     setTooltipTitle(name);
-    }
   };
 
   const handleTooltipClose = () => {

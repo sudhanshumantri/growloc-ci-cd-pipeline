@@ -155,8 +155,10 @@ useEffect(()=>{
   if(pusherData && pusherData.length){
     const sensorId = selectedSensor?selectedSensor:zoneDashboardZoneSensorList[0]?.sensorId;
   let sensorDataFilter = pusherData.filter(item=>item.device_id == sensorId);
+  console.log(sensorDataFilter,"sensorDataFilter");
       sensorDataFilter.sort((a,b)=>parseInt(b.iot_timestamp) - parseInt(a.iot_timestamp));
       let tmpData = [...sensorDataFilter];
+      console.log(tmpData,"tmpData");
       setLatestDataByPusher([{...tmpData[0]}]);
   }
 },[selectedSensor,pusherData]);

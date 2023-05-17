@@ -2,10 +2,7 @@ import { call, all, put, takeLatest } from "redux-saga/effects";
 import {
     callAddCropToLifecycle, callCropLifecycleTransition, callfetchAllCropsLifecycle, callfetchCropsLifecycleDetails, callUpdateCropCycleParameters, callUpdateCropCycleDetails,callUpdateCropToLifecycleSchedule
 } from "../utils/api";
-
 import { addNotification } from "../components/shared/notification";
-
-
 import {
     addCropToLifecycleSuccess,
     addCropToLifecycleFailure,

@@ -81,14 +81,14 @@ export default function PageHeader({
       {/* <Grid item xs={1} sm={1} md={1}>
         {renderBackButtonArray(showBackButton)}
       </Grid> */}
-      <Grid item xs={5} sm={5} md={5} sx={{display:"flex",}}>
+      <Grid item xs={4} sm={4} md={4} sx={{display:"flex",}}>
       {renderBackButtonArray(showBackButton)}
-      <p className="page-section-title">
-          <span>{title}</span>
-          {subtitle && <span className="label-light-header">{subtitle}</span>}
+        <p className="page-section-title">
+          {title}
+          {subtitle && <span className="label-light">{subtitle}</span>}
         </p>
       </Grid>
-      <Grid item xs={7} sm={7} md={7} className="button-container">
+      <Grid item xs={8} sm={8} md={8} className="button-container">
         {headerDropwdown && (
           <Select
             value={length ? value || "" : ""}

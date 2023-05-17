@@ -19,7 +19,8 @@ import {
     selectIsTransitionLoading,
     selectIsLifecycleParametersLoading,
     selectIsUpdateLifeCycleDetailsLoading,
-    selectIsUpdateLifeCycleDetailsError
+    selectIsUpdateLifeCycleDetailsError,
+    selectIsUpdateLifecycleStageScheduleRequested,
 } from "../../selectors/life-cycle";
 import {
     selectUsersList
@@ -49,9 +50,8 @@ const mapStateToProps = createStructuredSelector({
     recentZoneSensorDataLoadingError : selectIsRecentZoneSensorDataLoading(),
     isFarmDashboardZoneTaskLoading: selectIsFarmDashboardZoneTaskLoading(),
     isUpdateLifeCycleDetailsLoading:selectIsUpdateLifeCycleDetailsLoading(),
-    isUpdateLifeCycleDetailsError:selectIsUpdateLifeCycleDetailsError()
-  
-
+    isUpdateLifeCycleDetailsError:selectIsUpdateLifeCycleDetailsError(),
+    isUpdateLifecycleStageScheduleRequested:selectIsUpdateLifecycleStageScheduleRequested(),
 });
 const mapDispatchToProps = {
     fetchCropsLifecycleDetails: fetchCropsLifecycleDetailsRequest,

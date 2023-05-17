@@ -54,7 +54,8 @@ export default function CropLifeCycleDetails({
   addFarmDashboardZoneTask,
   isFarmDashboardZoneTaskLoading,
   updateCropToLifecycleDetails,
-  isUpdateLifeCycleDetailsLoading
+  isUpdateLifeCycleDetailsLoading,
+  isUpdateLifecycleStageScheduleRequested
 }) {
   let { farmId } = useParams();
   let { zoneId } = useParams();
@@ -702,7 +703,7 @@ export default function CropLifeCycleDetails({
     <>
       {isLifecycleDetailsLoading && <Loader title="Fetching Details" />}
       {isUpdateLifeCycleDetailsLoading && <Loader title="Updating Crop LifeCycle Details" />}
-
+      {isUpdateLifecycleStageScheduleRequested && <Loader title="Updating Crop LifeCycle Harvest Schedule"/>}
       {/* {isFarmDashboardZoneTaskLoading && <Loader title="Adding task" />}  */}
       {!isLifecycleDetailsLoading && (
         <>
@@ -761,6 +762,7 @@ export default function CropLifeCycleDetails({
             {isAddLifecycleParametersLoading && (
               <Loader title="updating parameters" />
             )}
+
             {isStageEditOpen && (
               <EditParameters
                 open={isStageEditOpen}

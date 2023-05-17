@@ -15,6 +15,24 @@ export default function MoveCropLifeCycleModal({
   handleChange,
   data,
 }) {
+  const renderActionButtons = () => {
+    return (
+      <>
+        <div className="flex-row-justify-center-container">
+        <DialogActions>
+        <ButtonCustom
+          isLight={true}
+          title="Cancel"
+          handleButtonClick={handleClose}
+        />
+        <ButtonCustom title="Schedule" handleButtonClick={handleSave} />
+      </DialogActions>
+
+        </div>
+      </>
+    );
+  };
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle className="dialog-title-container">
@@ -50,14 +68,16 @@ export default function MoveCropLifeCycleModal({
           })}
         </div>
       </DialogContent>
-      <DialogActions>
+      {/* <DialogActions>
         <ButtonCustom
           isLight={true}
           title="Cancel"
           handleButtonClick={handleClose}
+        
         />
         <ButtonCustom title="Schedule" handleButtonClick={handleSave} />
-      </DialogActions>
+      </DialogActions> */}
+      {renderActionButtons()}
     </Dialog>
   );
 }

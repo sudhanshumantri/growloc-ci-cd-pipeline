@@ -91,27 +91,7 @@ export default function SideBar({ router, logout, loginObject }) {
       setOpen(false)
     }
   }, []);
-  // const [windowSize, setWindowSize] = useState({
-  //   width: window.innerWidth,
-  //   height: window.innerHeight,
-  // });
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setWindowSize({
-  //       width: window.innerWidth,
-  //       height: window.innerHeight,
-  //     });
-  //   };
-  //   window.addEventListener('resize', handleResize);
-  //   return () => window.removeEventListener('resize', handleResize);
-  // }, []);
-  // useEffect(() => {
-  //   console.log(windowSize.width,"windowSize.width");
-  //   if (windowSize.width < 800) {
-  //     setOpen(false);
-  //   }
-  // }, [windowSize]);
+  
 
   const toggleDrawer = () => {
     setOpen(!open);
