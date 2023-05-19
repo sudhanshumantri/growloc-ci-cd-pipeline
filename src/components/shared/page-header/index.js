@@ -89,7 +89,7 @@ export default function PageHeader({
     setTooltipOpen(true);
     setTooltipTitle(name);
   };
-  const LightTooltip = styled(({ className, ...props }) => (
+  const GreenTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
@@ -110,7 +110,7 @@ export default function PageHeader({
           </Grid>
           <Grid item xs={4} sm={4} md={4} sx={{ marginLeft: "-5%" }}>
             <Grid item xs={12} sm={12} md={12}>
-              <LightTooltip
+              <GreenTooltip
                 title={tooltipTitle}
                 open={tooltipOpen}
                 onClose={handleTooltipClose}
@@ -124,7 +124,7 @@ export default function PageHeader({
                 >
                   {title}
                 </p>
-              </LightTooltip>
+              </GreenTooltip>
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
               {subtitle && <span className="label-light">{subtitle}</span>}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate,Link } from "react-router-dom";
 import PageHeader from "../shared/page-header";
 import Loader from "../shared/loader";
-import { Card, Grid, CardContent, CardActions, Menu, MenuItem, IconButton, ListItemIcon, ListItemText, Divider,Tooltip} from "@mui/material";
+import { Card, Grid, CardContent, CardActions, Menu, MenuItem, IconButton, ListItemIcon, ListItemText, Divider,} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import ConfirmDialogBox from "../shared/dailog/ConfirmDialogBox";
@@ -11,6 +11,9 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import "./style.css";
 import AuthOutlet from "../shared/authoutlet";
 import { isMobile } from 'react-device-detect';
+import { styled } from '@mui/material/styles';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+
 
 
 export default function ManageFarm({
@@ -30,6 +33,7 @@ export default function ManageFarm({
   const [showMenu, setShowMenu] = useState(false)
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [tooltipTitle, setTooltipTitle] = useState("");
+  const [selectedFarm, setSelectedFarm] = useState(""); // New state variable to track the selected farm
 
   useEffect(() => {
     fetchFarm();
@@ -99,14 +103,25 @@ export default function ManageFarm({
   const handleTitleClick = (e, name) => {
     e.preventDefault();
     setTooltipOpen(true);
+    setSelectedFarm(name)
     setTooltipTitle(name);
   };
 
   const handleTooltipClose = () => {
     setTooltipOpen(false);
     setTooltipTitle("");
-  };
 
+  };
+  const GreenTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: "#517223",
+      color: '#eee',
+      boxShadow: theme.shadows[1],
+      fontSize: 11,
+    },
+  }));
 
 
   return (
@@ -152,15 +167,13 @@ export default function ManageFarm({
                   <Grid container spacing={2} alignItems="center">
                     <Grid item xs={10} sm={10} md={10}>
                       {/* <p className="farm-card-title" >{elem.farm.name}</p> */}
-                      <Tooltip
+                  <GreenTooltip
                     title={tooltipTitle}
-                    open={tooltipOpen}
-                    onClose={handleTooltipClose}
+                    open={tooltipOpen && selectedFarm === elem.farm.name}                    onClose={handleTooltipClose}
                     enterDelay={500}
                   >
                 <p className="farm-card-title" onClick={(e) => handleTitleClick(e, elem.farm.name)}>{elem.farm.name}</p>
-                   </Tooltip>
-                   
+                   </GreenTooltip>
                     </Grid>
                     <Grid item xs={2} sm={2} md={2}>
                       <AuthOutlet
