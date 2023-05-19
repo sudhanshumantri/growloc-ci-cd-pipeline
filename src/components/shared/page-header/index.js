@@ -11,12 +11,15 @@ import {
   Card,
   CardContent,
   Typography,
-  Tooltip,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./style.css";
 import AuthOutlet from "../authoutlet";
 import InfoIcon from "@mui/icons-material/Info";
+import { styled } from '@mui/material/styles';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+
+
 
 function renderButtonArray(buttonArray) {
   return buttonArray.map((item, index) => {
@@ -86,19 +89,28 @@ export default function PageHeader({
     setTooltipOpen(true);
     setTooltipTitle(name);
   };
+  const LightTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: "#517223",
+      color: '#eee',
+      boxShadow: theme.shadows[1],
+      fontSize: 11,
+    },
+  }));
+  
 
   return (
     <>
       {showBackButton && showBackButton.length > 0 ? (
         <Grid container spacing={2} className="page-header-container ">
-          <Grid item xs={1} sm={1} md={1} sx={{paddingTop:"28px"}}>
+          <Grid item xs={1} sm={1} md={1} sx={{ paddingTop: "28px" }}>
             {renderBackButtonArray(showBackButton)}
           </Grid>
-          <Grid item xs={4} sm={4} md={4} sx={{ marginLeft: "-5%",
-                      
-        }}>
+          <Grid item xs={4} sm={4} md={4} sx={{ marginLeft: "-5%" }}>
             <Grid item xs={12} sm={12} md={12}>
-              <Tooltip
+              <LightTooltip
                 title={tooltipTitle}
                 open={tooltipOpen}
                 onClose={handleTooltipClose}
@@ -112,13 +124,13 @@ export default function PageHeader({
                 >
                   {title}
                 </p>
-              </Tooltip>
+              </LightTooltip>
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
               {subtitle && <span className="label-light">{subtitle}</span>}
             </Grid>
           </Grid>
-          <Grid item xs={7} sm={7} md={7} className="button-container"   >
+          <Grid item xs={7} sm={7} md={7} className="button-container">
             {headerDropwdown && (
               <Select
                 value={length ? value || "" : ""}

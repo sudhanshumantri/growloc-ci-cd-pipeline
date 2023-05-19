@@ -37,10 +37,6 @@
 .button-container>* {
   margin-left: 5px !important;
 }
-
-
-
-
 @media (max-width: 800px){
   .css-vok43g-MuiGrid-root{
     padding-left: 0px!important;
@@ -53,8 +49,8 @@
 
 
 @media (min-width: 1200px){
-.css-7vy65v {
-max-width: 62.333% !important;
+.button-container {
+max-width: 75.333% !important ;
 }}
 
 @media (max-width: 600px){
