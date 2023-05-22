@@ -35,6 +35,7 @@ function renderButtonArray(buttonArray) {
           isLight={item.isLight ? item.isLight : false}
           title={item.label}
           handleButtonClick={item.handler}
+        
         />
       </AuthOutlet>
     );
@@ -53,7 +54,7 @@ function renderBackButtonArray(showBackButton) {
         onClick={back.handler}
       >
         <ArrowBackIcon
-          sx={{ color: "rgba(0, 0, 0, 0.54)", marginRight: "5px" }}
+          sx={{ color: "rgba(0, 0, 0, 0.54)", marginLeft:"-21px!important", marginTop:"-25px!important"}}
         />
       </IconButton>
     );
@@ -100,15 +101,15 @@ export default function PageHeader({
     },
   }));
   
-
   return (
     <>
       {showBackButton && showBackButton.length > 0 ? (
-        <Grid container spacing={2} className="page-header-container ">
-          <Grid item xs={1} sm={1} md={1} sx={{ paddingTop: "28px" }}>
+        <Grid container spacing={1} className="page-header-container ">
+          <Grid item xs={1} sm={1} md={1} >
+          {/* sx={{ paddingTop: "28px" }} */}
             {renderBackButtonArray(showBackButton)}
           </Grid>
-          <Grid item xs={4} sm={4} md={4} sx={{ marginLeft: "-5%" }}>
+          <Grid item xs={4} sm={4} md={4}  sx={{ marginLeft: "-5%!important" }}>
             <Grid item xs={12} sm={12} md={12}>
               <GreenTooltip
                 title={tooltipTitle}

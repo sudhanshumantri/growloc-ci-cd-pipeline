@@ -64,6 +64,9 @@ max-width: 75.333% !important ;
 .css-mhc70k-MuiGrid-root>.MuiGrid-item{
   margin: 0px 10px 0px -10px!important;
 }
+.button-container {
+  max-width: 50.333% !important ;
+  }
 /* .MuiStepConnector-root{
     left: calc(-52% + -11px) !important;
     right: calc(50% + 22px) !important;
