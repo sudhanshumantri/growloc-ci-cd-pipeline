@@ -126,7 +126,6 @@ export default function FarmEfficiency({
     const generateChartData = (field) => {
       const labels = [];
       const values = [];
-  
       (farmReportsList || []).forEach((report) => {
         const { data, created_on } = report;
         const value = data[0].payload[field];

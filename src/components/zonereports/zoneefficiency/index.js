@@ -103,7 +103,6 @@ export default function ZoneEfficiency({
       },
     };
   }
-
   const phChartOptions = getChartOptions("Time (hours)", "pH Value");
   const waterTempChartOptions = getChartOptions(
     "Time (hours)",
@@ -121,88 +120,48 @@ export default function ZoneEfficiency({
     const durationInHours = convertDurationToHours(value);
     fetchZoneReports({ id: zoneId, duration: durationInHours });
   };
-
   useEffect(() => {
     fetchZoneReports({ id:zoneId,duration:parseInt(duration) });
   }, []);
+  
   useEffect(() => {
-    const labels = [];
-    const phValues = [];
-    const waterTempValues = [];
-    const lightIntensitValues = [];
-    const humidityValues = [];
-    (zoneReportsList || []).forEach((report) => {
-      const { data, created_on } = report;
-      const phValue = data[0].payload.pH;
-      const waterTempValue = data[0].payload.waterTemperature;
-      const lightIntensitValue = data[0].payload.lightIntensity;
-      const humidityValue = data[0].payload.humidity;
-      const createdOn = new Date(created_on).toLocaleString("en-US", {
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-        hour12: true,
+    const generateChartData = (field) => {
+      const labels = [];
+      const values = [];
+      (zoneReportsList || []).forEach((report) => {
+        const { data, created_on } = report;
+        const value = data[0].payload[field];
+        const createdOn = new Date(created_on).toLocaleString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        });
+        values.push(value);
+        labels.push(createdOn);
       });
-      phValues.push(phValue);
-      waterTempValues.push(waterTempValue);
-      lightIntensitValues.push(lightIntensitValue);
-      humidityValues.push(humidityValue);
-      labels.push(createdOn);
-    });
-
-    const phChartData = {
-      labels,
-      datasets: [
-        {
-          data: phValues,
-          fill: false,
-          borderColor: "rgba(75,192,192,1)",
-          tension: 0.1,
-        },
-      ],
+      return {
+        labels,
+        datasets: [
+          {
+            data: values,
+            fill: false,
+            borderColor: "rgba(75, 192, 192, 1)",
+            tension: 0.1,
+          },
+        ],
+      };
     };
+    const phChartData = generateChartData('pH');
     setPhData(phChartData);
-    const waterTempChartData = {
-      labels,
-      datasets: [
-        {
-          data: waterTempValues,
-          fill: false,
-          borderColor: "rgba(75,192,192,1)",
-          tension: 0.1,
-        },
-      ],
-    };
+    const waterTempChartData = generateChartData('waterTemperature');
     setWaterTempData(waterTempChartData);
-    const lightIntensityData = {
-      labels,
-      datasets: [
-        {
-          data: lightIntensitValues,
-          fill: false,
-          borderColor: "rgba(75,192,192,1)",
-          tension: 0.1,
-        },
-      ],
-    };
+    const lightIntensityData = generateChartData('lightIntensity');
     setlightIntensityData(lightIntensityData);
-
-    const humidityData = {
-      labels,
-      datasets: [
-        {
-          data: humidityValues,
-          fill: false,
-          borderColor: "rgba(75,192,192,1)",
-          tension: 0.1,
-        },
-      ],
-    };
+    const humidityData = generateChartData('humidity');
     setHumidityData(humidityData);
   }, [zoneReportsList]);
-
   const durationStyles = { backgroundColor: "green", color: "white" };
-
   return (
     <>
       <div className="page-container">
