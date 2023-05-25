@@ -1,8 +1,6 @@
 # GrowLoc
 
-This is the new version of Enalito:
-
-The front-end JS App, which uses React & Redux. The code is in the src directory.
+The front-end JS App, which uses React, Redux, Sagas. The code is in the src directory.
 
 ## Running the App
 
