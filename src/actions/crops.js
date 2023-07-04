@@ -13,103 +13,95 @@ import {
   UPDATE_MANAGE_CROP_FAILURE,
   DELETE_MANAGE_CROP_REQUEST,
   DELETE_MANAGE_CROP_SUCCESS,
-  DELETE_MANAGE_CROP_FAILURE,
-} from "./actionTypes";
+  DELETE_MANAGE_CROP_FAILURE
+} from './actionTypes'
 
-export function fetchCropRequest() {
+export function fetchCropRequest () {
   return {
-    type: FETCH_ALL_CROPS_REQUEST,
-  };
+    type: FETCH_ALL_CROPS_REQUEST
+  }
 }
-export function fetchCropSuccess(data) {
+export function fetchCropSuccess (data) {
   return {
     type: FETCH_ALL_CROPS_SUCCESS,
-    data,
-  };
+    data
+  }
 }
-export function fetchCropFailure(error) {
+export function fetchCropFailure (error) {
   return {
     type: FETCH_ALL_CROPS_FAILURE,
-    error,
-  };
+    error
+  }
 }
-
-export function addCropToFarmRequest(data) {
+export function addCropToFarmRequest (data) {
   return {
     type: ADD_CROP_TO_FARM_REQUEST,
-    data,
-  };
+    data
+  }
 }
-export function addCropToFarmSuccess(data) {
+export function addCropToFarmSuccess (data) {
   return {
     type: ADD_CROP_TO_FARM_SUCCESS,
-    data,
-  };
+    data
+  }
 }
-export function addCropToFarmFailure(error) {
+export function addCropToFarmFailure (error) {
   return {
     type: ADD_CROP_TO_FARM_FAILURE,
-    error,
-  };
+    error
+  }
 }
-export function fetchFarmCropsRequest(data) {
+export function fetchFarmCropsRequest (data) {
   return {
     type: FETCH_FARM_ALL_CROPS_REQUEST,
     data
-  };
+  }
 }
-export function fetchFarmCropsSuccess(data) {
+export function fetchFarmCropsSuccess (data) {
   return {
     type: FETCH_FARM_ALL_CROPS_SUCCESS,
-    data,
-  };
+    data
+  }
 }
-export function fetchFarmCropsFailure(error) {
+export function fetchFarmCropsFailure (error) {
   return {
     type: FETCH_FARM_ALL_CROPS_FAILURE,
-    error,
-  };
+    error
+  }
 }
-
-export function deleteFarmCropsRequest(data) {
+export function deleteFarmCropsRequest (data) {
   return {
-      type: DELETE_MANAGE_CROP_REQUEST,
-      data
-  };
+    type: DELETE_MANAGE_CROP_REQUEST,
+    data
+  }
 }
-export function deleteFarmCropsSuccess(data) {
+export function deleteFarmCropsSuccess (data) {
   return {
-      type: DELETE_MANAGE_CROP_SUCCESS,
-      data
-  };
+    type: DELETE_MANAGE_CROP_SUCCESS,
+    data
+  }
 }
-export function deleteFarmCropsFailure(error) {
+export function deleteFarmCropsFailure (error) {
   return {
-      type: DELETE_MANAGE_CROP_FAILURE,
-      error
-  };
+    type: DELETE_MANAGE_CROP_FAILURE,
+    error
+  }
 }
-
-
-export function updateFarmCropsRequest(data) {
+export function updateFarmCropsRequest (data) {
   return {
-      type: UPDATE_MANAGE_CROP_REQUEST,
-      data
-  };
+    type: UPDATE_MANAGE_CROP_REQUEST,
+    data
+  }
 }
-export function updateFarmCropsSuccess(data) {
+export function updateFarmCropsSuccess (data) {
   return {
-      type:UPDATE_MANAGE_CROP_SUCCESS,
-      data
-  };
+    type: UPDATE_MANAGE_CROP_SUCCESS,
+    data
+  }
 }
-export function updateFarmCropsFailure(error) {
+export function updateFarmCropsFailure (error) {
   return {
-      type: UPDATE_MANAGE_CROP_FAILURE,
-      error
-  };
+    type: UPDATE_MANAGE_CROP_FAILURE,
+    error
+  }
 }
-
-
-
-

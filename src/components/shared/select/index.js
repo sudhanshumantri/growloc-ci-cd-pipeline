@@ -1,6 +1,6 @@
-import React from "react";
-import { Select, MenuItem, FormHelperText } from "@mui/material/";
-import "./style.css";
+import React from 'react'
+import { Select, MenuItem, FormHelperText } from '@mui/material/'
+import './style.css'
 
 const SingleCustomSelect = ({
   value,
@@ -12,15 +12,15 @@ const SingleCustomSelect = ({
   isError,
   errorMessage,
   disabled,
-  isWhite,
+  isWhite
 }) => {
   return (
     <>
       <Select
-        className={isWhite ? "input-custom-white input-custom" : "input-custom"}
+        className={isWhite ? 'input-custom-white input-custom' : 'input-custom'}
         name={name}
-        size="small"
-        value={value ?? ""}
+        size='small'
+        value={value ?? ''}
         onChange={handleChange}
         disabled={disabled}
       >
@@ -29,19 +29,18 @@ const SingleCustomSelect = ({
             <MenuItem
               value={valueKey ? option[valueKey] || index : option}
               key={index}
-              className="menu-item-dropdown-item"
+              className='menu-item-dropdown-item'
             >
               {labelKey ? option[labelKey] : option}
             </MenuItem>
-          );
+          )
         })}
       </Select>
       {isError && (
-        <FormHelperText style={{ color: "red" }}>{errorMessage}</FormHelperText>
+        <FormHelperText style={{ color: 'red' }}>{errorMessage}</FormHelperText>
       )}
-      {/* // </FormControl> */}
     </>
-  );
-};
+  )
+}
 
-export default SingleCustomSelect;
+export default SingleCustomSelect

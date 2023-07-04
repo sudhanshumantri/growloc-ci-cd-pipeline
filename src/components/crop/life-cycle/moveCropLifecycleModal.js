@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from 'react'
 import {
   FormControl,
   Dialog,
@@ -9,93 +9,91 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
-  Grid,
-} from "@mui/material/";
-import ButtonCustom from "../../shared/button";
-import TextBox from "../../shared/text-box";
-export default function MoveCropLifeCycleModal({
+  Grid
+} from '@mui/material/'
+import ButtonCustom from '../../shared/button'
+import TextBox from '../../shared/text-box'
+export default function MoveCropLifeCycleModal ({
   title,
   open,
   handleClick,
   maxQty,
   handleClose,
   isHarvestStage,
-  isContiniousHarvet,
+  isContiniousHarvet
 }) {
-  const [units, setUnits] = useState("");
-  const [kgs, setKgs] = useState("");
-  const [complete, setComplete] = useState(false);
-  const [unitError, setUnitError] = useState(false);
-  const [unitErrorMessage, setUnitErrorMessage] = useState(false);
+  const [units, setUnits] = useState('')
+  const [kgs, setKgs] = useState('')
+  const [complete, setComplete] = useState(false)
+  const [unitError, setUnitError] = useState(false)
+  const [unitErrorMessage, setUnitErrorMessage] = useState(false)
   const handleCompleteToggle = () => {
-    setComplete(!complete);
-  };
+    setComplete(!complete)
+  }
   const handleUnitsChange = (e) => {
-    const numbers = e.target.value.replace(/[^0-9]/g, "");
-    setUnits(numbers);
-  };
+    const numbers = e.target.value.replace(/[^0-9]/g, '')
+    setUnits(numbers)
+  }
   const handleKgChange = (e) => {
-    let input = e.target.value;
+    const input = e.target.value
     if (!input || input.match(/^\d{1,}(\.\d{0,4})?$/)) {
-      setKgs(input);
+      setKgs(input)
     }
-  };
+  }
   const handleModalInfoSave = () => {
     if (!units) {
-      setUnitError(true);
-      setUnitErrorMessage('"No of plants is required');
+      setUnitError(true)
+      setUnitErrorMessage('"No of plants is required')
     } else if (parseInt(units) > maxQty) {
-      setUnitError(true);
-      setUnitErrorMessage("No of plants can't be greater than " + maxQty);
+      setUnitError(true)
+      setUnitErrorMessage("No of plants can't be greater than " + maxQty)
     } else {
-      let data = {
-        units,
-        kgs,
-        complete: isHarvestStage ? complete : false,
-      };
+      // const data = {
+      //   units,
+      //   kgs,
+      //   complete: isHarvestStage ? complete : false
+      // }
       handleClick(
         units,
         kgs,
         isContiniousHarvet ? (isHarvestStage ? complete : false) : true
-      );
+      )
     }
-  };
+  }
 
   const renderActionButtons = () => {
     return (
       <>
-        <div className="flex-row-justify-center-container">
-        <DialogActions>
-        <ButtonCustom
-            isLight={true}
-            title="Cancel"
-            handleButtonClick={handleClose}
-          />
-          <ButtonCustom title="Ok" handleButtonClick={handleModalInfoSave} />
-        </DialogActions>
+        <div className='flex-row-justify-center-container'>
+          <DialogActions>
+            <ButtonCustom
+              isLight
+              title='Cancel'
+              handleButtonClick={handleClose}
+            />
+            <ButtonCustom title='Ok' handleButtonClick={handleModalInfoSave} />
+          </DialogActions>
         </div>
       </>
-    );
-  };
-
-
+    )
+  }
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle className="dialog-title-container">{title}</DialogTitle>
+        <DialogTitle className='dialog-title-container'>{title}</DialogTitle>
         <DialogContent>
-          <br/>
+          <br />
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
-              <span className="input-label">No of plants</span>
-              <span className="label-light">*</span>
+              <span className='input-label'>No of plants</span>
+              <span className='label-light'>*</span>
               <FormControl fullWidth>
                 <TextBox
-                  isWhite={true}
-                  name="units"
+                  isWhite
+                  name='units'
                   value={units}
                   error={unitError}
-                  helperText={unitError ? unitErrorMessage : ""}
+                  helperText={unitError ? unitErrorMessage : ''}
                   onChange={handleUnitsChange}
                 />
               </FormControl>
@@ -103,10 +101,10 @@ export default function MoveCropLifeCycleModal({
             <Grid item xs={12} sm={12} md={12}>
               {isHarvestStage && (
                 <>
-                  <span className="input-label">Plants harvested in KGS?</span>
+                  <span className='input-label'>Plants harvested in KGS?</span>
                   <FormControl fullWidth>
                     <TextField
-                      name="units"
+                      name='units'
                       value={kgs}
                       onChange={handleKgChange}
                     />
@@ -120,7 +118,7 @@ export default function MoveCropLifeCycleModal({
                             checked-={complete}
                           />
                         }
-                        label="Do you want to dispose  the crops after this harvest?"
+                        label='Do you want to dispose  the crops after this harvest?'
                       />
                     </FormGroup>
                   )}
@@ -132,5 +130,5 @@ export default function MoveCropLifeCycleModal({
         {renderActionButtons()}
       </Dialog>
     </div>
-  );
+  )
 }

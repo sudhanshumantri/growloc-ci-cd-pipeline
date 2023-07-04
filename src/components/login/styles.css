@@ -1,36 +1,22 @@
 .login-container {
-    border-radius: 4px;
-    box-shadow: rgb(55 63 71 / 5%) 0px 0px 0px 1px, rgb(55 63 71 / 16%) 0px 1px 4px;
-    background-color: rgb(255, 255, 255);
-    box-sizing: border-box;
-    padding: 12px 24px;
-    margin: auto;
-    width: 500px;
-    /* max-width: 500px; */
-    text-align: center;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    /* left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0; */
-    /* position: absolute; */
+  border-radius: 4px;
+  box-shadow: rgb(55 63 71 / 5%) 0px 0px 0px 1px,
+    rgb(55 63 71 / 16%) 0px 1px 4px;
+  background-color: rgb(255, 255, 255);
+  box-sizing: border-box;
+  padding: 12px 24px;
+  margin: auto;
+  width: 500px;
+  text-align: center;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.custom-input-box{
-    background-color: #FFFFFF;
+.custom-input-box {
+  background-color: #ffffff;
 }
 .error-message {
-    color: red;
+  color: red;
 }
-/* @media (min-width: 600px){
-    .css-1qti2qw-MuiPaper-root-MuiGrid-root{
-        max-width: 100%!important;
-        flex-basis: 100%!important;
-    }
-}  */
-    
-

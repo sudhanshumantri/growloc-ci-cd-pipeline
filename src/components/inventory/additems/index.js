@@ -1,131 +1,131 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import {
   FormControl,
   Dialog,
   DialogActions,
   DialogTitle,
   DialogContent,
-  Grid,
-} from "@mui/material/";
-import CustomButton from "../../shared/button";
-import TextBox from "../../shared/text-box";
-import SingleCustomSelect from "../../shared/select";
-import { INVENTORY_UNITS } from "../../../config";
+  Grid
+} from '@mui/material/'
+import CustomButton from '../../shared/button'
+import TextBox from '../../shared/text-box'
+import SingleCustomSelect from '../../shared/select'
+import { INVENTORY_UNITS } from '../../../config'
 
-export default function AddInventoryItems({
+export default function AddInventoryItems ({
   open,
   handleClose,
   handleSave,
   itemDetails = {
-    name: "",
-    qty: "",
-    units: "",
-  },
+    name: '',
+    qty: '',
+    units: ''
+  }
 }) {
-  let { farmId } = useParams();
-  const [itemData, setItemData] = useState(itemDetails);
+  const { farmId } = useParams()
+  const [itemData, setItemData] = useState(itemDetails)
   const [validation, setValidation] = useState({
     name: false,
-    units: false,
-  });
+    units: false
+  })
 
   const handleChange = (e) => {
-    const { value, name } = e.target;
-    setItemData({ ...itemData, [name]: value });
-    validation[name] && setValidation({ ...validation, [name]: false });
-  };
+    const { value, name } = e.target
+    setItemData({ ...itemData, [name]: value })
+    validation[name] && setValidation({ ...validation, [name]: false })
+  }
   const handleFarmItem = () => {
-    let errors = { ...validation };
-    let isValid = true;
+    const errors = { ...validation }
+    let isValid = true
     if (!itemData.name) {
-      errors.name = true;
-      isValid = false;
+      errors.name = true
+      isValid = false
     }
     if (!itemData.units) {
-      errors.units = true;
-      isValid = false;
+      errors.units = true
+      isValid = false
     }
-    setValidation(errors);
-    return isValid;
-  };
+    setValidation(errors)
+    return isValid
+  }
   const handleFarmInventorySave = () => {
-    let payload = {
-      farmId: farmId,
+    const payload = {
+      farmId,
       name: itemData.name,
       qty: itemData.qty,
-      units: itemData.units,
-    };
-    if (handleFarmItem()) {
-      handleSave(payload);
+      units: itemData.units
     }
-  };
+    if (handleFarmItem()) {
+      handleSave(payload)
+    }
+  }
 
   const renderActionButtons = () => {
     return (
       <>
-        <div className="flex-row-justify-center-container">
+        <div className='flex-row-justify-center-container'>
           <DialogActions>
             <CustomButton
-              isLight={true}
+              isLight
               handleButtonClick={handleClose}
-              title="Cancel"
+              title='Cancel'
             />
             <CustomButton
               handleButtonClick={handleFarmInventorySave}
-              title="Save"
+              title='Save'
             />
           </DialogActions>
         </div>
       </>
-    );
-  };
+    )
+  }
 
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle className="dialog-title-container">
-          {itemDetails.id ? "Update item" : "Add a item"}
+        <DialogTitle className='dialog-title-container'>
+          {itemDetails.id ? 'Update item' : 'Add a item'}
         </DialogTitle>
-        <DialogContent sx={{ paddingTop: "10px" }}>
-          <Grid container sx={{ margin: "1px", width: 500 }} spacing={2}>
+        <DialogContent sx={{ paddingTop: '10px' }}>
+          <Grid container sx={{ margin: '1px', width: 500 }} spacing={2}>
             <Grid item xs={12} sm={12} md={12}>
-              <span className="input-label">Name</span>
-              <span className="label-light">*</span>
+              <span className='input-label'>Name</span>
+              <span className='label-light'>*</span>
               <FormControl fullWidth>
                 <TextBox
-                  isWhite={true}
-                  name="name"
+                  isWhite
+                  name='name'
                   value={itemData.name}
                   onChange={handleChange}
                   error={validation.name}
-                  helperText={validation.name ? "Please provide name" : ""}
+                  helperText={validation.name ? 'Please provide name' : ''}
                 />
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-              <span className="input-label">Quantity</span>
+              <span className='input-label'>Quantity</span>
               <FormControl fullWidth>
                 <TextBox
-                  isWhite={true}
-                  name="qty"
+                  isWhite
+                  name='qty'
                   value={itemData.qty}
                   onChange={handleChange}
                 />
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-              <span className="input-label">Units</span>
-              <span className="label-light">*</span>
+              <span className='input-label'>Units</span>
+              <span className='label-light'>*</span>
               <FormControl fullWidth>
                 <SingleCustomSelect
-                  isWhite={true}
-                  name="units"
+                  isWhite
+                  name='units'
                   value={itemData.units}
                   handleChange={handleChange}
                   options={INVENTORY_UNITS}
                   isError={validation.units}
-                  errorMessage="Please select units"
+                  errorMessage='Please select units'
                 />
               </FormControl>
             </Grid>
@@ -134,5 +134,5 @@ export default function AddInventoryItems({
         {renderActionButtons()}
       </Dialog>
     </div>
-  );
+  )
 }

@@ -1,21 +1,16 @@
-import { put, all, takeLatest, call } from "redux-saga/effects";
-import Pusher from 'pusher-js';
-import { fetchPusherFailure, fetchPusherSuccess } from '../actions/pusher';
+import { put, all, takeLatest } from 'redux-saga/effects'
+import { fetchPusherFailure, fetchPusherSuccess } from '../actions/pusher'
 
-
-export function* fetchSensorDataPusher({ data }) {
-   if(data){
-    yield put(fetchPusherSuccess(data));
-   }else{
-    yield put(fetchPusherFailure("Something went wrong"));
-   }
-
+export function * fetchSensorDataPusher ({ data }) {
+  if (data) {
+    yield put(fetchPusherSuccess(data))
+  } else {
+    yield put(fetchPusherFailure('Something went wrong'))
+  }
 }
-export function* pusherSagas() {
+export function * pusherSagas () {
   yield all([
-    takeLatest("FETCH_SENSOR_DATA_PUSHER_REQUEST", fetchSensorDataPusher)
-
-
-  ]);
+    takeLatest('FETCH_SENSOR_DATA_PUSHER_REQUEST', fetchSensorDataPusher)
+  ])
 }
-export default [pusherSagas];
+export default [pusherSagas]

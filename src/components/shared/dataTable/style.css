@@ -1,14 +1,13 @@
 .table-header-row {
   background: #e5e4d7 !important;
-  
 }
 .table-header {
-  font-size: 13px ;
+  font-size: 13px;
   font-weight: bold;
 }
-.custom-table-row{
+.custom-table-row {
   background-color: red;
 }
-.css-1kcmpt7-MuiTableCell-root{
-  padding: 7px!important;
+.css-1kcmpt7-MuiTableCell-root {
+  padding: 7px !important;
 }

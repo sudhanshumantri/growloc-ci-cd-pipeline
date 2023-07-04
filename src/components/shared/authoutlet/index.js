@@ -1,3 +1,3 @@
-import AuthOutlet from "./authoutlet";
+import AuthOutlet from './authoutlet'
 
-export default AuthOutlet;
+export default AuthOutlet

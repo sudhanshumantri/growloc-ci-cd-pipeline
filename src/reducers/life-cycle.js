@@ -1,4 +1,4 @@
-import { fromJS } from "immutable";
+import { fromJS } from 'immutable'
 import {
   ADD_CROP_LIFECYCLE_REQUEST,
   ADD_CROP_LIFECYCLE_SUCCESS,
@@ -21,7 +21,7 @@ import {
   UPDATE_CROP_LIFECYCLE_DETAILS_REQUEST,
   UPDATE_CROP_LIFECYCLE_DETAILS_SUCCESS,
   UPDATE_CROP_LIFECYCLE_DETAILS_FAILURE
-} from "../actions/actionTypes";
+} from '../actions/actionTypes'
 const INITIAL_STATE = fromJS({
   isCropLifeCycleListLoading: false,
   isAddLifecycleLoading: false,
@@ -35,120 +35,114 @@ const INITIAL_STATE = fromJS({
   isAddLifecycleParametersLoading: false,
   addLifecycleParameterError: null,
   isUpdateLifecycleStageScheduleRequested: false,
-  isUpdateLifeCycleDetailsLoading:false,
-  isUpdateLifeCycleDetailsError:false
-});
-export default function cropLifecycleReducer(
+  isUpdateLifeCycleDetailsLoading: false,
+  isUpdateLifeCycleDetailsError: false
+})
+export default function cropLifecycleReducer (
   state = INITIAL_STATE,
   action = {}
 ) {
-  let lifecycleDetails = state.toJS()["lifecycleDetails"];
+  const lifecycleDetails = state.toJS().lifecycleDetails
   switch (action.type) {
-
     case FETCH_CROP_LIFECYCLE_REQUEST:
       return state
-        .set("isCropLifeCycleListLoading", true)
-        .set("cropLifeCycleListError", null);
+        .set('isCropLifeCycleListLoading', true)
+        .set('cropLifeCycleListError', null)
     case FETCH_CROP_LIFECYCLE_SUCCESS:
       return state
-        .set("isCropLifeCycleListLoading", false)
-        .set("lifecycleCrops", action.data)
-        .set("cropLifeCycleListError", null);
+        .set('isCropLifeCycleListLoading', false)
+        .set('lifecycleCrops', action.data)
+        .set('cropLifeCycleListError', null)
     case FETCH_CROP_LIFECYCLE_FAILURE:
       return state
-        .set("isCropLifeCycleListLoading", false)
-        .set("lifecycleCrops", [])
-        .set("cropLifeCycleListError", action.error);
+        .set('isCropLifeCycleListLoading', false)
+        .set('lifecycleCrops', [])
+        .set('cropLifeCycleListError', action.error)
     case ADD_CROP_LIFECYCLE_REQUEST:
       return state
-        .set("isAddLifecycleLoading", true)
-        .set("addLifecycleError", null);
-    case ADD_CROP_LIFECYCLE_SUCCESS:
-      let lifecycleCrops = state.toJS()["lifecycleCrops"];
-      lifecycleCrops.push(action.data);
+        .set('isAddLifecycleLoading', true)
+        .set('addLifecycleError', null)
+    case ADD_CROP_LIFECYCLE_SUCCESS: {
+      const lifecycleCrops = state.toJS().lifecycleCrops
+      lifecycleCrops.push(action.data)
       return state
-        .set("isAddLifecycleLoading", false)
-        .set("lifecycleCrops", lifecycleCrops)
-        .set("addLifecycleError", null);
+        .set('isAddLifecycleLoading', false)
+        .set('lifecycleCrops', lifecycleCrops)
+        .set('addLifecycleError', null)
+    }
     case ADD_CROP_LIFECYCLE_FAILURE:
       return state
-        .set("isAddLifecycleLoading", false)
-        .set("addLifecycleError", action.error);
+        .set('isAddLifecycleLoading', false)
+        .set('addLifecycleError', action.error)
     case FETCH_CROP_LIFECYCLE_DETAILS_REQUEST:
       return state
-        .set("lifecycleDetails", null)
-        .set("isLifeCycleDetailsLoading", true)
-        .set("lifeCycleDetailsError", null);
+        .set('lifecycleDetails', null)
+        .set('isLifeCycleDetailsLoading', true)
+        .set('lifeCycleDetailsError', null)
     case FETCH_CROP_LIFECYCLE_DETAILS__SUCCESS:
       return state
-        .set("lifecycleDetails", action.data)
-        .set("isLifeCycleDetailsLoading", false)
-        .set("lifeCycleDetailsError", null);
+        .set('lifecycleDetails', action.data)
+        .set('isLifeCycleDetailsLoading', false)
+        .set('lifeCycleDetailsError', null)
     case FETCH_CROP_LIFECYCLE_DETAILS__FAILURE:
       return state
-        .set("lifecycleDetails", null)
-        .set("isLifeCycleDetailsLoading", false)
-        .set("lifeCycleDetailsError", null);
-    //transtion handling
+        .set('lifecycleDetails', null)
+        .set('isLifeCycleDetailsLoading', false)
+        .set('lifeCycleDetailsError', null)
     case CROP_LIFECYCLE_TRANSITION_REQUEST:
-      return state.set("isTransitionLoading", true);
+      return state.set('isTransitionLoading', true)
     case CROP_LIFECYCLE_TRANSITION__SUCCESS:
       return state
-        .set("lifecycleDetails", action.data)
-        .set("isTransitionLoading", false);
+        .set('lifecycleDetails', action.data)
+        .set('isTransitionLoading', false)
     case CROP_LIFECYCLE_TRANSITION__FAILURE:
-      return state.set("isTransitionLoading", false);
-    //
+      return state.set('isTransitionLoading', false)
     case UPDATE_CROP_LIFECYCLE_PARAMETERS_REQUEST:
       return state
-        .set("isAddLifecycleParametersLoading", true)
-        .set("addLifecycleParameterError", null);
-    case UPDATE_CROP_LIFECYCLE_PARAMETERS_SUCCESS:
-      const { FarmCropLifecycleStages } = lifecycleDetails.cropDetails;
-      const { id } = action.data;
+        .set('isAddLifecycleParametersLoading', true)
+        .set('addLifecycleParameterError', null)
+    case UPDATE_CROP_LIFECYCLE_PARAMETERS_SUCCESS: {
+      const { FarmCropLifecycleStages } = lifecycleDetails.cropDetails
+      const { id } = action.data
       const index = FarmCropLifecycleStages.findIndex(
         (stage) => stage.id === id
-      );
-      lifecycleDetails.cropDetails.FarmCropLifecycleStages[index] = action.data;
+      )
+      lifecycleDetails.cropDetails.FarmCropLifecycleStages[index] = action.data
       return state
-        .set("isAddLifecycleParametersLoading", false)
-        .set("lifecycleDetails", lifecycleDetails)
-        .set("addLifecycleParameterError", null);
+        .set('isAddLifecycleParametersLoading', false)
+        .set('lifecycleDetails', lifecycleDetails)
+        .set('addLifecycleParameterError', null)
+    }
     case UPDATE_CROP_LIFECYCLE_PARAMETERS_FAILURE:
       return state
-        .set("isAddLifecycleParametersLoading", false)
-        .set("addLifecycleParameterError", action.error);
-
-    // update of stage parameters
+        .set('isAddLifecycleParametersLoading', false)
+        .set('addLifecycleParameterError', action.error)
     case UPDATE_CROP_LIFECYCLE_SCHEDULE_REQUEST:
-      return state
-        .set("isUpdateLifecycleStageScheduleRequested", true)
+      return state.set('isUpdateLifecycleStageScheduleRequested', true)
     case UPDATE_CROP_LIFECYCLE_SCHEDULE_SUCCESS:
-      lifecycleDetails.cropDetails.FarmCropLifecycleSchedules = [action.data];
+      lifecycleDetails.cropDetails.FarmCropLifecycleSchedules = [action.data]
       return state
-        .set("isUpdateLifecycleStageScheduleRequested", false)
-        .set("lifecycleDetails", lifecycleDetails)
+        .set('isUpdateLifecycleStageScheduleRequested', false)
+        .set('lifecycleDetails', lifecycleDetails)
     case UPDATE_CROP_LIFECYCLE_SCHEDULE_FAILURE:
-      return state
-        .set("isUpdateLifecycleStageScheduleRequested", false)
-
+      return state.set('isUpdateLifecycleStageScheduleRequested', false)
     case UPDATE_CROP_LIFECYCLE_DETAILS_REQUEST:
       return state
-        .set("isUpdateLifeCycleDetailsLoading", true)
-        .set("isUpdateLifeCycleDetailsError", null);
-    case UPDATE_CROP_LIFECYCLE_DETAILS_SUCCESS:
-      const { cropDetails } = lifecycleDetails;
-      const newCropDetails= { ...cropDetails, ...action.data };
+        .set('isUpdateLifeCycleDetailsLoading', true)
+        .set('isUpdateLifeCycleDetailsError', null)
+    case UPDATE_CROP_LIFECYCLE_DETAILS_SUCCESS:{
+      const { cropDetails } = lifecycleDetails
+      const newCropDetails = { ...cropDetails, ...action.data }
       return state
-        .set("isUpdateLifeCycleDetailsLoading", false)
-        .set("lifecycleDetails", {cropDetails:newCropDetails})
-        .set("isUpdateLifeCycleDetailsError", null);
+        .set('isUpdateLifeCycleDetailsLoading', false)
+        .set('lifecycleDetails', { cropDetails: newCropDetails })
+        .set('isUpdateLifeCycleDetailsError', null)
+    }
     case UPDATE_CROP_LIFECYCLE_DETAILS_FAILURE:
       return state
-        .set("isUpdateLifeCycleDetailsLoading", false)
-        .set("isUpdateLifeCycleDetailsError", action.error);
-
+        .set('isUpdateLifeCycleDetailsLoading', false)
+        .set('isUpdateLifeCycleDetailsError', action.error)
     default:
-      return state;
+      return state
   }
 }

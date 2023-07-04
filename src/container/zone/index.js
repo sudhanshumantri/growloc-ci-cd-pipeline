@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { createStructuredSelector } from "reselect";
+import React from 'react'
+import { connect } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import { createStructuredSelector } from 'reselect'
 import {
   fetchFarmZoneRequest,
   fetchFarmZoneDashboardRequest,
@@ -14,24 +14,32 @@ import {
   fetchZoneDashboardZoneSensorRequest,
   fetchZoneDashboardZoneUtilizationCropsRequest,
   fetchZoneDashboardZoneUtilizationStagesRequest,
-  fetchZoneTaskRequest,
-  addZoneTaskCommentRequest,
-  fetchFarmZoneSensorDataRequest,
-} from "../../actions/zone";
-import {fetchDashboardAllZoneDetailsRequest} from "../../actions/dashboard";
+  fetchFarmZoneSensorDataRequest
+} from '../../actions/zone'
+import {
+  fetchDashboardAllZoneDetailsRequest,
+  fetchFarmDashboardZoneRequest,
+  fetchDashboardFarmLattestSensorDataRequest
+} from '../../actions/dashboard'
 import {
   fetchZoneReportsRequest,
   fetchFarmReportsZoneAverageMortalityRequest,
-  fetchFarmReportsZoneTatTaskCategoriesRequest,
-} from "../../actions/zonereports";
-import { fetchFarmDashboardZoneRequest,fetchDashboardFarmLattestSensorDataRequest } from "../../actions/dashboard";
-import { fetchUsersRequest } from "../../actions/users";
-import { fetchFarmInventoryRequest } from "../../actions/inventory";
-import { selectFarmInventoryList } from "../../selectors/inventory";
-import { selectUsersList } from "../../selectors/users";
-import { selectLoginObject } from "../../selectors/login";
-import { selectFarmDashboardZoneList } from "../../selectors/dashboard";
-import ZoneDashboard from "../../components/Zone";
+  fetchFarmReportsZoneTatTaskCategoriesRequest
+} from '../../actions/zonereports'
+import { fetchUsersRequest } from '../../actions/users'
+import { fetchFarmInventoryRequest } from '../../actions/inventory'
+import { selectFarmInventoryList } from '../../selectors/inventory'
+import { selectUsersList } from '../../selectors/users'
+import { selectLoginObject } from '../../selectors/login'
+import {
+  selectFarmDashboardZoneList,
+  selectIsFarmDashboardZoneLattestSensorLoading,
+  selectFarmDashboardZoneLattestSensorList,
+  selectFarmDashboardZoneLattestSensorListError,
+  selectIsFarmDashboardAllZoneDetailsLoading,
+  selectFarmDashboardAllZoneDetailsList
+} from '../../selectors/dashboard'
+import ZoneDashboard from '../../components/Zone'
 import {
   selectFarmZoneList,
   selectIsFarmZoneLoading,
@@ -58,18 +66,17 @@ import {
   selectIsZoneDashboardZoneSensorLoading,
   selectZoneDashboardZoneSensorList,
   selectZoneDashboardZoneSensorError,
- selectIsZoneDashboardZoneUtilizationCropsLoading,
- selectZoneDashboardZoneUtilizationCropsList,
- selectZoneDashboardZoneUtilizationCropsError,
- selectIsZoneDashboardZoneUtilizationStagesLoading,
- selectZoneDashboardZoneUtilizationStagesList,
- selectZoneDashboardZoneUtilizationStagesError,
- selectIsFarmZoneSensorDataLoading,
+  selectIsZoneDashboardZoneUtilizationCropsLoading,
+  selectZoneDashboardZoneUtilizationCropsList,
+  selectZoneDashboardZoneUtilizationCropsError,
+  selectIsZoneDashboardZoneUtilizationStagesLoading,
+  selectZoneDashboardZoneUtilizationStagesList,
+  selectZoneDashboardZoneUtilizationStagesError,
+  selectIsFarmZoneSensorDataLoading,
   selectFarmZoneSensorDataList,
-selectFarmZoneSensorDataListError,
-
-} from "../../selectors/zone";
-import { selectPusherData } from "../../selectors/pucher";
+  selectFarmZoneSensorDataListError
+} from '../../selectors/zone'
+import { selectPusherData } from '../../selectors/pucher'
 import {
   selectZoneReportsList,
   selectIsZoneReportsListLoading,
@@ -79,16 +86,8 @@ import {
   selectFarmReportsZoneAverageMortalityError,
   selectFarmReportsZoneTatTaskCategoriesList,
   selectIsFarmReportsZoneTatTaskCategoriesListLoading,
-  selectFarmReportsZoneTatTaskCategoriesError,
-} from "../../selectors/zonereports";
-
-import {
-  selectIsFarmDashboardZoneLattestSensorLoading,
-selectFarmDashboardZoneLattestSensorList,
-selectFarmDashboardZoneLattestSensorListError,
-selectIsFarmDashboardAllZoneDetailsLoading,
-selectFarmDashboardAllZoneDetailsList
-} from "../../selectors/dashboard"
+  selectFarmReportsZoneTatTaskCategoriesError
+} from '../../selectors/zonereports'
 
 const mapStateToProps = createStructuredSelector({
   farmZoneList: selectFarmZoneList(),
@@ -124,38 +123,46 @@ const mapStateToProps = createStructuredSelector({
   isZoneDashboardZoneSensorLoading: selectIsZoneDashboardZoneSensorLoading(),
   zoneDashboardZoneSensorList: selectZoneDashboardZoneSensorList(),
   zoneDashboardZoneSensorError: selectZoneDashboardZoneSensorError(),
-isZoneDashboardZoneUtilizationCropsLoading: selectIsZoneDashboardZoneUtilizationCropsLoading(),
-zoneDashboardZoneUtilizationCropsList: selectZoneDashboardZoneUtilizationCropsList(),
-zoneDashboardZoneUtilizationCropsError: selectZoneDashboardZoneUtilizationCropsError(),
-isZoneDashboardZoneUtilizationStagesLoading: selectIsZoneDashboardZoneUtilizationStagesLoading(),
-zoneDashboardZoneUtilizationStagesList: selectZoneDashboardZoneUtilizationStagesList(),
-zoneDashboardZoneUtilizationStagesError: selectZoneDashboardZoneUtilizationStagesError(),
-zoneReportsList: selectZoneReportsList(),
-isZoneReportsListLoading: selectIsZoneReportsListLoading(),
-zoneReportsListError: selectZoneReportsListError(),
-isFarmReportsZoneAverageMortalityListLoading:
-selectIsFarmReportsZoneAverageMortalityListLoading(),
-farmReportsZoneAverageMortalityList:
-selectFarmReportsZoneAverageMortalityList(),
-farmReportsZoneAverageMortalityError:
-selectFarmReportsZoneAverageMortalityError(),
-isFarmReportsZoneTatTaskCategoriesListLoading:
-selectIsFarmReportsZoneTatTaskCategoriesListLoading(),
-farmReportsZoneTatTaskCategoriesList:
-selectFarmReportsZoneTatTaskCategoriesList(),
-farmReportsZoneTatTaskCategoriesError:
-selectFarmReportsZoneTatTaskCategoriesError(),
-isFarmZoneSensorDataLoading:selectIsFarmZoneSensorDataLoading(),
-farmZoneSensorDataList:selectFarmZoneSensorDataList(),
-farmZoneSensorDataListError:selectFarmZoneSensorDataListError(),
-isFarmDashboardZoneLattestSensorLoading:selectIsFarmDashboardZoneLattestSensorLoading(),
-farmDashboardZoneLattestSensorList:selectFarmDashboardZoneLattestSensorList(),
-farmDashboardZoneLattestSensorListError:selectFarmDashboardZoneLattestSensorListError(),
-allFarmZones:selectFarmDashboardAllZoneDetailsList(),
-isAllFarmZonesLoading:selectIsFarmDashboardAllZoneDetailsLoading(),
-pusherData : selectPusherData()
-
-});
+  isZoneDashboardZoneUtilizationCropsLoading:
+    selectIsZoneDashboardZoneUtilizationCropsLoading(),
+  zoneDashboardZoneUtilizationCropsList:
+    selectZoneDashboardZoneUtilizationCropsList(),
+  zoneDashboardZoneUtilizationCropsError:
+    selectZoneDashboardZoneUtilizationCropsError(),
+  isZoneDashboardZoneUtilizationStagesLoading:
+    selectIsZoneDashboardZoneUtilizationStagesLoading(),
+  zoneDashboardZoneUtilizationStagesList:
+    selectZoneDashboardZoneUtilizationStagesList(),
+  zoneDashboardZoneUtilizationStagesError:
+    selectZoneDashboardZoneUtilizationStagesError(),
+  zoneReportsList: selectZoneReportsList(),
+  isZoneReportsListLoading: selectIsZoneReportsListLoading(),
+  zoneReportsListError: selectZoneReportsListError(),
+  isFarmReportsZoneAverageMortalityListLoading:
+    selectIsFarmReportsZoneAverageMortalityListLoading(),
+  farmReportsZoneAverageMortalityList:
+    selectFarmReportsZoneAverageMortalityList(),
+  farmReportsZoneAverageMortalityError:
+    selectFarmReportsZoneAverageMortalityError(),
+  isFarmReportsZoneTatTaskCategoriesListLoading:
+    selectIsFarmReportsZoneTatTaskCategoriesListLoading(),
+  farmReportsZoneTatTaskCategoriesList:
+    selectFarmReportsZoneTatTaskCategoriesList(),
+  farmReportsZoneTatTaskCategoriesError:
+    selectFarmReportsZoneTatTaskCategoriesError(),
+  isFarmZoneSensorDataLoading: selectIsFarmZoneSensorDataLoading(),
+  farmZoneSensorDataList: selectFarmZoneSensorDataList(),
+  farmZoneSensorDataListError: selectFarmZoneSensorDataListError(),
+  isFarmDashboardZoneLattestSensorLoading:
+    selectIsFarmDashboardZoneLattestSensorLoading(),
+  farmDashboardZoneLattestSensorList:
+    selectFarmDashboardZoneLattestSensorList(),
+  farmDashboardZoneLattestSensorListError:
+    selectFarmDashboardZoneLattestSensorListError(),
+  allFarmZones: selectFarmDashboardAllZoneDetailsList(),
+  isAllFarmZonesLoading: selectIsFarmDashboardAllZoneDetailsLoading(),
+  pusherData: selectPusherData()
+})
 const mapDispatchToProps = {
   fetchFarmZone: fetchFarmZoneRequest,
   fetchFarmDashboardZone: fetchFarmZoneDashboardRequest,
@@ -168,26 +175,29 @@ const mapDispatchToProps = {
   fetchZoneDashoboardZoneInfo: fetchFarmDashboardZoneInfoRequest,
   fetchZoneDashboardZoneCropSchdule: fetchZoneDashboardZoneCropScheduleRequest,
   fetchZoneDashboardZoneTaskSchedule: fetchZoneDashboardZoneTaskScheduleRequest,
-  fetchZoneDashboardZoneSensors:fetchZoneDashboardZoneSensorRequest,
-  fetchZoneDashboardZoneUtilizationCrops:fetchZoneDashboardZoneUtilizationCropsRequest,
-  fetchZoneDashboardZoneUtilizationStages:fetchZoneDashboardZoneUtilizationStagesRequest,
+  fetchZoneDashboardZoneSensors: fetchZoneDashboardZoneSensorRequest,
+  fetchZoneDashboardZoneUtilizationCrops:
+    fetchZoneDashboardZoneUtilizationCropsRequest,
+  fetchZoneDashboardZoneUtilizationStages:
+    fetchZoneDashboardZoneUtilizationStagesRequest,
   fetchZoneReports: fetchZoneReportsRequest,
-  fecthFarmReportsZoneAverageMortality:fetchFarmReportsZoneAverageMortalityRequest,
-  fetchFarmReportsZoneTatTaskRequest:fetchFarmReportsZoneTatTaskCategoriesRequest,
-  fetchFarmZoneSensorDataRequest:fetchFarmZoneSensorDataRequest,
-  fetchDashboardLattestSensors:fetchDashboardFarmLattestSensorDataRequest,
-  fetchAllFarmZones:fetchDashboardAllZoneDetailsRequest,
-
-};
-function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-    let navigate = useNavigate();
-    let params = useParams();
+  fecthFarmReportsZoneAverageMortality:
+    fetchFarmReportsZoneAverageMortalityRequest,
+  fetchFarmReportsZoneTatTaskRequest:
+    fetchFarmReportsZoneTatTaskCategoriesRequest,
+  fetchFarmZoneSensorDataRequest,
+  fetchDashboardLattestSensors: fetchDashboardFarmLattestSensorDataRequest,
+  fetchAllFarmZones: fetchDashboardAllZoneDetailsRequest
+}
+function withRouter (Component) {
+  function ComponentWithRouterProp (props) {
+    const navigate = useNavigate()
+    const params = useParams()
     // return React.createElement(Component, {...props, router:{ location, navigate, params }})
-    return <Component {...props} router={{ location, navigate, params }} />;
+    return <Component {...props} router={{ navigate, params }} />
   }
-  return ComponentWithRouterProp;
+  return ComponentWithRouterProp
 }
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(ZoneDashboard)
-);
+)

@@ -1,23 +1,20 @@
 .image-container {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .close-icon {
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
-    background-color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-  }
-  
-  .close-icon:hover {
-    background-color: green;
-  }
-  
+  position: relative;
+  display: inline-block;
+}
+.close-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+.close-icon:hover {
+  background-color: green;
+}

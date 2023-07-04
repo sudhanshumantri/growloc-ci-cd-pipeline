@@ -1,186 +1,181 @@
-import React, { useState, useEffect } from "react";
-import { Line } from "react-chartjs-2";
-import {
-  Grid,
-  Card,
-  CardContent,
-} from "@mui/material";
-import { useParams } from "react-router-dom";
-import Loader from "../../shared/loader";
-import { Time_Frames } from "../../../config";
-import convertDurationToHours from "../../shared/convertdaytohours";
-import ToggleButtonReports from "../../shared/togglebutton";
-
-export default function FarmEfficiency({
+import React, { useState, useEffect } from 'react'
+import { Line } from 'react-chartjs-2'
+import { Grid, Card, CardContent } from '@mui/material'
+import { useParams } from 'react-router-dom'
+import Loader from '../../shared/loader'
+// import { Time_Frames } from '../../../config'
+import { TIME_FRAMES } from '../../../config'
+import convertDurationToHours from '../../shared/convertdaytohours'
+import ToggleButtonReports from '../../shared/togglebutton'
+export default function FarmEfficiency ({
   fetchFarmReports,
   farmReportsList,
-  isFarmReportsListLoading,
+  isFarmReportsListLoading
 }) {
-  let { farmId } = useParams();
-  const [phData, setPhData] = useState({ labels: [], datasets: [] });
+  const { farmId } = useParams()
+  const [phData, setPhData] = useState({ labels: [], datasets: [] })
   const [waterTempData, setWaterTempData] = useState({
     labels: [],
-    datasets: [],
-  });
+    datasets: []
+  })
   const [lightIntensityData, setlightIntensityData] = useState({
     labels: [],
-    datasets: [],
-  });
+    datasets: []
+  })
   const [humidityData, setHumidityData] = useState({
     labels: [],
-    datasets: [],
-  });
-  const [duration, setDuration] = useState("4hr");
+    datasets: []
+  })
+  const [duration, setDuration] = useState('4hr')
 
-  function getChartOptions(xAxisLabel, yAxisLabel) {
+  function getChartOptions (xAxisLabel, yAxisLabel) {
     return {
       plugins: {
         legend: {
-          display: false,
-        },
+          display: false
+        }
       },
       scales: {
         y: {
           ticks: {
             font: {
-              size: 13,
-            },
+              size: 13
+            }
           },
           title: {
             display: true,
             text: yAxisLabel,
             font: {
-              size: 11,
+              size: 11
             },
             padding: {
-              top: 5,
-            },
-          },
+              top: 5
+            }
+          }
         },
         x: {
           ticks: {
             font: {
-              size: 11,
+              size: 11
             },
             padding: 10,
             maxRotation: 0,
             minRotation: 0,
-            maxTicksLimit: 500,
+            maxTicksLimit: 500
           },
           labels: function (ctx) {
-            const labels = ctx.chart.data.labels;
+            const labels = ctx.chart.data.labels
             if (labels.length === 2) {
-              return labels;
+              return labels
             }
             const remainingLabels = (labels || []).map((value, index) => {
               if (index === 0 || index === labels.length - 1) {
-                return value;
+                return value
               }
-              return "";
-            });
-            return remainingLabels;
+              return ''
+            })
+            return remainingLabels
           },
           callback: function (value, index, values) {
             if (index === 0 || index === values.length - 1) {
-              return value;
+              return value
             }
-            return "";
+            return ''
           },
           title: {
             display: true,
             text: xAxisLabel,
             font: {
-              size: 11,
+              size: 11
             },
             padding: {
-              top: 5,
-            },
-          },
-        },
-      },
-    };
+              top: 5
+            }
+          }
+        }
+      }
+    }
   }
-  const phChartOptions = getChartOptions("Time (hours)", "pH Value");
+  const phChartOptions = getChartOptions('Time (hours)', 'pH Value')
   const waterTempChartOptions = getChartOptions(
-    "Time (hours)",
-    "Water Temperature"
-  );
+    'Time (hours)',
+    'Water Temperature'
+  )
   const lightIntensityChartOptions = getChartOptions(
-    "Time (hours)",
-    "Light Intensity"
-  );
-  const humidityChartOptions = getChartOptions("Time (hours)", "Humidity");
+    'Time (hours)',
+    'Light Intensity'
+  )
+  const humidityChartOptions = getChartOptions('Time (hours)', 'Humidity')
 
   const handleTimeFrameChange = (event) => {
-    const { value } = event.target;
-    setDuration(value);
-    const durationInHours = convertDurationToHours(value);
-    fetchFarmReports({ id: farmId, duration: durationInHours });
-  };
+    const { value } = event.target
+    setDuration(value)
+    const durationInHours = convertDurationToHours(value)
+    fetchFarmReports({ id: farmId, duration: durationInHours })
+  }
   useEffect(() => {
-    fetchFarmReports({ farmId, duration:parseInt(duration) });
-  }, []);
-
+    fetchFarmReports({ farmId, duration: parseInt(duration) })
+  }, [])
 
   useEffect(() => {
     const generateChartData = (field) => {
-      const labels = [];
+      const labels = []
       const values = [];
       (farmReportsList || []).forEach((report) => {
-        const { data, created_on } = report;
-        const value = data[0].payload[field];
-        const createdOn = new Date(created_on).toLocaleString("en-US", {
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: true,
-        });
-  
-        values.push(value);
-        labels.push(createdOn);
-      });
-  
+        const { data, CREATED_ON } = report
+        const value = data[0].payload[field]
+        const createdOn = new Date(CREATED_ON).toLocaleString('en-US', {
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+          hour12: true
+        })
+
+        values.push(value)
+        labels.push(createdOn)
+      })
+
       return {
         labels,
         datasets: [
           {
             data: values,
             fill: false,
-            borderColor: "rgba(75, 192, 192, 1)",
-            tension: 0.1,
-          },
-        ],
-      };
-    };
-    const phChartData = generateChartData('pH');
-    setPhData(phChartData);
-    const waterTempChartData = generateChartData('waterTemperature');
-    setWaterTempData(waterTempChartData);
-    const lightIntensityData = generateChartData('lightIntensity');
-    setlightIntensityData(lightIntensityData);
-    const humidityData = generateChartData('humidity');
-    setHumidityData(humidityData);
-  }, [farmReportsList]);
-  
-  const durationStyles = { backgroundColor: "green", color: "white" };
+            borderColor: 'rgba(75, 192, 192, 1)',
+            tension: 0.1
+          }
+        ]
+      }
+    }
+    const phChartData = generateChartData('pH')
+    setPhData(phChartData)
+    const waterTempChartData = generateChartData('waterTemperature')
+    setWaterTempData(waterTempChartData)
+    const lightIntensityData = generateChartData('lightIntensity')
+    setlightIntensityData(lightIntensityData)
+    const humidityData = generateChartData('humidity')
+    setHumidityData(humidityData)
+  }, [farmReportsList])
+
+  const durationStyles = { backgroundColor: 'green', color: 'white' }
 
   return (
     <>
-      <div className="page-container">
+      <div className='page-container'>
         {isFarmReportsListLoading && (
-          <Loader title="Fetching farm reports details" />
+          <Loader title='Fetching farm reports details' />
         )}
         <Grid container spacing={2}>
           <Grid
             item
             xs={12}
-            sx={{ display: "flex", justifyContent: "flex-end" }}
+            sx={{ display: 'flex', justifyContent: 'flex-end' }}
           >
             <ToggleButtonReports
               value={duration}
-              options={Time_Frames.map((timeframe) => ({
+              options={TIME_FRAMES.map((timeframe) => ({
                 value: timeframe,
-                label: timeframe,
+                label: timeframe
               }))}
               styles={durationStyles}
               onChange={handleTimeFrameChange}
@@ -189,9 +184,9 @@ export default function FarmEfficiency({
           <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardContent>
-                <span className="input-label">PH</span>
+                <span className='input-label'>PH</span>
                 <Line
-                  className="chart-container"
+                  className='chart-container'
                   data={phData}
                   options={phChartOptions}
                 />
@@ -201,7 +196,7 @@ export default function FarmEfficiency({
           <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardContent>
-                <span className="input-label">Water temp</span>
+                <span className='input-label'>Water temp</span>
                 <Line data={waterTempData} options={waterTempChartOptions} />
               </CardContent>
             </Card>
@@ -209,7 +204,7 @@ export default function FarmEfficiency({
           <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardContent>
-                <span className="input-label">Light intensity</span>
+                <span className='input-label'>Light intensity</span>
                 <Line
                   data={lightIntensityData}
                   options={lightIntensityChartOptions}
@@ -220,7 +215,7 @@ export default function FarmEfficiency({
           <Grid item xs={12} sm={6} md={6} lg={6}>
             <Card>
               <CardContent>
-                <span className="input-label">Humidity</span>
+                <span className='input-label'>Humidity</span>
                 <Line data={humidityData} options={humidityChartOptions} />
               </CardContent>
             </Card>
@@ -228,5 +223,5 @@ export default function FarmEfficiency({
         </Grid>
       </div>
     </>
-  );
+  )
 }

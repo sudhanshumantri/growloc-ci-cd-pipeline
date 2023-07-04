@@ -1,146 +1,122 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from 'react'
 import {
   styled,
-  useTheme,
   Box,
   List,
   ListItemText,
   CssBaseline,
   ListItem,
   ListItemIcon,
-  Divider,
   IconButton
-} from "@mui/material/";
-import MuiDrawer from "@mui/material/Drawer";
-import { Link } from "react-router-dom";
-import TopHeader from "../../shared/header";
-import "../../../../public/assets/Irrigation.png";
-import LogoutIcon from "@mui/icons-material/Logout";
-import logo from "../../../../public/assets/logo.png";
-import { adminMenuItems } from "../../shared/sidebar/config";
-import Dashboard from "../../../../public/assets/Dashboard.png";
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+} from '@mui/material/'
+import MuiDrawer from '@mui/material/Drawer'
+import { Link } from 'react-router-dom'
+import TopHeader from '../../shared/header'
+import Dashboard from '../../../../public/assets/Dashboard.png'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import LOGO_DARK from '../../../../public/assets/logo_white_resized.png'
+import './style.css'
 
-import "./style.css";
-
-const drawerWidth = 300;
+const drawerWidth = 300
 const openedMixin = (theme) => ({
   width: drawerWidth,
-  transition: theme.transitions.create("width", {
+  transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
+    duration: theme.transitions.duration.enteringScreen
   }),
-  overflowX: "hidden",
-  backgroundColor: "#517223",
-});
+  overflowX: 'hidden',
+  backgroundColor: '#517223'
+})
 
 const closedMixin = (theme) => ({
-  transition: theme.transitions.create("width", {
+  transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+    duration: theme.transitions.duration.leavingScreen
   }),
-  overflowX: "hidden",
+  overflowX: 'hidden',
   width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
+  [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(9)} + -13px)`,
-    backgroundColor: "#517223",
-  },
-});
+    backgroundColor: '#517223'
+  }
+})
 
-/**
- * this configures the drawer header conatiner
- */
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  background: "white",
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  background: 'white',
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
-}));
+  justifyContent: 'flex-end'
+}))
 const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: (prop) => prop !== 'open'
 })(({ theme, open }) => ({
   width: drawerWidth,
   flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
   ...(open && {
     ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
+    '& .MuiDrawer-paper': openedMixin(theme)
   }),
   ...(!open && {
     ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
-}));
-export default function AdminSideBar({  logout, loginObject }) {
-  const theme = useTheme();
-  const [open, setOpen] = useState(true);
-  const [openSubmenu, toggleSubmenu] = useState(false);
-  const [items, setItems] = useState(adminMenuItems);
+    '& .MuiDrawer-paper': closedMixin(theme)
+  })
+}))
+export default function AdminSideBar ({ logout, loginObject }) {
+  const [open, setOpen] = useState(false)
 
   const toggleDrawer = () => {
-    setOpen(!open);
-  };
-  const handleClick = (id) => {
-    toggleSubmenu((prevState) => ({ ...prevState, [id]: !prevState[id] }));
-  };
-
-  const logoutHandler = () => {
-    logout();
-    };
+    setOpen(!open)
+  }
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <TopHeader
         open={open}
         drawerWidth={drawerWidth}
         loginObject={loginObject}
-        logout ={logout}
+        logout={logout}
         toggleDrawer={toggleDrawer}
       />
-      <Drawer variant="permanent" open={open} sx={{ zIndex: 1 }}>
-        <DrawerHeader sx={{ background: "#517223" }}>
-          <div className="drawer-header-logo">
-            <img src={logo} onClick={() => this.props.router.navigate("/")} />
-            <IconButton onClick={toggleDrawer} sx={{
-      display: {
-        lg: "none",
-        md: "none",
-        xs: "block",
-      },
-      color:"white",
-      textAlignt:"left",
-      "@media (min-width: 600px)": {
-        width:"100%"
-      },
-    }}
->
-{/* {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />} */}
-    {open && <ChevronLeftIcon /> }
-  </IconButton>
-
+      <Drawer variant='permanent' open={open} sx={{ zIndex: 1 }}>
+        <DrawerHeader sx={{ background: '#517223' }}>
+          <div className='drawer-header-logo'>
+            <img src={LOGO_DARK} width='245px' height='73px' />
+            <IconButton
+              onClick={toggleDrawer}
+              sx={{
+                color: 'white',
+                textAlignt: 'left',
+                marginTop: '-69px'
+              }}
+            >
+              {open && <ChevronLeftIcon />}
+            </IconButton>
           </div>
         </DrawerHeader>
         <List
-          className="drawer-list-container"
-          sx={{ width: "100%", maxWidth: 360 }}
-          component="nav"
-        >  
-        <ListItem component={Link} style={{borderBottom: "1px solid white"}}
->
-            <ListItemIcon className="darwer-icon">
-                <img src={Dashboard}/>
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItem> 
+          className='drawer-list-container'
+          sx={{ width: '100%', maxWidth: 360 }}
+          component='nav'
+        >
+          <div style={{ backgroundColor: 'black' }}>
+            <ListItem
+              component={Link}
+              style={{ borderBottom: '1px solid white' }}
+            >
+              <ListItemIcon className='darwer-icon'>
+                <img src={Dashboard} />
+              </ListItemIcon>
+              <ListItemText primary='Dashboard' sx={{ color: 'white' }} />
+            </ListItem>
+          </div>
         </List>
       </Drawer>
     </Box>
-  );
+  )
 }
-

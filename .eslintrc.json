@@ -1,0 +1,13 @@
+{
+  "extends": ["standard", "standard-jsx", "standard-react"],
+  "ignorePatterns": ["*.css"],
+  "rules": {
+    "react/prop-types": "off",
+    "react/no-children-prop": "off",
+    "no-useless-escape": "off",
+    "react/jsx-handler-names": "off",
+    "no-undef": "off",
+    "camelcase": "off",
+    "no-unused-vars": "off"
+  }
+}

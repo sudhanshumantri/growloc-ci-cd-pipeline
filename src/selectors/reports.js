@@ -1,57 +1,49 @@
-import { createSelector } from "reselect";
-const selectReports = (state) => state.get("reports");
+import { createSelector } from 'reselect'
+const selectReports = (state) => state.get('reports')
 
 export const selectFarmReportsList = () =>
-  createSelector(
-    selectReports,
-    (services) => services.toJS()["farmReportsList"]
-  );
+  createSelector(selectReports, (services) => services.toJS().farmReportsList)
 export const selectIsFarmReportsListLoading = () =>
   createSelector(
     selectReports,
-    (services) => services.toJS()["isFarmReportsListLoading"]
-  );
+    (services) => services.toJS().isFarmReportsListLoading
+  )
 
 export const selectFarmReportsListError = () =>
   createSelector(
     selectReports,
-    (services) => services.toJS()["farmReportsListError"]
-  );
-//
+    (services) => services.toJS().farmReportsListError
+  )
 
 export const selectFarmReportsFarmAverageMortalityList = () =>
-createSelector(
-  selectReports,
-  (services) => services.toJS()["farmReportsFarmAverageMortalityList"]
-);
+  createSelector(
+    selectReports,
+    (services) => services.toJS().farmReportsFarmAverageMortalityList
+  )
 export const selectIsFarmReportsFarmAverageMortalityListLoading = () =>
-createSelector(
-  selectReports,
-  (services) => services.toJS()["isFarmReportsFarmAverageMortalityListLoading"]
-);
+  createSelector(
+    selectReports,
+    (services) => services.toJS().isFarmReportsFarmAverageMortalityListLoading
+  )
 
 export const selectFarmReportsFarmAverageMortalityError = () =>
-createSelector(
-  selectReports,
-  (services) => services.toJS()["farmReportsFarmAverageMortalityError"]
-);
-
-
+  createSelector(
+    selectReports,
+    (services) => services.toJS().farmReportsFarmAverageMortalityError
+  )
 export const selectFarmReportsFarmTatTaskCategoriesList = () =>
-createSelector(
-  selectReports,
-  (services) => services.toJS()["farmReportsFarmTatTaskCategoriesList"]
-);
+  createSelector(
+    selectReports,
+    (services) => services.toJS().farmReportsFarmTatTaskCategoriesList
+  )
 export const selectIsFarmReportsFarmTatTaskCategoriesListLoading = () =>
-createSelector(
-  selectReports,
-  (services) => services.toJS()["isFarmReportsFarmTatTaskCategoriesListLoading"]
-);
+  createSelector(
+    selectReports,
+    (services) => services.toJS().isFarmReportsFarmTatTaskCategoriesListLoading
+  )
 
 export const selectFarmReportsFarmTatTaskCategoriesListError = () =>
-createSelector(
-  selectReports,
-  (services) => services.toJS()["farmReportsFarmTatTaskCategoriesListError"]
-);
-
-
+  createSelector(
+    selectReports,
+    (services) => services.toJS().farmReportsFarmTatTaskCategoriesListError
+  )

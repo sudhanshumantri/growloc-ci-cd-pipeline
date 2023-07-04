@@ -1,14 +1,10 @@
-import { combineReducers } from 'redux-immutable';
+import { combineReducers } from 'redux-immutable'
 import { routerReducer } from 'react-router-redux'
-
-const baseReducer = (state = {}) => state;
-/**
- * Creates the main reducer with the asynchronously loaded ones
- */
-export default function createReducer(asyncReducers) {
+const baseReducer = (state = {}) => state
+export default function createReducer (asyncReducers) {
   return combineReducers({
     baseReducer,
     ...asyncReducers,
     router: routerReducer
-  });
+  })
 }

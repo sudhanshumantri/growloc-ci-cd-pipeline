@@ -1,27 +1,24 @@
-import { createSelector } from "reselect";
-const selectAdmin = (state) => state.get("admin");
+import { createSelector } from 'reselect'
+const selectAdmin = (state) => state.get('admin')
 export const selectAdminList = () =>
-  createSelector(selectAdmin, (services) => services.toJS()["adminList"]);
+  createSelector(selectAdmin, (services) => services.toJS().adminList)
 export const selectIsAdminListLoading = () =>
-  createSelector(
-    selectAdmin,
-    (services) => services.toJS()["isAdminListLoading"]
-  );
+  createSelector(selectAdmin, (services) => services.toJS().isAdminListLoading)
 export const selectAdminListError = () =>
-  createSelector(selectAdmin, (services) => services.toJS()["adminListError"]);
+  createSelector(selectAdmin, (services) => services.toJS().adminListError)
 
-  export const selectIsAddAdminZoneSensorsLoading = () =>
+export const selectIsAddAdminZoneSensorsLoading = () =>
   createSelector(
     selectAdmin,
-    (services) => services.toJS()["isAddAdminZoneSensorsLoading"]
-  );
+    (services) => services.toJS().isAddAdminZoneSensorsLoading
+  )
 export const selectAddAdminZoneSensorsError = () =>
   createSelector(
     selectAdmin,
-    (services) => services.toJS()["addAdminZoneSensorsError"]
-  );
-  export const selectIsDeleteAdminZoneSensorsLoading = () =>
+    (services) => services.toJS().addAdminZoneSensorsError
+  )
+export const selectIsDeleteAdminZoneSensorsLoading = () =>
   createSelector(
     selectAdmin,
-    (services) => services.toJS()["isDeleteAdminZoneSensorsLoading"]
-  );
+    (services) => services.toJS().isDeleteAdminZoneSensorsLoading
+  )

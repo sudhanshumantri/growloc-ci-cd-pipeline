@@ -1,7 +1,6 @@
 .page-header-container {
   padding: 16px;
   margin-top: 50px !important;
-  /* min-height: 48px; */
 }
 .page-section-title {
   font-weight: 600;
@@ -11,10 +10,14 @@
   margin-block-end: 5px;
   display: block;
   white-space: nowrap;
+}
+.page-section-title.tooltip {
+  max-width: 50%;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 40%;
 }
+
 .page-header-subtitle {
   font-size: 14px;
   color: grey;
@@ -32,55 +35,57 @@
 .button-container {
   flex: 1 !important;
   display: flex;
-  justify-content: flex-end
+  justify-content: flex-end;
 }
-.button-container>* {
+.button-container > * {
   margin-left: 5px !important;
 }
-@media (max-width: 800px){
-  .css-vok43g-MuiGrid-root{
-    padding-left: 0px!important;
+@media (max-width: 800px) {
+  .css-vok43g-MuiGrid-root {
+    padding-left: 0px !important;
   }
-  .button-custom{
+  .button-custom {
     font-size: 10px !important;
   }
 }
 
-@media (min-width: 1200px){
-.button-container {
-max-width: 75.333% !important ;
-}}
+@media (min-width: 1200px) {
+  .button-container {
+    max-width: 75.333% !important ;
+  }
+}
 
-@media (max-width: 600px){
-  .css-1d6wzja-MuiButton-startIcon{
-    margin-right: 2px!important;
+@media (max-width: 600px) {
+  .css-1d6wzja-MuiButton-startIcon {
+    margin-right: 2px !important;
   }
-  .css-6tnbud-MuiButtonBase-root-MuiButton-root{padding: 5px 10px!important;}
-  .css-1d6wzja-MuiButton-startIcon>*:nth-of-type(1) {
-    font-size: 16px!important;
-}
-.css-mhc70k-MuiGrid-root>.MuiGrid-item{
-  margin: 0px 10px 0px -10px!important;
-}
-.button-container {
-  max-width: 50.333% !important ;
+  .css-6tnbud-MuiButtonBase-root-MuiButton-root {
+    padding: 5px 10px !important;
   }
-/* .MuiStepConnector-root{
-    left: calc(-52% + -11px) !important;
-    right: calc(50% + 22px) !important;
-} */
+  .css-1d6wzja-MuiButton-startIcon > *:nth-of-type(1) {
+    font-size: 16px !important;
+  }
+  .css-mhc70k-MuiGrid-root > .MuiGrid-item {
+    margin: 0px 10px 0px -10px !important;
+  }
+  .button-container {
+    max-width: 50.333% !important ;
+  }
 }
 
 .css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root {
   width: 35px;
   height: 35px;
-  margin: 15px 5px 0px 0px!important;
+  margin: 15px 5px 0px 0px !important;
 }
-.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root:hover{
+.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root:hover {
   width: 35px;
   height: 35px;
   margin: 15px 5px 0px 0px;
 }
-/* .page-header-top-row{
-  display: none;
-} */
+
+@media (max-width: 600px) {
+  .button-container {
+    max-width: 73.333% !important;
+  }
+}

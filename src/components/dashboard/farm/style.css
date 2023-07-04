@@ -1,45 +1,27 @@
 .farm-tab-text {
-    font-weight: bold;
-    color: black;
+  font-weight: bold;
+  color: black;
 }
-
 .tab-vertical .css-lfwcke-MuiTabs-flexContainer {
-    align-items: baseline !important;
+  align-items: baseline !important;
 }
-
 .section-title span {
-    color: grey !important;
+  color: grey !important;
 }
-
 .zone-gridview-cards {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    font-weight: bold;
-    text-align: center;
-   
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-weight: bold;
+  text-align: center;
 }
-.zone-gridview-cars-header{
-    font-weight: bold;
-    text-transform: uppercase;
-    color: black;
+.zone-gridview-cars-header {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: black;
 }
-/* .css-p033sf-MuiButtonBase-root-MuiTab-root{
-    padding: 12px 4px !important;
-} */
-
-/* .css-p033sf-MuiButtonBase-root-MuiTab-root{
-    padding: 12px 11px !important;
-} */
-
-
-/* @media (max-width: 600px){
-    .css-p033sf-MuiButtonBase-root-MuiTab-root{
-        padding: 12px 3px !important;
-    }
-    .css-p033sf-MuiButtonBase-root-MuiTab-root{
-        font-size: 0.8rem !important;
-    }
-} */
-  
+.tab-section .MuiTabs-scroller button {
+  padding: 12px 5px;
+  font-size: 14px;
+}

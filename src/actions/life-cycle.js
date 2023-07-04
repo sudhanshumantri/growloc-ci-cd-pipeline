@@ -20,141 +20,131 @@ import {
   UPDATE_CROP_LIFECYCLE_DETAILS_REQUEST,
   UPDATE_CROP_LIFECYCLE_DETAILS_SUCCESS,
   UPDATE_CROP_LIFECYCLE_DETAILS_FAILURE
+} from './actionTypes'
 
-} from "./actionTypes";
-
-export function fetchAllCropsLifecycleRequest(data) {
+export function fetchAllCropsLifecycleRequest (data) {
   return {
     type: FETCH_CROP_LIFECYCLE_REQUEST,
     data
-  };
+  }
 }
-export function fetchAllCropsLifecycleSuccess(data) {
+export function fetchAllCropsLifecycleSuccess (data) {
   return {
     type: FETCH_CROP_LIFECYCLE_SUCCESS,
-    data,
-  };
+    data
+  }
 }
-export function fetchAllCropsLifecycleFailure(error) {
+export function fetchAllCropsLifecycleFailure (error) {
   return {
     type: FETCH_CROP_LIFECYCLE_FAILURE,
-    error,
-  };
+    error
+  }
 }
-
-export function addCropToLifecycleRequest(data) {
+export function addCropToLifecycleRequest (data) {
   return {
     type: ADD_CROP_LIFECYCLE_REQUEST,
     data
-  };
+  }
 }
-export function addCropToLifecycleSuccess(data) {
+export function addCropToLifecycleSuccess (data) {
   return {
     type: ADD_CROP_LIFECYCLE_SUCCESS,
-    data,
-  };
+    data
+  }
 }
-export function addCropToLifecycleFailure(error) {
+export function addCropToLifecycleFailure (error) {
   return {
     type: ADD_CROP_LIFECYCLE_FAILURE,
-    error,
-  };
+    error
+  }
 }
-
-export function fetchCropsLifecycleDetailsRequest(data) {
+export function fetchCropsLifecycleDetailsRequest (data) {
   return {
     type: FETCH_CROP_LIFECYCLE_DETAILS_REQUEST,
     data
-  };
+  }
 }
-export function fetchCropsLifecycleDetailsSuccess(data) {
+export function fetchCropsLifecycleDetailsSuccess (data) {
   return {
     type: FETCH_CROP_LIFECYCLE_DETAILS__SUCCESS,
-    data,
-  };
+    data
+  }
 }
-export function fetchCropsLifecycleDetailsFailure(error) {
+export function fetchCropsLifecycleDetailsFailure (error) {
   return {
     type: FETCH_CROP_LIFECYCLE_DETAILS__FAILURE,
-    error,
-  };
+    error
+  }
 }
-
-export function cropsLifecycleTransitionRequest(data) {
+export function cropsLifecycleTransitionRequest (data) {
   return {
     type: CROP_LIFECYCLE_TRANSITION_REQUEST,
     data
-  };
+  }
 }
-export function cropsLifecycleTransitionSuccess(data) {
+export function cropsLifecycleTransitionSuccess (data) {
   return {
     type: CROP_LIFECYCLE_TRANSITION__SUCCESS,
-    data,
-  };
+    data
+  }
 }
-export function cropsLifecycleTransitionFailure(error) {
+export function cropsLifecycleTransitionFailure (error) {
   return {
     type: CROP_LIFECYCLE_TRANSITION__FAILURE,
-    error,
-  };
+    error
+  }
 }
-
-export function updateCropToLifecycleParametersRequest(data) {
+export function updateCropToLifecycleParametersRequest (data) {
   return {
     type: UPDATE_CROP_LIFECYCLE_PARAMETERS_REQUEST,
     data
-  };
+  }
 }
-export function updateCropToLifecycleParametersSuccess(data) {
+export function updateCropToLifecycleParametersSuccess (data) {
   return {
     type: UPDATE_CROP_LIFECYCLE_PARAMETERS_SUCCESS,
-    data,
-  };
+    data
+  }
 }
-export function updateCropToLifecycleParametersFailure(error) {
+export function updateCropToLifecycleParametersFailure (error) {
   return {
     type: UPDATE_CROP_LIFECYCLE_PARAMETERS_FAILURE,
-    error,
-  };
+    error
+  }
 }
-//
-export function updateCropToLifecycleScheduleRequest(data) {
+export function updateCropToLifecycleScheduleRequest (data) {
   return {
     type: UPDATE_CROP_LIFECYCLE_SCHEDULE_REQUEST,
     data
-  };
+  }
 }
-export function updateCropToLifecycleScheduleSuccess(data) {
+export function updateCropToLifecycleScheduleSuccess (data) {
   return {
     type: UPDATE_CROP_LIFECYCLE_SCHEDULE_SUCCESS,
-    data,
-  };
+    data
+  }
 }
-export function updateCropToLifecycleScheduleFailure(error) {
+export function updateCropToLifecycleScheduleFailure (error) {
   return {
     type: UPDATE_CROP_LIFECYCLE_SCHEDULE_FAILURE,
-    error,
-  };
+    error
+  }
 }
-
-//
-
-export function updateCropToLifecycleDetailsRequest(data) {
+export function updateCropToLifecycleDetailsRequest (data) {
   return {
     type: UPDATE_CROP_LIFECYCLE_DETAILS_REQUEST,
-    data,
-  };
+    data
+  }
 }
-export function  updateCropToLifecycleDetailsSuccess(data) {
+export function updateCropToLifecycleDetailsSuccess (data) {
   return {
     type: UPDATE_CROP_LIFECYCLE_DETAILS_SUCCESS,
-    data,
-  };
+    data
+  }
 }
-//
-export function  updateCropToLifecycleDetailsFailure(error) {
+export function updateCropToLifecycleDetailsFailure (error) {
   return {
     type: UPDATE_CROP_LIFECYCLE_DETAILS_FAILURE,
     error
-  };
+  }
 }

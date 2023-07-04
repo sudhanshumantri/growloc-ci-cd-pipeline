@@ -1,7 +1,5 @@
-import React from "react";
-import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
-import { parsePath } from "history";
+import React from 'react'
+import TextField from '@mui/material/TextField'
 const TextBox = ({
   disabled,
   value,
@@ -10,7 +8,6 @@ const TextBox = ({
   error,
   helperText,
   isWhite,
-  // inputRef,
   defaultValue,
   fullWidth,
   multiline,
@@ -18,37 +15,30 @@ const TextBox = ({
   onInput,
   multiple,
   inputProps,
-
   ...params
 }) => {
-
-  const formRef = React.useRef();
-
+  const formRef = React.useRef()
   return (
     <>
-        <TextField
-          size="small"
-          {...params}
-          ref ={formRef}
-          className={
-            isWhite ? "input-custom-white input-custom" : "input-custom"
-          }
-          disabled={disabled}
-          name ={name}
-          value={value || "" }
-          onChange={onChange}
-          error ={error}
-          helperText={helperText}
-          // inputRef ={inputRef}
-          fullWidth={fullWidth}
-          multiline={multiline}
-          rows={rows}
-          onInput={onInput}
-          multiple={multiple}
-          inputProps={inputProps}
-        />
-
+      <TextField
+        size='small'
+        {...params}
+        ref={formRef}
+        className={isWhite ? 'input-custom-white input-custom' : 'input-custom'}
+        disabled={disabled}
+        name={name}
+        value={value || ''}
+        onChange={onChange}
+        error={error}
+        helperText={helperText}
+        fullWidth={fullWidth}
+        multiline={multiline}
+        rows={rows}
+        onInput={onInput}
+        multiple={multiple}
+        inputProps={inputProps}
+      />
     </>
-  );
-};
-export default TextBox;
+  )
+}
+export default TextBox

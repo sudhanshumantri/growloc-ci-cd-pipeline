@@ -1,24 +1,23 @@
 .drawer-sub-menu {
-    margin-left: 20px !important;
+  margin-left: 20px !important;
 }
-
 .darwer-icon {
-    color: white !important;
+  color: white;
 }
-
-.drawer-list-container * {
-    color: white !important;
+.drawer-list-container {
+  color: white;
 }
-
 .drawer-header-logo {
-    cursor: pointer;
-    padding-left: 17px;
-    width: 350px !important;
-    display: flex;
+  cursor: pointer;
+  padding-left: 17px;
+  width: 350px !important;
 }
-.MuiButtonBase-root{
-    text-align: left !important;
+
+.drawer-background .MuiDrawer-paper {
+  background-color: #517223 !important;
 }
-/* .css-12i7wg6-MuiPaper-root-MuiDrawer-paper{
-    background-color: #517223 !important
-} */
+@media (max-width: 800px) {
+  .drawer-header-logo img {
+    width: 245px !important;
+  }
+}

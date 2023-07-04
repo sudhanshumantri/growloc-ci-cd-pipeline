@@ -13,9 +13,7 @@
 }
 
 .rounder-icon-stepper {
-  /* font-size: 40px; */
-  border: 2px solid #51722375;;
-  /* background-color: rgb(247, 206, 106); */
+  border: 2px solid #51722375;
   width: 40px !important;
   height: 40px !important;
   border-radius: 50%;
@@ -23,20 +21,21 @@
   margin-left: -5px;
 }
 .MuiStepper-root {
-  margin: 30px 0px ;
+  margin: 30px 0px;
 }
 
 .MuiStepConnector-root {
   top: 19px !important;
-  left: calc(-50% + 22px) ;
-  right: calc(50% + 22px) ;
+  left: calc(-50% + 22px);
+  right: calc(50% + 22px);
 }
 
-.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root{color: #51722375 !important;
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root {
+  color: #51722375 !important;
 }
 .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
   color: #517223 !important;
-  border: 2px solid  #517223 !important;
+  border: 2px solid #517223 !important;
 }
 .repeat-days-container {
   display: flex;
@@ -51,11 +50,10 @@
 .sub-tittle {
   font-size: 30px;
   line-height: 45px;
-
   color: #000000;
 }
-.life-cycle-spacing .label-light{
-padding: 5px 0px;
+.life-cycle-spacing .label-light {
+  padding: 5px 0px;
 }
 .life-cycle-header {
   font-weight: 500;
@@ -63,13 +61,12 @@ padding: 5px 0px;
   line-height: 30px;
   color: #000000;
   padding: 0px 5px;
-  
 }
 
-@media (max-width: 600px){
-.MuiStepConnector-root{
-  left: calc(-52% + -11px) !important;
-  right: calc(50% + 22px) !important;
-  z-index: -111;
-}
+@media (max-width: 600px) {
+  .MuiStepConnector-root {
+    left: calc(-52% + -11px) !important;
+    right: calc(50% + 22px) !important;
+    z-index: -111;
+  }
 }

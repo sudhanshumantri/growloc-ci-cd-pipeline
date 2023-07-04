@@ -1,440 +1,224 @@
-import React, { useState, useEffect } from "react";
-import Dashboard from "../../../../public/assets/Dashboard.png";
-import Irrigation from "../../../../public/assets/Irrigation.png";
-import Account from "../../../../public/assets/Account.png";
-import Report from "../../../../public/assets/Report.png";
-import ManageCrops from "../../../../public/assets/LawnCare.png";
-import Crops from "../../../../public/assets/Crops.png";
-import CropsLifecycle from "../../../../public/assets/Irrigation.png";
-import Inventory from "../../../../public/assets/Inventory.png";
-import InventoryItem from "../../../../public/assets/InventoryItem.png";
-import WaterManagement from "../../../../public/assets/WaterManagement.png";
-import Monitors from "../../../../public/assets/Monitor.png";
-import Tasks from "../../../../public/assets/Tasks.png";
+import Dashboard from '../../../../public/assets/Dashboard.png'
+import Irrigation from '../../../../public/assets/Irrigationcrop.png'
+import Account from '../../../../public/assets/Account.png'
+import ManageCrops from '../../../../public/assets/LawnCare.png'
+import CropsLifecycle from '../../../../public/assets/Irrigation.png'
+import Inventory from '../../../../public/assets/Inventory.png'
+import WaterManagement from '../../../../public/assets/WaterManagement.png'
+import Tasks from '../../../../public/assets/Tasks.png'
 
 const menuItems = [
   {
-    title: "Farms",
-    id: "dashboard",
-    navigation: "/",
+    title: 'Farms',
+    id: 'dashboard',
+    navigation: '/',
     icon: Irrigation,
-    css: { borderBottom: "1px solid white" },
+    css: { borderBottom: '1px solid white' },
     isAuthRequired: true,
-    from: "dashboard",
-    action: "view",
+    from: 'dashboard',
+    action: 'view',
+    isActive: true
   },
-  // {
-  //   title: "Reports",
-  //   id: "Reports",
-  //   icon: Report,
-  //   navigation: "reports",
-  //   from: "reports",
-  //   isAuthRequired: true,
-  //   action: "view",
-  //   css: { borderBottom: "1px solid white" },
-  //   // subMenu: [
-  //   //   {
-  //   //     id: "1",
-  //   //     name: "Avg Weight Per Plant",
-  //   //     navigation: "reports/avgweight",
-  //   //   },
-  //   //   { id: "2", name: "Farm Efficiency", navigation: "reports/efficiency" },
-  //   // ],
-  // },
+
   {
-    title: "Task",
-    id: "Task",
-    navigation: "task",
-    link: "task",
+    title: 'Task',
+    id: 'Task',
+    navigation: 'task',
+    link: 'task',
     icon: Tasks,
     isAuthRequired: true,
-    from: "task",
-    action: "view",
-    css: { borderBottom: "1px solid white" },
-  },
-];
+    from: 'task',
+    action: 'view',
+    css: { borderBottom: '1px solid white' },
+    isActive: true
+  }
+]
 
 const farmMenuItems = [
   {
-    title: "Dashboard",
-    id: "dashboard",
+    title: 'Dashboard',
+    id: 'Dashboard',
     icon: Dashboard,
-    navigation: "/dashboard",
-    link: "/dashboard",
-    css: { borderBottom: "1px solid white" },
+    navigation: '/dashboard',
+    link: '/dashboard',
+    css: { borderBottom: '1px solid white' },
     isAuthRequired: true,
-    from: "crops",
-    action: "view",
+    from: 'crops',
+    action: 'view',
+    isActive: true
   },
-  // {
-  //   title: "Crop",
-  //   id: "crop",
-  //   icon: Crops,
-  //   isChildToFarmId: true,
-  //   navigation: "corp",
-  //   css: { borderBottom: "1px solid white" },
-  //   isAuthRequired: true,
-  //   from: "crops",
-  //   action: "view",
-  //   subMenu: [
-  //     {
-  //       id: "1",
-  //       name: "Manage Crops",
-  //       navigation: "/crops/manage",
-  //       icon: ManageCrops,
-  //       link: "/crops/manage",
-  //     },
-  //     {
-  //       id: "3",
-  //       name: "Crops Lifecycle",
-  //       navigation: "/crops/lifecycle",
-  //       link: "/crops/lifecycle",
-  //       icon: CropsLifecycle,
-  //       isAuthRequired: true,
-  //       from: "lifeCycle",
-  //       action: "view",
-  //     },
-  //   ],
-  // },
+
   {
-    title: "Tasks",
-    id: "Tasks",
-    navigation: "/task",
+    title: 'Tasks',
+    id: 'Tasks',
+    navigation: '/task',
     icon: Tasks,
-    link: "/task",
-    css: { borderBottom: "1px solid white" },
+    link: '/task',
+    css: { borderBottom: '1px solid white' },
+    isActive: false
   },
   {
-    title: "Water Management",
-    id: "Water",
+    title: 'Water Management',
+    id: 'Water',
     icon: WaterManagement,
     isAuthRequired: true,
-    from: "waterManagement",
-    action: "view",
-    link: "/water-management",
-    navigation: "water-management",
-    css: { borderBottom: "1px solid white" },
-    // subMenu: [
-    //   {
-    //     id: "1",
-    //     name: "Storage & History",
-    //     icon: WaterHistory,
-    //     navigation: "water/storage",
-    //   },
-    // ],
+    from: 'waterManagement',
+    action: 'view',
+    link: '/water-management',
+    navigation: 'water-management',
+    css: { borderBottom: '1px solid white' },
+    isActive: false
   },
-  // {
-  //   title: "Monitors",
-  //   id: "Monitors",
-  //   icon: Monitors,
-  //   navigation: "monitors",
-  //   isAuthRequired: true,
-  //   from: "monitors",
-  //   action: "view",
-  //   link: "/monitor",
-  //   navigation: "monitor",
-  //   css: { borderBottom: "1px solid white" },
-  //   // subMenu: [
-  //   //   { id: "1", name: "Data Inputs", navigation: "monitors/datainputs" },
-  //   //   { id: "2", name: "Status", navigation: "monitors/status" },
-  //   //   { id: "3", name: "Data Plots", navigation: "monitors/dataplots" },
-  //   //   {
-  //   //     id: "4",
-  //   //     name: "Consulatant Reporting",
-  //   //     navigation: "monitors/reporting",
-  //   //   },
-  //   //   { id: "5", name: "My Reports", navigation: "monitors/myreports" },
-  //   // ],
-  // },
-  // {
-  //   title: "Inventory",
-  //   id: "Inventory",
-  //   icon: Inventory,
-  //   link: "/inventory/items",
-  //   navigation: "inventory/items",
-  //   isAuthRequired: true,
-  //   from: "inventory",
-  //   action: "view",
 
-  //   css: { borderBottom: "1px solid white" },
-  //   // subMenu: [
-  //   //   {
-  //   //     id: "1",
-  //   //     name: "Items",
-  //   //     icon: InventoryItem,
-  //   //     link: "/inventory/items",
-  //   //     navigation: "inventory/items",
-  //   //   },
-  //   // ],
-  // },
   {
-    title: "Inventory",
-    id: "inventory",
+    title: 'Inventory',
+    id: 'inventory',
     icon: Inventory,
     isChildToFarmId: true,
-    navigation: "inventory",
-    css: { borderBottom: "1px solid white" },
+    navigation: 'inventory',
+    css: { borderBottom: '1px solid white' },
     isAuthRequired: true,
-    from: "crops",
-    action: "view",
+    from: 'crops',
+    action: 'view',
+    isActive: false,
     subMenu: [
       {
-        id: "1",
-        name: "Items",
+        id: '1',
+        name: 'Items',
         icon: Inventory,
-        link: "/inventory/items",
-        navigation: "inventory/items",       
+        link: '/inventory/items',
+        navigation: 'inventory/items',
+        isActive: false
       },
       {
-       id: "2",
-       name: "Manage Crops",
-        navigation: "/inventory/manage",
+        id: '2',
+        name: 'Manage Crops',
+        navigation: '/inventory/manage',
         icon: ManageCrops,
-       link: "/inventory/manage",
-
-      },
-    ],
+        link: '/inventory/manage',
+        isActive: false
+      }
+    ]
   },
 
-  // {
-  //   title: "Reports",
-  //   id: "reports",
-  //   icon: Report,
-  //   navigation: "reports",
-  //   link: "/reports",
-  //   css: { borderBottom: "1px solid white" },
-  //   subMenu: [
-  //     {
-  //       id: "1",
-  //       name: "Farm Efficiency",
-  //       navigation: "/reports/farm-efficiency",
-  //       link: "/reports/farm-efficiency",
-  //     },
-  //     { id: "2", name: " Capacity Efficiency", navigation: "/reports/capacity-efficiency",link: "/reports/capacity-efficiency",
-  //   },
-  //     { id: "3", name: " Energy Efficiency", navigation: "/reports/energy-efficiency",link: "/reports/energy-efficiency" },
-
-  //   ],
-  // },
-  // {
-  //     title: 'Manage',
-  //     id: "Manage",
-  //     icon: null,
-  //     navigation: 'Manage',
-  //     css: { borderBottom: '1px solid white' },
-
-  // },
   {
-    title: "Users",
-    id: "Users",
+    title: 'Users',
+    id: 'Users',
     isChildToFarmId: true,
-    navigation: "users",
-    link: "/users",
+    navigation: 'users',
+    link: '/users',
     icon: Account,
-    // isAuthRequired: true,
-    // from: "users",
-    // action: "view",
-    css: { borderBottom: "1px solid white" },
-  },
-  
-];
+
+    css: { borderBottom: '1px solid white' },
+    isActive: false
+  }
+]
 
 const zoneMenuItems = [
   {
-    title: "Dashboard",
-    id: "dashboard",
+    title: 'Dashboard',
+    id: 'dashboard',
     icon: Dashboard,
-    navigation: "/dashboard",
-    link: "/dashboard",
-    css: { borderBottom: "1px solid white" },
+    navigation: '/dashboard',
+    link: '/dashboard',
+    css: { borderBottom: '1px solid white' },
     isAuthRequired: true,
-    from: "crops",
-    action: "view",
+    from: 'crops',
+    action: 'view',
+    isActive: true
   },
-  
 
-  // {
-  //   title: "Crop",
-  //   id: "crop",
-  //   icon: Crops,
-  //   isChildToFarmId: true,
-  //   navigation: "corp",
-  //   css: { borderBottom: "1px solid white" },
-  //   isAuthRequired: true,
-  //   from: "crops",
-  //   action: "view",
-  //   subMenu: [
-  //     {
-  //       id: "1",
-  //       name: "Manage Crops",
-  //       navigation: "/crops/manage",
-  //       icon: ManageCrops,
-  //       link: "/crops/manage",
-  //     },
-  //     {
-  //       id: "3",
-  //       name: "Crops Lifecycle",
-  //       navigation: "/crops/lifecycle",
-  //       link: "/crops/lifecycle",
-  //       icon: CropsLifecycle,
-  //       isAuthRequired: true,
-  //       from: "lifeCycle",
-  //       action: "view",
-  //     },
-  //   ],
-  // },
   {
-    title: "Lifecycle",
-    id: "lifecycle",
+    title: 'Lifecycle',
+    id: 'lifecycle',
     icon: CropsLifecycle,
     isChildToFarmId: true,
-    navigation: "/lifecycle",
-    link: "/lifecycle",
-    css: { borderBottom: "1px solid white" },
+    navigation: '/lifecycle',
+    link: '/lifecycle',
+    css: { borderBottom: '1px solid white' },
     isAuthRequired: true,
-    from: "crops",
-    action: "view",
-    // subMenu: [
-    //   {
-    //     id: "1",
-    //     name: "Manage Crops",
-    //     navigation: "/crops/manage",
-    //     icon: ManageCrops,
-    //     link: "/crops/manage",
-    //   },
-    //   {
-    //     id: "3",
-    //     name: "Crops Lifecycle",
-    //     navigation: "/crops/lifecycle",
-    //     link: "/crops/lifecycle",
-    //     icon: CropsLifecycle,
-    //     isAuthRequired: true,
-    //     from: "lifeCycle",
-    //     action: "view",
-    //   },
-    // ],
+    from: 'crops',
+    action: 'view',
+    isActive: false
   },
 
   {
-    title: "Tasks",
-    id: "Tasks",
-    navigation: "/task",
+    title: 'Tasks',
+    id: 'Tasks',
+    navigation: '/task',
     icon: Tasks,
-    link: "/task",
-    css: { borderBottom: "1px solid white" },
-    
+    link: '/task',
+    css: { borderBottom: '1px solid white' },
+    isActive: false
   },
   {
-    title: "Water Management",
-    id: "Water",
+    title: 'Water Management',
+    id: 'Water',
     icon: WaterManagement,
     isAuthRequired: true,
-    from: "waterManagement",
-    action: "view",
-    link: "/water-management",
-    navigation: "water-management",
-    css: { borderBottom: "1px solid white" },
+    from: 'waterManagement',
+    action: 'view',
+    link: '/water-management',
+    navigation: 'water-management',
+    css: { borderBottom: '1px solid white' },
+    isActive: false
   },
-  // {
-  //   title: "Monitors",
-  //   id: "Monitors",
-  //   icon: Monitors,
-  //   navigation: "monitors",
-  //   isAuthRequired: true,
-  //   from: "monitors",
-  //   action: "view",
-  //   link: "/monitor",
-  //   navigation: "monitor",
-  //   css: { borderBottom: "1px solid white" },
-  // },
-  // {
-  //   title: "Inventory",
-  //   id: "Inventory",
-  //   icon: Inventory,
-  //   link: "/inventory/items",
-  //   navigation: "inventory/items",
-  //   isAuthRequired: true,
-  //   from: "inventory",
-  //   action: "view",
 
-  //   css: { borderBottom: "1px solid white" },
-  // },
   {
-    title: "Inventory",
-    id: "inventory",
+    title: 'Inventory',
+    id: 'inventory',
     icon: Inventory,
     isChildToFarmId: true,
-    navigation: "inventory",
-    css: { borderBottom: "1px solid white" },
+    navigation: 'inventory',
+    css: { borderBottom: '1px solid white' },
     isAuthRequired: true,
-    from: "crops",
-    action: "view",
+    from: 'crops',
+    action: 'view',
+    isActive: false,
     subMenu: [
       {
-        id: "1",
-        name: "Items",
+        id: '1',
+        name: 'Items',
         icon: Inventory,
-        link: "/inventory/items",
-        navigation: "inventory/items",       
+        link: '/inventory/items',
+        navigation: 'inventory/items',
+        isActive: false
       },
       {
-       id: "2",
-       name: "Manage Crops",
-        navigation: "/inventory/manage",
+        id: '2',
+        name: 'Manage Crops',
+        navigation: '/inventory/manage',
         icon: ManageCrops,
-       link: "/inventory/manage",
-
-      },
-    ],
+        link: '/inventory/manage',
+        isActive: false
+      }
+    ]
   },
-
-  // {
-  //   title: "Reports",
-  //   id: "reports",
-  //   icon: Report,
-  //   navigation: "reports",
-  //   link: "/reports",
-  //   css: { borderBottom: "1px solid white" },
-  //   subMenu: [
-  //     {
-  //       id: "1",
-  //       name: "zone Efficiency",
-  //       navigation: "/reports/zone-efficiency",
-  //       link: "/reports/zone-efficiency",
-  //     },
-  //     { id: "2", name: " Capacity Efficiency", navigation: "/reports/capacity-efficiency",link: "/reports/capacity-efficiency",
-  //   },
-  //     { id: "3", name: " Energy Efficiency", navigation: "/reports/energy-efficiency",link: "/reports/energy-efficiency" },
-
-  //   ],
-  // },
-
 
   {
-    title: "Users",
-    id: "Users",
+    title: 'Users',
+    id: 'Users',
     isChildToFarmId: true,
-    navigation: "users",
-    link: "/users",
+    navigation: 'users',
+    link: '/users',
     icon: Account,
     isAuthRequired: true,
-    from: "users",
-    action: "view",
-    css: { borderBottom: "1px solid white" },
-  },
-];
+    from: 'users',
+    action: 'view',
+    css: { borderBottom: '1px solid white' },
+    isActive: false
+  }
+]
 
 const adminMenuItems = [
   {
-    title: "Dashboard",
-    id: "dashboard",
-    navigation: "/dashboard",
+    title: 'Dashboard',
+    id: 'dashboard',
+    navigation: '/dashboard',
     icon: Irrigation,
-    css: { borderBottom: "1px solid white" },
-  },
-];
- 
+    css: { borderBottom: '1px solid white' },
+    isActive: true
+  }
+]
 
-
-
-export { farmMenuItems, menuItems, zoneMenuItems,adminMenuItems };
+export { farmMenuItems, menuItems, zoneMenuItems, adminMenuItems }

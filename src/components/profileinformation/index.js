@@ -1,156 +1,148 @@
-import React, { useState } from "react";
-import { Grid, DialogContent } from "@mui/material";
-import PageHeader from "../shared/page-header";
-import { useNavigate } from "react-router-dom";
-import CustomButton from "../shared/button";
-import TextBox from "../shared/text-box";
-import Loader from "../shared/loader";
-export default function ProfileInformation({
+import React, { useState } from 'react'
+import { Grid, DialogContent } from '@mui/material'
+import PageHeader from '../shared/page-header'
+import { useNavigate } from 'react-router-dom'
+import CustomButton from '../shared/button'
+import TextBox from '../shared/text-box'
+import Loader from '../shared/loader'
+export default function ProfileInformation ({
   updateUserProfile,
   updateUserPhone,
   isLoading,
-  updateNewPassword,
+  updateNewPassword
 }) {
-  const navigate = useNavigate();
-  let loginObject = JSON.parse(localStorage.getItem("AUTH_OBJECT"));
-  const { profile } = loginObject || "";
-  const [profileData, setProfileData] = useState({...profile,password:""});
-  const [password, setPassword] = useState("");
-  const [confirmPasswordError, setconfirmPasswordError] = useState(false);
-
+  const navigate = useNavigate()
+  const loginObject = JSON.parse(localStorage.getItem('AUTH_OBJECT'))
+  const { profile } = loginObject || ''
+  const [profileData, setProfileData] = useState({ ...profile, password: '' })
+  const [confirmPasswordError, setconfirmPasswordError] = useState(false)
   const [updatePassword, setUpdatePassword] = useState({
-    newPassword: "",
-    confirmPassword: "",
-  });
+    newPassword: '',
+    confirmPassword: ''
+  })
   const [validation, setValidation] = useState({
     name: false,
     email: false,
-    address: false,
-  });
+    address: false
+  })
   const [passwordValidations, setPasswordValidations] = useState({
     newPassword: false,
-    confirmPassword: false,
-  });
+    confirmPassword: false
+  })
   const [phoneValidations, setPhoneValidations] = useState({
     phone: false,
-    password: false,
-  });
+    password: false
+  })
   const handleChange = (e) => {
-    const { value, name } = e.target;
-    setProfileData({ ...profileData, [name]: value });
-    validation[name] && setValidation({ ...validation, [name]: false });
-    setPhoneValidations({...phoneValidations,[name]:false});
-  };
-  
+    const { value, name } = e.target
+    setProfileData({ ...profileData, [name]: value })
+    validation[name] && setValidation({ ...validation, [name]: false })
+    setPhoneValidations({ ...phoneValidations, [name]: false })
+  }
+
   const handleNewPasswordChange = (e) => {
-    const { value, name } = e.target;
-    setUpdatePassword({ ...updatePassword, [name]: value });
+    const { value, name } = e.target
+    setUpdatePassword({ ...updatePassword, [name]: value })
     passwordValidations[name] &&
-      setPasswordValidations({ ...passwordValidations, [name]: false });
-  };
-  const handlePasswordChange = (e) => {
-     setPassword(e.target.value);
-     setPhoneValidations(false)
-  };
+      setPasswordValidations({ ...passwordValidations, [name]: false })
+  }
   const handleBackButton = () => {
-    navigate(-1);
-  };
-  let showBackButton = [
+    navigate(-1)
+  }
+  const showBackButton = [
     {
-      handler: handleBackButton,
-    },
-  ];
+      handler: handleBackButton
+    }
+  ]
   const handleProfileValidations = () => {
-    let errors = { ...validation };
-    let isValid = true;
+    const errors = { ...validation }
+    let isValid = true
     if (!profileData.name) {
-      errors.name = true;
-      isValid = false;
+      errors.name = true
+      isValid = false
     }
     if (!profileData.email) {
-      errors.email = true;
-      isValid = false;
+      errors.email = true
+      isValid = false
     }
     if (!profileData.address) {
-      errors.address = true;
-      isValid = false;
+      errors.address = true
+      isValid = false
     }
-    setValidation(errors);
-    return isValid;
-  };
+    setValidation(errors)
+    return isValid
+  }
 
   const handleUpdatePassword = () => {
-    let errors = { ...passwordValidations };
-    let isValid = true;
+    const errors = { ...passwordValidations }
+    let isValid = true
     if (!updatePassword.newPassword || updatePassword.newPassword.length < 6) {
-      errors.newPassword = true;
-      isValid = false;
+      errors.newPassword = true
+      isValid = false
     }
-
     if (!updatePassword.confirmPassword) {
-      errors.confirmPassword = true;
-      isValid = false;
-      setconfirmPasswordError("Please Provide confirm Password ");
+      errors.confirmPassword = true
+      isValid = false
+      setconfirmPasswordError('Please Provide confirm Password ')
     }
     if (updatePassword.newPassword !== updatePassword.confirmPassword) {
-      errors.confirmPassword = true;
-      isValid = false;
-      setconfirmPasswordError("Confirm Password does not match");
+      errors.confirmPassword = true
+      isValid = false
+      setconfirmPasswordError('Confirm Password does not match')
     }
-    setPasswordValidations(errors);
-    return isValid;
-  };
+    setPasswordValidations(errors)
+    return isValid
+  }
   const handleProfileDataSave = () => {
-    let payload = {
+    const payload = {
       name: profileData.name,
       email: profileData.email,
-      address: profileData.address,
-    };
-    if (handleProfileValidations()) {
-      updateUserProfile(payload);
+      address: profileData.address
     }
-  };
+    if (handleProfileValidations()) {
+      updateUserProfile(payload)
+    }
+  }
   const handlePhoneValidations = () => {
-    let errors = { ...phoneValidations };
-    let isValid = true;
+    const errors = { ...phoneValidations }
+    let isValid = true
     if (!profileData.phone) {
-      errors.phone = true;
-      isValid = false;
+      errors.phone = true
+      isValid = false
     }
     if (!profileData.password) {
-      errors.password = true;
-      isValid = false;
+      errors.password = true
+      isValid = false
     }
     if (profileData.password && profileData.password.length < 6) {
-      errors.password = true;
-      isValid = false;
+      errors.password = true
+      isValid = false
     }
-    if (profileData.phone && profileData.phone.length !==10) {
-      errors.phone = true;
-      isValid = false;
+    if (profileData.phone && profileData.phone.length !== 10) {
+      errors.phone = true
+      isValid = false
     }
-    setPhoneValidations(errors);
-    return isValid;
-  };
-
+    setPhoneValidations(errors)
+    return isValid
+  }
   const handlePhoneNumberChange = () => {
     const payload = {
       phone: profileData.phone,
-      password: profileData.password,
-    };
-    if (handlePhoneValidations()) {
-      updateUserPhone(payload);
+      password: profileData.password
     }
-  };
+    if (handlePhoneValidations()) {
+      updateUserPhone(payload)
+    }
+  }
 
   const handleUpdatePasswordChange = () => {
     const payload = {
-      password: updatePassword.newPassword,
-    };
-    if (handleUpdatePassword()) {
-      updateNewPassword(payload);
+      password: updatePassword.newPassword
     }
-  };
+    if (handleUpdatePassword()) {
+      updateNewPassword(payload)
+    }
+  }
   const renderPersonalInfo = () => {
     return (
       <>
@@ -159,53 +151,53 @@ export default function ProfileInformation({
             <h3>Personal</h3>
           </Grid>
           <Grid item xs={12}>
-            Your Phone Number is currently <b>{profile?.phone}</b>{" "}
+            Your Phone Number is currently <b>{profile?.phone}</b>{' '}
           </Grid>
           <Grid item xs={12}>
             <h3>Profile</h3>
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6}>
-            <span className="custom-input-label">Name</span>
+            <span className='custom-input-label'>Name</span>
             <TextBox
-              isWhite={true}
+              isWhite
               fullWidth
-              name="name"
+              name='name'
               value={profileData?.name}
               onChange={handleChange}
               error={validation.name}
-              helperText={validation.name ? "Please provide name" : ""}
+              helperText={validation.name ? 'Please provide name' : ''}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6}>
-            <span className="custom-input-label">Email</span>
+            <span className='custom-input-label'>Email</span>
             <TextBox
-              size="small"
+              size='small'
               fullWidth
-              isWhite={true}
-              name="email"
+              isWhite
+              name='email'
               value={profileData?.email}
               onChange={handleChange}
               error={validation.email}
-              helperText={validation.email ? "Please provide Email" : ""}
+              helperText={validation.email ? 'Please provide Email' : ''}
             />
           </Grid>
           <Grid item xs={8}>
-            <span className="custom-input-label">Address </span>
+            <span className='custom-input-label'>Address </span>
             <TextBox
-              isWhite={true}
-              multiline={true}
+              isWhite
+              multiline
               value={profileData?.address}
               rows={2}
-              name="address"
+              name='address'
               fullWidth
               onChange={handleChange}
               error={validation.address}
-              helperText={validation.address ? "Please provide address" : ""}
+              helperText={validation.address ? 'Please provide address' : ''}
             />
           </Grid>
           <Grid item xs={12}>
             <CustomButton
-              title="Update"
+              title='Update'
               handleButtonClick={handleProfileDataSave}
             />
           </Grid>
@@ -214,8 +206,8 @@ export default function ProfileInformation({
           </Grid>
         </Grid>
       </>
-    );
-  };
+    )
+  }
 
   const renderPhoneInfo = () => {
     return (
@@ -225,42 +217,44 @@ export default function ProfileInformation({
             <h3>Phone Number</h3>
           </Grid>
           <Grid item xs={12}>
-            <span className="label-light">
+            <span className='label-light'>
               To make changes to your phone number, please verify your current
               password
             </span>
           </Grid>
           <Grid item xs={6}>
-            <span className="custom-input-label">Phone Number</span>
+            <span className='custom-input-label'>Phone Number</span>
             <TextBox
               fullWidth
               value={profileData?.phone}
-              name="phone"
+              name='phone'
               onChange={handleChange}
               error={phoneValidations.phone}
               helperText={
-                phoneValidations.phone ? "Please provide correct phone Number" : ""
+                phoneValidations.phone
+                  ? 'Please provide correct phone Number'
+                  : ''
               }
             />
           </Grid>
           <Grid item xs={6}>
-            <span className="custom-input-label">Current Password</span>
+            <span className='custom-input-label'>Current Password</span>
             <TextBox
               fullWidth
-              name="password"
+              name='password'
               value={profileData.password}
               onChange={handleChange}
               error={phoneValidations.password}
               helperText={
                 phoneValidations.password
-                  ? "please provide current password atleast 6 characters"
-                  : ""
+                  ? 'please provide current password atleast 6 characters'
+                  : ''
               }
             />
           </Grid>
           <Grid item xs={12}>
             <CustomButton
-              title="Update"
+              title='Update'
               handleButtonClick={handlePhoneNumberChange}
             />
           </Grid>
@@ -269,9 +263,8 @@ export default function ProfileInformation({
           </Grid>
         </Grid>
       </>
-    );
-  };
-
+    )
+  }
   const renderPasswordSection = () => {
     return (
       <Grid container spacing={1}>
@@ -279,63 +272,63 @@ export default function ProfileInformation({
           <h3>Password</h3>
         </Grid>
         <Grid item xs={12}>
-          <span className="label-light">
+          <span className='label-light'>
             To make changes to your password, please verify your current
             password
           </span>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6}>
-          <span className="custom-input-label">New Password</span>
-          <span className="label-light">*</span>
+          <span className='custom-input-label'>New Password</span>
+          <span className='label-light'>*</span>
           <TextBox
             fullWidth
-            isWhite={true}
+            isWhite
             value={updatePassword.newPassword}
-            name="newPassword"
+            name='newPassword'
             onChange={handleNewPasswordChange}
             error={passwordValidations.newPassword}
             helperText={
               passwordValidations.newPassword
-                ? "please provide password atleast 6 characters"
-                : ""
+                ? 'please provide password atleast 6 characters'
+                : ''
             }
           />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6}>
-          <span className="custom-input-label">New Password Again</span>
-          <span className="label-light">*</span>
+          <span className='custom-input-label'>New Password Again</span>
+          <span className='label-light'>*</span>
           <TextBox
             fullWidth
-            isWhite={true}
+            isWhite
             value={updatePassword.confirmPassword}
-            name="confirmPassword"
+            name='confirmPassword'
             onChange={handleNewPasswordChange}
             error={passwordValidations.confirmPassword}
             helperText={
-              passwordValidations.confirmPassword ? confirmPasswordError : ""
+              passwordValidations.confirmPassword ? confirmPasswordError : ''
             }
           />
         </Grid>
         <Grid item xs={12}>
           <CustomButton
-            title="Change Password"
+            title='Change Password'
             handleButtonClick={handleUpdatePasswordChange}
           />
         </Grid>
       </Grid>
-    );
-  };
+    )
+  }
   return (
     <div>
-      <PageHeader title="Profile Information" showBackButton={showBackButton} />
-      <div className="page-container">
-        {isLoading && <Loader title="Updating Profile" />}
-        <DialogContent sx={{ paddingTop: "10px" }}>
+      <PageHeader title='Profile Information' showBackButton={showBackButton} />
+      <div className='page-container'>
+        {isLoading && <Loader title='Updating Profile' />}
+        <DialogContent sx={{ paddingTop: '10px' }}>
           {renderPersonalInfo()}
           {renderPhoneInfo()}
           {renderPasswordSection()}
         </DialogContent>
       </div>
     </div>
-  );
+  )
 }

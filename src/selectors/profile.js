@@ -1,23 +1,11 @@
-import { createSelector } from 'reselect';
-const selectProfile = state => state.get('profile');
+import { createSelector } from 'reselect'
+const selectProfile = (state) => state.get('profile')
 
 export const selectUserProfile = () =>
-    createSelector(
-        selectProfile,
-        services => services.toJS()['profileInfo']
-    );
+  createSelector(selectProfile, (services) => services.toJS().profileInfo)
 export const selectIsLoading = () =>
-    createSelector(
-        selectProfile,
-        services => services.toJS()['isLoading']
-    );
+  createSelector(selectProfile, (services) => services.toJS().isLoading)
 export const selectIsError = () =>
-    createSelector(
-        selectProfile,
-        services => services.toJS()['error']
-    );
+  createSelector(selectProfile, (services) => services.toJS().error)
 export const selectIsSuccess = () =>
-    createSelector(
-        selectProfile,
-        services => services.toJS()['isSucess']
-    );
+  createSelector(selectProfile, (services) => services.toJS().isSucess)
