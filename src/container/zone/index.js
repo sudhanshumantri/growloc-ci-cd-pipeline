@@ -39,7 +39,7 @@ import {
   selectIsFarmDashboardAllZoneDetailsLoading,
   selectFarmDashboardAllZoneDetailsList
 } from '../../selectors/dashboard'
-import ZoneDashboard from '../../components/Zone'
+import ZoneDashboard from '../../components/zone'
 import {
   selectFarmZoneList,
   selectIsFarmZoneLoading,
