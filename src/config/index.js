@@ -6,6 +6,7 @@ export const api = {
   host: 'https://api.growloc.farm/api/'
   // host: 'http://localhost:4000/api/'
 }
+
 export const WEEKDAYS = [
   { label: 'S', value: '7' },
   { label: 'M', value: '1' },
