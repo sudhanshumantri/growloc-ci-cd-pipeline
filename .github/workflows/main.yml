@@ -1,0 +1,41 @@
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - main
+      - 'GRWLC-*'
+
+## env:
+  ## SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 14.x
+
+      # Install packages
+      - name: Install packages
+        run: |
+          npm install
+
+      - name: Configure AWS credentials (STAGE)
+        if: startsWith(github.ref, 'refs/heads/main')
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_STAGE_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGE_PROD }}
+          aws-region: ap-south-1
+      - name: Deploy (STAGE)
+        id: deploy-stage
+        if: startsWith(github.ref, 'refs/heads/main')
+        run: |
+          npm rum start:prod
+          aws s3 sync dist s3://app.growloc.farm --delete  --metadata-directive REPLACE --cache-control public,max-age=31556926
+          aws cloudfront create-invalidation --distribution-id E1ND66AD47MGBF --paths "/*" --output json --query "Invalidation.Id" | xargs -I {} aws cloudfront wait invalidation-completed --distribution-id E1ND66AD47MGBF --id {}
