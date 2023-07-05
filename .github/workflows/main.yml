@@ -37,5 +37,4 @@ jobs:
         if: startsWith(github.ref, 'refs/heads/main')
         run: |
           npm rum start:prod
-          aws s3 sync dist s3://app.growloc.farm --delete  --metadata-directive REPLACE --cache-control public,max-age=31556926
-          aws cloudfront create-invalidation --distribution-id E1ND66AD47MGBF --paths "/*" --output json --query "Invalidation.Id" | xargs -I {} aws cloudfront wait invalidation-completed --distribution-id E1ND66AD47MGBF --id {}
+          aws s3 sync dist s3://prod.growloc.farm --delete  --metadata-directive REPLACE --cache-control public,max-age=31556926
