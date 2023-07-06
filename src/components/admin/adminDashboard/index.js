@@ -18,7 +18,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import Loader from '../../shared/loader'
 import PageHeader from '../../shared/page-header'
 import ConfirmDialogBox from '../../shared/dailog/ConfirmDialogBox'
-import AddZoneSensorsModal from '../../Zone/addsensors'
+import AddZoneSensorsModal from '../../zone/addsensors'
 import moment from 'moment'
 import './style.css'
 
